@@ -4,6 +4,12 @@
   "description": "simple html5 game",
   "main": "gulpfile.js",
   "scripts": {
+    "start": "gulp",
+    "serve": "gulp serve",
+    "build:view": "gulp build:view",
+    "build:style": "gulp build:style",
+    "build": "gulp build",
+    "build:prod": "set NODE_ENV=production&&gulp build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -19,6 +25,7 @@
     "gulp-file-include": "^1.2.0",
     "gulp-htmlmin": "^3.0.0",
     "gulp-if-else": "^1.0.3",
+    "gulp-sass": "^3.1.0",
     "gulp-sourcemaps": "^2.6.1",
     "gulp-uglify": "^3.0.0",
     "node-static": "^0.7.10",
