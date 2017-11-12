@@ -61,10 +61,12 @@ gulp.task("build:style", () => {
 
 gulp.task("build:js", () => {
     gulp.src(srcJsFolder)
+        .pipe(ifElse(process.env.NODE_ENV !== "production", sourcemaps.init))
         .pipe(fileInclude("//@@"))
         .pipe(ifElse(process.env.NODE_ENV === "production", uglify))
+        .pipe(ifElse(process.env.NODE_ENV !== "production", sourcemaps.write))
         .pipe(gulp.dest(buildJsFolder));
-})
+});
 
 gulp.task("build:assets", () => {
     gulp.src(srcAssetsFolder)
