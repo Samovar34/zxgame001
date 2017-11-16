@@ -1,5 +1,18 @@
 @import "../../node_modules/bootstrap/scss/bootstrap-reboot";
 
 body {
-    background-color: #000;
+    background-color: #111;
+}
+
+h2 {
+    color: #e1e1e1;
+}
+
+.version {
+    position: fixed;
+    right: 0;
+    top: 0;
+    padding: 5px;
+    color: #e1e1e1;
+    font-style: italic;
 }

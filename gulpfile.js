@@ -79,7 +79,7 @@ gulp.task("build", ["build:view", "build:style", "build:js", "build:assets"], (d
 
 // serve
 gulp.task("serve", (done) => {
-    var server = http.createServer((req, res) => {
+    let server = http.createServer((req, res) => {
         req.addListener("end", () => {
             
             fileServer.serve(req, res, (err, result) => {
