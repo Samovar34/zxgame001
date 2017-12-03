@@ -16,3 +16,9 @@ h2 {
     color: #e1e1e1;
     font-style: italic;
 }
+
+canvas {
+    image-rendering: -ms-interpolation-mode;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+}
