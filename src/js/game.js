@@ -3,6 +3,8 @@
 var game;
 var player;
 var cursors;
+var rigthButton, leftButton, jumpButton, jumpButton2;
+var debugInfo = {};
 
 window.onload = function () {
     // 480x270
@@ -45,7 +47,6 @@ playGame.prototype = {
         // state variables
         this.canJump = true;
         this.canDoubleJump = false;
-        this.onWall = false; // player on wall (true/false)
 
         // game objects
         this.map = game.add.tilemap("map", 16, 16);
@@ -67,7 +68,10 @@ playGame.prototype = {
         player.body.velocity.x = gameOptions.player.speed;
 
         // enable input
-        cursors = game.input.keyboard.createCursorKeys();
+        leftButton = game.input.keyboard.addKey(Phaser.Keyboard.A);
+        rigthButton = game.input.keyboard.addKey(Phaser.Keyboard.D);
+        jumpButton = game.input.keyboard.addKey(Phaser.Keyboard.W);
+        jumpButton2 = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
     },
 
     update: function () {
@@ -83,27 +87,34 @@ playGame.prototype = {
             if (p.body.blocked.down) {
                 self.canJump = true;
             }
-        });
+        }, null, this);
 
         // handle input
         // TODO не равнозначный ввод left right
-        if (cursors.left.isDown) {
+        if (leftButton.isDown) {
             player.body.velocity.x = gameOptions.player.speed * -1;
+            //player.scale.setTo(-0.5, 0.5);
         }
 
-        if (cursors.right.isDown) {
+        if (rigthButton.isDown) {
             player.body.velocity.x = gameOptions.player.speed;
+            //player.scale.setTo(0.5, 0.5);
         }
 
         // jump without checking
-        if (cursors.up.justDown) {
+        if (jumpButton.justDown || jumpButton2.justDown) {
             this.handleJump();
         }
+    },
+
+    render: function () {
+
     },
 
     // custom state functions
     setDefaultValues: function () {
         player.body.velocity.x = 0;
+        player.body.gravity.y = gameOptions.player.gravity;
     },
 
     setPlayerXVelocity: function (defaultDirection) {
@@ -111,9 +122,7 @@ playGame.prototype = {
     },
 
     handleJump: function () {
-        console.log("DO");
-        if ((this.canJump && player.body.blocked.down) || this.onWall) {
-            console.log("FIRST");
+        if (this.canJump && player.body.blocked.down) {
             player.body.velocity.y= gameOptions.player.jump * -1;
 
             // запретить обычный прыжок и разрешить двойной
@@ -121,7 +130,6 @@ playGame.prototype = {
             this.canDoubleJump = true;
         } else {
             if (this.canDoubleJump) {
-                console.log("DOUBLE");
                 this.canDoubleJump = false;
                 player.body.velocity.y = gameOptions.player.doubleJump * -1;
             }
