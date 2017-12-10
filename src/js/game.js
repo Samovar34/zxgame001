@@ -3,7 +3,7 @@
 var game;
 var player;
 var cursors;
-var rigthButton, leftButton, jumpButton, jumpButton2;
+var rigthButton, leftButton, jumpButton, jumpButton2, runButton;
 var debugInfo = {};
 
 window.onload = function () {
@@ -12,7 +12,7 @@ window.onload = function () {
     // 1280×720
     // 1600×900
     // 1920×1080
-    game = new Phaser.Game(480, 270, Phaser.AUTO);
+    game = new Phaser.Game(gameOptions.gameWidth, gameOptions.gameHeight, Phaser.AUTO);
     game.state.add("PreloadGame", preloadGame);
     game.state.add("PlayGame", playGame);
     game.state.start("PreloadGame");
@@ -58,26 +58,30 @@ playGame.prototype = {
 
         // player
         player = game.add.sprite(80, 80, "player");
+        player._direction = true;
         player.anchor.setTo(0.5);
-        player.scale.setTo(0.5);
+        player.scale.setTo(1);
         player.smoothed = false;
         
         // enable physics for the player
         game.physics.enable(player, Phaser.Physics.ARCADE);
         player.body.gravity.y = gameOptions.player.gravity;
         player.body.velocity.x = gameOptions.player.speed;
+        player.body.collideWorldBounds = true;
 
         // enable input
         leftButton = game.input.keyboard.addKey(Phaser.Keyboard.A);
         rigthButton = game.input.keyboard.addKey(Phaser.Keyboard.D);
         jumpButton = game.input.keyboard.addKey(Phaser.Keyboard.W);
         jumpButton2 = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        runButton = game.input.keyboard.addKey(Phaser.Keyboard.L);
     },
 
     update: function () {
         // reset values
         this.setDefaultValues();
         var self = this;
+        var curXVelocity = 0;
 
         // physics
         game.physics.arcade.collide(player, this.layer, function (p, tile) {
@@ -92,13 +96,32 @@ playGame.prototype = {
         // handle input
         // TODO не равнозначный ввод left right
         if (leftButton.isDown) {
-            player.body.velocity.x = gameOptions.player.speed * -1;
-            //player.scale.setTo(-0.5, 0.5);
+            // TODO вынести в отдельный класс Player
+            player._direction = false;
+            if (runButton.isDown) {
+                curXVelocity -= gameOptions.player.runSpeed;
+            } else {
+                curXVelocity -= gameOptions.player.speed;
+            }
         }
 
         if (rigthButton.isDown) {
-            player.body.velocity.x = gameOptions.player.speed;
-            //player.scale.setTo(0.5, 0.5);
+            // TODO вынести в отдельный класс Player
+            player._direction = true;
+            if (runButton.isDown) {
+                curXVelocity += gameOptions.player.runSpeed;
+            } else {
+                curXVelocity += gameOptions.player.speed;
+            }
+        }
+
+        player.body.velocity.x = curXVelocity;
+
+        // TODO вынести в отдельный класс Player
+        if (player._direction) {
+            player.scale.setTo(1, 1);
+        } else {
+            player.scale.setTo(-1, 1);
         }
 
         // jump without checking

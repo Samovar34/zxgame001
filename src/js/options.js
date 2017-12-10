@@ -1,11 +1,12 @@
 var gameOptions = {
-    gameWidth: 640,
-    gameHeight: 480,
+    gameWidth: 480,
+    gameHeight: 270,
     bgColor: 0x001199,
     player : {
         gravity: 900,
         grip: 50,
-        speed: 150,
+        speed: 250,
+        runSpeed: 350,
         jump: 300,
         doubleJump: 300
     }
