@@ -7,7 +7,9 @@ var gameOptions = {
         grip: 50,
         speed: 500,
         runSpeed: 650,
+        acceleration: 3500,
         jump: 500,
-        doubleJump: 400
+        doubleJump: 400,
+        drag: 3600
     }
 };
