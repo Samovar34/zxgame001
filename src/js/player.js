@@ -1,8 +1,11 @@
 // Player class
-var Player = function (game, x, y) {
+// inheritance Phaser.Sprite class
+AdslJumper.Player = function (game, input, x, y) {
+    
 	Phaser.Sprite.call(this, game, x, y, "player");
 	
     this.game = game;
+    this.input = input;
     
     // player variables
     this.facing = "right";
@@ -28,22 +31,90 @@ var Player = function (game, x, y) {
 	this.game.add.existing(this);
 };
 
-Player.prototype = Object.create(Phaser.Sprite.prototype);
-Player.prototype.constructor = Player;
+AdslJumper.Player.prototype = Object.create(Phaser.Sprite.prototype);
+AdslJumper.Player.prototype.constructor = AdslJumper.Player;
 
-Player.prototype.moveLeft = function () {
+AdslJumper.Player.prototype.update = function () {
 
+    // player state
+
+    // check collision with worldBounds or Tile
+    // false = collision
+    // true = no collision
+    // if player hit tile or worldBounds, no double jump is allowed
+    if(!this.body.blocked.none) {
+        this.doubleJump = false;
+    }
+
+    if (this.body.blocked.down) {
+        this.canJump = true;
+    }
+
+    if ((this.body.blocked.left || this.body.blocked.right) && !this.body.blocked.down) {
+        this.onWall = true;;
+        this.body.gravity.y = 0;
+        this.body.velocity.y = 100;
+    } else {
+        this.onWall = false;
+        this.body.gravity.y = gameOptions.player.gravity;
+    }
+
+    // input
+    var currentAcceleration = 0;
+
+    if (this.input.jumpIsJustDown()) {
+        this.jump();
+    }
+
+    if (this.input.leftIsDown()) {
+        //currentAcceleration -= gameOptions.player.acceleration;
+        currentAcceleration -= gameOptions.player.speed;
+    }
+    
+    if (this.input.rightIsDown()) {
+        //currentAcceleration += gameOptions.player.acceleration;
+        currentAcceleration += gameOptions.player.speed;
+    }
+
+    if (this.input.speedUpIsDown()) {
+        this.body.maxVelocity.x = gameOptions.player.runSpeed;
+    } else {
+        this.body.maxVelocity.x = gameOptions.player.speed;
+    }
+
+    //this.body.acceleration.x = currentAcceleration;
+    this.body.velocity.x = currentAcceleration;
+
+
+}
+
+AdslJumper.Player.prototype.jump = function () {
+    if (this.canJump) {
+        if (this.body.blocked.down) {
+            this.body.velocity.y= gameOptions.player.jump * -1;
+        } else if (this.onWall) {
+            this.body.velocity.y= gameOptions.player.jump * -1;
+            if (this.body.blocked.left) {
+                this.body.acceleration.x = 1800;
+            } else {
+                this.body.acceleration.x = -1800;
+            }
+            //player.body.velocity.x = 300;
+        }
+        
+
+        // запретить обычный прыжок и разрешить двойной
+        this.canJump = false;
+        this.canDoubleJump = true;
+    } else {
+        if (this.canDoubleJump) {
+            this.canDoubleJump = false;
+            this.body.velocity.y = gameOptions.player.doubleJump * -1;
+        }
+    }
 };
 
-Player.prototype.moveRight = function () {
-
-};
-
-Player.prototype.jump = function () {
-
-};
-
-Player.prototype.move = function () {
+AdslJumper.Player.prototype.move = function () {
 
 };
 
