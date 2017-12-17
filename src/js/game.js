@@ -71,9 +71,10 @@ playGame.prototype = {
     },
 
     render: function () {
-        this.game.debug.text("blocked down: " + this.player.body.blocked.down, 32, 92);
         this.game.debug.text("left: " + this.input.leftIsDown(), 32, 32);
         this.game.debug.text("right: " + this.input.rightIsDown(), 32, 52);
         this.game.debug.text("jump: " + this.input.jumpIsJustDown(), 32, 72);
+        this.game.debug.text("blocked down: " + this.player.body.blocked.down, 32, 92);
+        this.game.debug.text("onWall: " + this.player.body.onWall(), 32, 112);
     }
 };

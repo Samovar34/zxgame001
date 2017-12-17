@@ -50,7 +50,7 @@ AdslJumper.Player.prototype.update = function () {
         this.canJump = true;
     }
 
-    if ((this.body.blocked.left || this.body.blocked.right) && !this.body.blocked.down) {
+    if (this.body.onWall() && !this.body.blocked.down) {
         this.onWall = true;;
         this.body.gravity.y = 0;
         this.body.velocity.y = 100;
@@ -77,9 +77,7 @@ AdslJumper.Player.prototype.update = function () {
     }
 
     if (this.input.speedUpIsDown()) {
-        this.body.maxVelocity.x = gameOptions.player.runSpeed;
-    } else {
-        this.body.maxVelocity.x = gameOptions.player.speed;
+        currentAcceleration *= gameOptions.player.runSpeedUpRate;
     }
 
     //this.body.acceleration.x = currentAcceleration;

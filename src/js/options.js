@@ -6,10 +6,10 @@ var gameOptions = {
         gravity: 900,
         grip: 50,
         speed: 550,
-        runSpeed: 650,
+        runSpeedUpRate: 1.2,
         acceleration: 8000,
         jump: 500,
-        doubleJump: 300,
+        doubleJump: 400,
         drag: 7500
     }
 };
