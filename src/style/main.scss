@@ -17,8 +17,8 @@ h2 {
     font-style: italic;
 }
 
-// canvas {
-//     image-rendering: -ms-interpolation-mode;
-//     image-rendering: crisp-edges;
-//     image-rendering: pixelated;
-// }
+canvas {
+    image-rendering: -ms-interpolation-mode;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+}
