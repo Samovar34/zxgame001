@@ -20,6 +20,7 @@ AdslJumper.Player = function (game, input, x, y) {
     this.body.acceleration.x = 0;
     this.body.maxVelocity.x = gameOptions.player.speed;
     this.body.drag.x = gameOptions.player.drag;
+    this.currentSpeed = 0; 
 
     // physics variables
     this.canJump = true;
@@ -59,29 +60,11 @@ AdslJumper.Player.prototype.update = function () {
         this.body.gravity.y = gameOptions.player.gravity;
     }
 
-    // input
-    var currentAcceleration = 0;
+    this.move();
 
     if (this.input.jumpIsJustDown()) {
         this.jump();
     }
-
-    if (this.input.leftIsDown()) {
-        //currentAcceleration -= gameOptions.player.acceleration;
-        currentAcceleration -= gameOptions.player.speed;
-    }
-    
-    if (this.input.rightIsDown()) {
-        //currentAcceleration += gameOptions.player.acceleration;
-        currentAcceleration += gameOptions.player.speed;
-    }
-
-    if (this.input.speedUpIsDown()) {
-        currentAcceleration *= gameOptions.player.runSpeedUpRate;
-    }
-
-    //this.body.acceleration.x = currentAcceleration;
-    this.body.velocity.x = currentAcceleration;
 
 
 }
@@ -93,14 +76,12 @@ AdslJumper.Player.prototype.jump = function () {
         } else if (this.onWall) {
             this.body.velocity.y= gameOptions.player.jump * -1;
             if (this.body.blocked.left) {
-                this.body.acceleration.x = 1800;
+                this.body.velocity.x = 550;
             } else {
-                this.body.acceleration.x = -1800;
+                this.body.velocity.x = -550;
             }
-            //player.body.velocity.x = 300;
         }
         
-
         // запретить обычный прыжок и разрешить двойной
         this.canJump = false;
         this.canDoubleJump = true;
@@ -112,7 +93,30 @@ AdslJumper.Player.prototype.jump = function () {
     }
 };
 
+// moving X axis player 
+// void
 AdslJumper.Player.prototype.move = function () {
+    this.currentSpeed = 0;
 
+    if (this.input.leftIsDown()) {
+        //currentAcceleration -= gameOptions.player.acceleration;
+        this.currentSpeed-= gameOptions.player.speed;
+    }
+    
+    if (this.input.rightIsDown()) {
+        //currentAcceleration += gameOptions.player.acceleration;
+        this.currentSpeed += gameOptions.player.speed;
+    }
+
+    if (this.input.speedUpIsDown()) {
+        this.currentSpeed *= gameOptions.player.runSpeedUpRate;
+    }
+
+    // less speed if in air 90%
+    if (!this.body.onFloor()) {
+        this.currentSpeed *= 0.9;
+    }
+
+    this.body.velocity.x = this.currentSpeed;
 };
 
