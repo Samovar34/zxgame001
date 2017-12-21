@@ -77,5 +77,6 @@ playGame.prototype = {
         this.game.debug.text("blocked down: " + this.player.body.blocked.down, 32, 92);
         this.game.debug.text("onWall: " + this.player.body.onWall(), 32, 112);
         this.game.debug.text("speed: " + this.player.currentSpeed, 32, 132);
+        this.game.debug.text("state: " + this.player.currentState.name, 32, 152);
     }
 };

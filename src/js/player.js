@@ -27,6 +27,9 @@ AdslJumper.Player = function (game, input, x, y) {
     this.canDoubleJump = false;
     this.onWall = false;
     this.acceleration = 0;
+
+    // player state
+    this.currentState = this.groundState;
 	
 	//add to game
 	this.game.add.existing(this);
@@ -91,6 +94,11 @@ AdslJumper.Player.prototype.jump = function () {
             this.body.velocity.y = gameOptions.player.doubleJump * -1;
         }
     }
+};
+
+// states
+AdslJumper.Player.prototype.groundState = function groundState() {
+    
 };
 
 // moving X axis player 
