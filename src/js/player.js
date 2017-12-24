@@ -21,6 +21,9 @@ AdslJumper.Player = function (game, input, x, y) {
     this.body.maxVelocity.x = gameOptions.player.speed;
     this.body.drag.x = gameOptions.player.drag;
     this.currentSpeed = 0; 
+    this.groundDelay = gameOptions.player.groundDelay; // player can jump a few frames after leaving ground
+    this.groundDelayTimer = 0;
+    this.wasOnGround = true; // for custom ground check
 
     // physics variables
     this.canJump = true;
@@ -47,11 +50,7 @@ AdslJumper.Player.prototype.update = function () {
     // true = no collision
     // if player hit tile or worldBounds, no double jump is allowed
     if(!this.body.blocked.none) {
-        this.doubleJump = false;
-    }
-
-    if (this.body.blocked.down) {
-        this.canJump = true;
+        this.canDoubleJump = false;
     }
 
     if (this.body.onWall() && !this.body.blocked.down) {
@@ -63,7 +62,7 @@ AdslJumper.Player.prototype.update = function () {
         this.body.gravity.y = gameOptions.player.gravity;
     }
 
-    this.move();
+    this.currentState();
 
     if (this.input.jumpIsJustDown()) {
         this.jump();
@@ -72,33 +71,59 @@ AdslJumper.Player.prototype.update = function () {
 
 }
 
-AdslJumper.Player.prototype.jump = function () {
-    if (this.canJump) {
-        if (this.body.blocked.down) {
-            this.body.velocity.y= gameOptions.player.jump * -1;
-        } else if (this.onWall) {
-            this.body.velocity.y= gameOptions.player.jump * -1;
-            if (this.body.blocked.left) {
-                this.body.velocity.x = 550;
-            } else {
-                this.body.velocity.x = -550;
-            }
-        }
-        
-        // запретить обычный прыжок и разрешить двойной
-        this.canJump = false;
+AdslJumper.Player.prototype.jump = function () {  
+    //TODO запрет прыжка при определённых условиях
+
+    if (this.body.onWall() && !this.body.onFloor()) {
+        // jump from wall
+        this.wasOnGround = false;
+        this.currentState = this.airState;
+    } else if (this.body.onFloor() || this.wasOnGround) {
+        // simple jump
+        this.wasOnGround = false;
         this.canDoubleJump = true;
-    } else {
-        if (this.canDoubleJump) {
-            this.canDoubleJump = false;
-            this.body.velocity.y = gameOptions.player.doubleJump * -1;
-        }
+        this.body.velocity.y = gameOptions.player.jump * -1;
+        this.currentState = this.airState;
+    } else if (!this.body.onFloor() && this.canDoubleJump) {
+        // double jump
+        this.wasOnGround = false;
+        this.canDoubleJump = false;
+        this.body.velocity.y = gameOptions.player.doubleJump * -1;
+        this.currentState = this.airState;
     }
 };
 
 // states
 AdslJumper.Player.prototype.groundState = function groundState() {
-    
+    // player moving on ground
+    this.wasOnGround = true;
+
+    this.move();
+
+    // fell of a ledge
+    if (!this.body.onFloor()) {
+        this.currentState = this.airState;
+    }
+};
+
+AdslJumper.Player.prototype.airState = function airState() {
+    // player moving on air
+    if (this.wasOnGround) {
+        this.groundDelayTimer++;
+        if (this.groundDelayTimer > this.groundDelay) {
+            this.groundDelayTimer = 0;
+            this.wasOnGround = false;
+        }
+    } else {
+        this.groundDelayTimer = 0;
+    }
+
+    this.move();
+
+    // player hit ground
+    if (this.body.onFloor()) {
+        this.currentState = this.groundState;
+    }
 };
 
 // moving X axis player 
@@ -120,9 +145,10 @@ AdslJumper.Player.prototype.move = function () {
         this.currentSpeed *= gameOptions.player.runSpeedUpRate;
     }
 
-    // less speed if in air 90%
-    if (!this.body.onFloor()) {
-        this.currentSpeed *= 0.9;
+    // less speed if in air
+    if (this.currentState == this.airState) {
+        this.currentSpeed *= gameOptions.player.inAirVelocityRate;
+        console.log("air");
     }
 
     this.body.velocity.x = this.currentSpeed;

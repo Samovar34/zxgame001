@@ -12,6 +12,7 @@ var gameOptions = {
         doubleJump: 400,
         drag: 7500,
         // velocity = V * inAirVelocityRate
-        inAirVelocityRate: 0.95
+        inAirVelocityRate: 0.95,
+        groundDelay: 5 // delay in frames
     }
 };

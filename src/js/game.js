@@ -71,6 +71,7 @@ playGame.prototype = {
     },
 
     render: function () {
+        // col 1
         this.game.debug.text("input_left: " + this.input.leftIsDown(), 32, 32);
         this.game.debug.text("input_right: " + this.input.rightIsDown(), 32, 52);
         this.game.debug.text("input_jump: " + this.input.jumpIsJustDown(), 32, 72);
@@ -78,5 +79,10 @@ playGame.prototype = {
         this.game.debug.text("onWall: " + this.player.body.onWall(), 32, 112);
         this.game.debug.text("speed: " + this.player.currentSpeed, 32, 132);
         this.game.debug.text("state: " + this.player.currentState.name, 32, 152);
+        
+        // col 2
+        this.game.debug.text("wasOnGround: " + this.player.wasOnGround, 250, 32);
+        this.game.debug.text("groundDelayTimer: " + this.player.groundDelayTimer, 250, 52);
+        this.game.debug.text("canDoubleJump: " + this.player.canDoubleJump, 250, 72);
     }
 };
