@@ -77,7 +77,7 @@ playGame.prototype = {
         this.game.debug.text("input_jump: " + this.input.jumpIsJustDown(), 32, 72);
         this.game.debug.text("blocked down: " + this.player.body.blocked.down, 32, 92);
         this.game.debug.text("onWall: " + this.player.body.onWall(), 32, 112);
-        this.game.debug.text("speed: " + this.player.currentSpeed, 32, 132);
+        this.game.debug.text("speed(x;y): " + this.player.currentSpeed + ";" + this.player.body.velocity.y , 32, 132);
         this.game.debug.text("state: " + this.player.currentState.name, 32, 152);
         
         // col 2

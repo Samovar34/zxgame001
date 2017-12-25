@@ -4,15 +4,16 @@ var gameOptions = {
     bgColor: 0x001155,
     player : {
         gravity: 900,
-        grip: 50,
-        speed: 550,
+        grip: 0,
+        speed: 650,
         runSpeedUpRate: 1.5,
         acceleration: 8000,
         jump: 500,
         doubleJump: 400,
-        drag: 7500,
+        drag: 10000,
         // velocity = V * inAirVelocityRate
-        inAirVelocityRate: 0.95,
-        groundDelay: 5 // delay in frames
+        inAirVelocityRate: 1,
+        groundDelay: 5, // delay in frames
+        wallBreakTime: 10
     }
 };
