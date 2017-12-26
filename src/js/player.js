@@ -17,7 +17,7 @@ AdslJumper.Player = function (game, input, x, y) {
     this.game.physics.arcade.enable(this);
     this.body.gravity.y = gameOptions.player.gravity;
     this.body.collideWorldBounds = true;
-    //this.body.acceleration.x = 0;
+    this.body.acceleration.x = 0;
     this.body.maxVelocity.x = gameOptions.player.speed;
     //this.body.drag.x = gameOptions.player.drag;
     this.currentSpeed = 0; 
@@ -26,6 +26,7 @@ AdslJumper.Player = function (game, input, x, y) {
     this.wasOnGround = true; // for custom ground check
     this.wallBreakTime = gameOptions.player.wallBreakTime;
     this.wallBreakClock = 0;
+    this.body.stopVelocityOnCollide = false;
 
     // physics variables
     this.canJump = true;
@@ -60,8 +61,6 @@ AdslJumper.Player.prototype.update = function () {
     if (this.input.jumpIsJustDown()) {
         this.jump();
     }
-
-
 }
 
 AdslJumper.Player.prototype.jump = function () {  
@@ -70,62 +69,58 @@ AdslJumper.Player.prototype.jump = function () {
     if (this.body.onWall() && !this.body.onFloor()) {
         // jump from wall
         this.wasOnGround = false;
-        if (this.body.blocked.left) {
-            this.body.velocity.x = gameOptions.player.speed * 50;
-        } else {
-            this.body.velocity.x = -gameOptions.player.speed * 50;
-        }
+        this.canDoubleJump = true;
+        this.body.maxVelocity.y = gameOptions.player.gravity;
         this.body.velocity.y = gameOptions.player.jump * -1;
-        //this.currentState = this.airState;
+        if (this.body.blocked.left) {
+            this.body.velocity.x = gameOptions.player.speed * 500;
+        } else {
+            this.body.velocity.x = -gameOptions.player.speed * 500;
+        }
+        this.currentState = this.airState;
     } else if (this.body.onFloor() || this.wasOnGround) {
         // simple jump
         this.wasOnGround = false;
         this.canDoubleJump = true;
         this.body.velocity.y = gameOptions.player.jump * -1;
-        //this.currentState = this.airState;
+        this.currentState = this.airState;
     } else if (!this.body.onFloor() && this.canDoubleJump) {
         // double jump
         this.wasOnGround = false;
         this.canDoubleJump = false;
         this.body.velocity.y = gameOptions.player.doubleJump * -1;
-        //this.currentState = this.airState;
+        this.currentState = this.airState;
     }
 };
 
 // moving X axis player 
 // void
 AdslJumper.Player.prototype.move = function () {
-    this.currentSpeed = 0;
-    var currentAcceleration = 0;
+
+    this.currentAcceleration = 0;
 
     if (this.input.leftIsDown()) {
         this.facing = "left";
-        //currentAcceleration -= gameOptions.player.acceleration;
-        this.currentSpeed-= gameOptions.player.speed;
+        this.currentAcceleration -= gameOptions.player.acceleration;
     }
     
     if (this.input.rightIsDown()) {
         this.facing = "right";
-        //currentAcceleration += gameOptions.player.acceleration;
-        this.currentSpeed += gameOptions.player.speed;
+        this.currentAcceleration += gameOptions.player.acceleration;
     }
 
     if (this.input.speedUpIsDown()) {
-        this.currentSpeed *= gameOptions.player.runSpeedUpRate;
-    //this.body.maxVelocity.x = gameOptions.player.speed * gameOptions.player.runSpeedUpRate;
+        this.body.maxVelocity.x = gameOptions.player.speed * gameOptions.player.runSpeedUpRate;
     } else {
         this.body.maxVelocity.x = gameOptions.player.speed;
     }
 
     // less speed if in air
     if (this.currentState == this.airState) {
-        this.currentSpeed *= gameOptions.player.inAirVelocityRate;
-        //this.body.maxVelocity.x *= gameOptions.player.inAirVelocityRate;
+        this.body.maxVelocity.x *= gameOptions.player.inAirVelocityRate;
     }
 
-    this.body.velocity.x = this.currentSpeed;
-    //this.body.acceleration.x = currentAcceleration;
-    //this.currentSpeed = this.body.velocity.x;
+    this.body.acceleration.x = this.currentAcceleration;
 };
 
 // states
@@ -161,8 +156,7 @@ AdslJumper.Player.prototype.airState = function airState() {
 
     // player sliding wall (pre wall-jump)
     if (this.body.onWall()) {
-        this.body.gravity.y = 0;
-        this.body.velocity.y = gameOptions.player.grip;
+        this.body.maxVelocity.y = gameOptions.player.grip;
         this.currentState = this.wallSlideState;
     }
 
@@ -175,22 +169,27 @@ AdslJumper.Player.prototype.airState = function airState() {
 
 AdslJumper.Player.prototype.wallSlideState = function wallSlideState() {
 
-    this.wallBreakClock++;
-    this.move();
-    if (this.wallBreakClock > this.wallBreakTime) {
-        //this.wallBreakClock = 0;
-        this.body.gravity.y = gameOptions.player.gravity;
+    if ((this.input.leftIsDown() && this.facing == "left") || (this.input.rightIsDown() && this.facing == "right")) {
+        this.wallBreakClock = 0;
+    } else {
+        this.wallBreakClock++;
+    }
+    
+    if (this.wallBreakClock >= this.wallBreakTime) {
+        this.wallBreakClock = 0;
+        this.body.maxVelocity.y = gameOptions.player.gravity;
+        this.currentState = this.airState;
     }
 
     // let go of the wall
     if (!this.body.onWall()) {
-        this.body.gravity.y = gameOptions.player.gravity;
+        this.body.maxVelocity.y = gameOptions.player.gravity;
         this.wallBreakClock = 0;
         this.currentState = this.airState;
     }
 
     if (this.body.onFloor()) {
-        this.body.gravity.y = gameOptions.player.gravity;
+        this.body.maxVelocity.y = gameOptions.player.gravity;
         this.wallBreakClock = 0;
         this.currentState = this.groundState;
     }
