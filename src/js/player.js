@@ -9,6 +9,7 @@ AdslJumper.Player = function (game, input, x, y) {
     
     // player variables
     this.facing = "right";
+    this.settable = true; // проверка на возможность настроить игрока для текущего состояния
 	
 	this.anchor.setTo(0.5);
     this.smoothed = false;
@@ -19,14 +20,14 @@ AdslJumper.Player = function (game, input, x, y) {
     this.body.collideWorldBounds = true;
     this.body.acceleration.x = 0;
     this.body.maxVelocity.x = gameOptions.player.speed;
-    //this.body.drag.x = gameOptions.player.drag;
+    this.body.maxVelocity.y = gameOptions.player.maxFallSpeed;
+    this.body.drag.x = gameOptions.player.drag;
     this.currentSpeed = 0; 
     this.groundDelay = gameOptions.player.groundDelay; // player can jump a few frames after leaving ground
     this.groundDelayTimer = 0;
     this.wasOnGround = true; // for custom ground check
     this.wallBreakTime = gameOptions.player.wallBreakTime;
     this.wallBreakClock = 0;
-    this.body.stopVelocityOnCollide = false;
 
     // physics variables
     this.canJump = true;
@@ -63,32 +64,41 @@ AdslJumper.Player.prototype.update = function () {
     }
 }
 
+// player jump Y axis
+// void
 AdslJumper.Player.prototype.jump = function () {  
     //TODO запрет прыжка при определённых условиях
 
+    // прыжок от стены
     if (this.body.onWall() && !this.body.onFloor()) {
-        // jump from wall
         this.wasOnGround = false;
         this.canDoubleJump = true;
-        this.body.maxVelocity.y = gameOptions.player.gravity;
+        this.body.maxVelocity.y = gameOptions.player.maxFallSpeed;
         this.body.velocity.y = gameOptions.player.jump * -1;
+
         if (this.body.blocked.left) {
-            this.body.velocity.x = gameOptions.player.speed * 500;
+            this.body.velocity.x = gameOptions.player.speed;
         } else {
-            this.body.velocity.x = -gameOptions.player.speed * 500;
+            this.body.velocity.x = -gameOptions.player.speed;
         }
+        this.settable = true;
         this.currentState = this.airState;
+
+    // прыжок с платформы (пола)
     } else if (this.body.onFloor() || this.wasOnGround) {
         // simple jump
         this.wasOnGround = false;
         this.canDoubleJump = true;
         this.body.velocity.y = gameOptions.player.jump * -1;
+        this.settable = true;
         this.currentState = this.airState;
+
+    // дополнительный прыжок
     } else if (!this.body.onFloor() && this.canDoubleJump) {
         // double jump
-        this.wasOnGround = false;
         this.canDoubleJump = false;
         this.body.velocity.y = gameOptions.player.doubleJump * -1;
+        this.settable = true;
         this.currentState = this.airState;
     }
 };
@@ -96,7 +106,7 @@ AdslJumper.Player.prototype.jump = function () {
 // moving X axis player 
 // void
 AdslJumper.Player.prototype.move = function () {
-
+    // reset current acceleration
     this.currentAcceleration = 0;
 
     if (this.input.leftIsDown()) {
@@ -109,15 +119,9 @@ AdslJumper.Player.prototype.move = function () {
         this.currentAcceleration += gameOptions.player.acceleration;
     }
 
-    if (this.input.speedUpIsDown()) {
-        this.body.maxVelocity.x = gameOptions.player.speed * gameOptions.player.runSpeedUpRate;
-    } else {
-        this.body.maxVelocity.x = gameOptions.player.speed;
-    }
-
-    // less speed if in air
+    // less acceleration if in air
     if (this.currentState == this.airState) {
-        this.body.maxVelocity.x *= gameOptions.player.inAirVelocityRate;
+        this.currentAcceleration /= gameOptions.player.inAirAccelerationRate ;
     }
 
     this.body.acceleration.x = this.currentAcceleration;
@@ -125,19 +129,40 @@ AdslJumper.Player.prototype.move = function () {
 
 // states
 AdslJumper.Player.prototype.groundState = function groundState() {
-    // player moving on ground
+    // setup player
+    if (this.settable) {
+        this.body.drag.x = gameOptions.player.drag;
+        this.body.maxVelocity.y = gameOptions.player.maxFallSpeed;
+        this.settable = false;
+    }
+
+    // stae logic
     this.wasOnGround = true;
 
+    // X axis movement
     this.move();
+
+    // TODO animation
+    // TODO play sound
+    // TODO stop running animation
 
     // fell of a ledge
     if (!this.body.onFloor()) {
+        this.settable = true; // allow set player for next state
         this.currentState = this.airState;
     }
 };
 
 AdslJumper.Player.prototype.airState = function airState() {
-    // player moving on air
+    // setup player
+    if (this.settable) {
+        // reduce friction
+        this.body.drag.x = gameOptions.player.drag/2;
+        this.body.maxVelocity.y = gameOptions.player.maxFallSpeed;
+        this.settable = false; // deny set player
+    }
+
+    // state logic
     if (this.wasOnGround) {
         this.groundDelayTimer++;
         if (this.groundDelayTimer > this.groundDelay) {
@@ -148,27 +173,30 @@ AdslJumper.Player.prototype.airState = function airState() {
         this.groundDelayTimer = 0;
     }
 
-    // moving player
+    // X axis movement
     this.move();
-
-    // reduce friction
-    //this.body.drag.x = gameOptions.player.drag/10;
 
     // player sliding wall (pre wall-jump)
     if (this.body.onWall()) {
-        this.body.maxVelocity.y = gameOptions.player.grip;
+        this.settable = true; // allow set player for next state
         this.currentState = this.wallSlideState;
     }
 
     // player hit ground
     if (this.body.onFloor()) {
-        this.body.drag.x = gameOptions.player.drag;
+        this.settable = true; // allow set player for next state
         this.currentState = this.groundState;
     }
 };
 
 AdslJumper.Player.prototype.wallSlideState = function wallSlideState() {
+    // setup player
+    if (this.settable) {
+        this.body.maxVelocity.y = gameOptions.player.grip;
+        this.settable = false;
+    }
 
+    // state logic
     if ((this.input.leftIsDown() && this.facing == "left") || (this.input.rightIsDown() && this.facing == "right")) {
         this.wallBreakClock = 0;
     } else {
@@ -177,20 +205,20 @@ AdslJumper.Player.prototype.wallSlideState = function wallSlideState() {
     
     if (this.wallBreakClock >= this.wallBreakTime) {
         this.wallBreakClock = 0;
-        this.body.maxVelocity.y = gameOptions.player.gravity;
+        this.settable = true;
         this.currentState = this.airState;
     }
 
     // let go of the wall
     if (!this.body.onWall()) {
-        this.body.maxVelocity.y = gameOptions.player.gravity;
         this.wallBreakClock = 0;
+        this.settable = true;
         this.currentState = this.airState;
     }
 
     if (this.body.onFloor()) {
-        this.body.maxVelocity.y = gameOptions.player.gravity;
         this.wallBreakClock = 0;
+        this.settable = true;
         this.currentState = this.groundState;
     }
 };

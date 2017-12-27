@@ -3,17 +3,18 @@ var gameOptions = {
     gameHeight: 720,
     bgColor: 0x001155,
     player : {
-        gravity: 900,
-        grip: 50,
+        gravity: 1000,
+        grip: 100,
         speed: 400,
+        maxFallSpeed: 600,
         runSpeedUpRate: 1.5,
-        acceleration: 8000,
-        jump: 450,
-        doubleJump: 400,
-        drag: 8500,
+        acceleration: 7000,
+        jump: 490,
+        doubleJump: 440,
+        drag: 7500,
         // velocity = V * inAirVelocityRate
-        inAirVelocityRate: 1,
+        inAirAccelerationRate: 1.25,
         groundDelay: 5, // delay in frames
-        wallBreakTime: 10
+        wallBreakTime: 15
     }
 };

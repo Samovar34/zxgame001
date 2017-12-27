@@ -62,7 +62,7 @@ playGame.prototype = {
         player = this.player = new AdslJumper.Player(game, this.input, 288, 95);
 
         // camera
-        //game.camera.follow(player, Phaser.Camera.FOLLOW_PLATFORMER, 0.1, 0.1);
+        game.camera.follow(player, Phaser.Camera.FOLLOW_PLATFORMER, 0.1, 0.1);
     },
 
     update: function () {
@@ -77,7 +77,7 @@ playGame.prototype = {
         this.game.debug.text("input_jump: " + this.input.jumpIsJustDown(), 32, 72);
         this.game.debug.text("blocked down: " + this.player.body.blocked.down, 32, 92);
         this.game.debug.text("onWall: " + (this.player.body.blocked.left || this.player.body.blocked.right), 32, 112);
-        this.game.debug.text("speed(x;y): " + this.player.body.velocity.x  + ";" + this.player.body.velocity.y , 32, 132);
+        this.game.debug.text("speed(x;y): " + Math.round(this.player.body.velocity.x)  + ";" + Math.round(this.player.body.velocity.y) , 32, 132);
         this.game.debug.text("state: " + this.player.currentState.name, 32, 152);
         
         // col 2
@@ -85,5 +85,8 @@ playGame.prototype = {
         this.game.debug.text("groundDelayTimer: " + this.player.groundDelayTimer, 250, 52);
         this.game.debug.text("canDoubleJump: " + this.player.canDoubleJump, 250, 72);
         this.game.debug.text("wallBreakClock: " + this.player.wallBreakClock, 250, 92);
+        this.game.debug.text("drag: " + this.player.body.drag.x, 250, 112);
+        this.game.debug.text("accel: " + this.player.body.acceleration.x, 250, 132);
+        this.game.debug.text("settable: " + this.player.settable, 250, 152);
     }
 };
