@@ -12,7 +12,7 @@ var gameOptions = {
         jump: 490,
         doubleJump: 440,
         drag: 7500,
-        // velocity = V * inAirVelocityRate
+        // acceleration *= inAirAccelerationRate
         inAirAccelerationRate: 1.25,
         groundDelay: 5, // delay in frames
         wallBreakTime: 15
