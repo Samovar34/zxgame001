@@ -4,7 +4,7 @@ var gameOptions = {
     bgColor: 0x001155,
     player : {
         gravity: 1000,
-        grip: 100,
+        grip: 125,
         speed: 400,
         maxFallSpeed: 600,
         runSpeedUpRate: 1.5,
