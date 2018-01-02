@@ -1,7 +1,7 @@
 var gameOptions = {
     gameWidth: 1280,
     gameHeight: 720,
-    bgColor: 0x001155,
+    bgColor: 0x007188,
     player : {
         gravity: 1000,
         grip: 125,

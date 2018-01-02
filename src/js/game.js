@@ -37,6 +37,7 @@ preloadGame.prototype = {
         game.load.tilemap('map', 'assets/levels/hd.csv', null, Phaser.Tilemap.CSV);
         game.load.image('tiles', 'assets/images/tilemap.png');
         game.load.image("player", "/assets/images/player.png");
+        game.load.spritesheet("coin", "/assets/images/coin.png", 16, 16, 6);
 
     },
     create: function () {
@@ -58,6 +59,17 @@ playGame.prototype = {
         
         this.layer = this.map.createLayer(0);
         this.layer.resizeWorld();
+
+        // TODO delete
+        var coin;
+        for (var i = 0; i < 10; i++) {
+            coin = game.add.sprite(270 + i * 65, 620, "coin");
+            coin.smoothed = false;
+            coin.scale.setTo(2);
+            coin.animations.add("rotate");
+            coin.animations.play("rotate", 12,  true);
+            game.add.tween(coin).to({y: coin.y + 10}, 350, Phaser.Easing.Linear.None, true, 0 , 1000, true);
+        }
 
         player = this.player = new AdslJumper.Player(game, this.input, 288, 95);
 

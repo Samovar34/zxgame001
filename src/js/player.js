@@ -12,7 +12,7 @@ AdslJumper.Player = function (game, input, x, y) {
     this.settable = true; // проверка на возможность настроить игрока для текущего состояния
 	
 	this.anchor.setTo(0.5);
-    //this.smoothed = false;
+    this.smoothed = false;
     
     // physics
     this.game.physics.arcade.enable(this);
@@ -111,13 +111,13 @@ AdslJumper.Player.prototype.move = function () {
 
     if (this.input.leftIsDown()) {
         this.facing = "left";
-        this.scale.setTo(-.5, .5);
+        this.scale.setTo(-1, 1);
         this.currentAcceleration -= gameOptions.player.acceleration;
     }
     
     if (this.input.rightIsDown()) {
         this.facing = "right";
-        this.scale.setTo(.5, .5);
+        this.scale.setTo(1, 1);
         this.currentAcceleration += gameOptions.player.acceleration;
     }
 
