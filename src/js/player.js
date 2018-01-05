@@ -123,7 +123,7 @@ AdslJumper.Player.prototype.move = function () {
 
     // less acceleration if in air
     if (this.currentState == this.airState) {
-        this.currentAcceleration /= gameOptions.player.inAirAccelerationRate ;
+        this.currentAcceleration *= gameOptions.player.inAirAccelerationRate ;
     }
 
     this.body.acceleration.x = this.currentAcceleration;
