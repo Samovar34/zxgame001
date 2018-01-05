@@ -2,10 +2,12 @@ var gameOptions = {
     gameWidth: 480, //640
     gameHeight: 270, //360
     bgColor: 0x000000,
+    isDevelopment: false,
+    isFeatures: true,
     player : {
         gravity: 700,
         grip: 75,
-        speed: 200,
+        speed: 185,
         maxFallSpeed: 500,
         runSpeedUpRate: 1.5,
         acceleration: 3500,

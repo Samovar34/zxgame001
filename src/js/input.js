@@ -35,6 +35,6 @@ AdslJumper.Input.prototype.speedUpIsDown = function () {
 };
 
 AdslJumper.Input.prototype.jumpIsJustDown = function () {
-    return this.jumpButton.justDown || this.jumpButton2.justDown;
+    return this.jumpButton.justDown || this.jumpButton2.justDown || this.cursors.up.justDown;
 };
 

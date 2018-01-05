@@ -38,6 +38,7 @@ preloadGame.prototype = {
 
         // load assets
         game.load.tilemap('map', 'assets/levels/hd.csv', null, Phaser.Tilemap.CSV);
+        game.load.tilemap('map1', 'assets/levels/level_3.csv', null, Phaser.Tilemap.CSV);
         game.load.image('tiles', 'assets/images/tilemap.png');
         game.load.image("player", "/assets/images/player.png");
         game.load.spritesheet("coin", "/assets/images/coin.png", 16, 16, 6);
@@ -56,11 +57,12 @@ playGame.prototype = {
     create: function () {
         this.input = new AdslJumper.Input(game);
         //bg
-        this.bg001 = game.add.sprite(-10, -10, "bg001");
+        this.bg001 = game.add.sprite(0, -40, "bg001");
         this.bg001.smoothed = false;
+        this.bg001.fixedToCamera = true;
 
         // game objects
-        this.map = game.add.tilemap("map", 16, 16);
+        this.map = game.add.tilemap("map1", 16, 16);
         this.map.addTilesetImage("tiles");
         this.map.setCollision([0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35,]);
         
@@ -78,31 +80,27 @@ playGame.prototype = {
             game.add.tween(coin).to({y: coin.y + 10}, 600, Phaser.Easing.Linear.None, true, 0 , 1000, true);
         }
 
-        player = this.player = new AdslJumper.Player(game, this.input, 288, 95);
+        player = this.player = new AdslJumper.Player(game, this.input, 288, 95); // old 288 95; 288 595
 
         // camera
-        game.camera.follow(player, Phaser.Camera.FOLLOW_PLATFORMER, 0.25, 0.25);
+        //game.camera.follow(player);
     },
 
     update: function () {
         // // physics
         game.physics.arcade.collide(this.player, this.layer);
 
-        if (isTestFeatures) {
+        if (gameOptions.isFeatures) {
             // move bg
-            var x = this.player.x/game.width;
-            var y = this.player.y/game.height;
+            var x = game.camera.x;
+            var y = game.camera.y;
 
-            x = (-10 + x * 10) * -1;
-            y = (-10 + y * 10) * -1;
-
-            this.bg001.x = x;
-            this.bg001.y = y;
+            this.bg001.cameraOffset = {x: x/8 * -1, y: -20 + y/30};
         }
     },
 
     render: function () {
-        if (isDevelopment) {
+        if (gameOptions.isDevelopment) {
             // col 1
             this.game.debug.text("input_left: " + this.input.leftIsDown(), 8, 12, "#00ff00");
             this.game.debug.text("input_right: " + this.input.rightIsDown(), 8, 27, "#00ff00");
@@ -120,6 +118,7 @@ playGame.prototype = {
             this.game.debug.text("drag: " + this.player.body.drag.x, 220, 72);
             this.game.debug.text("accel: " + this.player.body.acceleration.x, 220, 87);
             this.game.debug.text("settable: " + this.player.settable, 220, 102);
+            this.game.debug.text("cam: " + game.camera.x + ";" + game.camera.y, 220, 117);
         }
         
     }
