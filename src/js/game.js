@@ -37,10 +37,12 @@ preloadGame.prototype = {
         //game.scale.disableVisibilityChange = true;
 
         // load assets
-        game.load.tilemap('map', 'assets/levels/hd.csv', null, Phaser.Tilemap.CSV);
+        game.load.tilemap('map', 'assets/levels/level_2.csv', null, Phaser.Tilemap.CSV);
         game.load.tilemap('map1', 'assets/levels/level_3.csv', null, Phaser.Tilemap.CSV);
         game.load.image('tiles', 'assets/images/tilemap.png');
+        game.load.image('tiles_hd', 'assets/images/tilemap_hd.png');
         game.load.image("player", "/assets/images/player.png");
+        game.load.image("player_hd", "/assets/images/player_hd.png");
         game.load.spritesheet("coin", "/assets/images/coin.png", 16, 16, 6);
         game.load.image("bg001", "/assets/images/back_001.png");
     },
@@ -62,8 +64,10 @@ playGame.prototype = {
         this.bg001.fixedToCamera = true;
 
         // game objects
-        this.map = game.add.tilemap("map1", 16, 16);
+        this.map = game.add.tilemap("map", 16, 16);
         this.map.addTilesetImage("tiles");
+        // this.map = game.add.tilemap("map", 64, 64);
+        // this.map.addTilesetImage("tiles_hd");
         this.map.setCollision([0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35,]);
         
         this.layer = this.map.createLayer(0);
@@ -80,10 +84,10 @@ playGame.prototype = {
             game.add.tween(coin).to({y: coin.y + 10}, 600, Phaser.Easing.Linear.None, true, 0 , 1000, true);
         }
 
-        player = this.player = new AdslJumper.Player(game, this.input, 288, 95); // old 288 95; 288 595
+        player = this.player = new AdslJumper.Player(game, this.input, 288,  595); // old 288 95; 288 595
 
         // camera
-        //game.camera.follow(player);
+        game.camera.follow(player);
     },
 
     update: function () {
@@ -95,7 +99,7 @@ playGame.prototype = {
             var x = game.camera.x;
             var y = game.camera.y;
 
-            this.bg001.cameraOffset = {x: x/8 * -1, y: -20 + y/30};
+            this.bg001.cameraOffset = {x: Math.round(x/40 * -1), y: Math.round(-10 + y/30)};
         }
     },
 
@@ -107,7 +111,7 @@ playGame.prototype = {
             this.game.debug.text("input_jump: " + this.input.jumpIsJustDown(), 8, 42, "#00ff00");
             this.game.debug.text("blocked down: " + this.player.body.blocked.down, 8, 57, "#00ff00");
             this.game.debug.text("onWall: " + (this.player.body.blocked.left || this.player.body.blocked.right), 8, 72, "#00ff00");
-            this.game.debug.text("speed(x;y): " + Math.round(this.player.body.velocity.x)  + ";" + Math.round(this.player.body.velocity.y) , 8, 87, "#00ff00");
+            this.game.debug.text("speed(x;y): " + (this.player.body.velocity.x).toFixed(2)  + ";" + Math.round(this.player.body.velocity.y) , 8, 87, "#00ff00");
             this.game.debug.text("state: " + this.player.currentState.name, 8, 102, "#00ff00");
 
             // col 2
