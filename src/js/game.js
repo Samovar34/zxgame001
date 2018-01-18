@@ -2,6 +2,7 @@ var AdslJumper = {};
 
 //@@include('./options.js')
 //@@include('./input.js')
+//@@include('./utils.js')
 //@@include('./player.js')
 //@@include('./boot.js')
 //@@include('./preload.js')

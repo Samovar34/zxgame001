@@ -4,9 +4,7 @@ AdslJumper.playGameState.prototype = {
     create: function () {
         this.input = new AdslJumper.Input(game);
         //bg
-        this.bg001 = game.add.sprite(0, -40, "bg001");
-        this.bg001.smoothed = false;
-        this.bg001.fixedToCamera = true;
+        this.bg001 = this.addBackGround("bg001");
 
         // game objects
         this.map = game.add.tilemap("map1", 16, 16);
@@ -20,18 +18,12 @@ AdslJumper.playGameState.prototype = {
         // resize game world to match layer dimensions
         this.bacgroundLayer.resizeWorld();
 
-        // TODO delete
-        var coin;
-        for (var i = 0; i < 10; i++) {
-            coin = game.add.sprite(64 + i * 32, 300, "coin");
-            coin.anchor.setTo(0.5, 0.5);
-            coin.smoothed = false;
-            coin.animations.add("rotate");
-            coin.animations.play("rotate", 12,  true);
-            game.add.tween(coin).to({y: coin.y + 10}, 600, Phaser.Easing.Linear.None, true, 0 , 1000, true);
-        }
+        // create coins group and add to game world
+        this.createCoins();
 
-        player = this.player = new AdslJumper.Player(game, this.input, 50,  330); // old 288 95; 288 595
+        // create player
+        var objects = AdslJumper.utils.findObjectsByType('playerStart', this.map, 'objectsLayer');
+        player = this.player = new AdslJumper.Player(game, this.input, objects[0].x,  objects[0].y);
 
         // camera
         game.camera.follow(player);
@@ -41,13 +33,8 @@ AdslJumper.playGameState.prototype = {
         // // physics
         game.physics.arcade.collide(this.player, this.collisionLayer);
 
-        if (gameOptions.isFeatures) {
-            // move bg
-            var x = game.camera.x;
-            var y = game.camera.y;
-
-            this.bg001.cameraOffset = {x: Math.round(x/40 * -1), y: Math.round(-10 + y/30)};
-        }
+        // move bg
+        this.moveBackGround(this.bg001);
     },
 
     render: function () {
@@ -73,4 +60,36 @@ AdslJumper.playGameState.prototype = {
         }
         
     }
+};
+
+// создаёт на карте монеты
+// return void 
+AdslJumper.playGameState.prototype.createCoins = function () {
+    this.coins = this.game.add.group();
+    this.coins.enableBody = true;
+
+    var result = AdslJumper.utils.findObjectsByType("coin", this.map, "objectsLayer");
+    result.forEach(function (element) {
+        AdslJumper.utils.createFromTileObject(element, this.coins);
+    }, this);
+
+    // add tween animation for every coin
+    this.coins.forEach(function (coin) {
+        game.add.tween(coin).to({y: coin.y + 6}, 600, Phaser.Easing.Linear.None, true, 0 , 1000, true);
+    });
+};
+
+// create background Sprite
+// return sprite
+AdslJumper.playGameState.prototype.addBackGround = function (textureName) {
+    var sprite = this.game.add.sprite(0, -40, textureName);
+    sprite.smoothed = false;
+    sprite.fixedToCamera = true;
+    return sprite;
+};
+
+// move background image
+// paralax effect
+AdslJumper.playGameState.prototype.moveBackGround = function (image) {
+    image.cameraOffset = {x: Math.round(this.game.camera.x/40 * -1), y: Math.round(-10 + this.game.camera.y/30)};
 };
