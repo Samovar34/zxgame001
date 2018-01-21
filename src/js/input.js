@@ -38,3 +38,8 @@ AdslJumper.Input.prototype.jumpIsJustDown = function () {
     return this.jumpButton.justDown || this.jumpButton2.justDown || this.cursors.up.justDown;
 };
 
+// возникает баг при вызове player.destroy(); ещё не разобрался
+AdslJumper.Input.prototype.destroy = function() {
+    // nothing
+  };
+

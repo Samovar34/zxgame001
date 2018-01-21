@@ -12,10 +12,30 @@ AdslJumper.utils.createFromTileObject = function (element, group) {
     });
 
     // play animation
-    if (sprite.animated) {
-        sprite.animations.add("default");
-        sprite.animations.play("default", 10, true);
-    }
+//     if (sprite.animated) {
+//         sprite.animations.add("default");
+//         sprite.animations.play("default", 10, true);
+//     }
+};
+
+// создаёт в группе group объект из тайла
+// return Phaser.Sprite
+AdslJumper.utils.createFromTileObjectSprite = function (element) {
+    // создадим элемент в группе в позиции {x; y} со спрайтов из элемента
+    var sprite = game.add.sprite(element.x, element.y, element.properties.sprite);
+
+    // copy all properties
+    Object.keys(element.properties).forEach(function (key) {
+        sprite[key] = element.properties[key];
+    });
+
+    return sprite;
+
+    // play animation
+//     if (sprite.animated) {
+//         sprite.animations.add("default");
+//         sprite.animations.play("default", 10, true);
+//     }
 };
 
 

@@ -7,13 +7,12 @@ AdslJumper.preloadState.prototype = {
         this.game.load.tilemap('map1', 'assets/levels/level.json', null, Phaser.Tilemap.TILED_JSON);
         this.game.load.image('tilemap', 'assets/images/tilemap.png');
         this.game.load.image("player", "/assets/images/player.png");
-        this.game.load.spritesheet("coin", "/assets/images/coin.png", 16, 16, 6);
+        this.game.load.spritesheet("coin", "/assets/images/coin.png", 10, 10, 5);
+        this.game.load.spritesheet("door", "/assets/images/door.png", 24, 40, 7);
         this.game.load.image("bg001", "/assets/images/back_001.png");
     },
 
     create: function () {
-        console.log("preload create");
-
         this.game.state.start("menu");
     }
 }
