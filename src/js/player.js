@@ -6,6 +6,9 @@ AdslJumper.Player = function (game, input, x, y) {
 	
     this.game = game;
     this.input = input;
+
+    // возможно ли управление персонажем
+    this.canInput = true;
     
     // player variables
     this.facing = "right";
@@ -59,7 +62,7 @@ AdslJumper.Player.prototype.update = function () {
 
     this.currentState();
 
-    if (this.input.jumpIsJustDown()) {
+    if (this.canInput && this.input.jumpIsJustDown()) {
         this.jump();
     }
 }
@@ -109,13 +112,13 @@ AdslJumper.Player.prototype.move = function () {
     // reset current acceleration
     this.currentAcceleration = 0;
 
-    if (this.input.leftIsDown()) {
+    if (this.canInput && this.input.leftIsDown()) {
         this.facing = "left";
         this.scale.setTo(-1, 1);
         this.currentAcceleration -= gameOptions.player.acceleration;
     }
     
-    if (this.input.rightIsDown()) {
+    if (this.canInput && this.input.rightIsDown()) {
         this.facing = "right";
         this.scale.setTo(1, 1);
         this.currentAcceleration += gameOptions.player.acceleration;
@@ -143,6 +146,7 @@ AdslJumper.Player.prototype.groundState = function groundState() {
 
     // X axis movement
     this.move();
+
 
     // TODO animation
     // TODO play sound

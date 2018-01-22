@@ -97,30 +97,17 @@ AdslJumper.playGameState.prototype.createCoins = function () {
 };
 
 AdslJumper.playGameState.prototype.createDoors = function () {
-    this.enterDoor = null;
-    this.exitDoor = null;
-    var result = AdslJumper.utils.findObjectsByType("enterDoor", this.map, "objectsLayer");
-    result.forEach(function (element) {
-        this.enterDoor = AdslJumper.utils.createFromTileObjectSprite(element);
-    }, this);
+    // get info about doors
+    var enterDoorTiledObject = AdslJumper.utils.findObjectsByType('enterDoor', this.map, 'objectsLayer');
+    var exitDoorTiledObject = AdslJumper.utils.findObjectsByType('exitDoor', this.map, 'objectsLayer');
 
-    result = AdslJumper.utils.findObjectsByType("exitDoor", this.map, "objectsLayer");
-    result.forEach(function (element) {
-        this.exitDoor = AdslJumper.utils.createFromTileObjectSprite(element);
-    }, this);
-
-    this.enterDoor.position.y -= 24;
-    this.exitDoor.position.y -= 24;
-
+    // create enter Door
+    this.enterDoor = this.game.add.sprite(enterDoorTiledObject[0].x, enterDoorTiledObject[0].y - 24, "door");
     this.enterDoor.animations.add("close", [5, 4, 3, 2, 1, 0], 10);
     this.enterDoor.animations.play("close");
 
-    this.exitDoor.frame = 0;
-    this.animationDoor = this.exitDoor.animations.add("open", [1, 2, 3, 4, 5, 6], 8);
-    this.exitDoor.isOpen = false;
-    this.game.physics.arcade.enable(this.exitDoor);
-    this.exitDoor.body.setSize(16, 26, 4, 14)
-    this.exitDoor.body.immovable = true;
+    // create exit Door
+    this.exitDoor = new AdslJumper.ExitDoor(this.game, exitDoorTiledObject[0].x, exitDoorTiledObject[0].y - 24, exitDoorTiledObject[0].properties.nextLevel);
 }
 
 // create background Sprite
@@ -142,22 +129,29 @@ AdslJumper.playGameState.prototype.playerCoinsHandler = function (player, coin) 
     // flag to destroy next update
     coin.pendingDestroy = true;
 
-    // get position of coin and add effect
+    // TODO get position of coin and add effect
 
     this.collectedCoins++;
 
     if (this.collectedCoins >= this.maxCoins) {
-        this.exitDoor.animations.play("open");
-        this.exitDoor.isOpen = true;
+        this.exitDoor.open();
     }
 };
 
 AdslJumper.playGameState.prototype.playerExitDoorHandler = function (player, door) {
     if (door.isOpen) {
+        // запретить управление пользователем
+        this.player.canInput = false;
+
+        // Переместить игрока в дверь
+        this.player.position.x = door.position.x+12;
+        this.player.position.y = door.position.y + 32;
+
+        // TODO проиграть анимация захода персонажа в дверь
+        // TODO сделать так что бы она закрывалась вместе с ним ( а может и не надо)
         this.game.camera.fade(0x000000, 200);
         this.game.camera.onFadeComplete.addOnce(function() {
             this.level = door.nextLevel;
-            console.log(door.nextLevel);
             this.game.state.start(this.game.state.current);
         }, this);
     }
