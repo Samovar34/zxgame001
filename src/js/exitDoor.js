@@ -19,7 +19,10 @@ AdslJumper.ExitDoor = function (game, x, y, nextLevel) {
     this.body.immovable = true;
 
     //add to game
-	this.game.add.existing(this);
+    this.game.add.existing(this);
+    var exitTitle = this.game.add.sprite(x +4 , y - 20, "exit");
+    this.game.add.tween(exitTitle).to({y: y - 16}, 300, Phaser.Easing.Linear.None, true, 0 , 1000, true);
+    
 }
 
 AdslJumper.ExitDoor.prototype = Object.create(Phaser.Sprite.prototype);
@@ -33,13 +36,12 @@ AdslJumper.ExitDoor.prototype.open = function () {
         return;
     }
 
-    // if door is not opening do nothing
+    // if door is opening do nothing
     if (!this.isOpening) {
         this.isOpening = true;
         this.animations.play("open");
         this.animationOpenDoor.onComplete.addOnce(function () {
             this.isOpen = true;
-            console.log("true");
         }, this);
     }
 };

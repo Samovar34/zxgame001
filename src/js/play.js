@@ -1,5 +1,8 @@
 AdslJumper.playGameState = function (game) {};
+
+// TODO убрать из глобальной видимости
 var level = 1;
+var score = 0;
 AdslJumper.playGameState.prototype = {
     // main state functions
     create: function () {
@@ -11,7 +14,7 @@ AdslJumper.playGameState.prototype = {
         this.bg001 = this.addBackGround("bg001");
 
         // game objects
-        this.map = game.add.tilemap("map1", 16, 16);
+        this.map = game.add.tilemap("map" + level, 16, 16);
         this.map.addTilesetImage("collision", "tilemap");
         // create layers
         this.bacgroundLayer = this.map.createLayer("backgroundLayer");
@@ -36,6 +39,7 @@ AdslJumper.playGameState.prototype = {
         // camera
         this.game.camera.follow(player);
         this.game.camera.flash(0x333333, 300);
+        console.log("once", this.game.camera.position);
     },
 
     update: function () {
@@ -49,8 +53,8 @@ AdslJumper.playGameState.prototype = {
     },
 
     render: function () {
-        this.game.debug.text("coins: " + this.collectedCoins, 8, 12, "#ffffff");
-        this.game.debug.text("level: " + level, 8, 27, "#00ff00");
+        this.game.debug.text("score: " + score, 8, 12, "#ffffff");
+        this.game.debug.text("room: " + level, 8, 27, "#00ff00");
         if (gameOptions.isDevelopment) {
             // col 1
             this.game.debug.text("input_left: " + this.input.leftIsDown(), 8, 12, "#00ff00");
@@ -113,16 +117,21 @@ AdslJumper.playGameState.prototype.createDoors = function () {
 // create background Sprite
 // return sprite
 AdslJumper.playGameState.prototype.addBackGround = function (textureName) {
-    var sprite = this.game.add.sprite(0, -40, textureName);
+    var sprite = this.game.add.sprite(0, 0, textureName);
     sprite.smoothed = false;
     sprite.fixedToCamera = true;
+
+    var child = sprite.addChild(this.game.make.sprite(227, 99, "killHuman"));
+    child.animations.add("default", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 10, 9, 10, 9, 10, 9], 2, true);
+    child.animations.play("default");
+
     return sprite;
 };
 
 // move background image
 // paralax effect
 AdslJumper.playGameState.prototype.moveBackGround = function (image) {
-    image.cameraOffset = {x: Math.round(this.game.camera.x/40 * -1), y: Math.round(-10 + this.game.camera.y/30)};
+    image.cameraOffset = {x: Math.round(this.game.camera.x/8 * -1), y: Math.round(-1 * this.game.camera.y/8)};
 };
 
 AdslJumper.playGameState.prototype.playerCoinsHandler = function (player, coin) {
@@ -132,6 +141,7 @@ AdslJumper.playGameState.prototype.playerCoinsHandler = function (player, coin) 
     // TODO get position of coin and add effect
 
     this.collectedCoins++;
+    score += 10;
 
     if (this.collectedCoins >= this.maxCoins) {
         this.exitDoor.open();
@@ -151,7 +161,9 @@ AdslJumper.playGameState.prototype.playerExitDoorHandler = function (player, doo
         // TODO сделать так что бы она закрывалась вместе с ним ( а может и не надо)
         this.game.camera.fade(0x000000, 200);
         this.game.camera.onFadeComplete.addOnce(function() {
-            this.level = door.nextLevel;
+            // TODO level global variable
+            // set AdslJumper variable
+            level = door.nextLevel;
             this.game.state.start(this.game.state.current);
         }, this);
     }
