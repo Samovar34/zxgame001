@@ -39,7 +39,6 @@ AdslJumper.playGameState.prototype = {
         // camera
         this.game.camera.follow(player);
         this.game.camera.flash(0x333333, 300);
-        console.log("once", this.game.camera.position);
     },
 
     update: function () {

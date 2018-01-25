@@ -18,11 +18,12 @@ AdslJumper.ExitDoor = function (game, x, y, nextLevel) {
     this.body.setSize(16, 26, 4, 14)
     this.body.immovable = true;
 
+    // add childrens and animate
+    var exitLabel = this.addChild(this.game.make.sprite(4 , -20, "exit"));
+    this.game.add.tween(exitLabel).to({y: -16}, 300, Phaser.Easing.Linear.None, true, 0 , 1000, true);
+    
     //add to game
     this.game.add.existing(this);
-    var exitTitle = this.game.add.sprite(x +4 , y - 20, "exit");
-    this.game.add.tween(exitTitle).to({y: y - 16}, 300, Phaser.Easing.Linear.None, true, 0 , 1000, true);
-    
 }
 
 AdslJumper.ExitDoor.prototype = Object.create(Phaser.Sprite.prototype);
