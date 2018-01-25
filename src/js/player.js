@@ -16,6 +16,9 @@ AdslJumper.Player = function (game, input, x, y) {
 	
 	this.anchor.setTo(0.5);
     this.smoothed = false;
+
+    // sounds
+    this.jumpSound = this.game.add.audio('jump');
     
     // physics
     this.game.physics.arcade.enable(this);
@@ -79,6 +82,9 @@ AdslJumper.Player.prototype.jump = function () {
         this.body.maxVelocity.y = gameOptions.player.maxFallSpeed;
         this.body.velocity.y = gameOptions.player.jump * -1;
 
+        // play sound
+        this.jumpSound.play();
+
         if (this.body.blocked.left) {
             this.body.velocity.x = gameOptions.player.speed;
         } else {
@@ -92,6 +98,8 @@ AdslJumper.Player.prototype.jump = function () {
         // simple jump
         this.wasOnGround = false;
         this.canDoubleJump = true;
+        // play sound
+        this.jumpSound.play();
         this.body.velocity.y = gameOptions.player.jump * -1;
         this.settable = true;
         this.currentState = this.airState;
@@ -99,6 +107,8 @@ AdslJumper.Player.prototype.jump = function () {
     // дополнительный прыжок
     } else if (!this.body.onFloor() && this.canDoubleJump) {
         // double jump
+        // play sound
+        this.jumpSound.play();
         this.canDoubleJump = false;
         this.body.velocity.y = gameOptions.player.doubleJump * -1;
         this.settable = true;

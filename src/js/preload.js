@@ -14,6 +14,9 @@ AdslJumper.preloadState.prototype = {
         this.game.load.spritesheet("killHuman", "/assets/images/kill_human.png", 56, 15, 11);
         this.game.load.image("bg001", "/assets/images/back_001.png");
         this.game.load.image("exit", "/assets/images/exit.png");
+
+        // audio
+        this.load.audio('jump', 'assets/audio/jump.mp3');
     },
 
     create: function () {
