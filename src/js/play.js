@@ -1,7 +1,7 @@
 AdslJumper.playGameState = function (game) {};
 
 // TODO убрать из глобальной видимости
-var level = 1;
+var level = 2;
 var score = 0;
 AdslJumper.playGameState.prototype = {
     // main state functions
@@ -10,6 +10,11 @@ AdslJumper.playGameState.prototype = {
         this.collectedCoins = 0;
 
         this.input = new AdslJumper.Input(game);
+
+        //sounds
+        this.closeDoorSound = this.game.add.sound("closeDoor");
+        this.getCoinSound = this.game.add.sound("getCoin");
+
         //bg
         this.bg001 = this.addBackGround("bg001");
 
@@ -29,16 +34,29 @@ AdslJumper.playGameState.prototype = {
         this.createCoins();
         this.createDoors();
 
+        // create particles
+        this.em = this.game.add.emitter(0, 0, 12);
+        this.em.makeParticles("sparks", [0]);
+        var particleSpeed = 250;
+        this.em.minParticleSpeed.setTo(-particleSpeed, -particleSpeed);
+        this.em.maxParticleSpeed.setTo(particleSpeed, particleSpeed);
+        this.em.gravity = 0;
+
         // create player
         var playerStartPosition = AdslJumper.utils.findObjectsByType('playerStart', this.map, 'objectsLayer');
         player = this.player = new AdslJumper.Player(game, this.input, playerStartPosition[0].x,  playerStartPosition[0].y);
+        this.player.canInput = false;
 
         // show secret ways
         this.hiddenLayer = this.map.createLayer("hiddenLayer");
 
         // camera
-        this.game.camera.follow(player);
-        this.game.camera.flash(0x333333, 300);
+        this.game.camera.follow(player,  this.game.camera.FOLLOW_PLATFORMER, 0.1, 0.1);
+        this.game.camera.flash(0x000000, 300);
+        this.game.camera.onFlashComplete.addOnce(function () {
+            console.log("go");
+            this.player.canInput = true;
+        })
     },
 
     update: function () {
@@ -107,6 +125,8 @@ AdslJumper.playGameState.prototype.createDoors = function () {
     // create enter Door
     this.enterDoor = this.game.add.sprite(enterDoorTiledObject[0].x, enterDoorTiledObject[0].y - 24, "door");
     this.enterDoor.animations.add("close", [5, 4, 3, 2, 1, 0], 10);
+
+    this.closeDoorSound.play();
     this.enterDoor.animations.play("close");
 
     // create exit Door
@@ -136,6 +156,13 @@ AdslJumper.playGameState.prototype.moveBackGround = function (image) {
 AdslJumper.playGameState.prototype.playerCoinsHandler = function (player, coin) {
     // flag to destroy next update
     coin.pendingDestroy = true;
+    
+    this.getCoinSound.play();
+
+    this.em.x = coin.x + 5;
+    this.em.y = coin.y + 5;
+    this.em.start(true, 60, 20, 8, 100);
+
 
     // TODO get position of coin and add effect
 
@@ -158,7 +185,7 @@ AdslJumper.playGameState.prototype.playerExitDoorHandler = function (player, doo
 
         // TODO проиграть анимация захода персонажа в дверь
         // TODO сделать так что бы она закрывалась вместе с ним ( а может и не надо)
-        this.game.camera.fade(0x000000, 200);
+        this.game.camera.fade(0x000000, 250);
         this.game.camera.onFadeComplete.addOnce(function() {
             // TODO level global variable
             // set AdslJumper variable

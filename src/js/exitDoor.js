@@ -10,6 +10,9 @@ AdslJumper.ExitDoor = function (game, x, y, nextLevel) {
     this.isOpen = false;
     this.isOpening = false;
 
+    // sounds
+    this.openDoorSound = this.game.add.audio('openDoor');
+
     // animation
     this.animationOpenDoor = this.animations.add("open", [1, 2, 3, 4, 5, 6], 8);
 
@@ -40,6 +43,7 @@ AdslJumper.ExitDoor.prototype.open = function () {
     // if door is opening do nothing
     if (!this.isOpening) {
         this.isOpening = true;
+        this.openDoorSound.play();
         this.animations.play("open");
         this.animationOpenDoor.onComplete.addOnce(function () {
             this.isOpen = true;
