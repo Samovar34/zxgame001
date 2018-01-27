@@ -14,6 +14,7 @@ AdslJumper.playGameState.prototype = {
         //sounds
         this.closeDoorSound = this.game.add.sound("closeDoor");
         this.getCoinSound = this.game.add.sound("getCoin");
+        this.getCoinSound.volume = 0.5;
 
         //bg
         this.bg001 = this.addBackGround("bg001");

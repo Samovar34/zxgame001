@@ -12,6 +12,7 @@ AdslJumper.ExitDoor = function (game, x, y, nextLevel) {
 
     // sounds
     this.openDoorSound = this.game.add.audio('openDoor');
+    this.openDoorSound.volume = 0.7;
 
     // animation
     this.animationOpenDoor = this.animations.add("open", [1, 2, 3, 4, 5, 6], 8);
