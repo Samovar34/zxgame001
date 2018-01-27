@@ -21,6 +21,7 @@ AdslJumper.preloadState.prototype = {
         this.load.audio('openDoor', 'assets/audio/openDoor.mp3');
         this.load.audio('closeDoor', 'assets/audio/closeDoor.mp3');
         this.load.audio('getCoin', 'assets/audio/coin.mp3');
+        this.load.audio('doubleJump', 'assets/audio/doubleJump.wav');
     },
 
     create: function () {
