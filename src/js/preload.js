@@ -8,7 +8,7 @@ AdslJumper.preloadState.prototype = {
             console.log("for", i);
         }
         this.game.load.image('tilemap', 'assets/images/tilemap.png');
-        this.game.load.image("player", "/assets/images/player.png");
+        this.game.load.spritesheet("player", "/assets/images/player.png", 16, 16, 4);
         this.game.load.spritesheet("coin", "/assets/images/coin.png", 10, 10, 5);
         this.game.load.spritesheet("door", "/assets/images/door.png", 24, 40, 7);
         this.game.load.spritesheet("killHuman", "/assets/images/kill_human.png", 56, 15, 11);
@@ -17,7 +17,7 @@ AdslJumper.preloadState.prototype = {
         this.game.load.image("exit", "/assets/images/exit.png");
 
         // audio
-        this.load.audio('jump', 'assets/audio/jump.mp3');
+        this.load.audio('jump', 'assets/audio/jump.wav');
         this.load.audio('openDoor', 'assets/audio/openDoor.mp3');
         this.load.audio('closeDoor', 'assets/audio/closeDoor.mp3');
         this.load.audio('getCoin', 'assets/audio/coin.wav');

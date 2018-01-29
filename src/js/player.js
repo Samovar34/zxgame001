@@ -17,6 +17,9 @@ AdslJumper.Player = function (game, input, x, y) {
 	this.anchor.setTo(0.5);
     this.smoothed = false;
 
+    // animation
+    this.animations.add("walk", [1, 2, 3, 2], 8);
+
     // sounds
     this.jumpSound = this.game.add.audio('jump');
     this.doubleJumpSound = this.game.add.audio('doubleJump');
@@ -84,7 +87,7 @@ AdslJumper.Player.prototype.jump = function () {
         this.body.velocity.y = gameOptions.player.jump * -1;
 
         // play sound
-        //this.jumpSound.play();
+        this.jumpSound.play();
 
         if (this.body.blocked.left) {
             this.body.velocity.x = gameOptions.player.speed;
@@ -100,7 +103,7 @@ AdslJumper.Player.prototype.jump = function () {
         this.wasOnGround = false;
         this.canDoubleJump = true;
         // play sound
-        //this.jumpSound.play();
+        this.jumpSound.play();
         this.body.velocity.y = gameOptions.player.jump * -1;
         this.settable = true;
         this.currentState = this.airState;
@@ -127,12 +130,14 @@ AdslJumper.Player.prototype.move = function () {
         this.facing = "left";
         this.scale.setTo(-1, 1);
         this.currentAcceleration -= gameOptions.player.acceleration;
+        this.animations.play("walk");
     }
     
     if (this.canInput && this.input.rightIsDown()) {
         this.facing = "right";
         this.scale.setTo(1, 1);
         this.currentAcceleration += gameOptions.player.acceleration;
+        this.animations.play("walk");
     }
 
     // less acceleration if in air
@@ -141,6 +146,9 @@ AdslJumper.Player.prototype.move = function () {
     }
 
     this.body.acceleration.x = this.currentAcceleration;
+    if (this.currentAcceleration == 0) {
+        this.frame = 0;
+    }
 };
 
 // states

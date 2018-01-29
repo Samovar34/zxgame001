@@ -1,7 +1,7 @@
 AdslJumper.playGameState = function (game) {};
 
 // TODO убрать из глобальной видимости
-var level = 2;
+var level = 1;
 var score = 0;
 AdslJumper.playGameState.prototype = {
     // main state functions
@@ -110,9 +110,9 @@ AdslJumper.playGameState.prototype.createCoins = function () {
 
     // add tween animation for every coin
     this.coins.forEach(function (coin) {
-        coin.animations.add("rotate", [0, 1, 2, 3, 4], 10, true);
+        coin.animations.add("rotate", [0, 1, 2, 3, 4], 12, true);
         coin.animations.play("rotate");
-        game.add.tween(coin).to({y: coin.y + 6}, 600, Phaser.Easing.Linear.None, true, 0 , 1000, true);
+        game.add.tween(coin).to({y: coin.y + 6}, 500, Phaser.Easing.Linear.None, true, 0 , 1000, true);
     });
 
     this.maxCoins = this.coins.length;
@@ -135,6 +135,7 @@ AdslJumper.playGameState.prototype.createDoors = function () {
 }
 
 // create background Sprite
+// textureName String - имя текстуры из кэша Phaser
 // return sprite
 AdslJumper.playGameState.prototype.addBackGround = function (textureName) {
     var sprite = this.game.add.sprite(0, 0, textureName);
@@ -149,6 +150,7 @@ AdslJumper.playGameState.prototype.addBackGround = function (textureName) {
 };
 
 // move background image
+// image Phaser.Sprite
 // paralax effect
 AdslJumper.playGameState.prototype.moveBackGround = function (image) {
     image.cameraOffset = {x: Math.round(this.game.camera.x/8 * -1), y: Math.round(-1 * this.game.camera.y/8)};
