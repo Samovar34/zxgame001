@@ -16,7 +16,7 @@ AdslJumper.ExitDoor = function (game, x, y, nextLevel) {
 
     // animation
     this.animationOpenDoor = this.animations.add("open", [1, 2, 3, 4, 5, 6], 8);
-
+    this.animationCloseDoor = this.animations.add("close", [7, 8, 9, 10, 11, 12, 13], 8);
     // physics
     this.game.physics.arcade.enable(this);
     this.body.setSize(16, 26, 4, 14)

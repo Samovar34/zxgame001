@@ -9,6 +9,7 @@ AdslJumper.Player = function (game, input, x, y) {
 
     // возможно ли управление персонажем
     this.canInput = true;
+    this.isComeIn = false; // входит ли игрок в дверь
     
     // player variables
     this.facing = "right";
@@ -18,7 +19,9 @@ AdslJumper.Player = function (game, input, x, y) {
     this.smoothed = false;
 
     // animation
-    this.animations.add("walk", [1, 2, 3, 2], 8);
+    this.animations.add("walk", [1, 2, 3, 2], gameOptions.player.walkAnimationSpeed);
+    this.doubleJumpAnimation = this.animations.add("doubleJump", [6, 7, 8, 5], gameOptions.player.doubleAnimationSpeed);
+    this.animations.add("comeIn", [11, 12, 13, 14, 10], gameOptions.player.comeInAnimationSpeed)
 
     // sounds
     this.jumpSound = this.game.add.audio('jump');
@@ -117,7 +120,10 @@ AdslJumper.Player.prototype.jump = function () {
         this.body.velocity.y = gameOptions.player.doubleJump * -1;
         this.settable = true;
         this.currentState = this.airState;
+        this.doubleJumpAnimation.play();
     }
+
+    // animation happens in move
 };
 
 // moving X axis player 
@@ -130,14 +136,22 @@ AdslJumper.Player.prototype.move = function () {
         this.facing = "left";
         this.scale.setTo(-1, 1);
         this.currentAcceleration -= gameOptions.player.acceleration;
-        this.animations.play("walk");
+
+        // play animation
+        if (this.currentState === this.groundState) {
+            this.animations.play("walk");
+        }
     }
     
     if (this.canInput && this.input.rightIsDown()) {
         this.facing = "right";
         this.scale.setTo(1, 1);
         this.currentAcceleration += gameOptions.player.acceleration;
-        this.animations.play("walk");
+
+        // play animation
+        if (this.currentState === this.groundState) {
+            this.animations.play("walk");
+        }
     }
 
     // less acceleration if in air
@@ -146,10 +160,26 @@ AdslJumper.Player.prototype.move = function () {
     }
 
     this.body.acceleration.x = this.currentAcceleration;
-    if (this.currentAcceleration == 0) {
+
+    if (this.currentState === this.airState) {
+        if (this.doubleJumpAnimation.isPlaying) {
+            
+        } else if (this.body.velocity.y < 0) {
+            this.frame  = 4;
+        } else {
+            // frame 6 not in use
+            this.frame = 5;
+        }
+    }
+
+    if (this.currentAcceleration == 0 && this.currentState === this.groundState) {
         this.frame = 0;
     }
 };
+
+AdslJumper.Player.prototype.comeIn = function () {
+    this.currentState = this.comeInState;
+}
 
 // states
 AdslJumper.Player.prototype.groundState = function groundState() {
@@ -221,6 +251,9 @@ AdslJumper.Player.prototype.wallSlideState = function wallSlideState() {
         this.settable = false;
     }
 
+    // TODO подумать где изменять фрейм
+    this.frame = 9;
+
     // state logic
     if ((this.input.leftIsDown() && this.facing == "left") || (this.input.rightIsDown() && this.facing == "right")) {
         this.wallBreakClock = 0;
@@ -245,5 +278,13 @@ AdslJumper.Player.prototype.wallSlideState = function wallSlideState() {
         this.wallBreakClock = 0;
         this.settable = true;
         this.currentState = this.groundState;
+    }
+};
+
+AdslJumper.Player.prototype.comeInState = function () {
+    // если игрок не входит в дверь
+    if (!this.isComeIn) {
+        this.isComeIn = true;
+        this.animations.play("comeIn");
     }
 };

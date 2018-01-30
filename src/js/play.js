@@ -3,11 +3,13 @@ AdslJumper.playGameState = function (game) {};
 // TODO убрать из глобальной видимости
 var level = 1;
 var score = 0;
+
 AdslJumper.playGameState.prototype = {
     // main state functions
     create: function () {
         // TODO delete
         this.collectedCoins = 0;
+        this.totalLevelCoins = 0;
 
         this.input = new AdslJumper.Input(game);
 
@@ -53,7 +55,7 @@ AdslJumper.playGameState.prototype = {
 
         // camera
         this.game.camera.follow(player,  this.game.camera.FOLLOW_PLATFORMER, 0.1, 0.1);
-        this.game.camera.flash(0x000000, 300);
+        this.game.camera.flash(0x000000, gameOptions.cameraFlashTime);
         this.game.camera.onFlashComplete.addOnce(function () {
             console.log("go");
             this.player.canInput = true;
@@ -71,8 +73,11 @@ AdslJumper.playGameState.prototype = {
     },
 
     render: function () {
-        this.game.debug.text("score: " + score, 8, 12, "#ffffff");
-        this.game.debug.text("room: " + level, 8, 27, "#00ff00");
+        this.game.debug.text("score: " + score, 220, 12, "#ffffff");
+        this.game.debug.text("room: " + level, 8, 12, "#00ff00");
+        this.game.debug.text("coins: " + this.collectedCoins + "/" + this.totalLevelCoins, 8, 27, "#00ff00");
+
+
         if (gameOptions.isDevelopment) {
             // col 1
             this.game.debug.text("input_left: " + this.input.leftIsDown(), 8, 12, "#00ff00");
@@ -115,7 +120,7 @@ AdslJumper.playGameState.prototype.createCoins = function () {
         game.add.tween(coin).to({y: coin.y + 6}, 500, Phaser.Easing.Linear.None, true, 0 , 1000, true);
     });
 
-    this.maxCoins = this.coins.length;
+    this.totalLevelCoins = this.coins.length;
 };
 
 AdslJumper.playGameState.prototype.createDoors = function () {
@@ -153,7 +158,7 @@ AdslJumper.playGameState.prototype.addBackGround = function (textureName) {
 // image Phaser.Sprite
 // paralax effect
 AdslJumper.playGameState.prototype.moveBackGround = function (image) {
-    image.cameraOffset = {x: Math.round(this.game.camera.x/8 * -1), y: Math.round(-1 * this.game.camera.y/8)};
+    image.cameraOffset = {x: Math.round(-1 * this.game.camera.x/2), y: Math.round(-1 * this.game.camera.y/2)};
 };
 
 AdslJumper.playGameState.prototype.playerCoinsHandler = function (player, coin) {
@@ -172,7 +177,7 @@ AdslJumper.playGameState.prototype.playerCoinsHandler = function (player, coin) 
     this.collectedCoins++;
     score += 10;
 
-    if (this.collectedCoins >= this.maxCoins) {
+    if (this.collectedCoins >= this.totalLevelCoins) {
         this.exitDoor.open();
     }
 };
@@ -181,14 +186,17 @@ AdslJumper.playGameState.prototype.playerExitDoorHandler = function (player, doo
     if (door.isOpen) {
         // запретить управление пользователем
         this.player.canInput = false;
+        this.player.comeIn();
 
-        // Переместить игрока в дверь
-        this.player.position.x = door.position.x+12;
-        this.player.position.y = door.position.y + 32;
+        console.log(door.position);
+
+        // Скрыть игрока
+        this.player.kill();
+        door.animations.play("close");
 
         // TODO проиграть анимация захода персонажа в дверь
         // TODO сделать так что бы она закрывалась вместе с ним ( а может и не надо)
-        this.game.camera.fade(0x000000, 250);
+        this.game.camera.fade(0x000000, gameOptions.cameraFadeTime);
         this.game.camera.onFadeComplete.addOnce(function() {
             // TODO level global variable
             // set AdslJumper variable

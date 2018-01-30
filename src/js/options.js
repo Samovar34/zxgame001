@@ -1,7 +1,9 @@
 var gameOptions = {
-    gameWidth: 480, //640
-    gameHeight: 270, //360
+    gameWidth: 320, //640
+    gameHeight: 180, //360
     bgColor: 0x000000,
+    cameraFadeTime: 800, // ms
+    cameraFlashTime: 500, // ms
     isDevelopment: 0,
     isFeatures: 1,
     player : {
@@ -15,8 +17,11 @@ var gameOptions = {
         doubleJump: 250,
         drag: 3050,
         // acceleration *= inAirAccelerationRate
-        inAirAccelerationRate: 0.85,
+        inAirAccelerationRate: 0.55,
         groundDelay: 5, // delay in frames
-        wallBreakTime: 15
+        wallBreakTime: 15,
+        walkAnimationSpeed: 8,
+        doubleAnimationSpeed: 6,
+        comeInAnimationSpeed: 8
     }
 };
