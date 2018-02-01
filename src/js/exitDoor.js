@@ -6,7 +6,7 @@ AdslJumper.ExitDoor = function (game, x, y, nextLevel) {
     this.game = game;
 
     this.smoothed = false;
-    this.scale.setTo(2);
+    this.scale.setTo(gameOptions.scaleFactor);
 
     //variables
     this.nextLevel = nextLevel;
@@ -28,7 +28,7 @@ AdslJumper.ExitDoor = function (game, x, y, nextLevel) {
     // add childrens and animate
     var exitLabel = this.addChild(this.game.make.sprite(4 , -20, "exit"));
     exitLabel.smoothed = false;
-    this.game.add.tween(exitLabel).to({y: -16}, 300, Phaser.Easing.Linear.None, true, 0 , 1000, true);
+    this.game.add.tween(exitLabel).to({y: - 8 * gameOptions.scaleFactor}, 300, Phaser.Easing.Linear.None, true, 0 , 1000, true);
     
     //add to game
     this.game.add.existing(this);

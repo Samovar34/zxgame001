@@ -16,12 +16,12 @@ AdslJumper.Player = function (game, input, x, y) {
     this.settable = true; // проверка на возможность настроить игрока для текущего состояния
 	
     this.anchor.setTo(0.5);
-    this.scale.setTo(2);
+    this.scale.setTo(gameOptions.scaleFactor);
     this.smoothed = false;
 
     // animation
     this.animations.add("walk", [1, 2, 3, 2], gameOptions.player.walkAnimationSpeed);
-    this.doubleJumpAnimation = this.animations.add("doubleJump", [6, 7, 8, 5], gameOptions.player.doubleAnimationSpeed);
+    this.doubleJumpAnimation = this.animations.add("doubleJump", [6, 7, 6, 8, 5], gameOptions.player.doubleAnimationSpeed);
     this.animations.add("comeIn", [11, 12, 13, 14, 10], gameOptions.player.comeInAnimationSpeed)
 
     // sounds
@@ -30,6 +30,7 @@ AdslJumper.Player = function (game, input, x, y) {
     
     // physics
     this.game.physics.arcade.enable(this);
+    this.body.setSize(16, 15, 0, 1);
     this.body.gravity.y = gameOptions.player.gravity;
     this.body.collideWorldBounds = true;
     this.body.acceleration.x = 0;
@@ -53,7 +54,14 @@ AdslJumper.Player = function (game, input, x, y) {
     this.currentState = this.groundState;
 	
 	//add to game
-	this.game.add.existing(this);
+    this.game.add.existing(this);
+    
+        // particles
+        this.em = this.game.add.emitter(0, 0, 10);
+        this.em.makeParticles("sparks", [1]);
+        this.em.minParticleSpeed.setTo(-125, -125);
+        this.em.maxParticleSpeed.setTo(125, 125);
+        this.em.gravity = 1000;
 };
 
 AdslJumper.Player.prototype = Object.create(Phaser.Sprite.prototype);
@@ -122,6 +130,9 @@ AdslJumper.Player.prototype.jump = function () {
         this.settable = true;
         this.currentState = this.airState;
         this.doubleJumpAnimation.play();
+        this.em.x = this.position.x;
+        this.em.y = this.position.y;
+        this.em.start(true, 80, 20, 3, 100);
     }
 
     // animation happens in move
@@ -135,7 +146,7 @@ AdslJumper.Player.prototype.move = function () {
 
     if (this.canInput && this.input.leftIsDown()) {
         this.facing = "left";
-        this.scale.setTo(-2, 2);
+        this.scale.x = -gameOptions.scaleFactor;
         this.currentAcceleration -= gameOptions.player.acceleration;
 
         // play animation
@@ -146,7 +157,7 @@ AdslJumper.Player.prototype.move = function () {
     
     if (this.canInput && this.input.rightIsDown()) {
         this.facing = "right";
-        this.scale.setTo(2, 2);
+        this.scale.x = gameOptions.scaleFactor;
         this.currentAcceleration += gameOptions.player.acceleration;
 
         // play animation

@@ -26,7 +26,7 @@ window.onload = function () {
     // 1280×720
     // 1600×900
     // 1920×1080
-    game = new Phaser.Game(gameOptions.gameWidth, gameOptions.gameHeight, Phaser.AUTO);
+    game = new Phaser.Game(gameOptions.gameWidth * gameOptions.scaleFactor, gameOptions.gameHeight * gameOptions.scaleFactor, Phaser.AUTO);
     game.state.add("boot", AdslJumper.bootState);
     game.state.add("preload", AdslJumper.preloadState);
     game.state.add("menu", AdslJumper.menuState);
