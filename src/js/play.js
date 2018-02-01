@@ -26,11 +26,16 @@ AdslJumper.playGameState.prototype = {
         this.map.addTilesetImage("collision", "tilemap");
         // create layers
         this.bacgroundLayer = this.map.createLayer("backgroundLayer");
+        this.bacgroundLayer.setScale(2, 2);
+        this.bacgroundLayer.smoothed = false;
         this.collisionLayer = this.map.createLayer("collisionLayer");
+        this.collisionLayer.setScale(2, 2);
+        this.collisionLayer.smoothed = false;
 
         this.map.setCollisionBetween(1, 2000, true, "collisionLayer");
         
         // resize game world to match layer dimensions
+        this.collisionLayer.resizeWorld();
         this.bacgroundLayer.resizeWorld();
 
         // create coins group and add to game world
@@ -47,7 +52,7 @@ AdslJumper.playGameState.prototype = {
 
         // create player
         var playerStartPosition = AdslJumper.utils.findObjectsByType('playerStart', this.map, 'objectsLayer');
-        player = this.player = new AdslJumper.Player(game, this.input, playerStartPosition[0].x,  playerStartPosition[0].y);
+        player = this.player = new AdslJumper.Player(game, this.input, playerStartPosition[0].x * 2,  playerStartPosition[0].y * 2);
         this.player.canInput = false;
 
         // show secret ways
@@ -115,9 +120,12 @@ AdslJumper.playGameState.prototype.createCoins = function () {
 
     // add tween animation for every coin
     this.coins.forEach(function (coin) {
+        coin.smoothed = false;
+        coin.scale.setTo(2);
+        coin.position = {x: coin.position.x *2, y: coin.position.y * 2};
         coin.animations.add("rotate", [0, 1, 2, 3, 4], 12, true);
         coin.animations.play("rotate");
-        game.add.tween(coin).to({y: coin.y + 6}, 500, Phaser.Easing.Linear.None, true, 0 , 1000, true);
+        game.add.tween(coin).to({y: coin.y + 6 * 2}, 500, Phaser.Easing.Linear.None, true, 0 , 1000, true);
     });
 
     this.totalLevelCoins = this.coins.length;
@@ -129,14 +137,16 @@ AdslJumper.playGameState.prototype.createDoors = function () {
     var exitDoorTiledObject = AdslJumper.utils.findObjectsByType('exitDoor', this.map, 'objectsLayer');
 
     // create enter Door
-    this.enterDoor = this.game.add.sprite(enterDoorTiledObject[0].x, enterDoorTiledObject[0].y - 24, "door");
+    this.enterDoor = this.game.add.sprite(enterDoorTiledObject[0].x *2, (enterDoorTiledObject[0].y - 24) * 2, "door");
+    this.enterDoor.scale.setTo(2);
+    this.enterDoor.smoothed = false;
     this.enterDoor.animations.add("close", [5, 4, 3, 2, 1, 0], 10);
 
     this.closeDoorSound.play();
     this.enterDoor.animations.play("close");
 
     // create exit Door
-    this.exitDoor = new AdslJumper.ExitDoor(this.game, exitDoorTiledObject[0].x, exitDoorTiledObject[0].y - 24, exitDoorTiledObject[0].properties.nextLevel);
+    this.exitDoor = new AdslJumper.ExitDoor(this.game, exitDoorTiledObject[0].x * 2, (exitDoorTiledObject[0].y - 24) * 2, exitDoorTiledObject[0].properties.nextLevel);
 }
 
 // create background Sprite
@@ -144,10 +154,12 @@ AdslJumper.playGameState.prototype.createDoors = function () {
 // return sprite
 AdslJumper.playGameState.prototype.addBackGround = function (textureName) {
     var sprite = this.game.add.sprite(0, 0, textureName);
+    sprite.scale.setTo(2);
     sprite.smoothed = false;
     sprite.fixedToCamera = true;
 
     var child = sprite.addChild(this.game.make.sprite(227, 99, "killHuman"));
+    child.smoothed = false;
     child.animations.add("default", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 10, 9, 10, 9, 10, 9], 2, true);
     child.animations.play("default");
 
