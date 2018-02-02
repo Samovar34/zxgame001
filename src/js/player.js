@@ -27,10 +27,14 @@ AdslJumper.Player = function (game, input, x, y) {
     // sounds
     this.jumpSound = this.game.add.audio('jump');
     this.doubleJumpSound = this.game.add.audio('doubleJump');
+    this.step01 = this.game.add.audio("step01");
+    this.step01.volume = 0.5;
+    this.step02 = this.game.add.audio("step02");
+    this.step02.volume = 0.5;
     
     // physics
     this.game.physics.arcade.enable(this);
-    this.body.setSize(16, 15, 0, 1);
+    this.body.setSize(52, 60, 8, 4);
     this.body.gravity.y = gameOptions.player.gravity;
     this.body.collideWorldBounds = true;
     this.body.acceleration.x = 0;
@@ -56,12 +60,17 @@ AdslJumper.Player = function (game, input, x, y) {
 	//add to game
     this.game.add.existing(this);
     
-        // particles
-        this.em = this.game.add.emitter(0, 0, 10);
-        this.em.makeParticles("sparks", [1]);
-        this.em.minParticleSpeed.setTo(0, 0);
-        this.em.maxParticleSpeed.setTo(25, 155);
-        this.em.gravity = 100;
+    // particles
+    this.em = this.game.add.emitter(0, 0, 10);
+    this.em.makeParticles("sparks", [1]);
+    this.em.setYSpeed(-gameOptions.particleSpeed/200, gameOptions.particleSpeed/20);
+    this.em.setXSpeed(-gameOptions.particleSpeed/25, gameOptions.particleSpeed/25);
+    this.em.minRotation = 0;
+    this.em.maxRotation = 0;
+    this.em.minParticleScale = 1;
+    this.em.maxParticleScale = 5;
+    this.em.alpha = 0.4;
+
 };
 
 AdslJumper.Player.prototype = Object.create(Phaser.Sprite.prototype);
@@ -132,7 +141,7 @@ AdslJumper.Player.prototype.jump = function () {
         this.doubleJumpAnimation.play();
         this.em.x = this.position.x;
         this.em.y = this.position.y;
-        this.em.start(true, 120, 20, 6, 10);
+        this.em.start(true, 525, null, 6, 100);
     }
 
     // animation happens in move
@@ -208,6 +217,20 @@ AdslJumper.Player.prototype.groundState = function groundState() {
     // X axis movement
     this.move();
 
+    var temp = Math.random();
+    // play sound
+    if (this.frame === 1) {
+        if (!this.step01.isPlaying) {
+            this.step01.play();
+        }
+
+    }
+    if (this.frame === 3) {
+        if (!this.step02.isPlaying) {
+            this.step02.play();
+        }
+    }
+
 
     // TODO animation
     // TODO play sound
@@ -246,12 +269,23 @@ AdslJumper.Player.prototype.airState = function airState() {
     // player sliding wall (pre wall-jump)
     if (this.body.onWall()) {
         this.settable = true; // allow set player for next state
+
+        // play sound
+        if (!this.step01.isPlaying) {
+            this.step01.play();
+        }
         this.currentState = this.wallSlideState;
     }
 
     // player hit ground
     if (this.body.onFloor()) {
         this.settable = true; // allow set player for next state
+
+        // play sound
+        if (!this.step01.isPlaying) {
+            this.step01.play();
+        }
+
         this.currentState = this.groundState;
     }
 };

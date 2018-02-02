@@ -91,7 +91,7 @@ gulp.task("serve", (done) => {
         }).resume();
     });
 
-    server.listen(8080, () => {
+    server.listen(8080, "192.168.0.102", () => {
         done();
         console.log("Listening...");
     });

@@ -3,6 +3,7 @@ AdslJumper.playGameState = function (game) {};
 // TODO убрать из глобальной видимости
 var level = 1;
 var score = 0;
+var currentTrack;
 
 AdslJumper.playGameState.prototype = {
     // main state functions
@@ -13,6 +14,7 @@ AdslJumper.playGameState.prototype = {
         // TODO delete
         this.collectedCoins = 0;
         this.totalLevelCoins = 0;
+        this.canCheckOverlapExitDoor = false;
 
         this.input = new AdslJumper.Input(game);
 
@@ -20,22 +22,27 @@ AdslJumper.playGameState.prototype = {
         this.closeDoorSound = this.game.add.sound("closeDoor");
         this.getCoinSound = this.game.add.sound("getCoin");
         this.getCoinSound.volume = 0.5;
+        this.playerDeathSound = this.game.add.sound("playerDeath");
+
+        // music
+        if (!currentTrack) {
+            currentTrack = this.game.add.audio('track01');
+            currentTrack.loopFull();
+        }
 
         //bg
         this.bg001 = this.addBackGround("bg001");
 
         // game objects
-        this.map = game.add.tilemap("map" + level, 16, 16);
+        this.map = game.add.tilemap("map" + level, 64, 64);
         this.map.addTilesetImage("collision", "tilemap");
         // create layers
         this.bacgroundLayer = this.map.createLayer("backgroundLayer");
-        this.bacgroundLayer.setScale(gameOptions.scaleFactor);
         this.bacgroundLayer.smoothed = false;
         this.collisionLayer = this.map.createLayer("collisionLayer");
-        this.collisionLayer.setScale(gameOptions.scaleFactor);
         this.collisionLayer.smoothed = false;
 
-        this.map.setCollisionBetween(1, 2000, true, "collisionLayer");
+        this.map.setCollisionBetween(0, 2000, true, "collisionLayer");
         
         // resize game world to match layer dimensions
         this.collisionLayer.resizeWorld();
@@ -44,36 +51,60 @@ AdslJumper.playGameState.prototype = {
         // create coins group and add to game world
         this.createCoins();
         this.createDoors();
+        this.createTraps();
 
         // create particles
         this.em = this.game.add.emitter(0, 0, 48);
         this.em.makeParticles("sparks", [1]);
+        this.em.minRotation = 0;
+        this.em.maxRotation = 0;
+        this.em.minParticleScale = 1;
+        this.em.maxParticleScale = 2;
         this.em.minParticleSpeed.setTo(-gameOptions.particleSpeed, -gameOptions.particleSpeed);
         this.em.maxParticleSpeed.setTo(gameOptions.particleSpeed, gameOptions.particleSpeed);
         this.em.gravity = 1000;
 
         // create player
         var playerStartPosition = AdslJumper.utils.findObjectsByType('playerStart', this.map, 'objectsLayer');
-        player = this.player = new AdslJumper.Player(game, this.input, playerStartPosition[0].x * gameOptions.scaleFactor,  playerStartPosition[0].y * gameOptions.scaleFactor);
+        player = this.player = new AdslJumper.Player(game, this.input, playerStartPosition[0].x + 32,  playerStartPosition[0].y + 30);
         this.player.canInput = false;
 
         // show secret ways
         this.hiddenLayer = this.map.createLayer("hiddenLayer");
+            
+        // blood
+        this.blood = this.game.add.emitter(0, 0, 200);
+        this.blood.makeParticles('blood', [0, 1]);
+        this.blood.minRotation = 0;
+        this.blood.maxRotation = 0;
+        this.blood.minParticleScale = 0.0625;
+        this.blood.maxParticleScale = 0.5;
+        // this.blood.minParticleSpeed.setTo(-gameOptions.particleSpeed * 0.25, -gameOptions.particleSpeed * 0.25);
+        // this.blood.maxParticleSpeed.setTo(gameOptions.particleSpeed * 1.25, gameOptions.particleSpeed * 1.25);
+        this.blood.setYSpeed(-gameOptions.particleSpeed * 1.5, gameOptions.particleSpeed/10);
+        this.blood.setXSpeed(-gameOptions.particleSpeed, gameOptions.particleSpeed);
+        this.blood.gravity = 1500;
 
         // camera
         this.game.camera.follow(player,  this.game.camera.FOLLOW_PLATFORMER, 0.1, 0.1);
         this.game.camera.flash(0x000000, gameOptions.cameraFlashTime);
-        this.game.camera.onFlashComplete.addOnce(function () {
-            console.log("go");
-            this.player.canInput = true;
-        })
+        this.player.canInput = true;
+        // this.game.camera.onFlashComplete.addOnce(function () {
+        //     this.player.canInput = true;
+        // })
     },
 
     update: function () {
         // // physics
         game.physics.arcade.collide(this.player, this.collisionLayer);
-        game.physics.arcade.overlap(this.player, this.coins, this.playerCoinsHandler, null, this);
-        game.physics.arcade.overlap(this.player, this.exitDoor, this.playerExitDoorHandler, null, this);
+        game.physics.arcade.overlap(this.player, this.thorns, this.trapHandler, null, this);
+        
+        // if player collected all coins check overlap or check overlap with coins
+        if (this.canCheckOverlapExitDoor == true) {
+            this.game.physics.arcade.overlap(this.player, this.exitDoor, this.playerExitDoorHandler, null, this);
+        } else {
+            game.physics.arcade.overlap(this.player, this.coins, this.playerCoinsHandler, null, this);
+        }
 
     },
 
@@ -126,10 +157,10 @@ AdslJumper.playGameState.prototype.createCoins = function () {
     this.coins.forEach(function (coin) {
         coin.smoothed = false;
         coin.scale.setTo(gameOptions.scaleFactor);
-        coin.position = {x: coin.position.x *gameOptions.scaleFactor, y: coin.position.y * gameOptions.scaleFactor + 6};
+        coin.position = {x: coin.position.x + 20, y: coin.position.y + 40};
         coin.animations.add("rotate", [0, 1, 2, 3, 4], 12, true);
         coin.animations.play("rotate");
-        game.add.tween(coin).to({y: coin.y + 8 * gameOptions.scaleFactor}, 500, Phaser.Easing.Linear.None, true, 0 , 1000, true);
+        game.add.tween(coin).to({y: coin.y + 32}, 500, Phaser.Easing.Linear.None, true, 0 , 1000, true);
     });
 
     this.totalLevelCoins = this.coins.length;
@@ -141,7 +172,7 @@ AdslJumper.playGameState.prototype.createDoors = function () {
     var exitDoorTiledObject = AdslJumper.utils.findObjectsByType('exitDoor', this.map, 'objectsLayer');
 
     // create enter Door
-    this.enterDoor = this.game.add.sprite(enterDoorTiledObject[0].x *gameOptions.scaleFactor, (enterDoorTiledObject[0].y - 24) * gameOptions.scaleFactor, "door");
+    this.enterDoor = this.game.add.sprite(enterDoorTiledObject[0].x - 16, (enterDoorTiledObject[0].y - 96) * gameOptions.scaleFactor, "door");
     this.enterDoor.scale.setTo(gameOptions.scaleFactor);
     this.enterDoor.smoothed = false;
     this.enterDoor.animations.add("close", [5, 4, 3, 2, 1, 0], 10);
@@ -150,7 +181,7 @@ AdslJumper.playGameState.prototype.createDoors = function () {
     this.enterDoor.animations.play("close");
 
     // create exit Door
-    this.exitDoor = new AdslJumper.ExitDoor(this.game, exitDoorTiledObject[0].x * gameOptions.scaleFactor, (exitDoorTiledObject[0].y - 24) * gameOptions.scaleFactor, exitDoorTiledObject[0].properties.nextLevel);
+    this.exitDoor = new AdslJumper.ExitDoor(this.game, exitDoorTiledObject[0].x - 16, (exitDoorTiledObject[0].y - 96) * gameOptions.scaleFactor, exitDoorTiledObject[0].properties.nextLevel);
 }
 
 // create background Sprite
@@ -162,7 +193,7 @@ AdslJumper.playGameState.prototype.addBackGround = function (textureName) {
     sprite.smoothed = false;
     sprite.fixedToCamera = true;
 
-    var child = sprite.addChild(this.game.make.sprite(227, 99, "killHuman"));
+    var child = sprite.addChild(this.game.make.sprite(908, 396, "killHuman"));
     child.smoothed = false;
     child.animations.add("default", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 10, 9, 10, 9, 10, 9], 2, true);
     child.animations.play("default");
@@ -175,7 +206,6 @@ AdslJumper.playGameState.prototype.addBackGround = function (textureName) {
 // paralax effect
 AdslJumper.playGameState.prototype.moveBackGround = function (image) {
     image.cameraOffset = {x: Math.round(-this.paralacsFactor.x * this.game.camera.x), y: Math.round(-this.paralacsFactor.y  * this.game.camera.y)};
-    console.log(image.cameraOffset);
 };
 
 AdslJumper.playGameState.prototype.playerCoinsHandler = function (player, coin) {
@@ -184,8 +214,8 @@ AdslJumper.playGameState.prototype.playerCoinsHandler = function (player, coin) 
     
     this.getCoinSound.play();
 
-    this.em.x = coin.x + 5 * gameOptions.scaleFactor;
-    this.em.y = coin.y + 5 * gameOptions.scaleFactor;
+    this.em.x = coin.x + 30 * gameOptions.scaleFactor;
+    this.em.y = coin.y + 30 * gameOptions.scaleFactor;
     this.em.start(true, 100, 20, 24, 100);
 
 
@@ -195,7 +225,61 @@ AdslJumper.playGameState.prototype.playerCoinsHandler = function (player, coin) 
     score += 10;
 
     if (this.collectedCoins >= this.totalLevelCoins) {
+        this.canCheckOverlapExitDoor = true;
         this.exitDoor.open();
+    }
+};
+
+AdslJumper.playGameState.prototype.trapHandler = function (player, trap) {
+    this.game.camera.unfollow();
+    
+    // player dies
+    player.pendingDestroy = true;
+
+
+    // play sound
+    this.playerDeathSound.play();
+
+    // start lava splash
+    this.blood.x = player.x;
+    this.blood.y = player.y + 12;
+    this.blood.start(true, 2200, null, 60, 100);
+
+    var a = this.game.add.sprite(this.blood.x, this.blood.y, "player");
+    a.anchor.setTo(0.5);
+    a.animations.add("death", [15, 16, 17, 18, 19, 20], gameOptions.player.deathAnimationSpeed);
+    var aa = a.animations.play("death");
+    aa.onComplete.addOnce(function () {
+        a.kill();
+    }, this);
+
+    this.game.camera.shake(0.004, 1200);
+    this.game.camera.onShakeComplete.addOnce(function() {
+        // restart level after camera shake
+        this.game.camera.fade(0x000000, gameOptions.cameraFadeTime);
+        this.game.camera.onFadeComplete.addOnce(function() {
+            // restart current state
+            this.game.state.start(this.game.state.current);
+        }, this);
+      }, this);
+};
+
+AdslJumper.playGameState.prototype.createTraps = function () {
+    this.thorns = this.game.add.group();
+    // this.thorns.enableBody = true;
+    // this.thorns.enableBodyDebug = true;
+    var thorns = AdslJumper.utils.findObjectsByType('thorn', this.map, 'objectsLayer');
+    var curThorn;
+    for (var i = 0; i < thorns.length; i++) {
+        curThorn = this.game.add.sprite(thorns[i].x, thorns[i].y, "thorn");
+        curThorn.frame = 0;
+        this.game.physics.arcade.enable(curThorn);
+        curThorn.body.immovable = true;
+        curThorn.body.setSize(64, 40, 0, 24);
+        this.thorns.add(curThorn);
+        // curThorn.animations.add("up", [4, 3, 2, 1, 0], 8);
+        // curThorn.animations.add("down", [0, 1, 2, 3, 4], 8);
+        // curThorn.animations.play("up");
     }
 };
 
@@ -210,8 +294,7 @@ AdslJumper.playGameState.prototype.playerExitDoorHandler = function (player, doo
         door.animations.play("close");
 
         // camera
-        // перевести камера на дверь
-        this.game.camera.follow(door,  this.game.camera.FOLLOW_PLATFORMER, 0.1, 0.1);
+        this.game.camera.unfollow();
 
         // TODO проиграть анимация захода персонажа в дверь
         // TODO сделать так что бы она закрывалась вместе с ним ( а может и не надо)

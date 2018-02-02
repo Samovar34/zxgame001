@@ -3,16 +3,18 @@ AdslJumper.preloadState = function (game) {};
 AdslJumper.preloadState.prototype = {
     preload: function () {
         // load assets
-        for (var i = 1; i <= 2; i++) {
-            this.game.load.tilemap('map' + i, 'assets/levels/level' + i + ".json", null, Phaser.Tilemap.TILED_JSON);
+        for (var i = 1; i <= 1; i++) {
+            this.game.load.tilemap('map' + i, 'assets/levels/level' + i + "_hd.json", null, Phaser.Tilemap.TILED_JSON);
             console.log("for", i);
         }
         this.game.load.image('tilemap', 'assets/images/tilemap.png');
-        this.game.load.spritesheet("player", "/assets/images/player.png", 16, 16, 15);
-        this.game.load.spritesheet("coin", "/assets/images/coin.png", 10, 10, 5);
-        this.game.load.spritesheet("door", "/assets/images/door.png", 24, 40, 14);
-        this.game.load.spritesheet("killHuman", "/assets/images/kill_human.png", 56, 15, 11);
-        this.game.load.spritesheet("sparks", "/assets/images/sparks.png", 2, 2, 2);
+        this.game.load.spritesheet("player", "/assets/images/player.png", 64, 64, 21);
+        this.game.load.spritesheet("coin", "/assets/images/coin.png", 40, 40, 5);
+        this.game.load.spritesheet("door", "/assets/images/door.png", 96, 160, 14);
+        this.game.load.spritesheet("killHuman", "/assets/images/kill_human.png", 224, 60, 11);
+        this.game.load.spritesheet("sparks", "/assets/images/sparks.png", 4, 4, 2);
+        this.game.load.spritesheet("thorn", "/assets/images/thorn.png", 64, 64, 5);
+        this.game.load.spritesheet("blood", "/assets/images/blood.png", 32, 32, 2);
         this.game.load.image("bg001", "/assets/images/back_001.png");
         this.game.load.image("exit", "/assets/images/exit.png");
 
@@ -22,6 +24,12 @@ AdslJumper.preloadState.prototype = {
         this.load.audio('closeDoor', 'assets/audio/closeDoor.mp3');
         this.load.audio('getCoin', 'assets/audio/coin.wav');
         this.load.audio('doubleJump', 'assets/audio/doubleJump.wav');
+        this.load.audio('playerDeath', 'assets/audio/playerDeath.wav');
+        this.load.audio('step01', 'assets/audio/step01.wav');
+        this.load.audio('step02', 'assets/audio/step02.wav');
+        this.load.audio('step03', 'assets/audio/step03.wav');
+        this.load.audio('step04', 'assets/audio/step04.wav');
+        this.load.audio('track01', 'assets/audio/track01.mp3');
     },
 
     create: function () {
