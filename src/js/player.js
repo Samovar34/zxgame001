@@ -59,9 +59,9 @@ AdslJumper.Player = function (game, input, x, y) {
         // particles
         this.em = this.game.add.emitter(0, 0, 10);
         this.em.makeParticles("sparks", [1]);
-        this.em.minParticleSpeed.setTo(-125, -125);
-        this.em.maxParticleSpeed.setTo(125, 125);
-        this.em.gravity = 1000;
+        this.em.minParticleSpeed.setTo(0, 0);
+        this.em.maxParticleSpeed.setTo(25, 155);
+        this.em.gravity = 100;
 };
 
 AdslJumper.Player.prototype = Object.create(Phaser.Sprite.prototype);
@@ -132,7 +132,7 @@ AdslJumper.Player.prototype.jump = function () {
         this.doubleJumpAnimation.play();
         this.em.x = this.position.x;
         this.em.y = this.position.y;
-        this.em.start(true, 80, 20, 3, 100);
+        this.em.start(true, 120, 20, 6, 10);
     }
 
     // animation happens in move
