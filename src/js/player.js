@@ -34,7 +34,7 @@ AdslJumper.Player = function (game, input, x, y) {
     
     // physics
     this.game.physics.arcade.enable(this);
-    this.body.setSize(52, 60, 8, 4);
+    this.body.setSize(26, 30, 4, 2);
     this.body.gravity.y = gameOptions.player.gravity;
     this.body.collideWorldBounds = true;
     this.body.acceleration.x = 0;
@@ -84,7 +84,7 @@ AdslJumper.Player.prototype.update = function () {
     // false = collision
     // true = no collision
     // if player hit tile or worldBounds, no double jump is allowed
-    if(!this.body.blocked.none) {
+    if(this.body.blocked.up) {
         this.canDoubleJump = false;
     }
 

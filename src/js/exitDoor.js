@@ -22,7 +22,7 @@ AdslJumper.ExitDoor = function (game, x, y, nextLevel) {
     this.animationCloseDoor = this.animations.add("close", [7, 8, 9, 10, 11, 12, 13], 8);
     // physics
     this.game.physics.arcade.enable(this);
-    this.body.setSize(64, 108, 16, 52)
+    this.body.setSize(32, 54, 8, 26)
     this.body.immovable = true;
 
     
@@ -30,7 +30,7 @@ AdslJumper.ExitDoor = function (game, x, y, nextLevel) {
     this.game.add.existing(this);
 
     // add childrens and animate
-    this.exitLabel = this.game.add.sprite(this.x + 16 , this.y - 60, "exit");
+    this.exitLabel = this.game.add.sprite(this.x + 8 , this.y - 30, "exit");
     this.exitLabel.smoothed = false;
     this.game.add.tween(this.exitLabel).to({y: this.exitLabel.y - 8 * gameOptions.scaleFactor}, 300, Phaser.Easing.Linear.None, true, 0 , 1000, true);
 

@@ -3,18 +3,18 @@ AdslJumper.preloadState = function (game) {};
 AdslJumper.preloadState.prototype = {
     preload: function () {
         // load assets
-        for (var i = 1; i <= 1; i++) {
-            this.game.load.tilemap('map' + i, 'assets/levels/level' + i + "_hd.json", null, Phaser.Tilemap.TILED_JSON);
-            console.log("for", i);
+        for (var i = 1; i <= 2; i++) {
+            this.game.load.tilemap('map' + i, 'assets/levels/level' + i + "_2x.json", null, Phaser.Tilemap.TILED_JSON);
         }
         this.game.load.image('tilemap', 'assets/images/tilemap.png');
-        this.game.load.spritesheet("player", "/assets/images/player.png", 64, 64, 21);
-        this.game.load.spritesheet("coin", "/assets/images/coin.png", 40, 40, 5);
-        this.game.load.spritesheet("door", "/assets/images/door.png", 96, 160, 14);
-        this.game.load.spritesheet("killHuman", "/assets/images/kill_human.png", 224, 60, 11);
-        this.game.load.spritesheet("sparks", "/assets/images/sparks.png", 4, 4, 2);
-        this.game.load.spritesheet("thorn", "/assets/images/thorn.png", 64, 64, 5);
-        this.game.load.spritesheet("blood", "/assets/images/blood.png", 32, 32, 2);
+        this.game.load.spritesheet("player", "/assets/images/player.png", 32, 32, 21);
+        this.game.load.spritesheet("coin", "/assets/images/coin.png", 20, 20, 5);
+        this.game.load.spritesheet("door", "/assets/images/door.png", 48, 80, 14);
+        this.game.load.spritesheet("killHuman", "/assets/images/kill_human.png", 112, 30, 11);
+        this.game.load.spritesheet("sparks", "/assets/images/sparks.png", 2, 2, 2);
+        this.game.load.spritesheet("thorn", "/assets/images/thorn.png", 32, 32, 24);
+        this.game.load.spritesheet("movableThorn", "/assets/images/movableThornRight.png", 64, 32, 8);
+        this.game.load.spritesheet("blood", "/assets/images/blood.png", 16, 16, 2);
         this.game.load.image("bg001", "/assets/images/back_001.png");
         this.game.load.image("exit", "/assets/images/exit.png");
 
