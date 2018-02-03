@@ -21,13 +21,13 @@ AdslJumper.playGameState.prototype = {
         //sounds
         this.closeDoorSound = this.game.add.sound("closeDoor");
         this.getCoinSound = this.game.add.sound("getCoin");
-        this.getCoinSound.volume = 0.5;
+        this.getCoinSound.volume = gameOptions.sound.sfx * 0.75;
         this.playerDeathSound = this.game.add.sound("playerDeath");
 
         // music
         if (!currentTrack) {
             currentTrack = this.game.add.audio('track01');
-            currentTrack.loopFull();
+            currentTrack.loopFull(gameOptions.sound.musicVolume);
         }
 
         //bg

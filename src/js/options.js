@@ -9,7 +9,11 @@ var gameOptions = {
     isFeatures: 1,
     particleSpeed: 1050,
     paralacsFactor: {x: 0.15, y: 0.35},
-    player : {
+    sound: {
+        musicVolume: 0.8,
+        sfx: 0.5
+    },
+    player: {
         gravity: 1200,
         grip: 105,
         speed: 362,
@@ -23,7 +27,7 @@ var gameOptions = {
         inAirAccelerationRate: 0.9,
         groundDelay: 5, // delay in frames
         wallBreakTime: 15,
-        walkAnimationSpeed: 9,
+        walkAnimationSpeed: 10,
         doubleAnimationSpeed: 12,
         comeInAnimationSpeed: 10,
         deathAnimationSpeed: 48

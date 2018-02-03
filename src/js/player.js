@@ -26,11 +26,13 @@ AdslJumper.Player = function (game, input, x, y) {
 
     // sounds
     this.jumpSound = this.game.add.audio('jump');
+    this.jumpSound.volume = gameOptions.sound.sfx * 0.75;
     this.doubleJumpSound = this.game.add.audio('doubleJump');
+    this.doubleJumpSound.volume = gameOptions.sound.sfx;
     this.step01 = this.game.add.audio("step01");
-    this.step01.volume = 0.5;
+    this.step01.volume = gameOptions.sound.sfx * 0.4;
     this.step02 = this.game.add.audio("step02");
-    this.step02.volume = 0.5;
+    this.step02.volume = gameOptions.sound.sfx * 0.4;
     
     // physics
     this.game.physics.arcade.enable(this);
