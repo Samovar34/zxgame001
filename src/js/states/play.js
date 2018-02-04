@@ -16,19 +16,17 @@ AdslJumper.playGameState.prototype = {
         this.totalLevelCoins = 0;
         this.canCheckOverlapExitDoor = false;
 
-        this.input = new AdslJumper.Input(game);
-
-        //sounds
-        // this.closeDoorSound = this.game.add.sound("closeDoor");
-        // this.getCoinSound = this.game.add.sound("getCoin");
-        // this.getCoinSound.volume = gameOptions.sound.sfx * 0.75;
-        // this.playerDeathSound = this.game.add.sound("playerDeath");
+        //this.input = new AdslJumper.Input(game);
+        
+        // get modules
+        this.input = AdslJumper.modules.inputManager;
+        this.soundManager = AdslJumper.modules.soundManager;
 
         // music
-        if (!currentTrack) {
-            currentTrack = this.game.add.audio('track01');
-            currentTrack.loopFull(gameOptions.sound.musicVolume);
-        }
+        // if (!currentTrack) {
+        //     currentTrack = this.game.add.audio('track01');
+        //     currentTrack.loopFull(gameOptions.sound.musicVolume);
+        // }
 
         //bg
         this.bg001 = this.addBackGround("bg001");
@@ -177,7 +175,7 @@ AdslJumper.playGameState.prototype.createDoors = function () {
     this.enterDoor.smoothed = false;
     this.enterDoor.animations.add("close", [5, 4, 3, 2, 1, 0], 10);
 
-    this.closeDoorSound.play();
+    this.soundManager.playCloseDoor();
     this.enterDoor.animations.play("close");
 
     // create exit Door
@@ -212,7 +210,7 @@ AdslJumper.playGameState.prototype.playerCoinsHandler = function (player, coin) 
     // flag to destroy next update
     coin.pendingDestroy = true;
     
-    this.getCoinSound.play();
+    this.soundManager.playCoin();
 
     this.em.x = coin.x + 15 * gameOptions.scaleFactor;
     this.em.y = coin.y + 15 * gameOptions.scaleFactor;
@@ -263,7 +261,7 @@ AdslJumper.playGameState.prototype.trapHandler = function (player, trap) {
     player.pendingDestroy = true;
 
     // play sound
-    this.playerDeathSound.play();
+    this.soundManager.playPlayerDeath();
 
     // start lava splash
     this.blood.x = player.x + offsetX;

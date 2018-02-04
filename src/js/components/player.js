@@ -2,10 +2,12 @@
 // inheritance Phaser.Sprite class
 AdslJumper.Player = function (game, input, x, y) {
     
+    // extend
 	Phaser.Sprite.call(this, game, x, y, "player");
 	
     this.game = game;
-    this.input = input;
+    this.input = AdslJumper.modules.inputManager;
+    this.soundManager = AdslJumper.modules.soundManager;
 
     // возможно ли управление персонажем
     this.canInput = true;
@@ -24,18 +26,8 @@ AdslJumper.Player = function (game, input, x, y) {
     // animation
     this.animations.add("walk", [1, 2, 3, 2], this.options.walkAnimationSpeed);
     this.doubleJumpAnimation = this.animations.add("doubleJump", [6, 7, 6, 8, 5], this.options.doubleAnimationSpeed);
-    this.animations.add("comeIn", [11, 12, 13, 14, 10], this.options.comeInAnimationSpeed)
+    this.animations.add("comeIn", [11, 12, 13, 14, 10], this.options.comeInAnimationSpeed);
 
-    // // sounds
-    // this.jumpSound = this.game.add.audio('jump');
-    // this.jumpSound.volume = gameOptions.sound.sfx * 0.75;
-    // this.doubleJumpSound = this.game.add.audio('doubleJump');
-    // this.doubleJumpSound.volume = gameOptions.sound.sfx;
-    // this.step01 = this.game.add.audio("step01");
-    // this.step01.volume = gameOptions.sound.sfx * 0.4;
-    // this.step02 = this.game.add.audio("step02");
-    // this.step02.volume = gameOptions.sound.sfx * 0.4;
-    
     // physics
     this.game.physics.arcade.enable(this);
     this.body.setSize(26, 30, 4, 2);
@@ -112,7 +104,7 @@ AdslJumper.Player.prototype.jump = function () {
         this.body.velocity.y = this.options.jump * -1;
 
         // play sound
-        this.jumpSound.play();
+        this.soundManager.playJump();
 
         if (this.body.blocked.left) {
             this.body.velocity.x = this.options.speed;
@@ -128,7 +120,7 @@ AdslJumper.Player.prototype.jump = function () {
         this.wasOnGround = false;
         this.canDoubleJump = true;
         // play sound
-        this.jumpSound.play();
+        this.soundManager.playJump();
         this.body.velocity.y = this.options.jump * -1;
         this.settable = true;
         this.currentState = this.airState;
@@ -137,7 +129,7 @@ AdslJumper.Player.prototype.jump = function () {
     } else if (!this.body.onFloor() && this.canDoubleJump) {
         // double jump
         // play sound
-        this.doubleJumpSound.play();
+        this.soundManager.playDoubleJump();
         this.canDoubleJump = false;
         this.body.velocity.y = this.options.doubleJump * -1;
         this.settable = true;
@@ -224,15 +216,11 @@ AdslJumper.Player.prototype.groundState = function groundState() {
     var temp = Math.random();
     // play sound
     if (this.frame === 1) {
-        if (!this.step01.isPlaying) {
-            this.step01.play();
-        }
+        this.soundManager.playStep01();
 
     }
     if (this.frame === 3) {
-        if (!this.step02.isPlaying) {
-            this.step02.play();
-        }
+        this.soundManager.playStep02();
     }
 
 
@@ -275,9 +263,7 @@ AdslJumper.Player.prototype.airState = function airState() {
         this.settable = true; // allow set player for next state
 
         // play sound
-        if (!this.step01.isPlaying) {
-            this.step01.play();
-        }
+        this.soundManager.playStep01();
         this.currentState = this.wallSlideState;
     }
 
@@ -286,9 +272,7 @@ AdslJumper.Player.prototype.airState = function airState() {
         this.settable = true; // allow set player for next state
 
         // play sound
-        if (!this.step01.isPlaying) {
-            this.step01.play();
-        }
+        this.soundManager.playStep01();
 
         this.currentState = this.groundState;
     }

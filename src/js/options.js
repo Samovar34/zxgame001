@@ -2,8 +2,8 @@
 AdslJumper.gameOptions = (function () {
 
     var gameOptions = {
-        gameWidth: 640, //320 = src; 640 => work dim => 320 x scaleFactor
-        gameHeight: 360, //360
+        gameWidth: 640,
+        gameHeight: 360, 
         scaleFactor: 1,
         bgColor: 0x000000,
         cameraFadeTime: 600, // ms
@@ -29,8 +29,7 @@ AdslJumper.gameOptions = (function () {
         jump: 400,
         doubleJump: 288,
         drag: 5950,
-        // acceleration *= inAirAccelerationRate
-        inAirAccelerationRate: 0.9,
+        inAirAccelerationRate: 0.9, // acceleration *= inAirAccelerationRate
         inAirDrag: 0.5,
         particleSpeed: {minX: 0, maxX: 0, minY: -6, maxY: 52},
         groundDelay: 5, // delay in frames
@@ -40,7 +39,6 @@ AdslJumper.gameOptions = (function () {
         comeInAnimationSpeed: 10,
         deathAnimationSpeed: 48
     };
-
 
     return {
         getMainOptions: function () {
