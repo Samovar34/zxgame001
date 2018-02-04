@@ -9,7 +9,7 @@ AdslJumper.playGameState.prototype = {
     // main state functions
     create: function () {
         // main variables
-        this.paralacsFactor = gameOptions.paralacsFactor;
+        this.paralacsFactor = AdslJumper.gameOptions.getMainOptions().paralacsFactor;
 
         // TODO delete
         this.collectedCoins = 0;
@@ -19,10 +19,10 @@ AdslJumper.playGameState.prototype = {
         this.input = new AdslJumper.Input(game);
 
         //sounds
-        this.closeDoorSound = this.game.add.sound("closeDoor");
-        this.getCoinSound = this.game.add.sound("getCoin");
-        this.getCoinSound.volume = gameOptions.sound.sfx * 0.75;
-        this.playerDeathSound = this.game.add.sound("playerDeath");
+        // this.closeDoorSound = this.game.add.sound("closeDoor");
+        // this.getCoinSound = this.game.add.sound("getCoin");
+        // this.getCoinSound.volume = gameOptions.sound.sfx * 0.75;
+        // this.playerDeathSound = this.game.add.sound("playerDeath");
 
         // music
         if (!currentTrack) {

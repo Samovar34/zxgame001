@@ -1,7 +1,10 @@
 var AdslJumper = {};
 
+// loaded game components, such Input, BoomBox
+AdslJumper.modules = {};
+
 //@@include('./options.js')
-//@@include('./components/boomBox.js')
+//@@include('./components/soundManager.js')
 //@@include('./components/input.js')
 //@@include('./components/utils.js')
 //@@include('./components/player.js')
@@ -11,6 +14,7 @@ var AdslJumper = {};
 //@@include('./states/menu.js')
 //@@include('./states/play.js')
 
+// TODO move from global scope
 var game;
 // var player;
 // var cursors;
@@ -30,6 +34,7 @@ window.onload = function () {
     // 1600×900
     // 1920×1080
     var gameOptions = AdslJumper.gameOptions.getMainOptions();
+
     game = new Phaser.Game(gameOptions.gameWidth, gameOptions.gameHeight, Phaser.AUTO);
     game.state.add("boot", AdslJumper.bootState);
     game.state.add("preload", AdslJumper.preloadState);

@@ -35,7 +35,7 @@ AdslJumper.preloadState.prototype = {
 
     create: function () {
         // init sound component
-        AdslJumper.boomBox = new AdslJumper.BoomBox(this.game);
+        AdslJumper.modules.soundManager = new AdslJumper.SoundManager(this.game);
 
         this.game.state.start("menu");
     }
