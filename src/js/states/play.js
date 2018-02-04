@@ -35,12 +35,13 @@ AdslJumper.playGameState.prototype = {
         this.map = game.add.tilemap("map" + level, 32, 32);
         this.map.addTilesetImage("collision", "tilemap");
         // create layers
-        this.bacgroundLayer = this.map.createLayer("backgroundLayer");
-        this.bacgroundLayer.smoothed = false;
+
         this.collisionLayer = this.map.createLayer("collisionLayer");
         this.collisionLayer.smoothed = false;
+        this.bacgroundLayer = this.map.createLayer("backgroundLayer");
+        this.bacgroundLayer.smoothed = false;
 
-        this.map.setCollisionBetween(0, 2000, true, "collisionLayer");
+        this.map.setCollisionBetween(0, 2000, true, this.collisionLayer);
         
         // resize game world to match layer dimensions
         this.collisionLayer.resizeWorld();
