@@ -6,6 +6,7 @@ AdslJumper.preloadState.prototype = {
         for (var i = 1; i <= 2; i++) {
             this.game.load.tilemap('map' + i, 'assets/levels/level' + i + "_2x.json", null, Phaser.Tilemap.TILED_JSON);
         }
+        
         this.game.load.image('tilemap', 'assets/images/tilemap.png');
         this.game.load.spritesheet("player", "/assets/images/player.png", 32, 32, 21);
         this.game.load.spritesheet("coin", "/assets/images/coin.png", 20, 20, 5);
@@ -33,6 +34,9 @@ AdslJumper.preloadState.prototype = {
     },
 
     create: function () {
+        // init sound component
+        AdslJumper.boomBox = new AdslJumper.BoomBox(this.game);
+
         this.game.state.start("menu");
     }
 }

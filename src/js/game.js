@@ -1,22 +1,25 @@
 var AdslJumper = {};
 
 //@@include('./options.js')
-//@@include('./input.js')
-//@@include('./utils.js')
-//@@include('./player.js')
-//@@include('./exitDoor.js')
-//@@include('./boot.js')
-//@@include('./preload.js')
-//@@include('./menu.js')
-//@@include('./play.js')
+//@@include('./components/boomBox.js')
+//@@include('./components/input.js')
+//@@include('./components/utils.js')
+//@@include('./components/player.js')
+//@@include('./components/exitDoor.js')
+//@@include('./states/boot.js')
+//@@include('./states/preload.js')
+//@@include('./states/menu.js')
+//@@include('./states/play.js')
 
 var game;
-var player;
-var cursors;
-var rigthButton, leftButton, jumpButton, jumpButton2, runButton;
-var debugInfo = {};
-var isDevelopment = false;
-var isTestFeatures = true; // патаму чта так сказал Сашка К.
+// var player;
+// var cursors;
+// var rigthButton, leftButton, jumpButton, jumpButton2, runButton;
+// var debugInfo = {};
+// var isDevelopment = false;
+// var isTestFeatures = true; // патаму чта так сказал Сашка К.
+
+// TODO delete
 var player;
 
 window.onload = function () {
@@ -26,6 +29,7 @@ window.onload = function () {
     // 1280×720
     // 1600×900
     // 1920×1080
+    var gameOptions = AdslJumper.gameOptions.getMainOptions();
     game = new Phaser.Game(gameOptions.gameWidth, gameOptions.gameHeight, Phaser.AUTO);
     game.state.add("boot", AdslJumper.bootState);
     game.state.add("preload", AdslJumper.preloadState);

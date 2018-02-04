@@ -10,7 +10,7 @@ AdslJumper.bootState.prototype = {
     create: function () {
         console.log("boot create");
 
-        this.game.stage.backgroundColor = gameOptions.bgColor;
+        this.game.stage.backgroundColor = AdslJumper.gameOptions.getMainOptions().bgColor;
 
         // scaling
         this.game.scale.pageAlignHorizontally = true;
