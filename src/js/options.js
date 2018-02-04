@@ -11,7 +11,7 @@ AdslJumper.gameOptions = (function () {
         isDevelopment: 0,
         isFeatures: 1,
         particleSpeed: 1050,
-        paralacsFactor: {x: 0.15, y: 0.35}
+        paralacsFactor: {x: -0.15, y: -0.35}
     };
 
     var soundOptions = {
@@ -31,14 +31,19 @@ AdslJumper.gameOptions = (function () {
         drag: 5950,
         inAirAccelerationRate: 0.9, // acceleration *= inAirAccelerationRate
         inAirDrag: 0.5,
-        particleSpeed: {minX: 0, maxX: 0, minY: -6, maxY: 52},
         groundDelay: 5, // delay in frames
         wallBreakTime: 15,
         walkAnimationSpeed: 10,
         doubleAnimationSpeed: 12,
-        comeInAnimationSpeed: 10,
-        deathAnimationSpeed: 48
+        comeInAnimationSpeed: 10
     };
+
+    var gameObjectOptions = {
+        fartParticlesSpeed  : {minX: -42, maxX: 42, minY: -6, maxY: 52},
+        bloodParticlesSpeed : {minX: -1052, maxX: 1052, minY: -1576, maxY: 106},
+        sparksSpeed: {minX: -1052, maxX: 1052, minY: -1052, maxY: 1052},
+        deathAnimationSpeed : 48
+    }
 
     return {
         getMainOptions: function () {
@@ -52,6 +57,10 @@ AdslJumper.gameOptions = (function () {
         getPlayerOptions: function () {
             return playerOptions;
         },
+
+        getGameObjectOptions: function () {
+            return gameObjectOptions;
+        }
     }
 })();
 

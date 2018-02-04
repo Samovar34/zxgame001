@@ -4,11 +4,15 @@ var AdslJumper = {};
 AdslJumper.modules = {};
 
 //@@include('./options.js')
+
 //@@include('./components/soundManager.js')
 //@@include('./components/input.js')
 //@@include('./components/utils.js')
 //@@include('./components/player.js')
 //@@include('./components/exitDoor.js')
+//@@include('./components/gameObjectFactory.js')
+
+
 //@@include('./states/boot.js')
 //@@include('./states/preload.js')
 //@@include('./states/menu.js')

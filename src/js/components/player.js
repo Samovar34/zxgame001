@@ -3,25 +3,22 @@
 AdslJumper.Player = function (game, input, x, y) {
     
     // extend
-	Phaser.Sprite.call(this, game, x, y, "player");
-	
+    Phaser.Sprite.call(this, game, x, y, "player");
+    
+    // components
     this.game = game;
     this.input = AdslJumper.modules.inputManager;
     this.soundManager = AdslJumper.modules.soundManager;
+    this.options = AdslJumper.gameOptions.getPlayerOptions();
 
-    // возможно ли управление персонажем
-    this.canInput = true;
-    this.isComeIn = false; // входит ли игрок в дверь
-    
     // player variables
     this.facing = "right";
     this.settable = true; // проверка на возможность настроить игрока для текущего состояния
-	
+    this.canInput = true; // возможно ли управление персонажем
+    this.isComeIn = false; // входит ли игрок в дверь
+    
     this.anchor.setTo(0.5);
-    this.scale.setTo(gameOptions.scaleFactor);
     this.smoothed = false;
-
-    this.options = AdslJumper.gameOptions.getPlayerOptions();
 
     // animation
     this.animations.add("walk", [1, 2, 3, 2], this.options.walkAnimationSpeed);
@@ -57,15 +54,7 @@ AdslJumper.Player = function (game, input, x, y) {
     this.game.add.existing(this);
     
     // particles
-    this.em = this.game.add.emitter(0, 0, 10);
-    this.em.makeParticles("sparks", [1]);
-    this.em.setYSpeed(this.options.particleSpeed.minY, this.options.particleSpeed.maxY);
-    this.em.setXSpeed(-gameOptions.particleSpeed/25, gameOptions.particleSpeed/25);
-    this.em.minRotation = 0;
-    this.em.maxRotation = 0;
-    this.em.minParticleScale = 1;
-    this.em.maxParticleScale = 5;
-    this.em.alpha = 0.4;
+    this.fartParticles = AdslJumper.modules.gameObjectFactory.createFartParticles();
 
 };
 
@@ -128,16 +117,20 @@ AdslJumper.Player.prototype.jump = function () {
     // дополнительный прыжок
     } else if (!this.body.onFloor() && this.canDoubleJump) {
         // double jump
-        // play sound
-        this.soundManager.playDoubleJump();
+
         this.canDoubleJump = false;
         this.body.velocity.y = this.options.doubleJump * -1;
         this.settable = true;
         this.currentState = this.airState;
-        this.doubleJumpAnimation.play();
-        this.em.x = this.position.x;
-        this.em.y = this.position.y;
-        this.em.start(true, 525, null, 6, 100);
+
+        // play sound and animation
+        this.soundManager.playDoubleJump();
+        this.animations.play("doubleJump");
+
+        // show particles
+        this.fartParticles.x = this.position.x;
+        this.fartParticles.y = this.position.y;
+        this.fartParticles.start(true, 525, null, 6, 100);
     }
 
     // animation happens in move
@@ -151,7 +144,7 @@ AdslJumper.Player.prototype.move = function () {
 
     if (this.canInput && this.input.leftIsDown()) {
         this.facing = "left";
-        this.scale.x = -gameOptions.scaleFactor;
+        this.scale.x = -1;
         this.currentAcceleration -= this.options.acceleration;
 
         // play animation
@@ -162,7 +155,7 @@ AdslJumper.Player.prototype.move = function () {
     
     if (this.canInput && this.input.rightIsDown()) {
         this.facing = "right";
-        this.scale.x = gameOptions.scaleFactor;
+        this.scale.x = 1;
         this.currentAcceleration += this.options.acceleration;
 
         // play animation
@@ -180,7 +173,7 @@ AdslJumper.Player.prototype.move = function () {
 
     if (this.currentState === this.airState) {
         if (this.doubleJumpAnimation.isPlaying) {
-            
+            // do nothing
         } else if (this.body.velocity.y < 0) {
             this.frame  = 4;
         } else {

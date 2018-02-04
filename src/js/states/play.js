@@ -8,28 +8,28 @@ var currentTrack;
 AdslJumper.playGameState.prototype = {
     // main state functions
     create: function () {
-        // main variables
-        this.paralacsFactor = AdslJumper.gameOptions.getMainOptions().paralacsFactor;
+        
+        // game options
+        this.options = AdslJumper.gameOptions.getMainOptions();
 
         // TODO delete
         this.collectedCoins = 0;
         this.totalLevelCoins = 0;
         this.canCheckOverlapExitDoor = false;
-
-        //this.input = new AdslJumper.Input(game);
         
         // get modules
         this.input = AdslJumper.modules.inputManager;
         this.soundManager = AdslJumper.modules.soundManager;
+        this.gameObjectFactory = AdslJumper.modules.gameObjectFactory;
 
         // music
-        // if (!currentTrack) {
-        //     currentTrack = this.game.add.audio('track01');
-        //     currentTrack.loopFull(gameOptions.sound.musicVolume);
-        // }
+        if (!this.soundManager.currentTrack) {
+            this.soundManager.setTrack("track01");
+            this.soundManager.playTrack();
+        }
 
         //bg
-        this.bg001 = this.addBackGround("bg001");
+        this.background = this.gameObjectFactory.createBackGround01();
 
         // game objects
         this.map = game.add.tilemap("map" + level, 32, 32);
@@ -52,15 +52,7 @@ AdslJumper.playGameState.prototype = {
         this.createTraps();
 
         // create particles
-        this.em = this.game.add.emitter(0, 0, 48);
-        this.em.makeParticles("sparks", [1]);
-        this.em.minRotation = 0;
-        this.em.maxRotation = 0;
-        this.em.minParticleScale = 1;
-        this.em.maxParticleScale = 2;
-        this.em.minParticleSpeed.setTo(-gameOptions.particleSpeed, -gameOptions.particleSpeed);
-        this.em.maxParticleSpeed.setTo(gameOptions.particleSpeed, gameOptions.particleSpeed);
-        this.em.gravity = 1000;
+        this.sparks = this.gameObjectFactory.createSparks();
 
         // create player
         var playerStartPosition = AdslJumper.utils.findObjectsByType('playerStart', this.map, 'objectsLayer');
@@ -71,21 +63,11 @@ AdslJumper.playGameState.prototype = {
         this.hiddenLayer = this.map.createLayer("hiddenLayer");
             
         // blood
-        this.blood = this.game.add.emitter(0, 0, 200);
-        this.blood.makeParticles('blood', [0, 1]);
-        this.blood.minRotation = 0;
-        this.blood.maxRotation = 0;
-        this.blood.minParticleScale = 0.0625;
-        this.blood.maxParticleScale = 0.5;
-        // this.blood.minParticleSpeed.setTo(-gameOptions.particleSpeed * 0.25, -gameOptions.particleSpeed * 0.25);
-        // this.blood.maxParticleSpeed.setTo(gameOptions.particleSpeed * 1.25, gameOptions.particleSpeed * 1.25);
-        this.blood.setYSpeed(-gameOptions.particleSpeed * 1.5, gameOptions.particleSpeed/10);
-        this.blood.setXSpeed(-gameOptions.particleSpeed, gameOptions.particleSpeed);
-        this.blood.gravity = 1500;
+        this.blood = this.gameObjectFactory.createBloodParticles();
 
         // camera
         this.game.camera.follow(player,  this.game.camera.FOLLOW_PLATFORMER, 0.12, 0.12);
-        this.game.camera.flash(0x000000, gameOptions.cameraFlashTime);
+        this.game.camera.flash(0x000000, this.options.cameraFlashTime);
         this.player.canInput = true;
         // this.game.camera.onFlashComplete.addOnce(function () {
         //     this.player.canInput = true;
@@ -108,7 +90,7 @@ AdslJumper.playGameState.prototype = {
 
     render: function () {
         // move bg
-        this.moveBackGround(this.bg001);
+        this.moveBackGround(this.background);
 
         this.game.debug.text("score: " + score, 220, 12, "#ffffff");
         this.game.debug.text("room: " + level, 8, 12, "#00ff00");
@@ -116,7 +98,7 @@ AdslJumper.playGameState.prototype = {
         // this.game.debug.body(this.exitDoor);
         // this.game.debug.body(this.player);
 
-        if (gameOptions.isDevelopment) {
+        if (this.options.isDevelopment) {
             // col 1
             this.game.debug.text("input_left: " + this.input.leftIsDown(), 8, 12, "#00ff00");
             this.game.debug.text("input_right: " + this.input.rightIsDown(), 8, 27, "#00ff00");
@@ -154,7 +136,6 @@ AdslJumper.playGameState.prototype.createCoins = function () {
     // add tween animation for every coin
     this.coins.forEach(function (coin) {
         coin.smoothed = false;
-        coin.scale.setTo(gameOptions.scaleFactor);
         coin.position = {x: coin.position.x, y: coin.position.y};
         coin.animations.add("rotate", [0, 1, 2, 3, 4], 12, true);
         coin.animations.play("rotate");
@@ -170,8 +151,7 @@ AdslJumper.playGameState.prototype.createDoors = function () {
     var exitDoorTiledObject = AdslJumper.utils.findObjectsByType('exitDoor', this.map, 'objectsLayer');
 
     // create enter Door
-    this.enterDoor = this.game.add.sprite(enterDoorTiledObject[0].x, (enterDoorTiledObject[0].y - 48) * gameOptions.scaleFactor, "door");
-    this.enterDoor.scale.setTo(gameOptions.scaleFactor);
+    this.enterDoor = this.game.add.sprite(enterDoorTiledObject[0].x, enterDoorTiledObject[0].y - 48, "door");
     this.enterDoor.smoothed = false;
     this.enterDoor.animations.add("close", [5, 4, 3, 2, 1, 0], 10);
 
@@ -179,31 +159,31 @@ AdslJumper.playGameState.prototype.createDoors = function () {
     this.enterDoor.animations.play("close");
 
     // create exit Door
-    this.exitDoor = new AdslJumper.ExitDoor(this.game, exitDoorTiledObject[0].x, (exitDoorTiledObject[0].y - 48) * gameOptions.scaleFactor, exitDoorTiledObject[0].properties.nextLevel);
+    this.exitDoor = new AdslJumper.ExitDoor(this.game, exitDoorTiledObject[0].x, exitDoorTiledObject[0].y - 48, exitDoorTiledObject[0].properties.nextLevel);
 }
 
-// create background Sprite
-// textureName String - имя текстуры из кэша Phaser
-// return sprite
-AdslJumper.playGameState.prototype.addBackGround = function (textureName) {
-    var sprite = this.game.add.sprite(0, 0, textureName);
-    sprite.scale.setTo(gameOptions.scaleFactor);
-    sprite.smoothed = false;
-    sprite.fixedToCamera = true;
+// // create background Sprite
+// // textureName String - имя текстуры из кэша Phaser
+// // return sprite
+// AdslJumper.playGameState.prototype.addBackGround = function (textureName) {
+//     var sprite = this.game.add.sprite(0, 0, textureName);
+//     sprite.scale.setTo(this.options.scaleFactor);
+//     sprite.smoothed = false;
+//     sprite.fixedToCamera = true;
 
-    var child = sprite.addChild(this.game.make.sprite(454, 198, "killHuman"));
-    child.smoothed = false;
-    child.animations.add("default", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 10, 9, 10, 9, 10, 9], 2, true);
-    child.animations.play("default");
+//     var child = sprite.addChild(this.game.make.sprite(454, 198, "killHuman"));
+//     child.smoothed = false;
+//     child.animations.add("default", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 10, 9, 10, 9, 10, 9], 2, true);
+//     child.animations.play("default");
 
-    return sprite;
-};
+//     return sprite;
+// };
 
 // move background image
 // image Phaser.Sprite
 // paralax effect
 AdslJumper.playGameState.prototype.moveBackGround = function (image) {
-    image.cameraOffset = {x: Math.round(-this.paralacsFactor.x * this.game.camera.x), y: Math.round(-this.paralacsFactor.y  * this.game.camera.y)};
+    image.cameraOffset = {x: Math.round(this.options.paralacsFactor.x * this.game.camera.x), y: Math.round(this.options.paralacsFactor.y  * this.game.camera.y)};
 };
 
 AdslJumper.playGameState.prototype.playerCoinsHandler = function (player, coin) {
@@ -212,9 +192,9 @@ AdslJumper.playGameState.prototype.playerCoinsHandler = function (player, coin) 
     
     this.soundManager.playCoin();
 
-    this.em.x = coin.x + 15 * gameOptions.scaleFactor;
-    this.em.y = coin.y + 15 * gameOptions.scaleFactor;
-    this.em.start(true, 100, 20, 24, 100);
+    this.sparks.x = coin.x + 15;
+    this.sparks.y = coin.y + 15;
+    this.sparks.start(true, 100, 20, 24, 100);
 
 
     // TODO get position of coin and add effect
@@ -268,18 +248,16 @@ AdslJumper.playGameState.prototype.trapHandler = function (player, trap) {
     this.blood.y = player.y + offsetY;
     this.blood.start(true, 2200, null, 60, 100);
 
-    var a = this.game.add.sprite(this.blood.x, this.blood.y, "player");
-    a.anchor.setTo(0.5);
-    a.animations.add("death", [15, 16, 17, 18, 19, 20], gameOptions.player.deathAnimationSpeed);
-    var aa = a.animations.play("death");
-    aa.onComplete.addOnce(function () {
-        a.kill();
+    var meatBlowSprite = this.gameObjectFactory.createMeatBlowSprite(this.blood.x, this.blood.y);
+    var meatBlowAnimation = meatBlowSprite.animations.play("default");
+    meatBlowAnimation.onComplete.addOnce(function () {
+        meatBlowSprite.kill();
     }, this);
 
     this.game.camera.shake(0.004, 1200);
     this.game.camera.onShakeComplete.addOnce(function() {
         // restart level after camera shake
-        this.game.camera.fade(0x000000, gameOptions.cameraFadeTime);
+        this.game.camera.fade(0x000000, this.options.cameraFadeTime);
         this.game.camera.onFadeComplete.addOnce(function() {
             // restart current state
             this.game.state.start(this.game.state.current);
@@ -363,7 +341,7 @@ AdslJumper.playGameState.prototype.playerExitDoorHandler = function (player, doo
 
         // TODO проиграть анимация захода персонажа в дверь
         // TODO сделать так что бы она закрывалась вместе с ним ( а может и не надо)
-        this.game.camera.fade(0x000000, gameOptions.cameraFadeTime);
+        this.game.camera.fade(0x000000, this.options.cameraFadeTime);
         this.game.camera.onFadeComplete.addOnce(function() {
             // TODO level global variable
             // set AdslJumper variable

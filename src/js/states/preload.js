@@ -34,9 +34,10 @@ AdslJumper.preloadState.prototype = {
     },
 
     create: function () {
-        // init sound component
+        // init game components
         AdslJumper.modules.soundManager = new AdslJumper.SoundManager(this.game);
         AdslJumper.modules.inputManager = new AdslJumper.Input(this.game);
+        AdslJumper.modules.gameObjectFactory = new AdslJumper.GameObjectFactory(this.game);
 
         this.game.state.start("menu");
     }

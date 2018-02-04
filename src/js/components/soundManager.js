@@ -50,9 +50,18 @@ AdslJumper.SoundManager.prototype.setSFXVolume = function (value) {
     
 };
 
-// void
-AdslJumper.SoundManager.prototype.playMusic = function (track) {
+AdslJumper.SoundManager.prototype.setTrack = function (value) {
+    if (this.currentTrack) {
+        this.currentTrack.stop();
+    }
+    this.currentTrack = this[value];
+}
 
+// void
+AdslJumper.SoundManager.prototype.playTrack = function () {
+    if (this.currentTrack) {
+        this.currentTrack.loopFull(this.musicVolume);
+    }
 };
 
 // void
@@ -71,9 +80,7 @@ AdslJumper.SoundManager.prototype.playStep02 = function () {
 
 // void
 AdslJumper.SoundManager.prototype.playJump = function () {
-    if (!this.jump.isPlaying) {
-        this.jump.play();
-    }
+    this.jump.play();
 };
 
 // void
