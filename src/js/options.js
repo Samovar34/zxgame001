@@ -6,8 +6,9 @@ AdslJumper.gameOptions = (function () {
         gameHeight: 360, 
         scaleFactor: 1,
         bgColor: 0x000000,
-        cameraFadeTime: 600, // ms
-        cameraFlashTime: 500, // ms
+        cameraFadeTime: 400, // ms
+        cameraFlashTime: 400, // ms
+        cameraShakeTime: 500,
         isDevelopment: 0,
         isFeatures: 1,
         particleSpeed: 1050,
@@ -15,8 +16,8 @@ AdslJumper.gameOptions = (function () {
     };
 
     var soundOptions = {
-        musicVolume: 0.8,
-        sfx: 0.5
+        musicVolume: 0.0,
+        sfx: 0.7
     };
 
     var playerOptions = {
@@ -39,10 +40,10 @@ AdslJumper.gameOptions = (function () {
     };
 
     var gameObjectOptions = {
-        fartParticlesSpeed  : {minX: -42, maxX: 42, minY: -6, maxY: 52},
-        bloodParticlesSpeed : {minX: -1052, maxX: 1052, minY: -1576, maxY: 106},
-        sparksSpeed: {minX: -1052, maxX: 1052, minY: -1052, maxY: 1052},
-        deathAnimationSpeed : 48
+        fartParticlesSpeed  : {minX: -24, maxX: 24, minY: -6, maxY: 32},
+        bloodParticlesSpeed : {minX: -1052, maxX: 1052, minY: -1576, maxY: 1576},
+        sparksSpeed: {minX: -256, maxX: 256, minY: -256, maxY: 256},
+        deathAnimationSpeed : 24
     }
 
     return {

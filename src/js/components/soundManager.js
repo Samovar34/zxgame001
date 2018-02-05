@@ -60,7 +60,7 @@ AdslJumper.SoundManager.prototype.setTrack = function (value) {
 // void
 AdslJumper.SoundManager.prototype.playTrack = function () {
     if (this.currentTrack) {
-        this.currentTrack.loopFull(this.musicVolume);
+        this.currentTrack.loopFull(this.options.musicVolume);
     }
 };
 
@@ -85,9 +85,7 @@ AdslJumper.SoundManager.prototype.playJump = function () {
 
 // void
 AdslJumper.SoundManager.prototype.playCoin = function () {
-    if (!this.coin.isPlaying) {
-        this.coin.play();
-    }
+    this.coin.play();
 };
 
 // void

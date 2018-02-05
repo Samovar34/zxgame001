@@ -7,7 +7,7 @@ AdslJumper.Player = function (game, input, x, y) {
     
     // components
     this.game = game;
-    this.input = AdslJumper.modules.inputManager;
+    this.input = input;
     this.soundManager = AdslJumper.modules.soundManager;
     this.options = AdslJumper.gameOptions.getPlayerOptions();
 
@@ -18,7 +18,6 @@ AdslJumper.Player = function (game, input, x, y) {
     this.isComeIn = false; // входит ли игрок в дверь
     
     this.anchor.setTo(0.5);
-    this.smoothed = false;
 
     // animation
     this.animations.add("walk", [1, 2, 3, 2], this.options.walkAnimationSpeed);
@@ -130,7 +129,7 @@ AdslJumper.Player.prototype.jump = function () {
         // show particles
         this.fartParticles.x = this.position.x;
         this.fartParticles.y = this.position.y;
-        this.fartParticles.start(true, 525, null, 6, 100);
+        this.fartParticles.start(true, 525, null, 4, 100);
     }
 
     // animation happens in move

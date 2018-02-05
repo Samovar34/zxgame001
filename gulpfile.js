@@ -97,6 +97,25 @@ gulp.task("serve", (done) => {
     });
 });
 
+gulp.task("serve:lan", (done) => {
+    let server = http.createServer((req, res) => {
+        req.addListener("end", () => {
+            
+            fileServer.serve(req, res, (err, result) => {
+                if (err) {
+                    res.writeHead(err.status, err.headers);
+                    res.end(err.message);
+                }
+            });
+        }).resume();
+    });
+
+    server.listen(8080, "192.168.0.102", () => {
+        done();
+        console.log("Listening...");
+    });
+});
+
 // watch
 gulp.task("watch", (done) => {
     gulp.watch(watchViewFolder, ["build:view"]);
@@ -114,6 +133,12 @@ gulp.task("watch", (done) => {
 gulp.task("default", ["build"], (done) => {
     gulp.start("watch");
     gulp.start("serve");
+    done();
+});
+
+gulp.task("default:lan", ["build"], (done) => {
+    gulp.start("watch");
+    gulp.start("serve:lan");
     done();
 });
 

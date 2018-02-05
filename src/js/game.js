@@ -20,26 +20,19 @@ AdslJumper.modules = {};
 
 // TODO move from global scope
 var game;
-// var player;
-// var cursors;
-// var rigthButton, leftButton, jumpButton, jumpButton2, runButton;
-// var debugInfo = {};
-// var isDevelopment = false;
-// var isTestFeatures = true; // патаму чта так сказал Сашка К.
 
 // TODO delete
 var player;
 
 window.onload = function () {
-    // 480x270
-    // 640x360
-    // 960x540
-    // 1280×720
-    // 1600×900
-    // 1920×1080
     var gameOptions = AdslJumper.gameOptions.getMainOptions();
 
-    game = new Phaser.Game(gameOptions.gameWidth, gameOptions.gameHeight, Phaser.AUTO);
+    game = new Phaser.Game({
+        width: gameOptions.gameWidth,
+        height: gameOptions.gameHeight,
+        renderer: Phaser.CANVAS,
+        antialias: false
+    });
     game.state.add("boot", AdslJumper.bootState);
     game.state.add("preload", AdslJumper.preloadState);
     game.state.add("menu", AdslJumper.menuState);

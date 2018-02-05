@@ -5,6 +5,7 @@
   "main": "gulpfile.js",
   "scripts": {
     "start": "gulp",
+    "start:lan": "gulp default:lan",
     "serve": "gulp serve",
     "build:view": "gulp build:view",
     "build:style": "gulp build:style",

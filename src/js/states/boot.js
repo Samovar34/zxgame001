@@ -14,7 +14,7 @@ AdslJumper.bootState.prototype = {
         // scaling
         this.game.scale.pageAlignHorizontally = true;
         this.game.scale.pageAlignVertically = true;
-        this.game.renderer.renderSession.roundPixels = true; // без этой опции страные артефакты. Проверено в Linux Mint
+        this.game.renderer.renderSession.roundPixels = false; // без этой опции страные артефакты. Проверено в Linux Mint
         this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 
         // start physics
