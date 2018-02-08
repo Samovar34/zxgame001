@@ -12,7 +12,7 @@ AdslJumper.gameOptions = (function () {
         isDevelopment: 0,
         isFeatures: 1,
         particleSpeed: 1050,
-        paralacsFactor: {x: -0.15, y: -0.35}
+        paralacsFactor: {x: -0.4, y: -0.5}
     };
 
     var soundOptions = {

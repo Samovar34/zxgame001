@@ -4,7 +4,7 @@ AdslJumper.playGameState = function (game) {};
 var level = 1;
 var score = 0;
 var currentTrack;
-
+var test;
 AdslJumper.playGameState.prototype = {
     // main state functions
     create: function () {
@@ -27,8 +27,19 @@ AdslJumper.playGameState.prototype = {
             this.soundManager.playTrack();
         }
 
+        // TODO Delete?
+        // this.filter = new Phaser.Filter(game, null, game.cache.getShader('testShader'));
+
+        // this.filter.setResolution(this.options.gameWidth, 230);
+    
+        // this.sprite = game.add.sprite();
+        // this.sprite.width = this.options.gameWidth;
+        // this.sprite.height = 230;
+    
+        // this.sprite.filters = [this.filter];
+
         //bg
-        this.background = this.gameObjectFactory.createBackGround01();
+        test = this.background = this.gameObjectFactory.createBackGround01();
 
         // game objects
         this.map = game.add.tilemap("map" + level, 32, 32);
@@ -94,7 +105,8 @@ AdslJumper.playGameState.prototype = {
         }
 
         // move bg
-        this.moveBackGround(this.background);
+        this.moveBackGround();
+        this.background._filter.update();
     },
 
     render: function () {
@@ -142,8 +154,8 @@ AdslJumper.playGameState.prototype.createDoors = function () {
 // move background image
 // image Phaser.Sprite
 // paralax effect
-AdslJumper.playGameState.prototype.moveBackGround = function (image) {
-    image.cameraOffset = {x: Math.round(this.options.paralacsFactor.x * this.game.camera.x), y: Math.round(this.options.paralacsFactor.y  * this.game.camera.y)};
+AdslJumper.playGameState.prototype.moveBackGround = function () {
+    this.background.cameraOffset = {x: Math.round(this.options.paralacsFactor.x * this.game.camera.x), y: Math.round(this.options.paralacsFactor.y  * this.game.camera.y)};
 };
 
 AdslJumper.playGameState.prototype.playerCoinsHandler = function (player, coin) {
