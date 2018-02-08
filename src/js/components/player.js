@@ -1,5 +1,5 @@
 // Player class
-// inheritance Phaser.Sprite class
+// extends Phaser.Sprite class
 AdslJumper.Player = function (game, input, x, y) {
     
     // extend

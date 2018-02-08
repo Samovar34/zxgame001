@@ -12,6 +12,7 @@ AdslJumper.modules = {};
 //@@include('./components/exitDoor.js')
 //@@include('./components/gameObjectFactory.js')
 
+//@@include("./gameObjects/thorn.js")
 
 //@@include('./states/boot.js')
 //@@include('./states/preload.js')

@@ -264,12 +264,7 @@ AdslJumper.playGameState.prototype.createTraps = function () {
     var thorns = AdslJumper.utils.findObjectsByType('thornUp', this.map, 'objectsLayer');
     var curThorn;
     for (var i = 0; i < thorns.length; i++) {
-        curThorn = this.game.add.sprite(thorns[i].x, thorns[i].y, "thorn");
-        curThorn.frame = 0;
-        this.game.physics.arcade.enable(curThorn);
-        curThorn.body.immovable = true;
-        curThorn.body.setSize(32, 20, 0, 12);
-        this.thorns.add(curThorn);
+        this.thorns.add(new AdslJumper.Thorn(this.game, thorns[i].x, thorns[i].y, "up"));
     }
 
     thorns = AdslJumper.utils.findObjectsByType('thornDown', this.map, 'objectsLayer');
