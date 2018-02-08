@@ -70,6 +70,10 @@ AdslJumper.Player.prototype.update = function () {
     // if player hit tile or worldBounds, no double jump is allowed
     if(this.body.blocked.up) {
         this.canDoubleJump = false;
+        this.soundManager.playPunch();
+        this.fartParticles.x = this.position.x;
+        this.fartParticles.y = this.position.y - 16;
+        this.fartParticles.start(true, 525, null, 2, 100);
     }
 
     this.currentState();

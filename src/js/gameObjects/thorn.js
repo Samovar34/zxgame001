@@ -1,6 +1,6 @@
 // Thorn class
 // extends Phaser.Sprite class
-
+// only for goup
 AdslJumper.Thorn = function (game, x, y, type) {
 
     // extend
@@ -19,7 +19,7 @@ AdslJumper.Thorn = function (game, x, y, type) {
             this.frame = 0;
             break;
         case "right":
-            this.body.setSize(20, 28, 12, 2);
+            this.body.setSize(20, 22, 0, 5);
             this.frame = 6;
             break;
         case "down":
@@ -27,7 +27,7 @@ AdslJumper.Thorn = function (game, x, y, type) {
             this.frame = 12;
             break;
         case "left": 
-            this.body.setSize(20, 28, 12, 2);
+            this.body.setSize(20, 22, 12, 5);
             this.frame = 18;
             break;
         case "default":

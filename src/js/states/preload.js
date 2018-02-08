@@ -28,9 +28,11 @@ AdslJumper.preloadState.prototype = {
         this.load.audio('playerDeath', 'assets/audio/playerDeath.wav');
         this.load.audio('step01', 'assets/audio/step01.wav');
         this.load.audio('step02', 'assets/audio/step02.wav');
-        this.load.audio('step03', 'assets/audio/step03.wav');
-        this.load.audio('step04', 'assets/audio/step04.wav');
+        this.load.audio('punch', 'assets/audio/punch.wav');
         this.load.audio('track01', 'assets/audio/track01.mp3');
+
+        // shaders
+        this.game.load.shader('testShader', 'assets/shaders/test.frag');
     },
 
     create: function () {

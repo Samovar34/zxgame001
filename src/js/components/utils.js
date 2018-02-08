@@ -10,12 +10,6 @@ AdslJumper.utils.createFromTileObject = function (element, group) {
     Object.keys(element.properties).forEach(function (key) {
         sprite[key] = element.properties[key];
     });
-
-    // play animation
-//     if (sprite.animated) {
-//         sprite.animations.add("default");
-//         sprite.animations.play("default", 10, true);
-//     }
 };
 
 // создаёт в группе group объект из тайла
@@ -30,12 +24,6 @@ AdslJumper.utils.createFromTileObjectSprite = function (element) {
     });
 
     return sprite;
-
-    // play animation
-//     if (sprite.animated) {
-//         sprite.animations.add("default");
-//         sprite.animations.play("default", 10, true);
-//     }
 };
 
 

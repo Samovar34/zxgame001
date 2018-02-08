@@ -18,9 +18,10 @@ AdslJumper.GameObjectFactory.prototype.createFartParticles = function () {
 };
 
 AdslJumper.GameObjectFactory.prototype.createBackGround01 = function () {
-    var gameObject = this.game.add.sprite(0, 0, "bg001");
-     gameObject.fixedToCamera = true;
 
+    var gameObject = this.game.add.sprite(0, 0, "bg001");
+    gameObject.fixedToCamera = true;
+    
     var child = gameObject.addChild(this.game.make.sprite(454, 198, "killHuman"));
     child.smoothed = false;
     child.animations.add("default", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 9, 10, 9, 10, 9, 10, 9], 2, true);
