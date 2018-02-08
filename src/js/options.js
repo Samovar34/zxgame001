@@ -43,7 +43,7 @@ AdslJumper.gameOptions = (function () {
         fartParticlesSpeed  : {minX: -24, maxX: 24, minY: -6, maxY: 32},
         bloodParticlesSpeed : {minX: -1052, maxX: 1052, minY: -1576, maxY: 1576},
         sparksSpeed: {minX: -256, maxX: 256, minY: -256, maxY: 256},
-        deathAnimationSpeed : 24
+        deathAnimationSpeed : 38
     }
 
     return {

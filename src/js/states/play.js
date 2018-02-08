@@ -72,6 +72,10 @@ AdslJumper.playGameState.prototype = {
         // blood
         this.blood = this.gameObjectFactory.createBloodParticles();
         this.game.layers.fx.add(this.blood);
+        
+        this.meatBlowSprite = this.gameObjectFactory.createMeatBlowSprite(0, 0);
+        this.game.layers.player.add(this.meatBlowSprite);
+        this.meatBlowSprite.kill();
 
         // camera
         this.game.camera.follow(player,  this.game.camera.FOLLOW_PLATFORMER, 0.12, 0.12);
@@ -119,14 +123,14 @@ AdslJumper.playGameState.prototype.createCoins = function () {
         AdslJumper.utils.createFromTileObject(element, this.coins);
     }, this);
 
+
+
     // add tween animation for every coin
     this.coins.forEach(function (coin) {
         coin.position = {x: coin.position.x, y: coin.position.y};
         coin.animations.add("rotate", [0, 1, 2, 3, 4, 5], 8, true);
-        coin.animations.add("collected", [6, 7, 8, 9, 10, 12, 11, 10, 12], 12);
-        coin.animations.getAnimation("collected").killOnComplete = true;
+        coin.animations.add("collected", [6, 7, 8, 9, 10, 12, 11, 10, 12]);
         coin.animations.play("rotate");
-        //game.add.tween(coin).to({y: coin.y + 16}, 500, Phaser.Easing.Linear.None, true, 0 , 1000, true);
     });
 
     this.totalLevelCoins = this.coins.length;
@@ -177,7 +181,7 @@ AdslJumper.playGameState.prototype.playerCoinsHandler = function (player, coin) 
     // flag to destroy next update
     //coin.pendingDestroy = true;
     coin.body.enable = false;
-    coin.animations.play("collected");
+    coin.animations.play("collected", 12, false, true);
     
     this.soundManager.playCoin();
 
@@ -237,12 +241,12 @@ AdslJumper.playGameState.prototype.trapHandler = function (player, trap) {
     this.blood.y = player.y + offsetY;
     this.blood.start(true, 2200, 20, 64, 100);
 
-    var meatBlowSprite = this.gameObjectFactory.createMeatBlowSprite(player.x + offsetX, player.y + offsetY);
-    this.game.layers.player.add(meatBlowSprite);
-    meatBlowSprite.animations.play("default");
+    this.meatBlowSprite.position.setTo(player.x + offsetX, player.y + offsetY);
+    this.meatBlowSprite.revive();
+    this.meatBlowSprite.animations.play("default");
 
 
-    this.game.camera.shake(0.004, this.options.cameraShakeTime);
+    this.game.camera.shake(0.01, this.options.cameraShakeTime);
     this.game.camera.onShakeComplete.addOnce(function() {
         // restart level after camera shake
         this.game.camera.fade(0x000000, this.options.cameraFadeTime);
@@ -310,8 +314,6 @@ AdslJumper.playGameState.prototype.createTraps = function () {
         curThorn.animations.play("default");
         this.thorns.add(curThorn);
     }
-    
-    
 };
 
 AdslJumper.playGameState.prototype.playerExitDoorHandler = function (player, door) {

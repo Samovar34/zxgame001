@@ -30,7 +30,7 @@ window.onload = function () {
     game = new Phaser.Game({
         width: gameOptions.gameWidth,
         height: gameOptions.gameHeight,
-        renderer: Phaser.CANVAS,
+        renderer: Phaser.AUTO,
         antialias: false
     });
     game.state.add("boot", AdslJumper.bootState);
