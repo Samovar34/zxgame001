@@ -35,6 +35,9 @@ AdslJumper.SoundManager = function (game) {
     this.punch = this.game.add.sound("punch");
     this.punch.volume = this.options.sfx;
 
+    this.explosion = this.game.add.sound("explosion");
+    this.explosion.volume = this.options.sfx;
+
     // music
     this.currentTrack = null;
     this.track01 = this.game.add.audio('track01');
@@ -126,6 +129,12 @@ AdslJumper.SoundManager.prototype.playPunch = function () {
     }
 };
 
+// void
+AdslJumper.SoundManager.prototype.playExplosion = function () {
+    if (!this.explosion.isPlaying) {
+        this.explosion.play();
+    }
+};
 
 // boolean
 AdslJumper.SoundManager.prototype.isMusicPlaying = function () {

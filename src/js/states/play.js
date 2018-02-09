@@ -27,19 +27,17 @@ AdslJumper.playGameState.prototype = {
             this.soundManager.playTrack();
         }
 
-        // TODO Delete?
-        // this.filter = new Phaser.Filter(game, null, game.cache.getShader('testShader'));
 
-        // this.filter.setResolution(this.options.gameWidth, 230);
-    
-        // this.sprite = game.add.sprite();
-        // this.sprite.width = this.options.gameWidth;
-        // this.sprite.height = 230;
-    
-        // this.sprite.filters = [this.filter];
-
-        //bg
         test = this.background = this.gameObjectFactory.createBackGround01();
+
+        this.blow = this.game.add.sprite(128, 256, "blow");
+        this.blow.animations.add("blow", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+        this.blow.kill();
+
+        this.mine = this.game.add.sprite(576, 466, "mine");
+        this.mine.animations.add("default", [0, 1], 1, true);
+        this.mine.animations.play("default");
+        this.game.physics.arcade.enable(this.mine);
 
         // game objects
         this.map = game.add.tilemap("map" + level, 32, 32);
@@ -84,6 +82,8 @@ AdslJumper.playGameState.prototype = {
         this.game.layers.player.add(this.meatBlowSprite);
         this.meatBlowSprite.kill();
 
+        this.game.layers.fx.add(this.blow);
+
         // camera
         this.game.camera.follow(player,  this.game.camera.FOLLOW_PLATFORMER, 0.12, 0.12);
         this.game.camera.flash(0x000000, this.options.cameraFlashTime);
@@ -96,6 +96,15 @@ AdslJumper.playGameState.prototype = {
         // // physics
         game.physics.arcade.collide(this.player, this.collisionLayer);
         game.physics.arcade.overlap(this.player, this.thorns, this.trapHandler, null, this);
+        game.physics.arcade.overlap(this.player, this.mine, function() {
+            this.mine.kill();
+            this.blow.revive();
+            this.blow.x = this.mine.x-64 + 16;
+            this.blow.y = this.mine.y-96;
+            this.blow.animations.play("blow", 48, false, true); 
+            this.soundManager.playExplosion();
+            this.gameOver(0, 0, false);
+        }, null, this);
         
         // if player collected all coins check overlap or check overlap with coins
         if (this.canCheckOverlapExitDoor == true) {
@@ -197,34 +206,7 @@ AdslJumper.playGameState.prototype.trapHandler = function (player, trap) {
         } 
     }
 
-    this.game.camera.unfollow();
-    
-    // player dies
-    player.pendingDestroy = true;
-
-    // play sound
-    this.soundManager.playPlayerDeath();
-
-    // start blood
-    this.blood.x = player.x + offsetX;
-    this.blood.y = player.y + offsetY;
-    this.blood.start(true, 2200, 20, 64, 100);
-
-    // meatBlow sprite animation
-    this.meatBlowSprite.position.setTo(player.x + offsetX, player.y + offsetY);
-    this.meatBlowSprite.revive();
-    this.meatBlowSprite.animations.play("default");
-
-
-    this.game.camera.shake(0.01, this.options.cameraShakeTime);
-    this.game.camera.onShakeComplete.addOnce(function() {
-        // restart level after camera shake
-        this.game.camera.fade(0x000000, this.options.cameraFadeTime);
-        this.game.camera.onFadeComplete.addOnce(function() {
-            // restart current state
-            this.game.state.start(this.game.state.current);
-        }, this);
-      }, this);
+    this.gameOver(offsetX, offsetX, true);
 };
 
 AdslJumper.playGameState.prototype.createTraps = function () {
@@ -280,3 +262,37 @@ AdslJumper.playGameState.prototype.playerExitDoorHandler = function (player, doo
         }, this);
     }
 };
+
+AdslJumper.playGameState.prototype.gameOver = function (offsetX, offsetY, isPlaySound) {
+    this.game.camera.unfollow();
+    
+    // player dies
+    player.pendingDestroy = true;
+
+    // play sound
+    if (isPlaySound) {
+        this.soundManager.playPlayerDeath();
+    }
+    
+
+    // start blood
+    this.blood.x = player.x + offsetX;
+    this.blood.y = player.y + offsetY;
+    this.blood.start(true, 2200, 20, 64, 100);
+
+    // meatBlow sprite animation
+    this.meatBlowSprite.position.setTo(player.x + offsetX, player.y + offsetY);
+    this.meatBlowSprite.revive();
+    this.meatBlowSprite.animations.play("default");
+
+
+    this.game.camera.shake(0.01, this.options.cameraShakeTime);
+    this.game.camera.onShakeComplete.addOnce(function() {
+        // restart level after camera shake
+        this.game.camera.fade(0x000000, this.options.cameraFadeTime);
+        this.game.camera.onFadeComplete.addOnce(function() {
+            // restart current state
+            this.game.state.start(this.game.state.current);
+        }, this);
+      }, this);
+}

@@ -17,6 +17,8 @@ AdslJumper.preloadState.prototype = {
         this.game.load.spritesheet("movableThorn", "/assets/images/movableThornRight.png", 64, 32, 8);
         this.game.load.spritesheet("blood", "/assets/images/blood.png", 8, 8, 4);
         this.game.load.spritesheet("led", "/assets/images/led.png", 6, 6, 3);
+        this.game.load.spritesheet("blow", "/assets/images/blow.png", 128, 128, 12);
+        this.game.load.spritesheet("mine", "/assets/images/mine.png", 16, 16, 2);
         this.game.load.image("bg001", "/assets/images/back_001.png");
         this.game.load.image("exit", "/assets/images/exit.png");
 
@@ -30,6 +32,7 @@ AdslJumper.preloadState.prototype = {
         this.load.audio('step01', 'assets/audio/step01.wav');
         this.load.audio('step02', 'assets/audio/step02.wav');
         this.load.audio('punch', 'assets/audio/punch.wav');
+        this.load.audio('explosion', 'assets/audio/explosion.wav');
         this.load.audio('track01', 'assets/audio/track01.mp3');
 
         // shaders
