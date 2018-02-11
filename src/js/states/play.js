@@ -27,7 +27,6 @@ AdslJumper.playGameState.prototype = {
             this.soundManager.playTrack();
         }
 
-
         test = this.background = this.gameObjectFactory.createBackGround01();
 
         this.blow = this.game.add.sprite(128, 256, "blow");
