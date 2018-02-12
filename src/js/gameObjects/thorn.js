@@ -7,6 +7,7 @@ AdslJumper.Thorn = function (game, x, y, type) {
     Phaser.Sprite.call(this, game, x, y, "thorn");
 
     this.game = game;
+    this.tag = "thorn";
 
     // enable physics
     this.game.physics.arcade.enable(this);

@@ -17,7 +17,7 @@ AdslJumper.preloadState.prototype = {
         this.game.load.spritesheet("movableThorn", "/assets/images/movableThornRight.png", 64, 32, 8);
         this.game.load.spritesheet("blood", "/assets/images/blood.png", 8, 8, 4);
         this.game.load.spritesheet("led", "/assets/images/led.png", 6, 6, 3);
-        this.game.load.spritesheet("blow", "/assets/images/blow.png", 128, 128, 14);
+        this.game.load.spritesheet("explosionSprite", "/assets/images/blow.png", 128, 128, 14);
         this.game.load.spritesheet("mine", "/assets/images/mine.png", 16, 14, 2);
         this.game.load.image("bg001", "/assets/images/back_001.png");
         this.game.load.image("exit", "/assets/images/exit.png");

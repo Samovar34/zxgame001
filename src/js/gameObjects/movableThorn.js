@@ -23,7 +23,7 @@ AdslJumper.MovableThorn = function (game, x, y, period, type) {
             this.name = "movableThornRight";
             break;
         case "left":
-            this.position.x += 64;
+            this.position.x += 34;
             this.scale.setTo(-1, 1);
             this.name = "movableThornLeft";
             break;

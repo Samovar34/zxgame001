@@ -44,19 +44,31 @@
                  "id":2,
                  "name":"ThornUp",
                  "rotation":0,
-                 "type":"thornUp",
+                 "type":"trap",
                  "visible":true,
                  "width":32,
                  "x":160,
                  "y":480
                 }, 
                 {
+                 "gid":1084,
+                 "height":14,
+                 "id":38,
+                 "name":"Mine",
+                 "rotation":0,
+                 "type":"trap",
+                 "visible":true,
+                 "width":16,
+                 "x":424,
+                 "y":448
+                }, 
+                {
                  "gid":1057,
                  "height":32,
-                 "id":3,
+                 "id":39,
                  "name":"ThornUp",
                  "rotation":0,
-                 "type":"thornUp",
+                 "type":"trap",
                  "visible":true,
                  "width":32,
                  "x":192,
@@ -65,46 +77,10 @@
                 {
                  "gid":1057,
                  "height":32,
-                 "id":4,
+                 "id":40,
                  "name":"ThornUp",
                  "rotation":0,
-                 "type":"thornUp",
-                 "visible":true,
-                 "width":32,
-                 "x":224,
-                 "y":480
-                }, 
-                {
-                 "gid":1057,
-                 "height":32,
-                 "id":5,
-                 "name":"ThornUp",
-                 "rotation":0,
-                 "type":"thornUp",
-                 "visible":true,
-                 "width":32,
-                 "x":256,
-                 "y":480
-                }, 
-                {
-                 "gid":1057,
-                 "height":32,
-                 "id":6,
-                 "name":"ThornUp",
-                 "rotation":0,
-                 "type":"thornUp",
-                 "visible":true,
-                 "width":32,
-                 "x":288,
-                 "y":480
-                }, 
-                {
-                 "gid":1057,
-                 "height":32,
-                 "id":7,
-                 "name":"ThornUp",
-                 "rotation":0,
-                 "type":"thornUp",
+                 "type":"trap",
                  "visible":true,
                  "width":32,
                  "x":320,
@@ -113,62 +89,174 @@
                 {
                  "gid":1057,
                  "height":32,
-                 "id":8,
+                 "id":41,
                  "name":"ThornUp",
                  "rotation":0,
-                 "type":"thornUp",
+                 "type":"trap",
                  "visible":true,
                  "width":32,
-                 "x":448,
+                 "x":288,
                  "y":480
                 }, 
                 {
-                 "gid":1057,
-                 "height":32,
-                 "id":9,
-                 "name":"ThornUp",
+                 "gid":1084,
+                 "height":14,
+                 "id":43,
+                 "name":"Mine",
                  "rotation":0,
-                 "type":"thornUp",
+                 "type":"trap",
                  "visible":true,
-                 "width":32,
-                 "x":480,
+                 "width":16,
+                 "x":264,
                  "y":480
                 }, 
                 {
-                 "gid":1057,
-                 "height":32,
-                 "id":10,
-                 "name":"ThornUp",
+                 "gid":1084,
+                 "height":14,
+                 "id":48,
+                 "name":"Mine",
                  "rotation":0,
-                 "type":"thornUp",
+                 "type":"trap",
                  "visible":true,
-                 "width":32,
-                 "x":512,
+                 "width":16,
+                 "x":456,
                  "y":480
                 }, 
                 {
-                 "gid":1057,
-                 "height":32,
-                 "id":11,
-                 "name":"ThornUp",
+                 "gid":1084,
+                 "height":14,
+                 "id":49,
+                 "name":"Mine",
                  "rotation":0,
-                 "type":"thornUp",
+                 "type":"trap",
                  "visible":true,
-                 "width":32,
-                 "x":544,
+                 "width":16,
+                 "x":488,
                  "y":480
                 }, 
                 {
-                 "gid":1057,
-                 "height":32,
-                 "id":13,
-                 "name":"ThornUp",
+                 "gid":1084,
+                 "height":14,
+                 "id":50,
+                 "name":"Mine",
                  "rotation":0,
-                 "type":"thornUp",
+                 "type":"trap",
                  "visible":true,
-                 "width":32,
-                 "x":576,
+                 "width":16,
+                 "x":520,
                  "y":480
+                }, 
+                {
+                 "gid":1084,
+                 "height":14,
+                 "id":51,
+                 "name":"Mine",
+                 "rotation":0,
+                 "type":"trap",
+                 "visible":true,
+                 "width":16,
+                 "x":552,
+                 "y":480
+                }, 
+                {
+                 "gid":1084,
+                 "height":14,
+                 "id":52,
+                 "name":"Mine",
+                 "rotation":0,
+                 "type":"trap",
+                 "visible":true,
+                 "width":16,
+                 "x":584,
+                 "y":480
+                }, 
+                {
+                 "gid":1086,
+                 "height":32,
+                 "id":53,
+                 "name":"MovableThorn",
+                 "properties":
+                    {
+                     "direction":"right",
+                     "period":0
+                    },
+                 "propertytypes":
+                    {
+                     "direction":"string",
+                     "period":"int"
+                    },
+                 "rotation":0,
+                 "type":"trap",
+                 "visible":true,
+                 "width":64,
+                 "x":32,
+                 "y":352
+                }, 
+                {
+                 "gid":1086,
+                 "height":32,
+                 "id":54,
+                 "name":"MovableThorn",
+                 "properties":
+                    {
+                     "direction":"left",
+                     "period":0
+                    },
+                 "propertytypes":
+                    {
+                     "direction":"string",
+                     "period":"int"
+                    },
+                 "rotation":0,
+                 "type":"trap",
+                 "visible":true,
+                 "width":64,
+                 "x":704,
+                 "y":352
+                }, 
+                {
+                 "gid":1086,
+                 "height":32,
+                 "id":55,
+                 "name":"MovableThorn",
+                 "properties":
+                    {
+                     "direction":"left",
+                     "period":1
+                    },
+                 "propertytypes":
+                    {
+                     "direction":"string",
+                     "period":"int"
+                    },
+                 "rotation":0,
+                 "type":"trap",
+                 "visible":true,
+                 "width":64,
+                 "x":704,
+                 "y":256
+                }, 
+                {
+                 "gid":1086,
+                 "height":32,
+                 "id":56,
+                 "name":"MovableThorn",
+                 "properties":
+                    {
+                     "direction":"left",
+                     "period":0
+                    },
+                 "propertytypes":
+                    {
+                     "direction":"string",
+                     "period":"int"
+                    },
+                 "rotation":0,
+                 "type":"trap",
+                 "visible":true,
+                 "width":64,
+                 "x":704,
+                 "y":128
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -389,8 +477,19 @@
          "visible":true,
          "x":0,
          "y":0
+        }, 
+        {
+         "data":[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+         "height":16,
+         "name":"hiddenLayer",
+         "opacity":1,
+         "type":"tilelayer",
+         "visible":true,
+         "width":24,
+         "x":0,
+         "y":0
         }],
- "nextobjectid":33,
+ "nextobjectid":57,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.0.3",
@@ -467,6 +566,34 @@
          "tilecount":3,
          "tileheight":6,
          "tilewidth":6,
+         "transparentcolor":"#ff00ff"
+        }, 
+        {
+         "columns":2,
+         "firstgid":1084,
+         "image":"..\/..\/..\/..\/..\/..\/13-YandexDisk\/art\/gamedev\/adsl_jumper\/images\/mine.png",
+         "imageheight":14,
+         "imagewidth":32,
+         "margin":0,
+         "name":"mine",
+         "spacing":0,
+         "tilecount":2,
+         "tileheight":14,
+         "tilewidth":16,
+         "transparentcolor":"#ff00ff"
+        }, 
+        {
+         "columns":4,
+         "firstgid":1086,
+         "image":"..\/..\/..\/..\/..\/..\/13-YandexDisk\/art\/gamedev\/adsl_jumper\/images\/movableThornRight.png",
+         "imageheight":64,
+         "imagewidth":256,
+         "margin":0,
+         "name":"movableThorn",
+         "spacing":0,
+         "tilecount":8,
+         "tileheight":32,
+         "tilewidth":64,
          "transparentcolor":"#ff00ff"
         }],
  "tilewidth":32,

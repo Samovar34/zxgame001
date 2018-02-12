@@ -11,6 +11,7 @@
 //@@include('./gameObjects/player.js')
 //@@include('./gameObjects/exitDoor.js')
 //@@include('./gameObjects/led.js')
+//@@include('./gameObjects/mine.js')
 
 //@@include('./states/boot.js')
 //@@include('./states/preload.js')

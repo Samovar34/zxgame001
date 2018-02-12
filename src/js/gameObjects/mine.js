@@ -28,9 +28,9 @@ AdslJumper.Mine.prototype.constructor = AdslJumper.Mine;
 AdslJumper.Mine.prototype.blow = function () {
     this.body.enable = false;
     this.kill();
+    this.explosionSprite.revive();
     this.explosionSprite.x = this.x - 48;
     this.explosionSprite.y = this.y - 96;
-    this.explosionSprite.revive();
     this.soundManager.playExplosion();
     this.explosionSprite.animations.play("default", 24, false, true);
 }
