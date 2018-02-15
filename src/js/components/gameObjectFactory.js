@@ -58,7 +58,7 @@ AdslJumper.GameObjectFactory.prototype.createExplosionSprite = function () {
 }
 
 AdslJumper.GameObjectFactory.prototype.createBloodParticles = function () {
-    var gameObject = this.game.add.emitter(0, 0, 200);
+    var gameObject = this.game.add.emitter(0, 0, 128);
     gameObject.makeParticles('blood', [0, 1, 2, 3]);
     gameObject.minRotation = 0;
     gameObject.maxRotation = 0;

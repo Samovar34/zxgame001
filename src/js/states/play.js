@@ -1,10 +1,5 @@
 AdslJumper.playGameState = function (game) {};
 
-// TODO убрать из глобальной видимости
-var level = 1;
-var score = 0;
-var currentTrack;
-var test;
 AdslJumper.playGameState.prototype = {
     // main state functions
     create: function () {
@@ -15,6 +10,9 @@ AdslJumper.playGameState.prototype = {
         this.collectedCoins = 0;
         this.totalLevelCoins = 0;
         this.canCheckOverlapExitDoor = false;
+
+        // get score
+        this.currentScore = AdslJumper.data.score;
         
         // get modules
         this.input = new AdslJumper.Input(this.game);
@@ -32,7 +30,7 @@ AdslJumper.playGameState.prototype = {
 
 
         // game world
-        this.map = game.add.tilemap("map" + level, 32, 32);
+        this.map = game.add.tilemap("map" + AdslJumper.data.level, 32, 32);
         this.map.addTilesetImage("world_tilemap", "tilemap");
        
         // create layers
@@ -45,7 +43,7 @@ AdslJumper.playGameState.prototype = {
         this.collisionLayer.resizeWorld();
         this.bacgroundLayer.resizeWorld();
 
-        // this.createDoors();
+        this.createDoors();
 
         // foreground layer for FX
         this.foregroundLayer = this.game.add.group();
@@ -63,7 +61,7 @@ AdslJumper.playGameState.prototype = {
 
         // create Game Objects
         // create coins group and add to game world
-        // this.createCoins();
+        this.createCoins();
 
         this.createTraps();
         this.createFx();
@@ -109,8 +107,9 @@ AdslJumper.playGameState.prototype = {
 
     render: function () {
 
-        this.game.debug.text("room: " + level, 8, 12, "#00ff00");
+        this.game.debug.text("room: " + AdslJumper.data.level, 8, 12, "#00ff00");
         this.game.debug.text("coins: " + this.collectedCoins + "/" + this.totalLevelCoins, 8, 27, "#00ff00");
+        this.game.debug.text("score: " + this.currentScore, 8, 42, "#00ff00");
         // this.game.debug.body(this.exitDoor);
         // this.game.debug.body(this.player);        
     }
@@ -125,7 +124,7 @@ AdslJumper.playGameState.prototype.createCoins = function () {
     this.coins = this.game.add.group();
 
     AdslJumper.utils.findObjectsByType("coin", this.map, "objectsLayer").forEach(function (element) {
-        this.coins.add(new AdslJumper.Coin(this.game, AdslJumper.modules.soundManager, element.x, element.y));
+        this.coins.add(new AdslJumper.Coin(this.game, AdslJumper.modules.soundManager, element.x, element.y + 16));
     }, this);
 
     // play animation
@@ -142,15 +141,16 @@ AdslJumper.playGameState.prototype.createDoors = function () {
     var exitDoorTiledObject = AdslJumper.utils.findObjectsByType('exitDoor', this.map, 'objectsLayer');
 
     // create enter Door
-    this.enterDoor = this.game.add.sprite(enterDoorTiledObject[0].x, enterDoorTiledObject[0].y - 48, "door");
+    this.enterDoor = this.game.add.sprite(enterDoorTiledObject[0].x, enterDoorTiledObject[0].y - 28, "door");
+    this.enterDoor.animations.add("default", [0, 1], 2, true);
     this.enterDoor.smoothed = false;
-    this.enterDoor.animations.add("close", [5, 4, 3, 2, 1, 0], 10);
+    this.enterDoor.animations.play("default");
+    
 
-    this.soundManager.playCloseDoor();
-    this.enterDoor.animations.play("close");
+    //this.soundManager.playCloseDoor();
 
     // create exit Door
-    this.exitDoor = new AdslJumper.ExitDoor(this.game, exitDoorTiledObject[0].x, exitDoorTiledObject[0].y - 48, exitDoorTiledObject[0].properties.nextLevel);
+    this.exitDoor = new AdslJumper.ExitDoor(this.game, exitDoorTiledObject[0].x, exitDoorTiledObject[0].y - 28, exitDoorTiledObject[0].properties.nextLevel);
 }
 
 // void
@@ -194,7 +194,7 @@ AdslJumper.playGameState.prototype.coinsHandler = function (player, coin) {
     coin.disableBodyAndKill();
 
     this.collectedCoins++;
-    score += 10;
+    this.currentScore += 10;
 
     if (this.collectedCoins >= this.totalLevelCoins) {
         this.canCheckOverlapExitDoor = true;
@@ -267,15 +267,17 @@ AdslJumper.playGameState.prototype.exitDoorHandler = function (player, door) {
         this.player.kill();
         door.animations.play("close");
 
+        // save score
+        AdslJumper.data.score = this.currentScore;
+
         // camera
         this.game.camera.follow(door,  this.game.camera.FOLLOW_PLATFORMER, 0.1, 0.1);
 
         // TODO проиграть анимация захода персонажа в дверь
         this.game.camera.fade(0x000000, this.options.cameraFadeTime);
         this.game.camera.onFadeComplete.addOnce(function() {
-            // TODO level global variable
-            // set AdslJumper variable
-            level = door.nextLevel;
+
+            AdslJumper.data.level = door.nextLevel;
             this.game.state.start(this.game.state.current);
         }, this);
     }
@@ -299,7 +301,7 @@ AdslJumper.playGameState.prototype.gameOver = function (offsetX, offsetY, isPlay
     // start blood
     this.blood.x = player.x + offsetX;
     this.blood.y = player.y + offsetY;
-    this.blood.start(true, 2200, 20, 64, 100);
+    this.blood.start(true, 2200, 20, 128, 100);
 
     // meatBlow sprite animation
     this.meatBlowSprite.position.setTo(player.x + offsetX, player.y + offsetY);
