@@ -33,7 +33,9 @@ AdslJumper.preloadState.prototype = {
         this.load.audio('step02', 'assets/audio/step02.wav');
         this.load.audio('punch', 'assets/audio/punch.wav');
         this.load.audio('explosion', 'assets/audio/explosion.wav');
+        this.load.audio('track00', 'assets/audio/intro.mp3');
         this.load.audio('track01', 'assets/audio/track01.mp3');
+        this.load.audio('track02', 'assets/audio/track02.mp3');
 
         // shaders
         this.game.load.shader('testShader', 'assets/shaders/test.frag');

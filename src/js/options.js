@@ -16,7 +16,7 @@ AdslJumper.gameOptions = (function () {
     };
 
     var soundOptions = {
-        musicVolume: 0.0,
+        musicVolume: 0.5,
         sfx: 0.7
     };
 
@@ -34,8 +34,8 @@ AdslJumper.gameOptions = (function () {
         inAirDrag: 0.5,
         groundDelay: 5, // delay in frames
         wallBreakTime: 15,
-        walkAnimationSpeed: 10,
-        doubleAnimationSpeed: 12,
+        walkAnimationSpeed: 9,
+        doubleAnimationSpeed: 9,
         comeInAnimationSpeed: 10
     };
 
