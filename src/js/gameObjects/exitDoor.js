@@ -14,7 +14,7 @@ AdslJumper.ExitDoor = function (game, x, y, nextLevel) {
     this.isOpening = false;
 
     // animation
-    this.animationOpenDoor = this.animations.add("open", [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], 14);
+    this.animationOpenDoor = this.animations.add("open", [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], 24);
     this.animationCloseDoor = this.animations.add("close", [14, 15, 16, 17], 8);
     this.animations.add("default", [0, 1], 2, true);
     // physics

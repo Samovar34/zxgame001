@@ -12,6 +12,9 @@
 //@@include('./gameObjects/exitDoor.js')
 //@@include('./gameObjects/led.js')
 //@@include('./gameObjects/mine.js')
+//@@include('./gameObjects/error01.js')
+//@@include('./gameObjects/fan01.js')
+//@@include('./gameObjects/doorSensor.js')
 
 //@@include('./states/boot.js')
 //@@include('./states/preload.js')
