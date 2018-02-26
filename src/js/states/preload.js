@@ -9,7 +9,7 @@ AdslJumper.preloadState.prototype = {
         
         this.game.load.image('tilemap', 'assets/images/adsl_world_tilemap.png');
         this.game.load.spritesheet("player", "/assets/images/player.png", 32, 32, 21);
-        this.game.load.spritesheet("coin", "/assets/images/internet.png", 32, 32, 13);
+        this.game.load.spritesheet("coin", "/assets/images/bitcoin.png", 32, 32, 14);
         this.game.load.spritesheet("door", "/assets/images/door2.png", 48, 60, 18);
         this.game.load.spritesheet("killHuman", "/assets/images/kill_human.png", 112, 30, 11);
         this.game.load.spritesheet("sparks", "/assets/images/sparks.png", 8, 8, 4);
@@ -39,6 +39,8 @@ AdslJumper.preloadState.prototype = {
         this.load.audio('step02', 'assets/audio/step02.wav');
         this.load.audio('punch', 'assets/audio/punch.wav');
         this.load.audio('explosion', 'assets/audio/explosion.wav');
+
+        // music
         this.load.audio('track00', 'assets/audio/intro.mp3');   
         this.load.audio('track01', 'assets/audio/track01.mp3');
         this.load.audio('track02', 'assets/audio/track02.mp3');

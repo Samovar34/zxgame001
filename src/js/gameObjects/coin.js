@@ -16,8 +16,8 @@ AdslJumper.Coin = function (game, soundManager, x, y) {
     this.game.physics.arcade.enable(this);
 
     // animation
-    this.animations.add("rotate", [0, 1, 2, 3, 4, 3, 2, 1], 8, true);
-    this.animations.add("collected", [6, 7, 8, 9, 10, 11, 12]);
+    this.animations.add("rotate", [0, 1, 2, 3, 4, 5, 0, 6], 9, true);
+    this.animations.add("collected", [7, 8, 9, 10, 11, 12]);
 };
 
 AdslJumper.Coin.prototype = Object.create(Phaser.Sprite.prototype);
@@ -27,5 +27,5 @@ AdslJumper.Coin.prototype.constructor = AdslJumper.Coin;
 AdslJumper.Coin.prototype.disableBodyAndKill = function () {
     this.body.enable = false;
     this.soundManager.playCoin();
-    this.animations.play("collected", 24, false, true);
+    this.animations.play("collected", 18, false, true);
 }
