@@ -23,6 +23,7 @@ window.onload = function () {
 
     game.state.add("boot", AdslJumper.bootState);
     game.state.add("preload", AdslJumper.preloadState);
+    game.state.add("story", AdslJumper.storyState);
     game.state.add("menu", AdslJumper.menuState);
     game.state.add("play", AdslJumper.testState);
 

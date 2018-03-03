@@ -26,7 +26,7 @@ AdslJumper.preloadState.prototype = {
         this.game.load.image("exit", "/assets/images/exit.png");
 
         // test atlas
-        this.game.load.atlas("atlas", 'assets/images/atlas.png', 'assets/images/atlas.json');
+        this.game.load.atlas("atlas_1", 'assets/images/atlas1/atlas.png', 'assets/images/atlas1/atlas.json'); 
 
         // audio
         this.load.audio('jump', 'assets/audio/jump.wav');
@@ -39,9 +39,12 @@ AdslJumper.preloadState.prototype = {
         this.load.audio('step02', 'assets/audio/step02.wav');
         this.load.audio('punch', 'assets/audio/punch.wav');
         this.load.audio('explosion', 'assets/audio/explosion.wav');
+        this.load.audio('menu_select_0', 'assets/audio/menu_select_0.wav');
+        this.load.audio('menu_select_1', 'assets/audio/menu_select_1.wav');
+
 
         // music
-        this.load.audio('track00', 'assets/audio/intro.mp3');   
+        this.load.audio('intro', 'assets/audio/intro.mp3');   
         this.load.audio('track01', 'assets/audio/track01.mp3');
         this.load.audio('track02', 'assets/audio/track02.mp3');
 
@@ -60,6 +63,6 @@ AdslJumper.preloadState.prototype = {
             score: 0
         };
 
-        this.game.state.start("menu");
+        this.game.state.start("story");
     }
 }

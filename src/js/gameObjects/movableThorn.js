@@ -44,5 +44,5 @@ AdslJumper.MovableThorn.prototype.constructor = AdslJumper.MovableThorn;
 
 // if true it can kill player
 AdslJumper.MovableThorn.prototype.isDangerous = function () {
-    return !(this.frame == 0 || this.frame == 1 || this.frame == 2);
+    return !(this.frame == 0 || this.frame == 1 || this.frame == 2 || this.frame == 3);
 }

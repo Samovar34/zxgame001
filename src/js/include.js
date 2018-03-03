@@ -18,6 +18,7 @@
 
 //@@include('./states/boot.js')
 //@@include('./states/preload.js')
+//@@include('./states/story.js')
 //@@include('./states/menu.js')
 //@@include('./states/play.js')
 

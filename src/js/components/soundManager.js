@@ -37,10 +37,18 @@ AdslJumper.SoundManager = function (game) {
 
     this.explosion = this.game.add.sound("explosion");
     this.explosion.volume = this.options.sfx;
+    
+    this.menuSelect0 = this.game.add.sound("menu_select_0");
+    this.menuSelect0.volume = this.options.sfx;
+
+    this.menuSelect1 = this.game.add.sound("menu_select_1");
+    this.menuSelect1.volume = this.options.sfx;
 
     // music
     this.currentTrack = null;
+    this.intro = this.game.add.audio('intro');
     this.track01 = this.game.add.audio('track01');
+    this.track02 = this.game.add.audio('track02');
 };
 
 // TODO подумать нужно ли это
@@ -135,6 +143,12 @@ AdslJumper.SoundManager.prototype.playExplosion = function () {
         this.explosion.play();
     }
 };
+
+// void
+AdslJumper.SoundManager.prototype.playMenuSelect = function (val) {
+    this["menuSelect"+ val].play();
+};
+
 
 // boolean
 AdslJumper.SoundManager.prototype.isMusicPlaying = function () {
