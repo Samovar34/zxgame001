@@ -4,7 +4,7 @@
 AdslJumper.Coin = function (game, soundManager, x, y) {
 
     // extend
-    Phaser.Sprite.call(this, game, x, y, "coin");
+    Phaser.Sprite.call(this, game, x, y, "atlas_2", "bitcoin1.png");
 
     this.game = game;
     this.soundManager = soundManager;
@@ -16,8 +16,24 @@ AdslJumper.Coin = function (game, soundManager, x, y) {
     this.game.physics.arcade.enable(this);
 
     // animation
-    this.animations.add("rotate", [0, 1, 2, 3, 4, 5, 0, 6], 9, true);
-    this.animations.add("collected", [7, 8, 9, 10, 11, 12]);
+    this.animations.add("rotate", ["bitcoin1.png", 
+        "bitcoin2.png", 
+        "bitcoin3.png", 
+        "bitcoin4.png", 
+        "bitcoin5.png", 
+        "bitcoin6.png", 
+        "bitcoin1.png", 
+        "bitcoin7.png"
+    ], 9, true);
+    this.animations.add("collected", [
+        "bitcoin8.png", 
+        "bitcoin9.png", 
+        "bitcoin10.png", 
+        "bitcoin11.png", 
+        "bitcoin12.png", 
+        "bitcoin13.png",
+        "bitcoin14.png"
+    ]);
 };
 
 AdslJumper.Coin.prototype = Object.create(Phaser.Sprite.prototype);

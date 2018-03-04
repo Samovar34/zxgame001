@@ -16,7 +16,7 @@ AdslJumper.gameOptions = (function () {
     };
 
     var soundOptions = {
-        musicVolume: 0.6,
+        musicVolume: 0.7,
         sfx: 0.9
     };
 

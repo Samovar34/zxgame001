@@ -6,27 +6,10 @@ AdslJumper.preloadState.prototype = {
         for (var i = 0; i <= 1; i++) {
             this.game.load.tilemap('map' + i, 'assets/levels/level' + i + ".json", null, Phaser.Tilemap.TILED_JSON);
         }
-        
-        this.game.load.image('tilemap', 'assets/images/adsl_world_tilemap.png');
-        this.game.load.spritesheet("player", "/assets/images/player.png", 32, 32, 21);
-        this.game.load.spritesheet("coin", "/assets/images/bitcoin.png", 32, 32, 14);
-        this.game.load.spritesheet("door", "/assets/images/door2.png", 48, 60, 18);
-        this.game.load.spritesheet("killHuman", "/assets/images/kill_human.png", 112, 30, 11);
-        this.game.load.spritesheet("sparks", "/assets/images/sparks.png", 8, 8, 4);
-        this.game.load.spritesheet("thorn", "/assets/images/thorn.png", 32, 32, 24);
-        this.game.load.spritesheet("movableThorn", "/assets/images/movableThornRight.png", 64, 32, 8);
-        this.game.load.spritesheet("blood", "/assets/images/blood.png", 8, 8, 4);
-        this.game.load.spritesheet("led", "/assets/images/led.png", 6, 6, 3);
-        this.game.load.spritesheet("explosionSprite", "/assets/images/blow.png", 128, 128, 14);
-        this.game.load.spritesheet("mine", "/assets/images/mine.png", 16, 14, 2);
-        this.game.load.spritesheet("error01", "/assets/images/error01.png", 22, 22, 2);
-        this.game.load.spritesheet("fan01", "/assets/images/fan01.png", 32, 32, 2);
-        this.game.load.spritesheet("doorSensor", "/assets/images/doorSensor.png", 38, 8, 10);
-        this.game.load.image("bg001", "/assets/images/back_001.png");
-        this.game.load.image("exit", "/assets/images/exit.png");
 
         // test atlas
         this.game.load.atlas("atlas_1", 'assets/images/atlas1/atlas.png', 'assets/images/atlas1/atlas.json'); 
+        this.game.load.atlas("atlas_2", 'assets/images/atlas2/atlas.png', 'assets/images/atlas2/atlas.json'); 
 
         // audio
         this.load.audio('jump', 'assets/audio/jump.wav');
@@ -63,6 +46,15 @@ AdslJumper.preloadState.prototype = {
             score: 0
         };
 
+        // Create bitmapData which will use as a image texture
+        var tileMapImage = game.add.bitmapData(1024, 1024);
+        tileMapImage.draw(this.game.make.image(0, 0, "atlas_2", "adsl_world_tilemap.png"));
+        
+        //	Put the bitmapData into the cache. For tileMap.
+        this.game.cache.addBitmapData('tileMapImage', tileMapImage);
+
         this.game.state.start("story");
+        // // TODO delete
+        // this.game.state.start("play");
     }
 }

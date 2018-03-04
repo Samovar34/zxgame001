@@ -4,7 +4,7 @@
 AdslJumper.Mine = function (game, soundManager, explosionSprite, x, y) {
 
     // extend
-    Phaser.Sprite.call(this, game, x, y, "mine");
+    Phaser.Sprite.call(this, game, x, y, "atlas_2", "mine1.png");
 
     this.game = game;
     this.soundManager = soundManager;
@@ -18,7 +18,7 @@ AdslJumper.Mine = function (game, soundManager, explosionSprite, x, y) {
     this.body.setSize(12, 6, 2, 8);
 
     // animation
-    this.animations.add("default", [0, 1], 1, true);
+    this.animations.add("default", ["mine1.png", "mine2.png"], 1, true);
 };
 
 AdslJumper.Mine.prototype = Object.create(Phaser.Sprite.prototype);

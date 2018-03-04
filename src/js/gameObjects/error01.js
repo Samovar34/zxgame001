@@ -4,7 +4,7 @@
 AdslJumper.Error01 = function (game, x, y) {
 
     // extend
-    Phaser.Sprite.call(this, game, x, y, "error01");
+    Phaser.Sprite.call(this, game, x, y, "atlas_2", "error01.png");
 
     this.game = game;
 
@@ -12,7 +12,7 @@ AdslJumper.Error01 = function (game, x, y) {
     this.name = "error01";
 
     // animation
-    this.animations.add("default", [0, 1], 0.8, true);
+    this.animations.add("default", ["error01.png", "error02.png"], 1.2, true);
     this.animations.play("default");
 };
 

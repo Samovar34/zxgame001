@@ -1,7 +1,7 @@
 // ExitDoor class
 // inheritance Phaser.Sprite class
 AdslJumper.ExitDoor = function (game, x, y, nextLevel) {
-    Phaser.Sprite.call(this, game, x, y, "door");
+    Phaser.Sprite.call(this, game, x, y, "atlas_2", "door1.png");
 
     this.game = game;
 
@@ -14,9 +14,28 @@ AdslJumper.ExitDoor = function (game, x, y, nextLevel) {
     this.isOpening = false;
 
     // animation
-    this.animationOpenDoor = this.animations.add("open", [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], 24);
-    this.animationCloseDoor = this.animations.add("close", [14, 15, 16, 17], 8);
-    this.animations.add("default", [0, 1], 2, true);
+    this.animationOpenDoor = this.animations.add("open", [
+        "door3.png",
+        "door4.png",
+        "door5.png",
+        "door6.png",
+        "door7.png",
+        "door8.png",
+        "door9.png",
+        "door10.png",
+        "door11.png",
+        "door12.png",
+        "door13.png",
+        "door14.png"
+    ], 24);
+    this.animationCloseDoor = this.animations.add("close", [
+        "door15.png",
+        "door16.png",
+        "door17.png",
+        "door18.png"
+    ], 8);
+    this.animations.add("default", ["door1.png", "door2.png"], 2, true);
+    
     // physics
     this.game.physics.arcade.enable(this);
     this.body.setSize(32, 54, 8, 26)

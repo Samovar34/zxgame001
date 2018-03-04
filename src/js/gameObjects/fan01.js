@@ -4,7 +4,7 @@
 AdslJumper.Fan01 = function (game, x, y) {
 
     // extend
-    Phaser.Sprite.call(this, game, x, y, "fan01");
+    Phaser.Sprite.call(this, game, x, y, "atlas_2", "fan01.png");
 
     this.game = game;
 
@@ -12,7 +12,7 @@ AdslJumper.Fan01 = function (game, x, y) {
     this.name = "fan01";
 
     // animation
-    this.animations.add("default", [0, 1], 12, true);
+    this.animations.add("default", ["fan01.png", "fan02.png"], 12, true);
     this.animations.play("default");
 };
 

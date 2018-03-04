@@ -27,11 +27,10 @@ AdslJumper.playGameState.prototype = {
 
         // background image or WebGL Shader
         this.background = this.gameObjectFactory.createBackGround01();
-
-
+        
         // game world
         this.map = game.add.tilemap("map" + AdslJumper.data.level, 32, 32);
-        this.map.addTilesetImage("world_tilemap", "tilemap");
+        this.map.addTilesetImage("world_tilemap", game.cache.getBitmapData("tileMapImage"));
        
         // create layers
         this.bacgroundLayer = this.map.createLayer("backgroundLayer");
@@ -142,9 +141,8 @@ AdslJumper.playGameState.prototype.createDoors = function () {
     var exitDoorTiledObject = AdslJumper.utils.findObjectsByType('exitDoor', this.map, 'objectsLayer');
 
     // create enter Door
-    this.enterDoor = this.game.add.sprite(enterDoorTiledObject[0].x, enterDoorTiledObject[0].y - 28, "door");
-    this.enterDoor.animations.add("default", [0, 1], 2, true);
-    this.enterDoor.smoothed = false;
+    this.enterDoor = this.game.add.sprite(enterDoorTiledObject[0].x, enterDoorTiledObject[0].y - 28, "atlas_2", "door1.png");
+    this.enterDoor.animations.add("default", ["door1.png", "door2.png"], 2, true);
     this.enterDoor.animations.play("default");
     
 
@@ -182,7 +180,7 @@ AdslJumper.playGameState.prototype.createFx = function () {
     // create Leds
     for (i = 0; i < tempArray.length; i++) {
         // y + 26 => поправка к у координате из за особенностей импорта из Tiled
-        this.foregroundLayer.add(new AdslJumper.Led(this.game, tempArray[i].x, tempArray[i].y + 26, "yellow"));
+        this.foregroundLayer.add(new AdslJumper.Led(this.game, tempArray[i].x, tempArray[i].y + 28, "yellow"));
     };
 
     tempArray = AdslJumper.utils.findObjectsByType('error01', this.map, 'fxLayer');
@@ -213,7 +211,7 @@ AdslJumper.playGameState.prototype.coinsHandler = function (player, coin) {
     this.collectedCoins++;
     this.currentScore += 10;
 
-    this.doorSensor.frame = Math.ceil(9 * this.collectedCoins/this.totalLevelCoins);
+    this.doorSensor.frameName = "doorSensor" + (Math.ceil(9 * this.collectedCoins/this.totalLevelCoins)) + ".png";
 
     if (this.collectedCoins >= this.totalLevelCoins) {
         this.doorSensor.animations.play("default");
@@ -281,7 +279,6 @@ AdslJumper.playGameState.prototype.exitDoorHandler = function (player, door) {
     if (door.isOpen) {
         // запретить управление пользователем
         this.player.canInput = false;
-        this.player.comeIn();
 
         // Скрыть игрока
         this.player.kill();

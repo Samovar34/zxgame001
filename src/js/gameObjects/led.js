@@ -4,7 +4,7 @@
 AdslJumper.Led = function (game, x, y, color) {
 
     // extend
-    Phaser.Sprite.call(this, game, x, y, "led");
+    Phaser.Sprite.call(this, game, x, y, "atlas_2", "led2.png");
 
     this.game = game;
 
@@ -13,16 +13,16 @@ AdslJumper.Led = function (game, x, y, color) {
 
     switch(color) {
         case "yellow":
-            this.startFrame = 0;
+            this.startFrame = 1;
             break;
         case "green":
-            this.startFrame = 2;
-            break;
-        case "red":
             this.startFrame = 3;
             break;
+        case "red":
+            this.startFrame = 4;
+            break;
         default:
-            this.startFrame = 0;
+            this.startFrame = 2;
             break;
     }
 
@@ -39,13 +39,36 @@ AdslJumper.Led.prototype.setRandomAnimation = function () {
     var frameRate = this.getRandomFrameRate();
 
     if (temp < 0.3) {
-        this.animations.add("default", [this.startFrame, 1], frameRate, true);
+        this.animations.add("default", [
+            "led" + this.startFrame + ".png", 
+            "led2.png"
+        ], frameRate, true);
     } else if (temp > 0.3 && temp < 0.6) {
-        this.animations.add("default", [this.startFrame, 1, 1, this.startFrame, 1], frameRate, true);
+        this.animations.add("default", [
+            "led" + this.startFrame + ".png",
+            "led2.png",
+            "led2.png",
+            "led" + this.startFrame + ".png",
+            "led2.png"
+        ], frameRate, true);
     } else if (temp > 0.6 && temp < 0.8) {
-        this.animations.add("default", [1, this.startFrame, this.startFrame, 1, 1], frameRate, true);
+        this.animations.add("default", [
+            "led2.png", 
+            "led" + this.startFrame + ".png",
+            "led" + this.startFrame + ".png",
+            "led2.png",
+            "led2.png"
+        ], frameRate, true);
     } else {
-        this.animations.add("default", [this.startFrame, this.startFrame, 1, this.startFrame, 1, 1, 1], frameRate, true);
+        this.animations.add("default", [
+            "led" + this.startFrame + ".png",
+            "led" + this.startFrame + ".png",
+            "led2.png", 
+            "led" + this.startFrame + ".png",
+            "led2.png",
+            "led2.png",
+            "led2.png"
+        ], frameRate, true);
     }
 }
 

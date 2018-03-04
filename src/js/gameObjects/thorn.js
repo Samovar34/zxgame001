@@ -4,7 +4,7 @@
 AdslJumper.Thorn = function (game, x, y, type) {
 
     // extend
-    Phaser.Sprite.call(this, game, x, y, "thorn");
+    Phaser.Sprite.call(this, game, x, y, "atlas_2", "thorn1.png");
 
     this.game = game;
     this.tag = "thorn";
@@ -17,23 +17,23 @@ AdslJumper.Thorn = function (game, x, y, type) {
     switch(type) {
         case "up":
             this.body.setSize(32, 20, 0, 12);
-            this.frame = 0;
+            this.frameName = "thorn1.png";
             break;
         case "right":
             this.body.setSize(20, 22, 0, 5);
-            this.frame = 6;
+            this.frameName = "thorn2.png";
             break;
         case "down":
             this.body.setSize(32, 20, 0, 0);
-            this.frame = 12;
+            this.frameName = "thorn3.png";
             break;
         case "left": 
             this.body.setSize(20, 22, 12, 5);
-            this.frame = 18;
+            this.frameName = "thorn4.png";
             break;
         case "default":
             this.body.setSize(32, 20, 0, 0);
-            this.frame = 12;
+            this.frame = "thorn3.png";
             break;
     }
 };

@@ -4,7 +4,7 @@
 AdslJumper.DoorSensor = function (game, x, y) {
 
     // extend
-    Phaser.Sprite.call(this, game, x, y, "doorSensor");
+    Phaser.Sprite.call(this, game, x, y, "atlas_2", "doorSensor1.png");
 
     this.game = game;
 
@@ -12,7 +12,10 @@ AdslJumper.DoorSensor = function (game, x, y) {
     this.name = "doorSensor";
 
     // animation
-    this.animations.add("default", [0, 9], 2, true);
+    this.animations.add("default", [
+        "doorSensor10.png", 
+        "doorSensor1.png",
+    ], 3, true);
 };
 
 AdslJumper.DoorSensor.prototype = Object.create(Phaser.Sprite.prototype);

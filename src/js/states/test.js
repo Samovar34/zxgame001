@@ -11,72 +11,33 @@ AdslJumper.testState.prototype = {
         game.load.bitmapFont('font', 'assets/font/font.png', 'assets/font/font.xml');
     },
     create: function () {
-        // this.testGroup = this.game.add.group();
-        // gameObject = this.thorn = this.testGroup.add(new AdslJumper.MovableThorn(this.game, 128, 32, 0, "left"));
-        // this.mine = this.game.add.sprite(20, 20, "mine");
-        // this.mine.animations.add("default", [0, 1], 1, true);
-        // this.mine.animations.play("default");
-        // this.game.physics.arcade.enable(this.mine);
-        // this.mine.body.setSize(12, 6, 2, 8);
-
-        this.gameObjectFactory = AdslJumper.modules.gameObjectFactory;
-        this.soundManager = AdslJumper.modules.soundManager;
+        // get modules
         this.input = new AdslJumper.Input(this.game);
+        this.soundManager = AdslJumper.modules.soundManager;
+        this.gameObjectFactory = AdslJumper.modules.gameObjectFactory;
 
-        // music
-        if (!this.soundManager.currentTrack) {
-            this.soundManager.setTrack("intro");
-            this.soundManager.playTrack();
-        }
+        this.tg = this.game.add.group();
 
-        // background image or WebGL Shader
-        this.background = this.gameObjectFactory.createBackGround01();
+        this.tg.add(new AdslJumper.Thorn(this.game, 10, 10, "up"));
+        this.tg.add(new AdslJumper.Thorn(this.game, 52, 10, "right"));
+        this.tg.add(new AdslJumper.Thorn(this.game, 94, 10, "down"));
+        this.tg.add(new AdslJumper.Thorn(this.game, 136, 10, "left"));
 
-        var logo = this.game.add.sprite(160, 10, "atlas_1", "logo.png");
-        logo.scale.setTo(0.5);
-
-
-        this.game.add.sprite(menuX, munuY + menuOffsetY*0, "atlas_1", "menu_items7.png");
-        this.game.add.sprite(menuX, munuY + menuOffsetY*1, "atlas_1", "menu_items9.png");
-        this.game.add.sprite(menuX, munuY + menuOffsetY*2, "atlas_1", "menu_items10.png");
-        this.game.add.sprite(menuX, munuY + menuOffsetY*3, "atlas_1", "menu_items11.png");
-        this.game.add.sprite(menuX+25, 340, "atlas_1", "menu_items13.png");
-
-        gameObject = this.game.add.sprite(250, munuY + menuOffsetY*0, "atlas_1", "arrow.png");
-
+        this.tg.add(new AdslJumper.MovableThorn(this.game, 190, 10, 0, "right"));
+        this.tg.add(new AdslJumper.MovableThorn(this.game, 300, 10, 0, "left"));
+        this.tg.add(new AdslJumper.MovableThorn(this.game, 190, 50, 1, "right"));
+        this.tg.add(new AdslJumper.MovableThorn(this.game, 300, 50, 1, "left"));
     },
 
     update: function () {
         //this.game.physics.arcade.collide(this.player, this.testGroup);
-        this.updateMenu();
-        // update bg
-        this.background._filter.update();
+
     },
     
     render: function () {
     //     this.game.debug.body(gameObject);
-
-    //     this.game.debug.text("isDangerous: " + this.thorn.isDangerous(), 12, 12, "#ffffff");
-    //     //this.game.debug.body(this.player);
+        this.game.debug.physicsGroup(this.tg);
     }
 };
 
-AdslJumper.testState.prototype.updateMenu = function () {
-    if (this.input.jumpIsJustDown()) {
-        curItem--;
-        if (curItem < 0) {
-            curItem = menuItems;
-        }
-        gameObject.y =munuY + menuOffsetY*curItem;
-        this.soundManager.playMenuSelect(0);
-    } else if(this.input.downIsJustDown()) {
-        curItem++;
-        if (curItem > menuItems) {
-            curItem = 0;
-        }
-        gameObject.y =munuY + menuOffsetY*curItem;
-        this.soundManager.playMenuSelect(0);
-    } else if (this.input.selectButtonIsJustDown()) {
-        this.soundManager.playMenuSelect(1);
-    }
-}
+

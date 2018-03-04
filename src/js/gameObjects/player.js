@@ -3,7 +3,7 @@
 AdslJumper.Player = function (game, input, x, y) {
     
     // extend
-    Phaser.Sprite.call(this, game, x, y, "player");
+    Phaser.Sprite.call(this, game, x, y, "atlas_2", "player1.png");
     
     // components
     this.game = game;
@@ -20,9 +20,19 @@ AdslJumper.Player = function (game, input, x, y) {
     this.anchor.setTo(0.5);
 
     // animation
-    this.animations.add("walk", [1, 2, 3, 2], this.options.walkAnimationSpeed);
-    this.doubleJumpAnimation = this.animations.add("doubleJump", [6, 7, 6, 8, 5], this.options.doubleAnimationSpeed);
-    this.animations.add("comeIn", [11, 12, 13, 14, 10], this.options.comeInAnimationSpeed);
+    this.animations.add("walk", [
+        "player2.png",
+        "player3.png",
+        "player4.png",
+        "player3.png"
+    ], this.options.walkAnimationSpeed);
+    this.doubleJumpAnimation = this.animations.add("doubleJump", [
+        "player7.png",
+        "player8.png",
+        "player7.png",
+        "player9.png",
+        "player6.png"
+    ], this.options.doubleAnimationSpeed);
 
     // physics
     this.game.physics.arcade.enable(this);
@@ -178,21 +188,17 @@ AdslJumper.Player.prototype.move = function () {
         if (this.doubleJumpAnimation.isPlaying) {
             // do nothing
         } else if (this.body.velocity.y < 0) {
-            this.frame  = 4;
+            this.frameName  = "player5.png";
         } else {
             // frame 6 not in use
-            this.frame = 5;
+            this.frameName = "player6.png";
         }
     }
 
     if (this.currentAcceleration == 0 && this.currentState === this.groundState) {
-        this.frame = 0;
+        this.frameName = "player1.png";
     }
 };
-
-AdslJumper.Player.prototype.comeIn = function () {
-    this.currentState = this.comeInState;
-}
 
 // states
 AdslJumper.Player.prototype.groundState = function groundState() {
@@ -211,11 +217,11 @@ AdslJumper.Player.prototype.groundState = function groundState() {
 
     var temp = Math.random();
     // play sound
-    if (this.frame === 1) {
+    if (this.frameName === "player2.png") {
         this.soundManager.playStep01();
 
     }
-    if (this.frame === 3) {
+    if (this.frameName === "player3.png") {
         this.soundManager.playStep02();
     }
 
@@ -282,7 +288,7 @@ AdslJumper.Player.prototype.wallSlideState = function wallSlideState() {
     }
 
     // TODO подумать где изменять фрейм
-    this.frame = 9;
+    this.frameName = "player10.png";
 
     // state logic
     if ((this.input.leftIsDown() && this.facing == "left") || (this.input.rightIsDown() && this.facing == "right")) {
@@ -308,13 +314,5 @@ AdslJumper.Player.prototype.wallSlideState = function wallSlideState() {
         this.wallBreakClock = 0;
         this.settable = true;
         this.currentState = this.groundState;
-    }
-};
-
-AdslJumper.Player.prototype.comeInState = function () {
-    // если игрок не входит в дверь
-    if (!this.isComeIn) {
-        this.isComeIn = true;
-        this.animations.play("comeIn");
     }
 };

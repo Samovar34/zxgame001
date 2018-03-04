@@ -7,7 +7,7 @@ AdslJumper.GameObjectFactory = function (game) {
 AdslJumper.GameObjectFactory.prototype.createFartParticles = function () {
     // particles
     var gameObject = this.game.add.emitter(0, 0, 10);
-    gameObject.makeParticles("sparks", [1, 2]);
+    gameObject.makeParticles("atlas_2", ["sparks2.png", "sparks3.png"]);
     gameObject.setYSpeed(this.options.fartParticlesSpeed.minY, this.options.fartParticlesSpeed.maxY);
     gameObject.setXSpeed(this.options.fartParticlesSpeed.minX, this.options.fartParticlesSpeed.maxX);
     gameObject.minRotation = 0;
@@ -19,47 +19,60 @@ AdslJumper.GameObjectFactory.prototype.createFartParticles = function () {
 
 AdslJumper.GameObjectFactory.prototype.createBackGround01 = function () {
 
-    var gameObject = this.game.add.sprite(0, 0, "bg001")
-    gameObject.width = 1000;
-    gameObject.height = 600;
+    var gameObject = this.game.add.sprite()
+    gameObject.width = 640;
+    gameObject.height = 360;
     gameObject.fixedToCamera = true;
 
 
-    var child;
-
     gameObject._filter = new Phaser.Filter(game, null, game.cache.getShader('testShader'));
-
     gameObject._filter.setResolution(640, 360);
 
-    child = gameObject.addChild(this.game.make.sprite(0, 0, "bg001"));
-    child.width = 640;
-    child.height = 360;
-    child.smoothed = false;
-    child.scale.setTo(1);
-    child.alpha = 0.1;
-    child.filters = [gameObject._filter];
+    gameObject.filters = [gameObject._filter];
 
     return gameObject;
 };
 
 AdslJumper.GameObjectFactory.prototype.createMeatBlowSprite = function(x, y) {
-    var gameObject = this.game.add.sprite(x, y, "player");
+    var gameObject = this.game.add.sprite(x, y, "atlas_2", "player16.png");
     gameObject.anchor.setTo(0.5);
-    gameObject.animations.add("default", [15, 16, 17, 18, 19, 20], this.options.deathAnimationSpeed);
+    gameObject.animations.add("default", [
+        "player16.png",
+        "player17.png",
+        "player18.png",
+        "player19.png",
+        "player20.png",
+        "player21.png"
+    ], this.options.deathAnimationSpeed);
     gameObject.animations.getAnimation("default").killOnComplete = true;
     return gameObject;
 };
 
 AdslJumper.GameObjectFactory.prototype.createExplosionSprite = function () {
-    var gameObject = this.game.add.sprite(0, 0, "explosionSprite");
-    gameObject.animations.add("default", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13], 24, true);
+    var gameObject = this.game.add.sprite(0, 0, "atlas_2", "blow1.png");
+    gameObject.animations.add("default", [
+        "blow1.png",
+        "blow2.png",
+        "blow3.png",
+        "blow4.png",
+        "blow5.png",
+        "blow6.png",
+        "blow7.png",
+        "blow8.png",
+        "blow9.png",
+        "blow10.png",
+        "blow11.png",
+        "blow12.png",
+        "blow13.png",
+        "blow14.png"
+    ], 24, true);
 
     return gameObject;
 }
 
 AdslJumper.GameObjectFactory.prototype.createBloodParticles = function () {
     var gameObject = this.game.add.emitter(0, 0, 128);
-    gameObject.makeParticles('blood', [0, 1, 2, 3]);
+    gameObject.makeParticles("atlas_2", ['blood1.png', 'blood2.png']);
     gameObject.minRotation = 0;
     gameObject.maxRotation = 0;
     gameObject.setYSpeed(this.options.bloodParticlesSpeed.minY, this.options.bloodParticlesSpeed.maxY);
@@ -71,7 +84,7 @@ AdslJumper.GameObjectFactory.prototype.createBloodParticles = function () {
 
 AdslJumper.GameObjectFactory.prototype.createSparks = function () {
     var gameObject = this.game.add.emitter(0, 0, 24);
-    gameObject.makeParticles("sparks", [0, 1, 2, 3]);
+    gameObject.makeParticles("atlas_2", ["sparks2.png", "sparks3.png"]);
     gameObject.minRotation = 0;
     gameObject.maxRotation = 0;
     gameObject.setYSpeed(this.options.sparksSpeed.minY, this.options.sparksSpeed.maxY);

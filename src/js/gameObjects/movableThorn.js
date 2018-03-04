@@ -6,7 +6,7 @@
 AdslJumper.MovableThorn = function (game, x, y, period, type) {
 
     // extend
-    Phaser.Sprite.call(this, game, x, y, "movableThorn");
+    Phaser.Sprite.call(this, game, x, y, "atlas_2", "movableThorn1.png");
 
     this.game = game;
     this.frame = 0;
@@ -31,9 +31,121 @@ AdslJumper.MovableThorn = function (game, x, y, period, type) {
 
     // animation
     if (period === 0) {
-        this.animations.add("default", [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 3, 4, 5, 6, 6, 6, 6, 6, 6, 6, 7, 6, 6, 6, 7, 6, 7, 6, 7, 5, 4, 3, 2], 8, true);
+        this.animations.add("default", [
+            // green
+            "movableThorn1.png",
+            "movableThorn1.png",
+            "movableThorn1.png",
+            "movableThorn1.png",
+            "movableThorn1.png",
+            "movableThorn1.png",
+            "movableThorn1.png",
+            "movableThorn1.png",
+            "movableThorn1.png",
+            "movableThorn1.png",
+            "movableThorn1.png",
+            // yellow
+            "movableThorn2.png",
+            "movableThorn2.png",
+            "movableThorn2.png",
+            "movableThorn2.png",
+            "movableThorn2.png",
+            "movableThorn2.png",
+            "movableThorn2.png",
+            "movableThorn2.png",
+            "movableThorn2.png",
+            "movableThorn2.png",
+            // activate
+            "movableThorn3.png",
+            "movableThorn4.png",
+            "movableThorn5.png",
+            "movableThorn6.png",
+            // red
+            "movableThorn7.png",
+            "movableThorn7.png",
+            "movableThorn7.png",
+            "movableThorn7.png",
+            "movableThorn7.png",
+            "movableThorn7.png",
+            "movableThorn7.png",
+            "movableThorn7.png",
+            "movableThorn7.png",
+            "movableThorn7.png",
+            "movableThorn7.png",
+            // flash
+            "movableThorn8.png",
+            "movableThorn7.png",
+            "movableThorn7.png",
+            "movableThorn7.png",
+            "movableThorn8.png",
+            "movableThorn7.png",
+            "movableThorn8.png",
+            "movableThorn7.png",
+            "movableThorn8.png",
+            // disable
+            "movableThorn6.png",
+            "movableThorn5.png",
+            "movableThorn4.png",
+            "movableThorn3.png"
+        ], 10, true);
     } else {
-        this.animations.add("default", [2, 3, 4, 5, 6, 6, 6, 6, 6, 6, 6, 7, 6, 6, 6, 7, 6, 7, 6, 7, 5, 4, 3, 2, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 8, true);
+        this.animations.add("default", [
+            // red
+            "movableThorn7.png",
+            "movableThorn7.png",
+            "movableThorn7.png",
+            "movableThorn7.png",
+            "movableThorn7.png",
+            "movableThorn7.png",
+            "movableThorn7.png",
+            "movableThorn7.png",
+            "movableThorn7.png",
+            "movableThorn7.png",
+            "movableThorn7.png",
+            // flash
+            "movableThorn8.png",
+            "movableThorn7.png",
+            "movableThorn7.png",
+            "movableThorn7.png",
+            "movableThorn8.png",
+            "movableThorn7.png",
+            "movableThorn8.png",
+            "movableThorn7.png",
+            "movableThorn8.png",
+            //disable
+            "movableThorn6.png",
+            "movableThorn5.png",
+            "movableThorn4.png",
+            "movableThorn3.png",
+            // green
+            "movableThorn1.png",
+            "movableThorn1.png",
+            "movableThorn1.png",
+            "movableThorn1.png",
+            "movableThorn1.png",
+            "movableThorn1.png",
+            "movableThorn1.png",
+            "movableThorn1.png",
+            "movableThorn1.png",
+            "movableThorn1.png",
+            "movableThorn1.png",
+            // yellow
+            "movableThorn2.png",
+            "movableThorn2.png",
+            "movableThorn2.png",
+            "movableThorn2.png",
+            "movableThorn2.png",
+            "movableThorn2.png",
+            "movableThorn2.png",
+            "movableThorn2.png",
+            "movableThorn2.png",
+            "movableThorn2.png",
+            //activete
+            "movableThorn3.png",
+            "movableThorn4.png",
+            "movableThorn5.png",
+            "movableThorn6.png"
+        ], 10, true);
     }
     // TODO где запускать?
     this.animations.play("default");
@@ -44,5 +156,5 @@ AdslJumper.MovableThorn.prototype.constructor = AdslJumper.MovableThorn;
 
 // if true it can kill player
 AdslJumper.MovableThorn.prototype.isDangerous = function () {
-    return !(this.frame == 0 || this.frame == 1 || this.frame == 2 || this.frame == 3);
+    return !(this.frameName == "movableThorn1.png" || this.frameName == "movableThorn2.png" || this.frameName == "movableThorn3.png" || this.frameName == "movableThorn4.png");
 }
