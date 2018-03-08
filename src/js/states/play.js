@@ -11,6 +11,11 @@ AdslJumper.playGameState.prototype = {
         this.totalLevelCoins = 0;
         this.canCheckOverlapExitDoor = false;
 
+        // testing game with low fps
+        // this.game.time.advancedTiming = true;
+        // this.game.time.desiredFps = 24;
+        // this.game.time.slowMotion = 1.2;
+
         // get score
         this.currentScore = AdslJumper.data.score;
         
@@ -26,15 +31,19 @@ AdslJumper.playGameState.prototype = {
         }
 
         // background image or WebGL Shader
-        this.background = this.gameObjectFactory.createBackGround01();
+       // this.background = this.gameObjectFactory.createBackGround01();
         
         // game world
         this.map = game.add.tilemap("map" + AdslJumper.data.level, 32, 32);
-        this.map.addTilesetImage("world_tilemap", game.cache.getBitmapData("tileMapImage"));
+        this.map.addTilesetImage("adsl_world_tilemap", game.cache.getBitmapData("tileMapImage"));
        
         // create layers
         this.bacgroundLayer = this.map.createLayer("backgroundLayer");
         this.collisionLayer = this.map.createLayer("collisionLayer");
+
+        // cache tilemap layers
+        this.bacgroundLayer.cacheAsBitmap = true;
+        this.collisionLayer.cacheAsBitmap = true;
         
         this.map.setCollisionBetween(0, 2000, true, this.collisionLayer);
         
@@ -71,7 +80,7 @@ AdslJumper.playGameState.prototype = {
         player = this.player = new AdslJumper.Player(game, this.input, playerStartPosition[0].x + 16,  playerStartPosition[0].y + 15);
 
         // show secret ways
-        this.hiddenLayer = this.map.createLayer("hiddenLayer");
+        //this.hiddenLayer = this.map.createLayer("hiddenLayer");
 
         // самый верхний слой для визуальных эффектов
         this.topLayer = this.game.add.group();
@@ -82,11 +91,11 @@ AdslJumper.playGameState.prototype = {
         this.topLayer.add(this.explosionSprite);
 
         // camera
-        this.game.camera.follow(player,  this.game.camera.FOLLOW_PLATFORMER, 0.12, 0.12);
+        this.game.camera.follow(this.player,  this.game.camera.FOLLOW_PLATFORMER, 0.2, 0.2);
         this.game.camera.flash(0x000000, this.options.cameraFlashTime);
-        // this.game.camera.onFlashComplete.addOnce(function () {
-        //     this.player.canInput = true;
-        // })
+        this.game.camera.onFlashComplete.addOnce(function () {
+            this.player.canInput = true;
+        });
     },
 
     update: function () {
@@ -102,14 +111,14 @@ AdslJumper.playGameState.prototype = {
         }
 
         // update bg
-        this.background._filter.update();
+        //this.background._filter.update();
     },
 
     render: function () {
 
-        this.game.debug.text("room: " + AdslJumper.data.level, 8, 12, "#00ff00");
-        this.game.debug.text("coins: " + this.collectedCoins + "/" + this.totalLevelCoins, 8, 27, "#00ff00");
-        this.game.debug.text("score: " + this.currentScore, 8, 42, "#00ff00");
+        // this.game.debug.text("room: " + AdslJumper.data.level, 8, 12, "#00ff00");
+        // this.game.debug.text("coins: " + this.collectedCoins + "/" + this.totalLevelCoins, 8, 27, "#00ff00");
+        // this.game.debug.text("score: " + this.currentScore, 8, 42, "#00ff00");
         // this.game.debug.body(this.exitDoor);
         // this.game.debug.body(this.player);        
     }

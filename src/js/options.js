@@ -6,7 +6,7 @@ AdslJumper.gameOptions = (function () {
         gameHeight: 360, 
         scaleFactor: 1,
         bgColor: 0x000000,
-        cameraFadeTime: 400, // ms
+        cameraFadeTime: 500, // ms
         cameraFlashTime: 400, // ms
         cameraShakeTime: 500,
         isDevelopment: 0,
@@ -23,12 +23,12 @@ AdslJumper.gameOptions = (function () {
     var playerOptions = {
         gravity: 1200,
         grip: 120,
-        speed: 362,
-        maxFallSpeed: 820,
+        speed: 272,
+        maxFallSpeed: 596,
         runSpeedUpRate: 1.5,
         acceleration: 4200,
-        jump: 400,
-        doubleJump: 288,
+        jump: 388,
+        doubleJump: 296,
         drag: 5950,
         inAirAccelerationRate: 0.9, // acceleration *= inAirAccelerationRate
         inAirDrag: 0.5,

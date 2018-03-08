@@ -18,6 +18,7 @@ window.onload = function () {
         width: gameOptions.gameWidth,
         height: gameOptions.gameHeight,
         renderer: Phaser.AUTO,
+        enableDebug: false,
         antialias: false
     });
     game.state.add("boot", AdslJumper.bootState);

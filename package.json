@@ -34,6 +34,6 @@
   },
   "dependencies": {
     "bootstrap": "^4.0.0-beta.2",
-    "phaser-ce": "^2.10.0"
+    "phaser-ce": "^2.10.1"
   }
 }

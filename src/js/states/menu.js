@@ -8,7 +8,7 @@ AdslJumper.menuState.prototype = {
 
         // variables
         this.menuX = 272;
-        this.munuY = 220;
+        this.munuY = 150;
         this.menuOffsetY = 20;
         this.menuItems = 3;
         this.curItem = 0;
@@ -16,14 +16,15 @@ AdslJumper.menuState.prototype = {
         this.canInput = true;
 
         // background image or WebGL Shader
-        this.background = this.gameObjectFactory.createBackGround01();
+        //this.background = this.gameObjectFactory.createBackGround01();
 
-        var logo = this.game.add.sprite(160, 10, "atlas_1", "logo.png");
-        logo.scale.setTo(0.5);
+        var logo = this.game.add.sprite(0, 0, "atlas_1", "logo.png");
+        logo.scale.setTo(1);
+        logo.alpha = 0.4;
 
 
         this.newGame = this.game.add.sprite(this.menuX, this.munuY + this.menuOffsetY*0, "atlas_1", "menu_items7.png");
-        this.continue = this.game.add.sprite(this.menuX, munuY + this.menuOffsetY*1, "atlas_1", "menu_items9.png");
+        this.continue = this.game.add.sprite(this.menuX, this.munuY + this.menuOffsetY*1, "atlas_1", "menu_items9.png");
         this.options = this.game.add.sprite(this.menuX, this.munuY + this.menuOffsetY*2, "atlas_1", "menu_items10.png");
         this.about = this.game.add.sprite(this.menuX, this.munuY + this.menuOffsetY*3, "atlas_1", "menu_items11.png");
         this.game.add.sprite(this.menuX+25, 340, "atlas_1", "menu_items13.png");
@@ -37,7 +38,7 @@ AdslJumper.menuState.prototype = {
     update: function () {
         this.currentState();
         // update bg
-        this.background._filter.update();
+        //this.background._filter.update();
     }    
 };
 
@@ -56,6 +57,7 @@ AdslJumper.menuState.prototype.updateMenu = function () {
             this.game.camera.onFadeComplete.addOnce(function() {
                 this.soundManager.currentTrack.stop();
                 this.soundManager.currentTrack = null;
+                this.game.cache.removeSound("intro")
                 // play
                 this.game.state.start("play");
             }, this);

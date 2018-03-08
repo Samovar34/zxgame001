@@ -1,1 +1,1 @@
-//@@include('../../node_modules/phaser-ce/build/phaser.js')
+//@@include('../../node_modules/phaser-ce/build/custom/phaser-arcade-physics.min.js')

@@ -28,8 +28,8 @@ AdslJumper.preloadState.prototype = {
 
         // music
         this.load.audio('intro', 'assets/audio/intro.mp3');   
-        this.load.audio('track01', 'assets/audio/track01.mp3');
-        this.load.audio('track02', 'assets/audio/track02.mp3');
+        this.load.audio('track01', 'assets/audio/track01.ogg');
+        //this.load.audio('track02', 'assets/audio/track02.mp3');
 
         // shaders
         this.game.load.shader('testShader', 'assets/shaders/test.frag');
@@ -53,8 +53,8 @@ AdslJumper.preloadState.prototype = {
         //	Put the bitmapData into the cache. For tileMap.
         this.game.cache.addBitmapData('tileMapImage', tileMapImage);
 
-        this.game.state.start("story");
+        //this.game.state.start("story");
         // // TODO delete
-        // this.game.state.start("play");
+        this.game.state.start("play");
     }
 }

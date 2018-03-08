@@ -145,8 +145,6 @@ AdslJumper.Player.prototype.jump = function () {
         this.fartParticles.y = this.position.y;
         this.fartParticles.start(true, 525, null, 4, 100);
     }
-
-    // animation happens in move
 };
 
 // moving X axis player 
@@ -214,21 +212,12 @@ AdslJumper.Player.prototype.groundState = function groundState() {
 
     // X axis movement
     this.move();
-
-    var temp = Math.random();
+    
     // play sound
-    if (this.frameName === "player2.png") {
+    if (this.frameName === "player2.png" || this.frameName === "player3.png" || this.frameName === "player4.png") {
         this.soundManager.playStep01();
 
     }
-    if (this.frameName === "player3.png") {
-        this.soundManager.playStep02();
-    }
-
-
-    // TODO animation
-    // TODO play sound
-    // TODO stop running animation
 
     // fell of a ledge
     if (!this.body.onFloor()) {
@@ -262,20 +251,16 @@ AdslJumper.Player.prototype.airState = function airState() {
 
     // player sliding wall (pre wall-jump)
     if (this.body.onWall()) {
-        this.settable = true; // allow set player for next state
-
         // play sound
-        this.soundManager.playStep01();
+        this.soundManager.playStep02();
+
+        this.settable = true; // allow set player for next state
         this.currentState = this.wallSlideState;
-    }
-
-    // player hit ground
-    if (this.body.onFloor()) {
-        this.settable = true; // allow set player for next state
-
+    } else if (this.body.onFloor()) { // player hit ground
         // play sound
-        this.soundManager.playStep01();
-
+        this.soundManager.playStep02();
+        
+        this.settable = true; // allow set player for next state
         this.currentState = this.groundState;
     }
 };
@@ -287,7 +272,6 @@ AdslJumper.Player.prototype.wallSlideState = function wallSlideState() {
         this.settable = false;
     }
 
-    // TODO подумать где изменять фрейм
     this.frameName = "player10.png";
 
     // state logic
@@ -301,16 +285,11 @@ AdslJumper.Player.prototype.wallSlideState = function wallSlideState() {
         this.wallBreakClock = 0;
         this.settable = true;
         this.currentState = this.airState;
-    }
-
-    // let go of the wall
-    if (!this.body.onWall()) {
+    } else if (!this.body.onWall()) { // let go of the wall
         this.wallBreakClock = 0;
         this.settable = true;
         this.currentState = this.airState;
-    }
-
-    if (this.body.onFloor()) {
+    } else if (this.body.onFloor()) {
         this.wallBreakClock = 0;
         this.settable = true;
         this.currentState = this.groundState;
