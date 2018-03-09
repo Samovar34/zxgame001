@@ -27,6 +27,9 @@ AdslJumper.testState.prototype = {
         this.tg.add(new AdslJumper.MovableThorn(this.game, 300, 10, 0, "left"));
         this.tg.add(new AdslJumper.MovableThorn(this.game, 190, 50, 1, "right"));
         this.tg.add(new AdslJumper.MovableThorn(this.game, 300, 50, 1, "left"));
+
+        this.exitLable = this.gameObjectFactory.createExitLabel(10, 72);
+        this.exitLable.animations.play("default");
     },
 
     update: function () {
@@ -36,7 +39,7 @@ AdslJumper.testState.prototype = {
     
     render: function () {
     //     this.game.debug.body(gameObject);
-        this.game.debug.physicsGroup(this.tg);
+        //this.game.debug.physicsGroup(this.tg);
     }
 };
 

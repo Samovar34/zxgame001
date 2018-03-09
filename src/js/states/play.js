@@ -35,7 +35,7 @@ AdslJumper.playGameState.prototype = {
         
         // game world
         this.map = game.add.tilemap("map" + AdslJumper.data.level, 32, 32);
-        this.map.addTilesetImage("adsl_world_tilemap", game.cache.getBitmapData("tileMapImage"));
+        this.map.addTilesetImage("adsl_world_tilemap", "adslWorldTilemap");
        
         // create layers
         this.bacgroundLayer = this.map.createLayer("backgroundLayer");
@@ -45,12 +45,14 @@ AdslJumper.playGameState.prototype = {
         this.bacgroundLayer.cacheAsBitmap = true;
         this.collisionLayer.cacheAsBitmap = true;
         
+        // collision
         this.map.setCollisionBetween(0, 2000, true, this.collisionLayer);
         
         // resize game world to match layer dimensions
         this.collisionLayer.resizeWorld();
         this.bacgroundLayer.resizeWorld();
 
+        // enter and exit doors
         this.createDoors();
 
         // foreground layer for FX
@@ -58,7 +60,7 @@ AdslJumper.playGameState.prototype = {
         this.doorSensor = null;
 
         // create Fx GameObjects and Particles
-        this.explosionSprite = this.gameObjectFactory.createExplosionSprite()
+        this.explosionSprite = this.gameObjectFactory.createExplosionSprite();
         this.explosionSprite.kill();
 
         // blood
@@ -159,7 +161,7 @@ AdslJumper.playGameState.prototype.createDoors = function () {
 
     // create exit Door
     this.exitDoor = new AdslJumper.ExitDoor(this.game, exitDoorTiledObject[0].x, exitDoorTiledObject[0].y - 28, exitDoorTiledObject[0].properties.nextLevel);
-}
+};
 
 // void
 AdslJumper.playGameState.prototype.createTraps = function () {
@@ -174,7 +176,26 @@ AdslJumper.playGameState.prototype.createTraps = function () {
         } else {
             console.error(elements[i].name, "not found");
         }
-        
+
+    }
+
+    // play animation
+    this.traps.callAll("animations.play", "animations", "default");
+};
+
+// void
+AdslJumper.playGameState.prototype.createFx = function () {
+    var elements = AdslJumper.utils.findObjectsByType('fx', this.map, 'fxLayer');
+    var currentFunction = null;
+
+    for (var i = 0; i < elements.length; i++) {
+        currentFunction = this.createFxObjects[elements[i].name];
+        if (currentFunction !== undefined) {
+            this.traps.add(currentFunction.call(this, elements[i].x, elements[i].y, elements[i].properties));
+        } else {
+            console.error(elements[i].name, "not found");
+        }
+
     }
 
     // play animation
@@ -183,7 +204,7 @@ AdslJumper.playGameState.prototype.createTraps = function () {
 
 // create FX (Visual)
 // void
-AdslJumper.playGameState.prototype.createFx = function () {
+AdslJumper.playGameState.prototype.createFx1 = function () {
     var tempArray = AdslJumper.utils.findObjectsByType('ledYellow', this.map, 'fxLayer');
     var i;
     // create Leds
@@ -376,4 +397,16 @@ AdslJumper.playGameState.prototype.createObjects = {
     "Error01": function (x, y) {
         return new AdslJumper.Error01(this.game, x, y);
     }
-}
+};
+
+AdslJumper.playGameState.prototype.createFxObjects = {
+    "Led": function (x, y, prop) {
+      return new AdslJumper.Led(this.game, x, y, prop.color)
+    },
+    "Fan01": function (x, y) {
+        return new AdslJumper.Fan01(this.game, x, y);
+    },
+    "Error01": function () {
+        return new AdslJumper.Error01(this.game, x, y);
+    }
+};

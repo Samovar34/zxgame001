@@ -38,7 +38,7 @@ AdslJumper.ExitDoor = function (game, x, y, nextLevel) {
     
     // physics
     this.game.physics.arcade.enable(this);
-    this.body.setSize(32, 54, 8, 26)
+    this.body.setSize(32, 54, 8, 26);
     this.body.immovable = true;
 
     
@@ -50,7 +50,7 @@ AdslJumper.ExitDoor = function (game, x, y, nextLevel) {
     // this.exitLabel = this.game.add.sprite(this.x + 8 , this.y - 30, "exit");
     // this.exitLabel.smoothed = false;
     // this.game.add.tween(this.exitLabel).to({y: this.exitLabel.y - 8}, 300, Phaser.Easing.Linear.None, true, 0 , 1000, true);
-}
+};
 
 AdslJumper.ExitDoor.prototype = Object.create(Phaser.Sprite.prototype);
 AdslJumper.ExitDoor.prototype.constructor = AdslJumper.ExitDoor;

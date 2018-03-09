@@ -157,4 +157,4 @@ AdslJumper.MovableThorn.prototype.constructor = AdslJumper.MovableThorn;
 // if true it can kill player
 AdslJumper.MovableThorn.prototype.isDangerous = function () {
     return !(this.frameName == "movableThorn1.png" || this.frameName == "movableThorn2.png" || this.frameName == "movableThorn3.png" || this.frameName == "movableThorn4.png");
-}
+};

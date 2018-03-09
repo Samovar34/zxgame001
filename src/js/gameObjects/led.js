@@ -70,8 +70,8 @@ AdslJumper.Led.prototype.setRandomAnimation = function () {
             "led2.png"
         ], frameRate, true);
     }
-}
+};
 
 AdslJumper.Led.prototype.getRandomFrameRate = function () {
     return Math.round(Math.random() * 36);
-}
+};

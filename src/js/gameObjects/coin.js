@@ -44,4 +44,4 @@ AdslJumper.Coin.prototype.disableBodyAndKill = function () {
     this.body.enable = false;
     this.soundManager.playCoin();
     this.animations.play("collected", 18, false, true);
-}
+};

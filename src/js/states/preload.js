@@ -7,9 +7,12 @@ AdslJumper.preloadState.prototype = {
             this.game.load.tilemap('map' + i, 'assets/levels/level' + i + ".json", null, Phaser.Tilemap.TILED_JSON);
         }
 
-        // test atlas
+        // atlas
         this.game.load.atlas("atlas_1", 'assets/images/atlas1/atlas.png', 'assets/images/atlas1/atlas.json'); 
         this.game.load.atlas("atlas_2", 'assets/images/atlas2/atlas.png', 'assets/images/atlas2/atlas.json'); 
+
+        // tilemaps
+        this.game.load.image("adslWorldTilemap", "assets/images/adsl_world_tilemap.png");
 
         // audio
         this.load.audio('jump', 'assets/audio/jump.wav');
@@ -45,13 +48,6 @@ AdslJumper.preloadState.prototype = {
             level: 0,
             score: 0
         };
-
-        // Create bitmapData which will use as a image texture
-        var tileMapImage = game.add.bitmapData(1024, 1024);
-        tileMapImage.draw(this.game.make.image(0, 0, "atlas_2", "adsl_world_tilemap.png"));
-        
-        //	Put the bitmapData into the cache. For tileMap.
-        this.game.cache.addBitmapData('tileMapImage', tileMapImage);
 
         //this.game.state.start("story");
         // // TODO delete

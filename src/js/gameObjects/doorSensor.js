@@ -14,7 +14,7 @@ AdslJumper.DoorSensor = function (game, x, y) {
     // animation
     this.animations.add("default", [
         "doorSensor10.png", 
-        "doorSensor1.png",
+        "doorSensor1.png"
     ], 3, true);
 };
 

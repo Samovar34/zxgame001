@@ -72,12 +72,8 @@ AdslJumper.Player.prototype.constructor = AdslJumper.Player;
 
 AdslJumper.Player.prototype.update = function () {
 
-    // player state
-
     // check collision with worldBounds or Tile
-    // false = collision
-    // true = no collision
-    // if player hit tile or worldBounds, no double jump is allowed
+    // for particles when player touch roof
     if(this.body.blocked.up) {
         //this.canDoubleJump = false;
         this.soundManager.playPunch();
@@ -91,12 +87,11 @@ AdslJumper.Player.prototype.update = function () {
     if (this.canInput && this.input.jumpIsJustDown()) {
         this.jump();
     }
-}
+};
 
 // player jump Y axis
 // void
 AdslJumper.Player.prototype.jump = function () {  
-    //TODO запрет прыжка при определённых условиях
 
     // прыжок от стены
     if (this.body.onWall() && !this.body.onFloor()) {
@@ -176,26 +171,11 @@ AdslJumper.Player.prototype.move = function () {
     }
 
     // less acceleration if in air
-    if (this.currentState == this.airState) {
+    if (this.currentState === this.airState) {
         this.currentAcceleration *= this.options.inAirAccelerationRate ;
     }
 
     this.body.acceleration.x = this.currentAcceleration;
-
-    if (this.currentState === this.airState) {
-        if (this.doubleJumpAnimation.isPlaying) {
-            // do nothing
-        } else if (this.body.velocity.y < 0) {
-            this.frameName  = "player5.png";
-        } else {
-            // frame 6 not in use
-            this.frameName = "player6.png";
-        }
-    }
-
-    if (this.currentAcceleration == 0 && this.currentState === this.groundState) {
-        this.frameName = "player1.png";
-    }
 };
 
 // states
@@ -212,11 +192,14 @@ AdslJumper.Player.prototype.groundState = function groundState() {
 
     // X axis movement
     this.move();
+
+    if (this.currentAcceleration === 0) {
+        this.frameName = "player1.png";
+    }
     
     // play sound
     if (this.frameName === "player2.png" || this.frameName === "player3.png" || this.frameName === "player4.png") {
         this.soundManager.playStep01();
-
     }
 
     // fell of a ledge
@@ -249,6 +232,14 @@ AdslJumper.Player.prototype.airState = function airState() {
     // X axis movement
     this.move();
 
+    if (this.doubleJumpAnimation.isPlaying) {
+        // do nothing
+    } else if (this.body.velocity.y < 0) {
+        this.frameName  = "player5.png";
+    } else {
+        this.frameName = "player6.png";
+    }
+
     // player sliding wall (pre wall-jump)
     if (this.body.onWall()) {
         // play sound
@@ -275,7 +266,7 @@ AdslJumper.Player.prototype.wallSlideState = function wallSlideState() {
     this.frameName = "player10.png";
 
     // state logic
-    if ((this.input.leftIsDown() && this.facing == "left") || (this.input.rightIsDown() && this.facing == "right")) {
+    if ((this.input.leftIsDown() && this.facing === "left") || (this.input.rightIsDown() && this.facing === "right")) {
         this.wallBreakClock = 0;
     } else {
         this.wallBreakClock++;
