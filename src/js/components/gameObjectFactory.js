@@ -94,3 +94,24 @@ AdslJumper.GameObjectFactory.prototype.createSparks = function () {
 
     return gameObject;
 };
+
+AdslJumper.GameObjectFactory.prototype.createExitLabel = function (x, y) {
+    var gameObject = this.game.add.sprite(x, y, "atlas_2", "doorExitLabel1.png");
+    gameObject.animations.add("default", [
+        "doorExitLabel2.png",
+        "doorExitLabel3.png",
+        "doorExitLabel4.png",
+        "doorExitLabel5.png",
+        "doorExitLabel6.png",
+        "doorExitLabel7.png",
+        "doorExitLabel8.png",
+        "doorExitLabel9.png",
+        "doorExitLabel10.png",
+        "doorExitLabel11.png",
+        "doorExitLabel12.png",
+        "doorExitLabel13.png",
+        "doorExitLabel14.png"
+    ], 16, true);
+
+    return gameObject;
+};
