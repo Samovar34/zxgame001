@@ -22,7 +22,7 @@ AdslJumper.gameObjectFactory = {
         return new AdslJumper.MovableThorn(this.game, x, y, properties.period, properties.direction);
     },
     "Mine": function (x, y) {
-        return new AdslJumper.Mine(this.game, this.soundManager, this.explosionSprite, x, y + 18);
+        return new AdslJumper.Mine(this.game, x, y + 18);
     },
 
     // fx
@@ -37,6 +37,24 @@ AdslJumper.gameObjectFactory = {
     },
     "ScreenA": function (x, y) {
         return new AdslJumper.ScreenA(this.game, x, y + 14);
+    },
+    "ScreenD": function (x, y) {
+        return new AdslJumper.ScreenD(this.game, x, y + 32);
+    },
+    "Tutor1": function (x, y) {
+        return this.game.add.sprite(x, y + 32, "atlas_2", "tutorial3.png");
+    },
+    "Tutor2": function (x, y) {
+        return this.game.add.sprite(x, y + 32, "atlas_2", "tutorial5.png");
+    },
+    "Tutor3": function (x, y) {
+        return this.game.add.sprite(x, y + 32, "atlas_2", "tutorial7.png");
+    },
+    "Tutor4": function (x, y) {
+        return this.game.add.sprite(x, y + 32, "atlas_2", "tutorial9.png");
+    },
+    "Tutor5": function (x, y) {
+        return this.game.add.sprite(x, y + 32, "atlas_2", "tutorial11.png");
     }
 };
 

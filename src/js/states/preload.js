@@ -3,7 +3,7 @@ AdslJumper.preloadState = function (game) {};
 AdslJumper.preloadState.prototype = {
     preload: function () {
         // load assets
-        for (var i = 0; i <= 2; i++) {
+        for (var i = 0; i <= 4; i++) {
             this.game.load.tilemap('map' + i, 'assets/levels/level' + i + ".json", null, Phaser.Tilemap.TILED_JSON);
         }
 
@@ -50,6 +50,6 @@ AdslJumper.preloadState.prototype = {
 
         //this.game.state.start("story");
         // // TODO delete
-        this.game.state.start("play");
+        this.game.state.start("story");
     }
 }

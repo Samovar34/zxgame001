@@ -15,6 +15,7 @@
 //@@include('./gameObjects/fan01.js')
 //@@include('./gameObjects/doorSensor.js')
 //@@include('./gameObjects/screenA.js')
+//@@include('./gameObjects/screenD.js')
 
 //@@include('./components/gameObjectFactory.js')
 

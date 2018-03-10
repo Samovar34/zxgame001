@@ -97,25 +97,17 @@ AdslJumper.playGameState.prototype = {
         this.game.camera.follow(this.player,  this.game.camera.FOLLOW_PLATFORMER, 0.2, 0.2);
         this.game.camera.flash(0x000000, this.options.cameraFlashTime);
 
-        // level without learning
-        if (AdslJumper.data.level > 3) {
-            this.game.camera.onFlashComplete.addOnce(function () {
-                this.player.canInput = true;
-            }, this);
-        } else {
-            this.showMessage();
-        }
+        this.game.camera.onFlashComplete.addOnce(function () {
+            this.player.canInput = true;
+        }, this);
     },
 
     update: function () {
 
-        if (this.isShowMessage) {
-            this.updateMessage();
-        } 
-
-        // // physics
+        // physics
         this.game.physics.arcade.collide(this.player, this.collisionLayer);
-        this.game.physics.arcade.overlap(this.player, this.traps, this.trapHandler, null, this);
+
+        this.game.physics.arcade.collide(this.player, this.traps, this.trapHandler, null, this);
         
         // if player collected all coins check overlap or check overlap with coins
         if (this.canCheckOverlapExitDoor === true) {
@@ -198,7 +190,6 @@ AdslJumper.playGameState.prototype.createTraps = function () {
         } else {
             console.error(elements[i].name, "not found");
         }
-
     }
 
     // play animation
@@ -222,34 +213,6 @@ AdslJumper.playGameState.prototype.createFx = function () {
     // play animation
     this.foregroundLayer.callAll("animations.play", "animations", "default");
 };
-
-// void
-AdslJumper.playGameState.prototype.showMessage = function () {
-    this.isShowMessage = true;
-    if (AdslJumper.data.level === 0) {
-        this.msg = AdslJumper.gameObjectFactory.createMessage1.call(this);
-    } else if (AdslJumper.data.level === 1) {
-        this.msg = AdslJumper.gameObjectFactory.createMessage2.call(this);
-    } else if (AdslJumper.data.level === 2) {
-        this.msg = AdslJumper.gameObjectFactory.createMessage3.call(this);
-    } else {
-        this.isShowMessage = false;
-        this.player.canInput = true;
-    }
-    
-
-    // if (AdslJumper.data.level === 2){
-    //     this.msg.position.y = 264;
-    // }
-};
-
-AdslJumper.playGameState.prototype.updateMessage = function () {
-    if (this.input.jumpIsJustDown()) {
-        this.player.canInput = true;
-        this.isShowMessage = false;
-        this.msg.kill();
-    }
-}
 
 // HANDLERS
 
