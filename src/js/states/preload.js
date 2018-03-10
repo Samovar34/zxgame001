@@ -3,7 +3,7 @@ AdslJumper.preloadState = function (game) {};
 AdslJumper.preloadState.prototype = {
     preload: function () {
         // load assets
-        for (var i = 0; i <= 1; i++) {
+        for (var i = 0; i <= 2; i++) {
             this.game.load.tilemap('map' + i, 'assets/levels/level' + i + ".json", null, Phaser.Tilemap.TILED_JSON);
         }
 
@@ -42,7 +42,6 @@ AdslJumper.preloadState.prototype = {
         // init game components
         AdslJumper.modules.soundManager = new AdslJumper.SoundManager(this.game);
         AdslJumper.modules.inputManager = new AdslJumper.Input(this.game);
-        AdslJumper.modules.gameObjectFactory = new AdslJumper.GameObjectFactory(this.game);
 
         AdslJumper.data = {
             level: 0,

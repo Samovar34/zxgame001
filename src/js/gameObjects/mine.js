@@ -23,14 +23,3 @@ AdslJumper.Mine = function (game, soundManager, explosionSprite, x, y) {
 
 AdslJumper.Mine.prototype = Object.create(Phaser.Sprite.prototype);
 AdslJumper.Mine.prototype.constructor = AdslJumper.Mine;
-
-// play sound and animation
-AdslJumper.Mine.prototype.blow = function () {
-    this.body.enable = false;
-    this.kill();
-    this.explosionSprite.revive();
-    this.explosionSprite.x = this.x - 48;
-    this.explosionSprite.y = this.y - 96;
-    this.soundManager.playExplosion();
-    this.explosionSprite.animations.play("default", 24, false, true);
-}

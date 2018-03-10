@@ -27,7 +27,7 @@ AdslJumper.Led = function (game, x, y, color) {
     }
 
     this.setRandomAnimation();
-    this.animations.play("default");
+
 };
 
 AdslJumper.Led.prototype = Object.create(Phaser.Sprite.prototype);

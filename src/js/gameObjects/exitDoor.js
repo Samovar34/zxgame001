@@ -1,6 +1,6 @@
 // ExitDoor class
 // inheritance Phaser.Sprite class
-AdslJumper.ExitDoor = function (game, x, y, nextLevel) {
+AdslJumper.ExitDoor = function (game, x, y, nextLevel, exitLabel) {
     Phaser.Sprite.call(this, game, x, y, "atlas_2", "door1.png");
 
     this.game = game;
@@ -32,8 +32,9 @@ AdslJumper.ExitDoor = function (game, x, y, nextLevel) {
         "door15.png",
         "door16.png",
         "door17.png",
-        "door18.png"
-    ], 8);
+        "door18.png",
+        "door19.png"
+    ], 9);
     this.animations.add("default", ["door1.png", "door2.png"], 2, true);
     
     // physics
@@ -46,10 +47,29 @@ AdslJumper.ExitDoor = function (game, x, y, nextLevel) {
     this.game.add.existing(this);
     this.animations.play("default", [0, 1]);
 
-    // add label and animate
-    // this.exitLabel = this.game.add.sprite(this.x + 8 , this.y - 30, "exit");
-    // this.exitLabel.smoothed = false;
-    // this.game.add.tween(this.exitLabel).to({y: this.exitLabel.y - 8}, 300, Phaser.Easing.Linear.None, true, 0 , 1000, true);
+    // add label
+    this.exitLabel = this.game.add.sprite(this.x - 8, this.y - 28, "atlas_2", "doorExitLabel1.png");
+    this.exitLabel.animations.add("exit", [
+        "doorExitLabel5.png",
+        "doorExitLabel6.png",
+        "doorExitLabel7.png",
+        "doorExitLabel8.png",
+        "doorExitLabel9.png",
+        "doorExitLabel10.png",
+        "doorExitLabel11.png",
+        "doorExitLabel12.png",
+        "doorExitLabel13.png",
+        "doorExitLabel14.png",
+        "doorExitLabel15.png",
+        "doorExitLabel16.png",
+        "doorExitLabel17.png"
+    ], 16, true);
+
+    this.openAnimation = this.exitLabel.animations.add("open", [
+        "doorExitLabel2.png",
+        "doorExitLabel3.png",
+        "doorExitLabel4.png"
+    ], 16, false);
 };
 
 AdslJumper.ExitDoor.prototype = Object.create(Phaser.Sprite.prototype);
@@ -62,6 +82,13 @@ AdslJumper.ExitDoor.prototype.open = function () {
     if (this.isOpen) {
         return;
     }
+
+    // play lable animation
+
+    this.exitLabel.play("open");
+    this.openAnimation.onComplete.addOnce(function() {
+        this.exitLabel.play("exit");
+    }, this)
 
     // if door is opening do nothing
     if (!this.isOpening) {

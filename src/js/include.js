@@ -3,7 +3,6 @@
 //@@include('./components/soundManager.js')
 //@@include('./components/input.js')
 //@@include('./components/utils.js')
-//@@include('./components/gameObjectFactory.js')
 
 //@@include("./gameObjects/thorn.js")
 //@@include("./gameObjects/coin.js")
@@ -15,6 +14,9 @@
 //@@include('./gameObjects/error01.js')
 //@@include('./gameObjects/fan01.js')
 //@@include('./gameObjects/doorSensor.js')
+//@@include('./gameObjects/screenA.js')
+
+//@@include('./components/gameObjectFactory.js')
 
 //@@include('./states/boot.js')
 //@@include('./states/preload.js')

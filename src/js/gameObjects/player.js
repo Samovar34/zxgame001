@@ -63,7 +63,7 @@ AdslJumper.Player = function (game, input, x, y) {
     this.game.add.existing(this);
     
     // particles
-    this.fartParticles = AdslJumper.modules.gameObjectFactory.createFartParticles();
+    this.fartParticles = AdslJumper.gameObjectFactory.createFartParticles.call(this);
 
 };
 

@@ -13,7 +13,6 @@ AdslJumper.Fan01 = function (game, x, y) {
 
     // animation
     this.animations.add("default", ["fan01.png", "fan02.png"], 12, true);
-    this.animations.play("default");
 };
 
 AdslJumper.Fan01.prototype = Object.create(Phaser.Sprite.prototype);
