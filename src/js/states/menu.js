@@ -37,8 +37,6 @@ AdslJumper.menuState.prototype = {
     
     update: function () {
         this.currentState();
-        // update bg
-        //this.background._filter.update();
     }    
 };
 
@@ -57,9 +55,12 @@ AdslJumper.menuState.prototype.updateMenu = function () {
             this.game.camera.onFadeComplete.addOnce(function() {
                 this.soundManager.currentTrack.stop();
                 this.soundManager.currentTrack = null;
-                this.game.cache.removeSound("intro")
+                this.game.cache.removeSound("intro");
+
+                AdslJumper.data.prev = "menu";
+                AdslJumper.data.next = "waitDecodeAudio";
                 // play
-                this.game.state.start("play");
+                this.game.state.start("waitDecodeAudio");
             }, this);
         } 
     }

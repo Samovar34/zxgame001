@@ -23,6 +23,7 @@
 //@@include('./states/preload.js')
 //@@include('./states/story.js')
 //@@include('./states/menu.js')
+//@@include('./states/waitDecodeAudio.js')
 //@@include('./states/play.js')
 
 //@@include('./states/test.js')

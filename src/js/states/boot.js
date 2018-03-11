@@ -3,7 +3,8 @@ AdslJumper.bootState = function (game) {};
 AdslJumper.bootState.prototype = {
     preload: function () {
         // load the loader bar
-
+        this.game.load.image("preloadBorder", "assets/images/preloadBorder.png");
+        this.game.load.image("progress", "assets/images/progress.png");
         // load font
     },
 

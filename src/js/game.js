@@ -17,7 +17,7 @@ window.onload = function () {
     game = new Phaser.Game({
         width: gameOptions.gameWidth,
         height: gameOptions.gameHeight,
-        renderer: Phaser.AUTO,
+        renderer: Phaser.CANVAS,
         enableDebug: false,
         antialias: false
     });
@@ -25,6 +25,7 @@ window.onload = function () {
     game.state.add("preload", AdslJumper.preloadState);
     game.state.add("story", AdslJumper.storyState);
     game.state.add("menu", AdslJumper.menuState);
+    game.state.add("waitDecodeAudio", AdslJumper.waitDecodeAudio);
     game.state.add("play", AdslJumper.playGameState);
 
     game.state.start("boot");

@@ -117,9 +117,10 @@ gulp.task("serve:lan", (done) => {
     });
 });
 
-gulp.task("clean", function () {
-    return gulp.src(buildViewFolder, {read: false})
+gulp.task("clean", function (done) {
+    gulp.src(buildViewFolder, {read: false})
         .pipe(clean());
+    done(); 
 });
 
 // watch

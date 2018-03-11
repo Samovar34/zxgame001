@@ -46,9 +46,7 @@ AdslJumper.SoundManager = function (game) {
 
     // music
     this.currentTrack = null;
-    this.intro = this.game.add.audio('intro');
-    this.track01 = this.game.add.audio('track01');
-    this.track02 = this.game.add.audio('track02');
+    this.tempTrack = null;
 };
 
 // TODO подумать нужно ли это
@@ -63,13 +61,6 @@ AdslJumper.SoundManager.prototype.setMusicVolume = function (value) {
 AdslJumper.SoundManager.prototype.setSFXVolume = function (value) {
     
 };
-
-AdslJumper.SoundManager.prototype.setTrack = function (value) {
-    if (this.currentTrack) {
-        this.currentTrack.stop();
-    }
-    this.currentTrack = this[value];
-}
 
 // void
 AdslJumper.SoundManager.prototype.playTrack = function () {

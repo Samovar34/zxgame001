@@ -1,5 +1,5 @@
 AdslJumper.storyState = function (game) {};
-var gg;
+
 AdslJumper.storyState.prototype = {
     create: function () {
         // modules
@@ -20,9 +20,10 @@ AdslJumper.storyState.prototype = {
         this.textLayer = this.game.add.group();
 
         // music
-        if (!this.soundManager.currentTrack) {
-            this.soundManager.setTrack("intro");
+        if (this.soundManager.currentTrack) {
             this.soundManager.playTrack();
+        } else {
+            console.error("story state without music!");
         }
     },
     update: function () {

@@ -27,7 +27,8 @@ AdslJumper.playGameState.prototype = {
 
         // music
         if (!this.soundManager.currentTrack) {
-            this.soundManager.setTrack("track01");
+            this.soundManager.currentTrack = this.soundManager.tempTrack;
+            this.soundManager.tempTrack = null;
             this.soundManager.playTrack();
         }
 
