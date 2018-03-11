@@ -30,12 +30,12 @@ AdslJumper.preloadState.prototype = {
 
 
         // music
-        this.load.audio('intro', 'assets/audio/intro.mp3');   
+        this.load.audio('intro', 'assets/audio/intro.ogg');   
         this.load.audio('track01', 'assets/audio/track01.ogg');
         //this.load.audio('track02', 'assets/audio/track02.mp3');
 
         // shaders
-        this.game.load.shader('testShader', 'assets/shaders/test.frag');
+        //this.game.load.shader('testShader', 'assets/shaders/test.frag');
     },
 
     create: function () {

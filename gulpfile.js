@@ -7,7 +7,8 @@ const gulp        = require("gulp"),
       ifElse      = require("gulp-if-else"),
       sourcemaps  = require("gulp-sourcemaps"),
       uglify      = require("gulp-uglify"),
-      sass        = require("gulp-sass");
+      sass        = require("gulp-sass"),
+      clean       = require("gulp-clean");
 
 // node modules
 const http = require("http");
@@ -116,6 +117,11 @@ gulp.task("serve:lan", (done) => {
     });
 });
 
+gulp.task("clean", function () {
+    return gulp.src(buildViewFolder, {read: false})
+        .pipe(clean());
+});
+
 // watch
 gulp.task("watch", (done) => {
     gulp.watch(watchViewFolder, ["build:view"]);
@@ -130,13 +136,13 @@ gulp.task("watch", (done) => {
 
 
 //default
-gulp.task("default", ["build"], (done) => {
+gulp.task("default", ["clean", "build"], (done) => {
     gulp.start("watch");
     gulp.start("serve");
     done();
 });
 
-gulp.task("default:lan", ["build"], (done) => {
+gulp.task("default:lan", ["clean", "build"], (done) => {
     gulp.start("watch");
     gulp.start("serve:lan");
     done();
