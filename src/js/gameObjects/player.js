@@ -84,6 +84,8 @@ AdslJumper.Player.prototype.update = function () {
 
     this.currentState();
 
+    this.input.update();
+
     if (this.canInput && this.input.jumpIsJustDown()) {
         this.jump();
     }

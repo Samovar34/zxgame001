@@ -52,7 +52,7 @@ AdslJumper.preloadState.prototype = {
         AdslJumper.data = {
             level: 0,
             score: 0,
-            prev: "preload", // prev state
+            prev: "preload", // prev state  TODO set preload
             next: "story" // next state
         };
 

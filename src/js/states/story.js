@@ -27,6 +27,7 @@ AdslJumper.storyState.prototype = {
         }
     },
     update: function () {
+        this.input.update();
         this.currentState();
 
         if (this.input.selectButtonIsJustDown()) {

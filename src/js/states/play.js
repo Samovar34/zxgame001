@@ -12,10 +12,10 @@ AdslJumper.playGameState.prototype = {
         this.totalLevelCoins = 0;
         this.canCheckOverlapExitDoor = false;
 
-        // testing game with low fps
+        //testing game with low fps
         // this.game.time.advancedTiming = true;
-        // this.game.time.desiredFps = 24;
-        // this.game.time.slowMotion = 1.2;
+        // this.game.time.desiredFps = 30;
+        // this.game.time.slowMotion = 1.0;
 
         // get score
         this.currentScore = AdslJumper.data.score;

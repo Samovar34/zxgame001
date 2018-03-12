@@ -36,6 +36,7 @@ AdslJumper.menuState.prototype = {
     },
     
     update: function () {
+        this.input.update();
         this.currentState();
     }    
 };
