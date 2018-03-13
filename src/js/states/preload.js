@@ -32,11 +32,9 @@ AdslJumper.preloadState.prototype = {
         this.load.audio('menu_select_0', 'assets/audio/menu_select_0.wav');
         this.load.audio('menu_select_1', 'assets/audio/menu_select_1.wav');
 
-
         // music
-        this.load.audio('intro', ['assets/audio/music/intro.ogg', 'assets/audio/music/intro.mp3'], false);   
-        this.load.audio('track01', ['assets/audio/music/track01.ogg', 'assets/audio/music/track01.mp3'], false);
-        //this.load.audio('track02', 'assets/audio/track02.mp3');
+        this.load.audio('intro', ['assets/audio/music/intro.ogg', 'assets/audio/music/intro.mp3'], false);
+
         // init game components
         this.game.load.onFileComplete.add(this.doOnFIleLoad, this);
 
@@ -44,16 +42,23 @@ AdslJumper.preloadState.prototype = {
 
     create: function () {
 
-
         AdslJumper.modules.soundManager = new AdslJumper.SoundManager(this.game);
         AdslJumper.modules.inputManager = new AdslJumper.Input(this.game);
+
+        // for waitDecodeAudio
+        // m = main code
+        AdslJumper.actionCode = {};
+        AdslJumper.actionCode.FROMPRELOADTOSTORY = 0; // m
+        AdslJumper.actionCode.FROMAUDIOTOSTORY = 1;
+        AdslJumper.actionCode.FROMMENUTOPLAY = 2; // m
+        AdslJumper.actionCode.FROMAUDIOTOPLAY = 3;
+        AdslJumper.actionCode.FROMPLAYTOAUDIO = 3; // m
 
         // gama data
         AdslJumper.data = {
             level: 0,
             score: 0,
-            prev: "preload", // prev state  TODO set preload
-            next: "story" // next state
+            actionCode: AdslJumper.actionCode.FROMPRELOADTOSTORY,
         };
 
         this.game.state.start("waitDecodeAudio");

@@ -2,25 +2,35 @@ AdslJumper.waitDecodeAudio = function (game) {};
 
 AdslJumper.waitDecodeAudio.prototype = {
 
-    create: function () {
+    preload: function () {
         this.game.add.image(268, 148, "waitingAudio");
-        if (AdslJumper.data.prev === "preload") {
-            this.beforeStory();
-            return;
+        if ((AdslJumper.data.actionCode === AdslJumper.actionCode.FROMMENUTOPLAY) ||
+            (AdslJumper.data.actionCode === AdslJumper.actionCode.FROMPLAYTOAUDIO)) {
+
+            // load music
+            if (AdslJumper.data.level <= 15) {
+                this.load.audio('track01', ['assets/audio/music/track01.ogg', 'assets/audio/music/track01.mp3'], false);
+            }
         }
 
-        if (AdslJumper.data.prev === "menu") {
-            this.beforePlay();
-            return;
-        }
+    },
 
-        
+    create: function () {
+
+        switch (AdslJumper.data.actionCode) {
+            case AdslJumper.actionCode.FROMPRELOADTOSTORY :
+                this.beforeStory();
+                break;
+            case AdslJumper.actionCode.FROMMENUTOPLAY :
+                this.beforePlay();
+                break;
+        }
     }
 };
 
 // before story
 AdslJumper.waitDecodeAudio.prototype.beforeStory = function () {
-    console.log("wait decode story");
+
     // add track
     AdslJumper.modules.soundManager.currentTrack = this.game.add.sound("intro");
     this.game.sound.decode("intro");
@@ -29,8 +39,7 @@ AdslJumper.waitDecodeAudio.prototype.beforeStory = function () {
     // after decode start story
     this.game.sound.setDecodedCallback([AdslJumper.modules.soundManager.currentTrack], function () {
 
-        AdslJumper.data.prev = "waitDecodeAudio";
-        AdslJumper.data.next = "story";
+        AdslJumper.data.actionCode = AdslJumper.actionCode.FROMAUDIOTOSTORY;
 
         this.state.start("story");
     }, this);
@@ -38,9 +47,8 @@ AdslJumper.waitDecodeAudio.prototype.beforeStory = function () {
 };
 
 AdslJumper.waitDecodeAudio.prototype.beforePlay = function () {
-    console.log("wait decode play");
 
-    if (AdslJumper.data.level >= 0 && AdslJumper.data.level <= 15) {
+    if (AdslJumper.data.level <= 15) {
         // add track
         AdslJumper.modules.soundManager.tempTrack = this.game.add.sound("track01");
         this.game.sound.decode("track01");
@@ -49,8 +57,7 @@ AdslJumper.waitDecodeAudio.prototype.beforePlay = function () {
     // after decode start story
     this.game.sound.setDecodedCallback([AdslJumper.modules.soundManager.tempTrack], function () {
 
-        AdslJumper.data.prev = "waitDecodeAudio";
-        AdslJumper.data.next = "play";
+        AdslJumper.data.actionCode = AdslJumper.actionCode.FROMAUDIOTOPLAY;
 
         this.state.start("play");
     }, this);

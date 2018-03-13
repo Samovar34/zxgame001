@@ -30,9 +30,13 @@ AdslJumper.storyState.prototype = {
         this.input.update();
         this.currentState();
 
+        // skip
         if (this.input.selectButtonIsJustDown()) {
-            if (this.currentState != this.showSlide0 && this.currentState != this.showSlide1)
-            this.game.state.start("menu");
+            if (this.currentState != this.showSlide0 && this.currentState != this.showSlide1) {
+
+                this.game.state.start("menu");
+            }
+
         }
     }
 };
@@ -50,7 +54,7 @@ AdslJumper.storyState.prototype.showSlide0 = function () {
 
 AdslJumper.storyState.prototype.beforeSlide0 = function () {
     this.game.time.events.add(this.stateTime, this.afterSlide0, this);
-}
+};
 
 AdslJumper.storyState.prototype.afterSlide0 = function () {
     this.game.camera.fade(0x000000, this.fadeTime);
@@ -61,7 +65,7 @@ AdslJumper.storyState.prototype.afterSlide0 = function () {
         this.isRunning = false;
         this.currentState = this.showSlide1;
     }, this);
-}
+};
 
 // screen 2 vendors
 AdslJumper.storyState.prototype.showSlide1 = function () {
@@ -76,7 +80,7 @@ AdslJumper.storyState.prototype.showSlide1 = function () {
 
 AdslJumper.storyState.prototype.beforeSlide1 = function () {
     this.game.time.events.add(this.stateTime, this.afterSlide1, this);
-}
+};
 
 AdslJumper.storyState.prototype.afterSlide1 = function () {
     this.game.camera.fade(0x000000, this.fadeTime);
@@ -87,7 +91,7 @@ AdslJumper.storyState.prototype.afterSlide1 = function () {
         this.isRunning = false;
         this.currentState = this.showSlide2;
     }, this);
-}
+};
 
 // screen 3 town
 AdslJumper.storyState.prototype.showSlide2 = function () {
@@ -110,7 +114,7 @@ AdslJumper.storyState.prototype.showSlide2 = function () {
 
 AdslJumper.storyState.prototype.beforeSlide2 = function () {
     this.game.time.events.add(this.longStateTime, this.afterSlide2, this);
-}
+};
 
 AdslJumper.storyState.prototype.afterSlide2 = function () {
     this.game.camera.fade(0x000000, this.fadeTime);
@@ -121,7 +125,7 @@ AdslJumper.storyState.prototype.afterSlide2 = function () {
         this.isRunning = false;
         this.currentState = this.showSlide3;
     }, this);
-}
+};
 
 // screen 4 but
 AdslJumper.storyState.prototype.showSlide3 = function () {
@@ -135,18 +139,18 @@ AdslJumper.storyState.prototype.showSlide3 = function () {
 
 AdslJumper.storyState.prototype.beforeSlide3 = function () {
     this.game.time.events.add(this.longStateTime/2, this.afterSlide3, this);
-}
+};
 
 AdslJumper.storyState.prototype.afterSlide3 = function () {
     this.game.camera.fade(0x000000, this.fadeTime);
     this.game.camera.onFadeComplete.addOnce(function () {
 
-        this.clearLayers()
+        this.clearLayers();
 
         this.isRunning = false;
         this.currentState = this.showSlide4;
     }, this);
-}
+};
 
 // screen 5 lag
 AdslJumper.storyState.prototype.showSlide4 = function () {
@@ -168,7 +172,7 @@ AdslJumper.storyState.prototype.showSlide4 = function () {
 
 AdslJumper.storyState.prototype.beforeSlide4 = function () {
     this.game.time.events.add(this.longStateTime, this.afterSlide4, this);
-}
+};
 
 AdslJumper.storyState.prototype.afterSlide4 = function () {
     this.game.camera.fade(0x000000, this.fadeTime);
@@ -179,7 +183,7 @@ AdslJumper.storyState.prototype.afterSlide4 = function () {
         this.isRunning = false;
         this.currentState = this.showSlide5;
     }, this);
-}
+};
 
 // screen 6 no internet
 AdslJumper.storyState.prototype.showSlide5 = function () {
@@ -200,7 +204,7 @@ AdslJumper.storyState.prototype.showSlide5 = function () {
 
 AdslJumper.storyState.prototype.beforeSlide5 = function () {
     this.game.time.events.add(this.longStateTime, this.afterSlide5, this);
-}
+};
 
 AdslJumper.storyState.prototype.afterSlide5 = function () {
     this.game.camera.fade(0x000000, this.fadeTime);
@@ -211,7 +215,7 @@ AdslJumper.storyState.prototype.afterSlide5 = function () {
         this.isRunning = false;
         this.currentState = this.showSlide6;
     }, this);
-}
+};
 
 // screen 7 hero
 AdslJumper.storyState.prototype.showSlide6 = function () {
@@ -233,7 +237,7 @@ AdslJumper.storyState.prototype.showSlide6 = function () {
 
 AdslJumper.storyState.prototype.beforeSlide6 = function () {
     this.game.time.events.add(this.longStateTime, this.afterSlide6, this);
-}
+};
 
 AdslJumper.storyState.prototype.afterSlide6 = function () {
     this.game.camera.fade(0x000000, this.fadeTime);
@@ -312,7 +316,7 @@ AdslJumper.storyState.prototype.afterSlide8 = function () {
 AdslJumper.storyState.prototype.clearLayers = function () {
     this.imagesLayer.removeAll(true, true);
     this.textLayer.removeAll(true, true);
-}
+};
 
 // FONT WORKER
 AdslJumper.storyState.prototype.stringToSprite = function (x, y, line) {
@@ -355,33 +359,33 @@ AdslJumper.storyState.prototype.codeToImg = {
     "121": fontName + "90.png",
     "122": fontName + "91.png",
 
-    // en uppercase
-    "97": fontName + "66.png",
-    "98": fontName + "67.png",
-    "99": fontName + "68.png",
-    "100": fontName + "69.png",
-    "101": fontName + "70.png",
-    "102": fontName + "71.png",
-    "103": fontName + "72.png",
-    "104": fontName + "73.png",
-    "105": fontName + "74.png",
-    "106": fontName + "75.png",
-    "107": fontName + "76.png",
-    "108": fontName + "77.png",
-    "109": fontName + "78.png",
-    "110": fontName + "79.png",
-    "111": fontName + "80.png",
-    "112": fontName + "81.png",
-    "113": fontName + "82.png",
-    "114": fontName + "83.png",
-    "115": fontName + "84.png",
-    "116": fontName + "85.png",
-    "117": fontName + "86.png",
-    "118": fontName + "87.png",
-    "119": fontName + "88.png",
-    "120": fontName + "89.png",
-    "121": fontName + "90.png",
-    "122": fontName + "91.png",
+    // // en uppercase
+    // "97": fontName + "66.png",
+    // "98": fontName + "67.png",
+    // "99": fontName + "68.png",
+    // "100": fontName + "69.png",
+    // "101": fontName + "70.png",
+    // "102": fontName + "71.png",
+    // "103": fontName + "72.png",
+    // "104": fontName + "73.png",
+    // "105": fontName + "74.png",
+    // "106": fontName + "75.png",
+    // "107": fontName + "76.png",
+    // "108": fontName + "77.png",
+    // "109": fontName + "78.png",
+    // "110": fontName + "79.png",
+    // "111": fontName + "80.png",
+    // "112": fontName + "81.png",
+    // "113": fontName + "82.png",
+    // "114": fontName + "83.png",
+    // "115": fontName + "84.png",
+    // "116": fontName + "85.png",
+    // "117": fontName + "86.png",
+    // "118": fontName + "87.png",
+    // "119": fontName + "88.png",
+    // "120": fontName + "89.png",
+    // "121": fontName + "90.png",
+    // "122": fontName + "91.png",
 
     // rus lowercase
     "1072": fontName + "1.png",

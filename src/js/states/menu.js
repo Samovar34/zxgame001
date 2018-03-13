@@ -56,16 +56,19 @@ AdslJumper.menuState.prototype.updateMenu = function () {
             this.game.camera.onFadeComplete.addOnce(function() {
                 this.soundManager.currentTrack.stop();
                 this.soundManager.currentTrack = null;
+
+                // clear cache
+                this.game.cache.removeTextureAtlas("atlas_1");
                 this.game.cache.removeSound("intro");
 
-                AdslJumper.data.prev = "menu";
-                AdslJumper.data.next = "waitDecodeAudio";
+                AdslJumper.data.actionCode = AdslJumper.actionCode.FROMMENUTOPLAY;
+
                 // play
                 this.game.state.start("waitDecodeAudio");
             }, this);
         } 
     }
-}
+};
 
 // void
 AdslJumper.menuState.prototype.setMenu = function (val) {
@@ -84,9 +87,9 @@ AdslJumper.menuState.prototype.setMenu = function (val) {
         this.arrow.y = this.munuY + this.menuOffsetY*this.curItem;
         this.soundManager.playMenuSelect(0);
     }
-}
+};
 
 // void
 AdslJumper.menuState.prototype.topMenu = function () {
     this.updateMenu();
-}
+};

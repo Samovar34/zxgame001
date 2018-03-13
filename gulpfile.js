@@ -118,7 +118,7 @@ gulp.task("serve:lan", (done) => {
 });
 
 gulp.task("clean", function (done) {
-    gulp.src(buildViewFolder, {read: false})
+    gulp.src(buildViewFolder, {force: true})
         .pipe(clean());
     done(); 
 });

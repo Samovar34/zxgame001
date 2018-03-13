@@ -5,19 +5,14 @@ AdslJumper.modules = {};
 
 //@@include('./include.js')
 
-// TODO move from global scope
-var game;
-
-// TODO delete
-var player;
 
 window.onload = function () {
     var gameOptions = AdslJumper.gameOptions.getMainOptions();
 
-    game = new Phaser.Game({
+    var game = new Phaser.Game({
         width: gameOptions.gameWidth,
         height: gameOptions.gameHeight,
-        renderer: Phaser.CANVAS,
+        renderer: Phaser.AUTO,
         enableDebug: false,
         antialias: false
     });

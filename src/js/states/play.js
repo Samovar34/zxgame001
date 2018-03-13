@@ -78,7 +78,7 @@ AdslJumper.playGameState.prototype = {
 
         // create player
         var playerStartPosition = AdslJumper.utils.findObjectsByType('playerStart', this.map, 'objectsLayer');
-        this.player = new AdslJumper.Player(game, this.input, playerStartPosition[0].x + 16,  playerStartPosition[0].y + 15);
+        this.player = new AdslJumper.Player(this.game, this.input, playerStartPosition[0].x + 16,  playerStartPosition[0].y + 15);
         this.player.canInput = false;
 
         // show secret ways
@@ -248,19 +248,19 @@ AdslJumper.playGameState.prototype.thornHandler = function (player, trap) {
     var offsetX = 0;
     var offsetY = 0;
 
-    if (trap.tag == "movableThorn") {
+    if (trap.tag === "movableThorn") {
         if (!trap.isDangerous()) {
             return;
         }
     } else {
         // Static Thorn
         // thornUp
-        if (trap.frame == 0) {
+        if (trap.frame === 0) {
             offsetY = 12;
-        } else if (trap.frame == 6) {
+        } else if (trap.frame === 6) {
             // thornRight
             offsetY = -12;
-        } else if (trap.frame == 12) {
+        } else if (trap.frame === 12) {
             // thornDown
             offsetX = -12;
         } else {

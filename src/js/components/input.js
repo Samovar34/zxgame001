@@ -25,6 +25,8 @@ AdslJumper.Input = function (game) {
     // other buttons
     this.selectButton = this.game.input.keyboard.addKey(Phaser.Keyboard.ENTER);
     this.runButton = this.game.input.keyboard.addKey(Phaser.Keyboard.L);
+
+    this.jumpButtonBuffer = 0;
 };
 
 AdslJumper.Input.prototype.constructor = AdslJumper.Input;
@@ -36,6 +38,8 @@ AdslJumper.Input.prototype.update = function () {
         this.usingPad = false;
     }
 };
+
+AdslJumper.Input.prototype.DURATION = 32;
 
 // Get button objects
 AdslJumper.Input.prototype.leftIsDown = function () {
@@ -77,11 +81,15 @@ AdslJumper.Input.prototype.jumpIsJustDown = function () {
 // enter
 AdslJumper.Input.prototype.selectButtonIsJustDown = function () {
     if (this.usingPad) {
-        return this.pad1.justPressed(Phaser.Gamepad.XBOX360_START, 32) || this.selectButton.justDown;
+        return this.pad1.justPressed(Phaser.Gamepad.XBOX360_START, this.DURATION) || this.selectButton.justDown;
     }
     
     return this.selectButton.justDown;
 };
+
+// methods for menu
+// ...
+
 
 // S or arrow down
 AdslJumper.Input.prototype.downIsJustDown = function () {
@@ -91,5 +99,5 @@ AdslJumper.Input.prototype.downIsJustDown = function () {
 // возникает баг при вызове player.destroy(); ещё не разобрался
 AdslJumper.Input.prototype.destroy = function() {
     // nothing
-  };
+};
 
