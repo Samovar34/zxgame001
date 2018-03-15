@@ -109,7 +109,7 @@ AdslJumper.playGameState.prototype = {
         this.game.physics.arcade.collide(this.player, this.collisionLayer);
 
         this.game.physics.arcade.collide(this.player, this.traps, this.trapHandler, null, this);
-        
+
         // if player collected all coins check overlap or check overlap with coins
         if (this.canCheckOverlapExitDoor === true) {
             this.game.physics.arcade.overlap(this.player, this.exitDoor, this.exitDoorHandler, null, this);

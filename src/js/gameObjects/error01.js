@@ -12,7 +12,7 @@ AdslJumper.Error01 = function (game, x, y) {
     this.name = "error01";
 
     // animation
-    this.animations.add("default", ["error01.png", "error02.png"], 1.2, true);
+    this.animations.add("default", ["error01.png", "error03 .png"], 1, true);
 };
 
 AdslJumper.Error01.prototype = Object.create(Phaser.Sprite.prototype);

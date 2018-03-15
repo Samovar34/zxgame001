@@ -7,7 +7,7 @@ AdslJumper.preloadState.prototype = {
         this.progress = this.game.add.image(28, 180, "progress");
 
         // load assets
-        for (var i = 0; i <= 4; i++) {
+        for (var i = 0; i <= 7; i++) {
             this.game.load.tilemap('map' + i, 'assets/levels/level' + i + ".json", null, Phaser.Tilemap.TILED_JSON);
         }
 
@@ -18,6 +18,9 @@ AdslJumper.preloadState.prototype = {
         // tilemaps
         this.game.load.image("adslWorldTilemap", "assets/images/adsl_world_tilemap.png");
         this.game.load.image("waitingAudio", "assets/images/waitAudioDecode.png");
+
+        //TODO delete
+        this.game.load.spritesheet("platform01", "assets/images/platform01.png", 64, 32, 7);
 
         // audio
         this.load.audio('jump', 'assets/audio/jump.wav');
@@ -58,8 +61,15 @@ AdslJumper.preloadState.prototype = {
         AdslJumper.data = {
             level: 0,
             score: 0,
-            actionCode: AdslJumper.actionCode.FROMPRELOADTOSTORY,
+            actionCode: AdslJumper.actionCode.FROMMENUTOPLAY,
         };
+
+        // TODO del
+        var urlLevel = parseInt(window.location.hash.slice(-1));
+        console.log(urlLevel);
+        if (!isNaN(urlLevel)) {
+            AdslJumper.data.level = urlLevel;
+        }
 
         this.game.state.start("waitDecodeAudio");
     }

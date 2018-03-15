@@ -25,6 +25,11 @@ AdslJumper.gameObjectFactory = {
         return new AdslJumper.Mine(this.game, x, y + 18);
     },
 
+    // special
+    "Platform01": function (x, y, prop) {
+        return new AdslJumper.Platform01(this.game, x, y + 32);
+    },
+
     // fx
     "Led": function (x, y, prop) {
         return new AdslJumper.Led(this.game, x, y + 30, prop.color);
