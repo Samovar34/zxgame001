@@ -36,9 +36,9 @@ AdslJumper.Player = function (game, input, x, y) {
 
     // physics
     this.game.physics.arcade.enable(this);
-    this.body.setSize(26, 30, 4, 2);
+    this.body.setSize(39, 45, 6, 3);
     this.body.gravity.y = this.options.gravity;
-    this.body.collideWorldBounds = true;
+    //this.body.collideWorldBounds = true;
     this.body.acceleration.x = 0;
     this.body.maxVelocity.x = this.options.speed;
     this.body.maxVelocity.y = this.options.maxFallSpeed;
@@ -48,13 +48,20 @@ AdslJumper.Player = function (game, input, x, y) {
     this.groundDelayTimer = 0;
     this.wasOnGround = true; // for custom ground check
     this.wallBreakTime = this.options.wallBreakTime;
-    this.wallBreakClock = 0;
+    this.wallBreakClock = 0; // for custom wall check
 
     // physics variables
     this.canJump = true;
     this.canDoubleJump = false;
     this.onWall = false;
     this.acceleration = 0;
+    
+    this.customTouch = {
+        u: false,
+        r: false,
+        d: false,
+        l: false
+    };
 
     // player state
     this.currentState = this.groundState;
@@ -72,14 +79,15 @@ AdslJumper.Player.prototype.constructor = AdslJumper.Player;
 
 AdslJumper.Player.prototype.update = function () {
 
-    // check collision with worldBounds or Tile
+    // check collision with wall
     // for particles when player touch roof
-    if(this.body.blocked.up) {
-        //this.canDoubleJump = false;
+    if(this.customTouch.u) {
         this.soundManager.playPunch();
-        this.fartParticles.x = this.position.x;
-        this.fartParticles.y = this.position.y - 16;
-        this.fartParticles.start(true, 525, null, 2, 100);
+    }
+
+    // if player touch enything no allow double jump
+    if (this._isToucn()) {
+        this.canDoubleJump = false;
     }
 
     this.currentState();
@@ -96,7 +104,7 @@ AdslJumper.Player.prototype.update = function () {
 AdslJumper.Player.prototype.jump = function () {  
 
     // прыжок от стены
-    if (this.body.onWall() && !this.body.onFloor()) {
+    if (this._onWall() && !this._onFloor()) {
         this.wasOnGround = false;
         this.canDoubleJump = true;
         this.body.maxVelocity.y = this.options.maxFallSpeed;
@@ -105,7 +113,7 @@ AdslJumper.Player.prototype.jump = function () {
         // play sound
         this.soundManager.playJump();
 
-        if (this.body.blocked.left) {
+        if (this.customTouch.l) {
             this.body.velocity.x = this.options.speed;
         } else {
             this.body.velocity.x = -this.options.speed;
@@ -114,7 +122,7 @@ AdslJumper.Player.prototype.jump = function () {
         this.currentState = this.airState;
 
     // прыжок с платформы (пола)
-    } else if (this.body.onFloor() || this.wasOnGround) {
+    } else if (this._onFloor() || this.wasOnGround) {
         // simple jump
         this.wasOnGround = false;
         this.canDoubleJump = true;
@@ -125,8 +133,9 @@ AdslJumper.Player.prototype.jump = function () {
         this.currentState = this.airState;
 
     // дополнительный прыжок
-    } else if (!this.body.onFloor() && this.canDoubleJump) {
+    } else if (!this._onFloor() && this.canDoubleJump) {
         // double jump
+        //return;
 
         this.canDoubleJump = false;
         this.body.velocity.y = this.options.doubleJump * -1;
@@ -205,7 +214,7 @@ AdslJumper.Player.prototype.groundState = function groundState() {
     }
 
     // fell of a ledge
-    if (!this.body.onFloor()) {
+    if (!this._onFloor()) {
         this.settable = true; // allow set player for next state
         this.currentState = this.airState;
     }
@@ -243,13 +252,13 @@ AdslJumper.Player.prototype.airState = function airState() {
     }
 
     // player sliding wall (pre wall-jump)
-    if (this.body.onWall()) {
+    if (this._onWall()) {
         // play sound
         this.soundManager.playStep02();
 
         this.settable = true; // allow set player for next state
         this.currentState = this.wallSlideState;
-    } else if (this.body.onFloor()) { // player hit ground
+    } else if (this._onFloor()) { // player hit ground
         // play sound
         this.soundManager.playStep02();
         
@@ -278,13 +287,39 @@ AdslJumper.Player.prototype.wallSlideState = function wallSlideState() {
         this.wallBreakClock = 0;
         this.settable = true;
         this.currentState = this.airState;
-    } else if (!this.body.onWall()) { // let go of the wall
+    } else if (!this._onWall()) { // let go of the wall
         this.wallBreakClock = 0;
         this.settable = true;
         this.currentState = this.airState;
-    } else if (this.body.onFloor()) {
+    } else if (this._onFloor()) {
         this.wallBreakClock = 0;
         this.settable = true;
         this.currentState = this.groundState;
     }
+};
+
+AdslJumper.Player.prototype.reset = function () {
+    this.customTouch.u = false;
+    this.customTouch.r = false;
+    this.customTouch.d = false;
+    this.customTouch.l = false;
+}
+
+AdslJumper.Player.prototype._onWall = function () {
+    return this.customTouch.l || this.customTouch.r;
+};
+
+AdslJumper.Player.prototype._onFloor = function () {
+    return this.customTouch.d;
+};
+
+AdslJumper.Player.prototype._onRoof = function () {
+    return this.customTouch.u;
+};
+
+AdslJumper.Player.prototype._isToucn = function () {
+    return this.customTouch.u  ||
+    this.customTouch.r  ||
+    this.customTouch.d  ||
+    this.customTouch.l;
 };

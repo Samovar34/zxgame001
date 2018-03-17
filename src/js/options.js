@@ -21,16 +21,16 @@ AdslJumper.gameOptions = (function () {
     };
 
     var playerOptions = {
-        gravity: 1200,
-        grip: 120,
-        speed: 272,
-        maxFallSpeed: 596,
+        gravity: 1700,
+        grip: 150,
+        speed: 362,
+        maxFallSpeed: 720,
         runSpeedUpRate: 1.5,
-        acceleration: 4200,
-        jump: 388,
-        doubleJump: 296,
-        drag: 5950,
-        inAirAccelerationRate: 0.45, // acceleration *= inAirAccelerationRate
+        acceleration: 5200,
+        jump: 572,
+        doubleJump: 462,
+        drag: 6950,
+        inAirAccelerationRate: 0.42, // acceleration *= inAirAccelerationRate
         inAirDrag: 0.1,
         groundDelay: 5, // delay in frames
         wallBreakTime: 15, // delay in frames

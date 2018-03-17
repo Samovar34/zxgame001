@@ -15,8 +15,8 @@ window.onload = function () {
     var gameOptions = AdslJumper.gameOptions.getMainOptions();
 
     game = new Phaser.Game({
-        width: gameOptions.gameWidth,
-        height: gameOptions.gameHeight,
+        width: 960,
+        height: 540,
         renderer: Phaser.AUTO,
         antialias: false
     });

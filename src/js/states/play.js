@@ -30,7 +30,7 @@ AdslJumper.playGameState.prototype = {
             this.soundManager.currentTrack = this.soundManager.tempTrack;
             this.soundManager.tempTrack = null;
             this.soundManager.playTrack();
-        }
+        };
 
         // background image or WebGL Shader
        // this.background = this.gameObjectFactory.createBackGround01();
