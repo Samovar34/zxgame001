@@ -9,6 +9,10 @@ AdslJumper.testState.prototype = {
         this.game.load.image("render", "assets/images/render.png");
     },
     create: function () {
+        // set renderer
+        this.game.renderer.renderSession.roundPixels = true;
+        this.game.clearBeforeRender = false;
+
         // get modules
         this.input = new AdslJumper.Input(this.game);
         this.soundManager = AdslJumper.modules.soundManager;
@@ -16,7 +20,7 @@ AdslJumper.testState.prototype = {
 
         this.game.world.setBounds(0, 0, 1152, 576);
 
-        this.game.add.image(0, 0, "level");
+        this.background = this.game.add.image(0, 0, "level");
 
         // game world
         this.map = this.game.add.tilemap("map", 32, 32);

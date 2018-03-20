@@ -18,6 +18,7 @@ AdslJumper.Player = function (game, input, x, y) {
     this.isComeIn = false; // входит ли игрок в дверь
     
     this.anchor.setTo(0.5);
+    this.smoothed = false;
 
     // animation
     this.animations.add("walk", [
@@ -26,17 +27,17 @@ AdslJumper.Player = function (game, input, x, y) {
         "player4.png",
         "player3.png"
     ], this.options.walkAnimationSpeed);
+    
     this.doubleJumpAnimation = this.animations.add("doubleJump", [
-        "player7.png",
         "player8.png",
-        "player7.png",
         "player9.png",
-        "player6.png"
+        "player10.png",
+        "player11.png"
     ], this.options.doubleAnimationSpeed);
 
     // physics
     this.game.physics.arcade.enable(this);
-    this.body.setSize(39, 45, 6, 3);
+    this.body.setSize(26, 30, 4, 2);
     this.body.gravity.y = this.options.gravity;
     //this.body.collideWorldBounds = true;
     this.body.acceleration.x = 0;
@@ -128,6 +129,8 @@ AdslJumper.Player.prototype.jump = function () {
         this.canDoubleJump = true;
         // play sound
         this.soundManager.playJump();
+        this.animations.play("jump");
+
         this.body.velocity.y = this.options.jump * -1;
         this.settable = true;
         this.currentState = this.airState;
@@ -246,9 +249,11 @@ AdslJumper.Player.prototype.airState = function airState() {
     if (this.doubleJumpAnimation.isPlaying) {
         // do nothing
     } else if (this.body.velocity.y < 0) {
-        this.frameName  = "player5.png";
+        this.frameName  = "player6.png";
+    } else if (this.body.velocity.x !== 0){
+        this.frameName = "player11.png";
     } else {
-        this.frameName = "player6.png";
+        this.frameName = "player7.png";
     }
 
     // player sliding wall (pre wall-jump)
@@ -274,7 +279,7 @@ AdslJumper.Player.prototype.wallSlideState = function wallSlideState() {
         this.settable = false;
     }
 
-    this.frameName = "player10.png";
+    this.frameName = "player12.png";
 
     // state logic
     if ((this.input.leftIsDown() && this.facing === "left") || (this.input.rightIsDown() && this.facing === "right")) {

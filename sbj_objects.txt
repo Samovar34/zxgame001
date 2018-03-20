@@ -1,0 +1,55 @@
+Точка старта игрока
+playerStart
+
+*** Traps *** ---------------------------------------
+Тип - trap
+Имена
+Статические шипы           Динамические шипы
+    ThornUp                     MovableThornVertical
+    ThornRight                  MovableThornHorizontal
+    ThornDown
+    ThornLeft
+
+Мины
+    Mine
+
+*** END Traps *** ---------------------------------------
+
+*** FX *** ---------------------------------------
+Тип -fx
+
+Параметры
+isTop bool (над игроком?)
+
+Имена
+Анимированные спрайты
+    Led
+    Fan
+    Error01
+    ScreenA
+    ScreenD
+
+Обучение
+    Tutor1
+    Tutor2
+    Tutor3
+    Tutor4
+    Tutor5
+
+*** END FX *** ---------------------------------------
+
+*** collision & rigidbody ***                   *** triggers ***
+Тип - box2d             rb2d                        Тип - tr2d
+Имя - Collider          Rigidbody                   Имя - Trigger
+
+Rigidbody                       Trigger
+Параметры                       Параметры
+
+endX        int                 killOnOverlap       bool
+endY        int                 interactable        bool
+immovable   bool                killAfterInteract   bool
+tween       bool                event               string
+sprite      string              
+
+
+*** END collision & rigidbody & triggers ***

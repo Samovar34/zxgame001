@@ -34,7 +34,7 @@ AdslJumper.gameOptions = (function () {
         inAirDrag: 0.1,
         groundDelay: 5, // delay in frames
         wallBreakTime: 15, // delay in frames
-        walkAnimationSpeed: 10,
+        walkAnimationSpeed: 9,
         doubleAnimationSpeed: 10,
         comeInAnimationSpeed: 10
     };
