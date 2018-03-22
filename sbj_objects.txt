@@ -52,4 +52,21 @@ tween       bool                event               string
 sprite      string              
 
 
-*** END collision & rigidbody & triggers ***
+*** END collision & rigidbody & triggers *** -----------
+
+
+*** background ***
+Тип - bg
+Имя - Bg
+
+Параметры
+sprite - string
+
+*** END background *** ---------------------------------
+
+*** Doors *** ---------------------------------------
+
+Тип - door
+Имя - EnterDoor, ExitDoor
+
+*** END Doors *** ---------------------------------------

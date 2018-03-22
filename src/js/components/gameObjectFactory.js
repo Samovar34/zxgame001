@@ -19,7 +19,7 @@ AdslJumper.gameObjectFactory = {
         return new AdslJumper.Thorn(this.game, x, y, "right");
     },
     "MovableThorn": function (x, y, properties) {
-        return new AdslJumper.MovableThorn(this.game, x, y, properties.period, properties.direction);
+        return new AdslJumper.MovableThorn(this.game, x, y, properties.invert, properties.direction);
     },
     "Mine": function (x, y) {
         return new AdslJumper.Mine(this.game, x, y + 18);
@@ -164,4 +164,155 @@ AdslJumper.gameObjectFactory.createScreenA = function (x, y) {
     ], 2, true);
 
     return gameObject;
+};
+
+// GAME WORLD FUNCTIONS
+
+// call with binding context
+AdslJumper.gameObjectFactory.createBackGround = function () {
+   
+    //temp variables
+    this.tempArray = AdslJumper.utils.findObjectsByType('bg', this.map, 'background');
+    this.tempElement = null;
+
+    for (var i = 0; i < this.tempArray.length; i++) {
+        this.game.add.sprite(
+            this.tempArray[i].x,
+            this.tempArray[i].y, //TODO скорректировать координата по оси Y
+            this.tempArray[i].properties.atlas,
+            this.tempArray[i].properties.sprite
+        );
+    }
+
+    // clear temp variables
+    this.tempArray = null;
+    this.tempElement = null;
+};
+
+// call with binding context
+AdslJumper.gameObjectFactory.createCollision = function () {
+    this.collision2d  = this.game.add.group();
+    this.collision2d.enableBody = true;
+
+    //temp variables
+    this.tempArray = AdslJumper.utils.findObjectsByType('box2d', this.map, 'collision');
+    this.tempElement = null;
+
+    for (var i = 0; i < this.tempArray.length; i++) {
+        // create element
+        this.tempElement = this.game.make.sprite(this.tempArray[i].x, this.tempArray[i].y + 32);
+        this.tempElement.width = this.tempArray[i].width;
+        this.tempElement.height = this.tempArray[i].height;
+
+        // add to group
+        this.collision2d.add(this.tempElement);
+    }
+
+    this.collision2d.setAll("body.immovable", "true");
+
+    // clear temp variables
+    this.tempArray = null;
+    this.tempElement = null;
+};
+
+// call with binding context
+AdslJumper.gameObjectFactory.createDoors = function () {
+    //temp variables
+    this.tempArray = AdslJumper.utils.findObjectsByType('door', this.map, 'doors');
+    this.tempElement = null;
+
+    for (var i = 0; i < this.tempArray.length; i++) {
+        if (this.tempArray[i].name === "ExitDoor") {
+            // create exit Door
+            this.exitDoor = new AdslJumper.ExitDoor(
+                this.game,
+                this.tempArray[i].x,
+                this.tempArray[i].y - 28
+            );
+        } else {
+            // create enter Door
+            this.enterDoor = this.game.add.sprite(
+                this.tempArray[i].x,
+                this.tempArray[i].y - 28,
+                "atlas_2",
+                "door1.png"
+            );
+            this.enterDoor.animations.add("default", ["door1.png", "door2.png"], 2, true);
+            this.enterDoor.animations.play("default");
+        }
+    }
+
+    // clear temp variables
+    this.tempArray = null;
+    this.tempElement = null;
+};
+
+// call with binding context
+AdslJumper.gameObjectFactory.createPlayer = function () {
+    //temp variables
+    this.tempArray = AdslJumper.utils.findObjectsByType('playerStart', this.map, 'objects');
+    this.tempElement = null;
+
+    this.player = new AdslJumper.Player(
+        this.game,
+        this.input,
+        this.tempArray[0].x + 16,
+        this.tempArray[0].y);
+
+    // clear temp variables
+    this.tempArray = null;
+    this.tempElement = null;
+};
+
+// call with binding context
+// call after createCollision2d
+AdslJumper.gameObjectFactory.createRb = function () {
+
+    //temp variables
+    this.tempArray = AdslJumper.utils.findObjectsByType('rb2d', this.map, 'rigidbody');
+    this.tempElement = null;
+
+    for (var i = 0; i < this.tempArray.length; i++) {
+        // TODO logic here
+    }
+
+    this.collision2d.setAll("body.immovable", "true");
+
+    // clear temp variables
+    this.tempArray = null;
+    this.tempElement = null;
+};
+
+// call with binding context
+AdslJumper.gameObjectFactory.createTriggers = function () {
+    this.triggers = this.game.add.group();
+    this.triggers.enableBody = true;
+
+    //temp variables
+    this.tempArray = AdslJumper.utils.findObjectsByType('tr2d', this.map, 'triggers');
+    this.tempElement = null;
+
+    for (var i = 0; i < this.tempArray.length; i++) {
+        // create an element
+        this.tempElement = this.game.make.sprite(
+            this.tempArray[i].x,
+            this.tempArray[i].y + 32
+        );
+
+        // setup the element
+        this.tempElement.width = this.tempArray[i].width;
+        this.tempElement.height = this.tempArray[i].height;
+
+        this.tempElement._killOnOverlap = this.tempArray[i].properties.killOnOverlap;
+        this.tempElement._interactable = this.tempArray[i].properties.interactable;
+        this.tempElement._killAfterInteract = this.tempArray[i].properties.killAfterInteract;
+        this.tempElement._event = this.tempArray[i].properties.event;
+
+        // add to the group
+        this.triggers.add(this.tempElement);
+    }
+
+    // clear temp variables
+    this.tempArray = null;
+    this.tempElement = null;
 };

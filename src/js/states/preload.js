@@ -7,9 +7,11 @@ AdslJumper.preloadState.prototype = {
         this.progress = this.game.add.image(28, 180, "progress");
 
         // load assets
-        for (var i = 0; i <= 7; i++) {
-            this.game.load.tilemap('map' + i, 'assets/levels/level' + i + ".json", null, Phaser.Tilemap.TILED_JSON);
-        }
+        // for (var i = 0; i <= 1; i++) {
+        //     this.game.load.tilemap('map' + i, 'assets/levels/level' + i + ".json", null, Phaser.Tilemap.TILED_JSON);
+        // }
+
+        this.game.load.tilemap('level1', "assets/levels/level1.json", null, Phaser.Tilemap.TILED_JSON);
 
         // atlas
         this.game.load.atlas("atlas_1", 'assets/images/atlas1/atlas.png', 'assets/images/atlas1/atlas.json'); 
