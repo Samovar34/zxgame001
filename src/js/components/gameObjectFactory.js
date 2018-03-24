@@ -107,8 +107,8 @@ AdslJumper.gameObjectFactory.createMeatBlowSprite = function(x, y) {
     return gameObject;
 };
 
-AdslJumper.gameObjectFactory.createExplosionSprite = function () {
-    var gameObject = this.game.make.sprite(0, 0, "atlas_2", "blow1.png");
+AdslJumper.gameObjectFactory.createExplosionSprite = function (game) {
+    var gameObject = game.make.sprite(0, 0, "atlas_2", "blow1.png");
     gameObject.animations.add("default", [
         "blow1.png",
         "blow2.png",
@@ -124,7 +124,7 @@ AdslJumper.gameObjectFactory.createExplosionSprite = function () {
         "blow12.png",
         "blow13.png",
         "blow14.png"
-    ], 24, true);
+    ], 24);
 
     return gameObject;
 }
@@ -315,4 +315,42 @@ AdslJumper.gameObjectFactory.createTriggers = function () {
     // clear temp variables
     this.tempArray = null;
     this.tempElement = null;
+};
+
+// void
+// call with binding context
+AdslJumper.gameObjectFactory.createTraps = function () {
+    this.explosionSprites = this.game.add.group();
+    
+    for (var i = 0; i < 4; i++) {
+        this.explosionSprites.add(AdslJumper.gameObjectFactory.createExplosionSprite(this.game));
+    }
+
+    this.explosionSprites.killAll();
+
+    this.traps = this.game.add.group();
+    this.tempArray = AdslJumper.utils.findObjectsByType('trap', this.map, 'objects');
+    this.tempElement = null;
+
+    for (i = 0; i < this.tempArray.length; i++) {
+        this.tempElement = AdslJumper.gameObjectFactory[this.tempArray[i].name];
+        if (this.tempElement !== undefined) {
+            this.traps.add(
+                this.tempElement.call(
+                    this,
+                    this.tempArray[i].x,
+                    this.tempArray[i].y,
+                    this.tempArray[i].properties
+                )
+            );
+        } else {
+            console.error(this.tempArray[i].name, "not found");
+        }
+    }
+
+    this.tempArray = null;
+    this.tempElement = null;
+
+    // play animation
+    this.traps.callAll("animations.play", "animations", "default");
 };

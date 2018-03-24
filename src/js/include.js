@@ -3,6 +3,7 @@
 //@@include('./components/soundManager.js')
 //@@include('./components/input.js')
 //@@include('./components/utils.js')
+//@@include('./components/gameFunc.js')
 
 //@@include("./gameObjects/thorn.js")
 //@@include("./gameObjects/coin.js")

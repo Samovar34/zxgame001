@@ -26,7 +26,6 @@ AdslJumper.utils.createFromTileObjectSprite = function (element) {
     return sprite;
 };
 
-
 // Ищет объекты карты в указанном слоё
 // return array of objects
 AdslJumper.utils.findObjectsByType = function (type, map, layer) {

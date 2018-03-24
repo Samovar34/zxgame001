@@ -3,46 +3,56 @@
 // SoundManager Class
 AdslJumper.SoundManager = function (game) {
 
+    this.MUSICVOLUMEDEFAULT = 0.7;
+    this.SFXVOLUMEDEFAULT = 0.9;
+
+    this.sfxVolume = 0.9;
+    this.musicVolume = 0.7;
+
     // options
-    this.options = AdslJumper.gameOptions.getSoundOptions();
+    this.options = {
+        musicVolume: 0.0,
+        sfx: 0.9
+    };
+
     this.game = game;
 
     // sounds
     this.jump = this.game.add.audio('jump');
-    this.jump.volume = this.options.sfx * 0.75;
+    this.jump.volume = this.sfxVolume * 0.75;
 
     this.doubleJump = this.game.add.audio('doubleJump');
-    this.doubleJump.volume = this.options.sfx;
+    this.doubleJump.volume = this.sfxVolume;
 
     this.step01 = this.game.add.audio("step01");
-    this.step01.volume = this.options.sfx * 0.4;
+    this.step01.volume = this.sfxVolume * 0.4;
 
     this.step02 = this.game.add.audio("step02");
-    this.step02.volume = this.options.sfx * 0.4;
+    this.step02.volume = this.sfxVolume * 0.4;
 
     this.closeDoor = this.game.add.sound("closeDoor");
-    this.closeDoor.volume = this.options.sfx;
+    this.closeDoor.volume = this.sfxVolume;
 
     this.openDoor = this.game.add.audio('openDoor');
-    this.openDoor.volume = this.options.sfx;
+    this.openDoor.volume = this.sfxVolume;
 
     this.coin = this.game.add.sound("getCoin");
-    this.coin.volume = this.options.sfx * 0.75;
+    this.coin.volume = this.sfxVolume * 0.75;
 
     this.playerDeath = this.game.add.sound("playerDeath");
-    this.playerDeath.volume = this.options.sfx;
+    this.playerDeath.volume = this.sfxVolume;
 
     this.punch = this.game.add.sound("punch");
-    this.punch.volume = this.options.sfx;
+    this.punch.volume = this.sfxVolume;
 
     this.explosion = this.game.add.sound("explosion");
-    this.explosion.volume = this.options.sfx;
+    this.explosion.volume = this.sfxVolume;
     
     this.menuSelect0 = this.game.add.sound("menu_select_0");
-    this.menuSelect0.volume = this.options.sfx;
+    this.menuSelect0.volume = this.sfxVolume;
 
     this.menuSelect1 = this.game.add.sound("menu_select_1");
-    this.menuSelect1.volume = this.options.sfx;
+    this.menuSelect1.volume = this.sfxVolume;
 
     // music
     this.currentTrack = null;
@@ -65,7 +75,7 @@ AdslJumper.SoundManager.prototype.setSFXVolume = function (value) {
 // void
 AdslJumper.SoundManager.prototype.playTrack = function () {
     if (this.currentTrack) {
-        this.currentTrack.loopFull(this.options.musicVolume);
+        this.currentTrack.loopFull(this.musicVolume);
     }
 };
 

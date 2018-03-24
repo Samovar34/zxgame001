@@ -4,7 +4,6 @@ AdslJumper.testState = function (game) {};
 AdslJumper.testState.prototype = {
     preload: function () {
         this.game.load.image("level", "assets/images/levels/level1.png");
-        this.game.load.image("platform", "assets/images/platform.png");
         this.game.load.tilemap('map', 'assets/levels/level1' + ".json", null, Phaser.Tilemap.TILED_JSON);
         this.game.load.image("render", "assets/images/render.png");
     },
@@ -36,6 +35,7 @@ AdslJumper.testState.prototype = {
 
         this.gameObjectFactory.createCollision.call(this);
         this.gameObjectFactory.createTriggers.call(this);
+        this.gameObjectFactory.createTraps.call(this);
 
         this.game.camera.follow(this.player,  this.game.camera.FOLLOW_PLATFORMER, 0.2, 0.2);
     },
@@ -46,6 +46,7 @@ AdslJumper.testState.prototype = {
 
         this.game.physics.arcade.collide(this.player, this.collision2d, callback, null, this);
         this.game.physics.arcade.overlap(this.player, this.triggers, callback2, null, this);
+        this.game.physics.arcade.overlap(this.player, this.traps, AdslJumper.gameFunc.trapHandler, null, this);
 
     },
     
@@ -73,23 +74,9 @@ function callback2(player, trigger) {
     console.log(trigger._event);
 }
 
-// void
-AdslJumper.testState.prototype.createTraps = function () {
-    var elements = AdslJumper.utils.findObjectsByType('trap', this.map, 'fxLayer');
-    var currentFunction = null;
-
-    for (var i = 0; i < elements.length; i++) {
-        currentFunction = AdslJumper.gameObjectFactory[elements[i].name];
-        if (currentFunction !== undefined) {
-            this.foregroundLayer.add(currentFunction.call(this, elements[i].x, elements[i].y, elements[i].properties));
-        } else {
-            console.error(elements[i].name, "not found");
-        }
-    }
-
-    // play animation
-    this.foregroundLayer.callAll("animations.play", "animations", "default");
-};
+function callback3(player, trap) {
+    console.log(trap.name);
+}
 
 // main trap handler method.
 // void

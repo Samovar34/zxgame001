@@ -10,10 +10,10 @@ AdslJumper.bootState.prototype = {
 
     create: function () {
 
-        this.game.stage.backgroundColor = AdslJumper.gameOptions.getMainOptions().bgColor;
+        this.game.stage.backgroundColor = AdslJumper.gameOptions.bgColor;
 
         // // scaling
-        //this.game.renderer.renderSession.roundPixels = true;; // без этой опции страные артефакты. Проверено в Linux Mint
+        this.game.renderer.renderSession.roundPixels = true;; // без этой опции страные артефакты. Проверено в Linux Mint
         this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 
         // start physics

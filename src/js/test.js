@@ -12,11 +12,10 @@ var game;
 var player;
 
 window.onload = function () {
-    var gameOptions = AdslJumper.gameOptions.getMainOptions();
 
     game = new Phaser.Game({
-        width: 640,
-        height: 360,
+        width: AdslJumper.gameOptions.gameWidth,
+        height: AdslJumper.gameOptions.gameHeight,
         renderer: Phaser.AUTO,
         antialias: false
     });

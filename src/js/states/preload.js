@@ -17,12 +17,8 @@ AdslJumper.preloadState.prototype = {
         this.game.load.atlas("atlas_1", 'assets/images/atlas1/atlas.png', 'assets/images/atlas1/atlas.json'); 
         this.game.load.atlas("atlas_2", 'assets/images/atlas2/atlas.png', 'assets/images/atlas2/atlas.json'); 
 
-        // tilemaps
-        this.game.load.image("adslWorldTilemap", "assets/images/adsl_world_tilemap.png");
+        // images
         this.game.load.image("waitingAudio", "assets/images/waitAudioDecode.png");
-
-        //TODO delete
-        this.game.load.spritesheet("platform01", "assets/images/platform01.png", 64, 32, 7);
 
         // audio
         this.load.audio('jump', 'assets/audio/jump.wav');
@@ -49,7 +45,7 @@ AdslJumper.preloadState.prototype = {
 
         AdslJumper.modules.soundManager = new AdslJumper.SoundManager(this.game);
         AdslJumper.modules.inputManager = new AdslJumper.Input(this.game);
-
+        
         // for waitDecodeAudio
         // m = main code
         AdslJumper.actionCode = {};

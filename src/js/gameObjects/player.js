@@ -9,7 +9,24 @@ AdslJumper.Player = function (game, input, x, y) {
     this.game = game;
     this.input = input;
     this.soundManager = AdslJumper.modules.soundManager;
-    this.options = AdslJumper.gameOptions.getPlayerOptions();
+    this.options = {
+        gravity: 1000,
+        grip: 120,
+        speed: 276,
+        maxFallSpeed: 720,
+        runSpeedUpRate: 1.5,
+        acceleration: 4800,
+        jump: 358,
+        doubleJump: 288,
+        drag: 5950,
+        inAirAccelerationRate: 0.45, // acceleration *= inAirAccelerationRate
+        inAirDrag: 0.1,
+        groundDelay: 5, // delay in frames
+        wallBreakTime: 15, // delay in frames
+        walkAnimationSpeed: 9,
+        doubleAnimationSpeed: 10,
+        comeInAnimationSpeed: 10
+    };
 
     // player variables
     this.facing = "right";
@@ -250,8 +267,6 @@ AdslJumper.Player.prototype.airState = function airState() {
         // do nothing
     } else if (this.body.velocity.y < 0) {
         this.frameName  = "player6.png";
-    } else if (this.body.velocity.x !== 0){
-        this.frameName = "player11.png";
     } else {
         this.frameName = "player7.png";
     }
