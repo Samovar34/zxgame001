@@ -140,9 +140,7 @@ AdslJumper.SoundManager.prototype.playPunch = function () {
 
 // void
 AdslJumper.SoundManager.prototype.playExplosion = function () {
-    if (!this.explosion.isPlaying) {
-        this.explosion.play();
-    }
+    this.explosion.play();
 };
 
 // void

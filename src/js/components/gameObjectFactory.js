@@ -109,6 +109,7 @@ AdslJumper.gameObjectFactory.createMeatBlowSprite = function(x, y) {
 
 AdslJumper.gameObjectFactory.createExplosionSprite = function (game) {
     var gameObject = game.make.sprite(0, 0, "atlas_2", "blow1.png");
+    gameObject.name = "explosion";
     gameObject.animations.add("default", [
         "blow1.png",
         "blow2.png",
@@ -130,12 +131,12 @@ AdslJumper.gameObjectFactory.createExplosionSprite = function (game) {
 }
 
 AdslJumper.gameObjectFactory.createBloodParticles = function () {
-    var gameObject = this.game.add.emitter(0, 0, 128);
+    var gameObject = this.game.add.emitter(0, 0, 64);
     gameObject.makeParticles("atlas_2", ['blood1.png', 'blood2.png']);
     gameObject.minRotation = 0;
     gameObject.maxRotation = 0;
-    gameObject.setYSpeed(-1576, 1576);
-    gameObject.setXSpeed(-1052, 1052);
+    gameObject.setYSpeed(-1052, 1576/10);
+    gameObject.setXSpeed(-900, 900);
     gameObject.gravity = 900;
 
     return gameObject;
@@ -321,8 +322,9 @@ AdslJumper.gameObjectFactory.createTriggers = function () {
 // call with binding context
 AdslJumper.gameObjectFactory.createTraps = function () {
     this.explosionSprites = this.game.add.group();
+    this.explosionSprites.enableBody = true;
     
-    for (var i = 0; i < 4; i++) {
+    for (var i = 0; i < 5; i++) {
         this.explosionSprites.add(AdslJumper.gameObjectFactory.createExplosionSprite(this.game));
     }
 

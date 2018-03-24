@@ -137,13 +137,13 @@ gulp.task("watch", (done) => {
 
 
 //default
-gulp.task("default", ["clean", "build"], (done) => {
+gulp.task("default", ["build"], (done) => {
     gulp.start("watch");
     gulp.start("serve");
     done();
 });
 
-gulp.task("default:lan", ["clean", "build"], (done) => {
+gulp.task("default:lan", ["build"], (done) => {
     gulp.start("watch");
     gulp.start("serve:lan");
     done();

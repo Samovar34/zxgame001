@@ -33,6 +33,10 @@ AdslJumper.Player = function (game, input, x, y) {
     this.settable = true; // проверка на возможность настроить игрока для текущего состояния
     this.canInput = true; // возможно ли управление персонажем
     this.isComeIn = false; // входит ли игрок в дверь
+    this.isInteract = false; // может ли взаимодействовать игрок с тригерром
+
+    // items
+    this.hasKey = false; // взял ли игрок специальный ключ
     
     this.anchor.setTo(0.5);
     this.smoothed = false;
@@ -74,12 +78,10 @@ AdslJumper.Player = function (game, input, x, y) {
     this.onWall = false;
     this.acceleration = 0;
     
-    this.customTouch = {
-        u: false,
-        r: false,
-        d: false,
-        l: false
-    };
+    this.customTouchUp = false;
+    this.customTouchRight = false;
+    this.customTouchDown = false;
+    this.customTouchLeft = false;
 
     // player state
     this.currentState = this.groundState;
@@ -99,7 +101,7 @@ AdslJumper.Player.prototype.update = function () {
 
     // check collision with wall
     // for particles when player touch roof
-    if(this.customTouch.u) {
+    if(this.customTouchUp) {
         this.soundManager.playPunch();
     }
 
@@ -131,7 +133,7 @@ AdslJumper.Player.prototype.jump = function () {
         // play sound
         this.soundManager.playJump();
 
-        if (this.customTouch.l) {
+        if (this.customTouchLeft) {
             this.body.velocity.x = this.options.speed;
         } else {
             this.body.velocity.x = -this.options.speed;
@@ -153,10 +155,8 @@ AdslJumper.Player.prototype.jump = function () {
         this.currentState = this.airState;
 
     // дополнительный прыжок
-    } else if (!this._onFloor() && this.canDoubleJump) {
-        // double jump
-        //return;
-
+    // TODO false
+    } else if (!this._onFloor() && this.canDoubleJump && false) {
         this.canDoubleJump = false;
         this.body.velocity.y = this.options.doubleJump * -1;
         this.settable = true;
@@ -319,27 +319,30 @@ AdslJumper.Player.prototype.wallSlideState = function wallSlideState() {
 };
 
 AdslJumper.Player.prototype.reset = function () {
-    this.customTouch.u = false;
-    this.customTouch.r = false;
-    this.customTouch.d = false;
-    this.customTouch.l = false;
+    this.isInteract = false;
+    this.hasKey = false;
+
+    this.customTouchUp = false;
+    this.customTouchRight = false;
+    this.customTouchDown = false;
+    this.customTouchLeft = false;
 }
 
 AdslJumper.Player.prototype._onWall = function () {
-    return this.customTouch.l || this.customTouch.r;
+    return this.customTouchLeft || this.customTouchRight;
 };
 
 AdslJumper.Player.prototype._onFloor = function () {
-    return this.customTouch.d;
+    return this.customTouchDown;
 };
 
 AdslJumper.Player.prototype._onRoof = function () {
-    return this.customTouch.u;
+    return this.customTouchUp;
 };
 
 AdslJumper.Player.prototype._isToucn = function () {
-    return this.customTouch.u  ||
-    this.customTouch.r  ||
-    this.customTouch.d  ||
-    this.customTouch.l;
+    return this.customTouchUp  ||
+    this.customTouchRight  ||
+    this.customTouchDown  ||
+    this.customTouchLeft;
 };

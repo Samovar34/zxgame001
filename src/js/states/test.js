@@ -35,61 +35,51 @@ AdslJumper.testState.prototype = {
 
         this.gameObjectFactory.createCollision.call(this);
         this.gameObjectFactory.createTriggers.call(this);
+
+        this.blood = AdslJumper.gameObjectFactory.createBloodParticles.call(this);
+
         this.gameObjectFactory.createTraps.call(this);
 
         this.game.camera.follow(this.player,  this.game.camera.FOLLOW_PLATFORMER, 0.2, 0.2);
-    },
+
+        },
 
     update: function () {
         // reset player
         this.player.reset();
 
-        this.game.physics.arcade.collide(this.player, this.collision2d, callback, null, this);
-        this.game.physics.arcade.overlap(this.player, this.triggers, callback2, null, this);
+        this.game.physics.arcade.collide(this.player, this.collision2d, AdslJumper.gameFunc.playerCollideHandler, null, this);
+        this.game.physics.arcade.overlap(this.player, this.triggers, AdslJumper.gameFunc.triggerHandler, null, this);
         this.game.physics.arcade.overlap(this.player, this.traps, AdslJumper.gameFunc.trapHandler, null, this);
+        
+        // TODO подумать о коллизиях со взрывом
+        //this.game.physics.arcade.overlap(this.player, this.explosionSprites, AdslJumper.gameFunc.trapHandler, null, this);
 
     },
     
     render: function () {
         this.game.debug.text("state: " + this.player.currentState.name, 8, 24, "#00ff00");
+        this.game.debug.text("isInteract: " + this.player.isInteract, 8, 32, "#00ff00");
+
+        if (this.player.isInteract) {
+            // TODO show message
+        }
         //this.game.debug.body(this.player);
         //this.game.debug.body(this.exitDoor);
         //this.game.debug.physicsGroup(this.triggers);
     }
 };
 
-function callback() {
-    this.player.customTouch.u = this.player.body.touching.up;
-    this.player.customTouch.r = this.player.body.touching.right;
-    this.player.customTouch.d = this.player.body.touching.down;
-    this.player.customTouch.l = this.player.body.touching.left;
+function randomExplosion() {
+    var x = 64 + Math.floor(Math.random() * 640);
+    var y = 64 + Math.floor(Math.random() * 360);
+    AdslJumper.gameFunc.makeExplosion.call(this, x, y);
 }
 
-function callback2(player, trigger) {
-    if (trigger._killOnOverlap) {
-        trigger.body.enable = false;
+function blowMine(trigger) {
+    if (trigger._killAfterInteract) {
+        trigger.kill();
     }
-
-    this._events[trigger._event].call(this);
-    console.log(trigger._event);
-}
-
-function callback3(player, trap) {
-    console.log(trap.name);
-}
-
-// main trap handler method.
-// void
-AdslJumper.testState.prototype.trapHandler = function (player, trap) {
-    var handler = this.trapHandlerCollection[trap.tag];
-    if (handler !== undefined) {
-        handler.call(this, player, trap);
-    } else {
-        console.error("handled not found for " + trap.tag);
-    }
-};
-
-function blowMine() {
     this.exitDoor.open();
 }
 

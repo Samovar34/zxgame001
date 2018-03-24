@@ -132,9 +132,9 @@
                  "properties":
                     {
                      "event":"openDoor",
-                     "interactable":false,
-                     "killAfterInteract":false,
-                     "killOnOverlap":true
+                     "interactable":true,
+                     "killAfterInteract":true,
+                     "killOnOverlap":false
                     },
                  "propertytypes":
                     {
