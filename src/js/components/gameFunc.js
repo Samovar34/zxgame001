@@ -17,9 +17,11 @@ AdslJumper.gameFunc.playerCollideHandler = function (player, collider) {
 // void
 // context Phaser.State
 AdslJumper.gameFunc.triggerHandler = function (player, trigger) {
-    // if (trigger._killOnOverlap) {
-    //     trigger.body.enable = false;
-    // }
+    player.inTrigger = true;
+
+    if (trigger._killOnOverlap) {
+        trigger.body.enable = false;
+    }
 
     if (typeof trigger._event === "string") {
         try {
@@ -28,6 +30,8 @@ AdslJumper.gameFunc.triggerHandler = function (player, trigger) {
                 if (this.input.jumpIsJustDown()) {
                     this._events[trigger._event].call(this, trigger);
                 }
+            } else {
+                this._events[trigger._event].call(this, trigger);
             }
             
         } catch (err) {
@@ -43,12 +47,12 @@ AdslJumper.gameFunc.triggerHandler = function (player, trigger) {
 // обработчик столкновений игрока с ловушками
 // context Phaser.State
 AdslJumper.gameFunc.trapHandler = function (player, trap) {
-    console.log(trap.name);
-    var handler = AdslJumper.gameFunc.trapHandlerCollection[trap.name];
+    console.log(trap.tag);
+    var handler = AdslJumper.gameFunc.trapHandlerCollection[trap.tag];
     if (handler !== undefined) {
         handler.call(this, player, trap);
     } else {
-        console.warn("handled not found for " + trap.name);
+        console.warn("handled not found for " + trap.tag);
     }
 };
 
@@ -62,6 +66,31 @@ AdslJumper.gameFunc.mineHandler = function (player, mine) {
     this.blood.y = player.y;
     this.blood.start(true, 2200, 20, 64, 100);
     AdslJumper.gameFunc.gameOverMine.call(this);
+};
+
+AdslJumper.gameFunc.thornHandler = function (player, thorn) {
+
+    this.soundManager.playPlayerDeath();
+
+    this.blood.x = player.x;
+    this.blood.y = player.y;
+    this.blood.start(true, 2200, 20, 64, 100);
+
+    AdslJumper.gameFunc.gameOver.call(this);
+};
+
+AdslJumper.gameFunc.movableThornHandler = function (player, thorn) {
+    if (!thorn.isDangerous()) {
+        return;
+    }
+
+    this.soundManager.playPlayerDeath();
+
+    this.blood.x = player.x;
+    this.blood.y = player.y;
+    this.blood.start(true, 2200, 20, 64, 100);
+
+    AdslJumper.gameFunc.gameOver.call(this);
 };
 
 AdslJumper.gameFunc.explosionHandler = function (player, explosion) {
@@ -81,10 +110,18 @@ AdslJumper.gameFunc.explosionHandler = function (player, explosion) {
 // объект, который содержит в себе ссылки на обработчики ловушек
 AdslJumper.gameFunc.trapHandlerCollection = {
     "mine": AdslJumper.gameFunc.mineHandler,
+    "thorn": AdslJumper.gameFunc.thornHandler,
+    "movableThorn": AdslJumper.gameFunc.movableThornHandler,
     "explosion": AdslJumper.gameFunc.explosionHandler
 };
 
 AdslJumper.gameFunc.gameOverMine = function () {
+    tryCount++;
+    AdslJumper.gameFunc.restartLevel.call(this);
+};
+
+AdslJumper.gameFunc.gameOver = function () {
+    tryCount++;
     AdslJumper.gameFunc.restartLevel.call(this);
 };
 

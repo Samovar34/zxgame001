@@ -1,13 +1,14 @@
 // Thorn class
 // extends Phaser.Sprite class
 // only for goup
-AdslJumper.Thorn = function (game, x, y, type) {
+AdslJumper.Thorn = function (game, x, y, type, name) {
 
     // extend
     Phaser.Sprite.call(this, game, x, y, "atlas_2", "thorn1.png");
 
     this.game = game;
     this.tag = "thorn";
+    this.name = name || "thorn";
 
     // enable physics
     this.game.physics.arcade.enable(this);

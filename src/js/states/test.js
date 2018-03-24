@@ -1,5 +1,6 @@
 AdslJumper.testState = function (game) {};
 
+var tryCount = 0;
 
 AdslJumper.testState.prototype = {
     preload: function () {
@@ -27,11 +28,12 @@ AdslJumper.testState.prototype = {
         this.gameObjectFactory.createDoors.call(this);
 
         this._events = {
-            "openDoor": blowMine
+            "openDoor": blowMine,
+            "dropThorn0": dropThorn0,
+            "dropThorn1": dropThorn1,
+            "dropThorn2": dropThorn2,
+            "dropThorn3": dropThorn3,
         }
-
-        // player
-        this.gameObjectFactory.createPlayer.call(this);
 
         this.gameObjectFactory.createCollision.call(this);
         this.gameObjectFactory.createTriggers.call(this);
@@ -39,6 +41,21 @@ AdslJumper.testState.prototype = {
         this.blood = AdslJumper.gameObjectFactory.createBloodParticles.call(this);
 
         this.gameObjectFactory.createTraps.call(this);
+
+        this.thorn0 = this.traps.getByName("dropThorn0");
+        this.thorn0.outOfBoundsKill = true;
+        this.thorn3 = this.traps.getByName("dropThorn3");
+        this.thorn3.outOfBoundsKill = true;
+        this.thorn4 = this.traps.getByName("dropThorn4");
+        this.thorn4.outOfBoundsKill = true;
+
+        this.thorn1 = this.traps.getByName("dropThorn1");
+        this.thorn1.outOfBoundsKill = true;
+        this.thorn2 = this.traps.getByName("dropThorn2");
+        this.thorn2.outOfBoundsKill = true;
+
+        // player
+        this.gameObjectFactory.createPlayer.call(this);
 
         this.game.camera.follow(this.player,  this.game.camera.FOLLOW_PLATFORMER, 0.2, 0.2);
 
@@ -59,7 +76,8 @@ AdslJumper.testState.prototype = {
     
     render: function () {
         this.game.debug.text("state: " + this.player.currentState.name, 8, 24, "#00ff00");
-        this.game.debug.text("isInteract: " + this.player.isInteract, 8, 32, "#00ff00");
+        this.game.debug.text("isInteract: " + this.player.isInteract, 8, 40, "#00ff00");
+        this.game.debug.text("inTrigger: " + this.player.inTrigger, 8, 56, "#00ff00");
 
         if (this.player.isInteract) {
             // TODO show message
@@ -81,5 +99,40 @@ function blowMine(trigger) {
         trigger.kill();
     }
     this.exitDoor.open();
+}
+
+function dropThorn0(trigger) {
+    if (trigger._killAfterInteract) {
+        trigger.kill();
+    }
+    if (tryCount === 0) {
+        this.thorn0.body.gravity.y = 1900;
+    } else if (tryCount === 1) {
+        this.thorn3.body.gravity.y = 1900;
+    }
+    
+}
+
+function dropThorn3(trigger) {
+    if (trigger._killAfterInteract) {
+        trigger.kill();
+    }
+    if (tryCount >=2 ) {
+        this.thorn4.body.gravity.y = 1900;
+    }
+}
+
+function dropThorn1(trigger) {
+    if (trigger._killAfterInteract) {
+        trigger.kill();
+    }
+    this.thorn1.body.gravity.y = 1900;
+}
+
+function dropThorn2(trigger) {
+    if (trigger._killAfterInteract) {
+        trigger.kill();
+    }
+    this.thorn2.body.gravity.y = 1800;
 }
 

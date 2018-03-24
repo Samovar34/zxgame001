@@ -6,17 +6,17 @@
 AdslJumper.gameObjectFactory = {
 
     // traps
-    "ThornUp": function (x, y) {
-        return new AdslJumper.Thorn(this.game, x, y, "up");
+    "ThornUp": function (x, y, properties) {
+        return new AdslJumper.Thorn(this.game, x, y, "up", properties.name);
     },
-    "ThornDown": function (x, y) {
-        return new AdslJumper.Thorn(this.game, x, y, "down");
+    "ThornDown": function (x, y, properties) {
+        return new AdslJumper.Thorn(this.game, x, y, "down", properties.name);
     },
-    "ThornLeft": function (x, y) {
-        return new AdslJumper.Thorn(this.game, x, y, "left");
+    "ThornLeft": function (x, y, properties) {
+        return new AdslJumper.Thorn(this.game, x, y, "left", properties.name);
     },
-    "ThornRight": function (x, y) {
-        return new AdslJumper.Thorn(this.game, x, y, "right");
+    "ThornRight": function (x, y, properties) {
+        return new AdslJumper.Thorn(this.game, x, y, "right", properties.name);
     },
     "MovableThorn": function (x, y, properties) {
         return new AdslJumper.MovableThorn(this.game, x, y, properties.invert, properties.direction);
@@ -258,7 +258,7 @@ AdslJumper.gameObjectFactory.createPlayer = function () {
         this.game,
         this.input,
         this.tempArray[0].x + 16,
-        this.tempArray[0].y);
+        this.tempArray[0].y - 16);
 
     // clear temp variables
     this.tempArray = null;
@@ -323,7 +323,7 @@ AdslJumper.gameObjectFactory.createTriggers = function () {
 AdslJumper.gameObjectFactory.createTraps = function () {
     this.explosionSprites = this.game.add.group();
     this.explosionSprites.enableBody = true;
-    
+
     for (var i = 0; i < 5; i++) {
         this.explosionSprites.add(AdslJumper.gameObjectFactory.createExplosionSprite(this.game));
     }

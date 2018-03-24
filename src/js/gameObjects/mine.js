@@ -8,7 +8,7 @@ AdslJumper.Mine = function (game, x, y) {
 
     this.game = game;
 
-    this.tag = "trap";
+    this.tag = "mine";
     this.name = "mine";
 
     // enable physics

@@ -34,6 +34,7 @@ AdslJumper.Player = function (game, input, x, y) {
     this.canInput = true; // возможно ли управление персонажем
     this.isComeIn = false; // входит ли игрок в дверь
     this.isInteract = false; // может ли взаимодействовать игрок с тригерром
+    this.inTrigger = false; // внутри триггера или нет?
 
     // items
     this.hasKey = false; // взял ли игрок специальный ключ
@@ -320,13 +321,14 @@ AdslJumper.Player.prototype.wallSlideState = function wallSlideState() {
 
 AdslJumper.Player.prototype.reset = function () {
     this.isInteract = false;
+    this.inTrigger = false;
     this.hasKey = false;
 
     this.customTouchUp = false;
     this.customTouchRight = false;
     this.customTouchDown = false;
     this.customTouchLeft = false;
-}
+};
 
 AdslJumper.Player.prototype._onWall = function () {
     return this.customTouchLeft || this.customTouchRight;
