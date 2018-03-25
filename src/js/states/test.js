@@ -13,6 +13,9 @@ AdslJumper.testState.prototype = {
         this.game.renderer.renderSession.roundPixels = true;
         this.game.clearBeforeRender = false;
 
+        // for triggers
+        this.randomeNumber = Math.floor(Math.random() * 100)/100;
+
         // get modules
         this.input = new AdslJumper.Input(this.game);
         this.soundManager = AdslJumper.modules.soundManager;
@@ -27,6 +30,7 @@ AdslJumper.testState.prototype = {
 
         this.gameObjectFactory.createDoors.call(this);
 
+        // for triggers
         this._events = {
             "openDoor": blowMine,
             "dropThorn0": dropThorn0,
@@ -44,15 +48,20 @@ AdslJumper.testState.prototype = {
 
         this.thorn0 = this.traps.getByName("dropThorn0");
         this.thorn0.outOfBoundsKill = true;
+        this.thorn0.checkWorldBounds = true;
         this.thorn3 = this.traps.getByName("dropThorn3");
         this.thorn3.outOfBoundsKill = true;
+        this.thorn3.checkWorldBounds = true;
         this.thorn4 = this.traps.getByName("dropThorn4");
         this.thorn4.outOfBoundsKill = true;
+        this.thorn4.checkWorldBounds = true;
 
         this.thorn1 = this.traps.getByName("dropThorn1");
         this.thorn1.outOfBoundsKill = true;
+        this.thorn1.checkWorldBounds = true;
         this.thorn2 = this.traps.getByName("dropThorn2");
         this.thorn2.outOfBoundsKill = true;
+        this.thorn2.checkWorldBounds = true;
 
         // player
         this.gameObjectFactory.createPlayer.call(this);
@@ -68,6 +77,7 @@ AdslJumper.testState.prototype = {
         this.game.physics.arcade.collide(this.player, this.collision2d, AdslJumper.gameFunc.playerCollideHandler, null, this);
         this.game.physics.arcade.overlap(this.player, this.triggers, AdslJumper.gameFunc.triggerHandler, null, this);
         this.game.physics.arcade.overlap(this.player, this.traps, AdslJumper.gameFunc.trapHandler, null, this);
+         
         
         // TODO подумать о коллизиях со взрывом
         //this.game.physics.arcade.overlap(this.player, this.explosionSprites, AdslJumper.gameFunc.trapHandler, null, this);
@@ -78,6 +88,9 @@ AdslJumper.testState.prototype = {
         this.game.debug.text("state: " + this.player.currentState.name, 8, 24, "#00ff00");
         this.game.debug.text("isInteract: " + this.player.isInteract, 8, 40, "#00ff00");
         this.game.debug.text("inTrigger: " + this.player.inTrigger, 8, 56, "#00ff00");
+        this.game.debug.text("tryCount: " + tryCount, 8, 72, "#00ff00");
+        this.game.debug.text("random: " + this.randomeNumber, 8, 88, "#00ff00");
+        this.game.debug.text("exist: " + this.thorn0.alive, 8, 104, "#00ff00");
 
         if (this.player.isInteract) {
             // TODO show message
@@ -109,6 +122,14 @@ function dropThorn0(trigger) {
         this.thorn0.body.gravity.y = 1900;
     } else if (tryCount === 1) {
         this.thorn3.body.gravity.y = 1900;
+    } else if (tryCount >= 3) {
+        if (this.randomeNumber < 0.1) {
+            this.thorn0.body.gravity.y = 1900;
+        } else if (this.randomeNumber > 0.1 && this.randomeNumber < 0.2) {
+            this.thorn3.body.gravity.y = 1900;
+        } else if (this.randomeNumber > 0.5 && this.randomeNumber < 0.6) {
+            this.thorn4.body.gravity.y = 1900;
+        }
     }
     
 }
@@ -117,7 +138,7 @@ function dropThorn3(trigger) {
     if (trigger._killAfterInteract) {
         trigger.kill();
     }
-    if (tryCount >=2 ) {
+    if (tryCount === 2 ) {
         this.thorn4.body.gravity.y = 1900;
     }
 }
