@@ -4,11 +4,13 @@ AdslJumper.waitDecodeAudio.prototype = {
 
     preload: function () {
         this.game.add.image(268, 148, "waitingAudio");
+
+        // Play game states
         if ((AdslJumper.data.actionCode === AdslJumper.actionCode.FROMMENUTOPLAY) ||
             (AdslJumper.data.actionCode === AdslJumper.actionCode.FROMPLAYTOAUDIO)) {
 
             // load music
-            if (AdslJumper.data.level <= 15) {
+            if (AdslJumper.data.level === "tutor" || AdslJumper.data.level === "level1") {
                 this.load.audio('track01', ['assets/audio/music/track01.ogg', 'assets/audio/music/track01.mp3'], false);
             }
         }
@@ -41,6 +43,8 @@ AdslJumper.waitDecodeAudio.prototype.beforeStory = function () {
 
         AdslJumper.data.actionCode = AdslJumper.actionCode.FROMAUDIOTOSTORY;
 
+        AdslJumper.data.level = "story";
+
         this.state.start("story");
     }, this);
  
@@ -48,7 +52,7 @@ AdslJumper.waitDecodeAudio.prototype.beforeStory = function () {
 
 AdslJumper.waitDecodeAudio.prototype.beforePlay = function () {
 
-    if (AdslJumper.data.level <= 15) {
+    if (AdslJumper.data.level === "tutor" || AdslJumper.data.level === "level1") {
         // add track
         AdslJumper.modules.soundManager.tempTrack = this.game.add.sound("track01");
         this.game.sound.decode("track01");
@@ -59,7 +63,7 @@ AdslJumper.waitDecodeAudio.prototype.beforePlay = function () {
 
         AdslJumper.data.actionCode = AdslJumper.actionCode.FROMAUDIOTOPLAY;
 
-        this.state.start("play");
+        this.state.start("tutor");
     }, this);
  
 };

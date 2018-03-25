@@ -7,13 +7,12 @@ AdslJumper.modules = {};
 
 
 window.onload = function () {
-    var gameOptions = AdslJumper.gameOptions.getMainOptions();
 
     var game = new Phaser.Game({
-        width: gameOptions.gameWidth,
-        height: gameOptions.gameHeight,
+        width: AdslJumper.gameOptions.gameWidth,
+        height: AdslJumper.gameOptions.gameHeight,
         renderer: Phaser.AUTO,
-        enableDebug: false,
+        enableDebug: true,
         antialias: false
     });
     game.state.add("boot", AdslJumper.bootState);
@@ -21,7 +20,8 @@ window.onload = function () {
     game.state.add("story", AdslJumper.storyState);
     game.state.add("menu", AdslJumper.menuState);
     game.state.add("waitDecodeAudio", AdslJumper.waitDecodeAudio);
-    game.state.add("play", AdslJumper.playGameState);
+    game.state.add("tutor", AdslJumper.tutorState);
+    game.state.add("level1", AdslJumper.level1State);
 
     game.state.start("boot");
 };

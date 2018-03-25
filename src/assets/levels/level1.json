@@ -271,6 +271,31 @@
                  "width":96,
                  "x":224,
                  "y":224
+                }, 
+                {
+                 "height":96,
+                 "id":65,
+                 "name":"Trigger",
+                 "properties":
+                    {
+                     "event":"dropThorn4",
+                     "interactable":false,
+                     "killAfterInteract":false,
+                     "killOnOverlap":false
+                    },
+                 "propertytypes":
+                    {
+                     "event":"string",
+                     "interactable":"bool",
+                     "killAfterInteract":"bool",
+                     "killOnOverlap":"bool"
+                    },
+                 "rotation":0,
+                 "type":"tr2d",
+                 "visible":true,
+                 "width":80,
+                 "x":416,
+                 "y":224
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -534,7 +559,7 @@
                  "name":"ThornDown",
                  "properties":
                     {
-                     "name":""
+                     "name":"dropThorn5"
                     },
                  "propertytypes":
                     {
@@ -703,7 +728,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":65,
+ "nextobjectid":66,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.0.3",

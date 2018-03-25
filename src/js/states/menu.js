@@ -48,6 +48,8 @@ AdslJumper.menuState.prototype.updateMenu = function () {
         this.setMenu("up");
     } else if (this.input.selectButtonIsJustDown() && this.canInput) {
         this.soundManager.playMenuSelect(1);
+
+        // start new game
         if (this.curItem === 0) {
             this.game.camera.fade(0x000000, 800);
             this.continue.kill();
@@ -62,6 +64,7 @@ AdslJumper.menuState.prototype.updateMenu = function () {
                 this.game.cache.removeSound("intro");
 
                 AdslJumper.data.actionCode = AdslJumper.actionCode.FROMMENUTOPLAY;
+                AdslJumper.data.level = "tutor";
 
                 // play
                 this.game.state.start("waitDecodeAudio");

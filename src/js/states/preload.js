@@ -6,11 +6,6 @@ AdslJumper.preloadState.prototype = {
         this.game.add.image(24, 176, "preloadBorder");
         this.progress = this.game.add.image(28, 180, "progress");
 
-        // load assets
-        // for (var i = 0; i <= 1; i++) {
-        //     this.game.load.tilemap('map' + i, 'assets/levels/level' + i + ".json", null, Phaser.Tilemap.TILED_JSON);
-        // }
-
         this.game.load.tilemap('level1', "assets/levels/level1.json", null, Phaser.Tilemap.TILED_JSON);
 
         // atlas
@@ -57,9 +52,9 @@ AdslJumper.preloadState.prototype = {
 
         // gama data
         AdslJumper.data = {
-            level: 0,
+            level: null,
             score: 0,
-            actionCode: AdslJumper.actionCode.FROMMENUTOPLAY,
+            actionCode: AdslJumper.actionCode.FROMPRELOADTOSTORY,
         };
 
         // TODO del

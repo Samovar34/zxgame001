@@ -359,7 +359,7 @@ AdslJumper.storyState.prototype.codeToImg = {
     "121": fontName + "90.png",
     "122": fontName + "91.png",
 
-    // // en uppercase
+    // // TODO en uppercase
     // "97": fontName + "66.png",
     // "98": fontName + "67.png",
     // "99": fontName + "68.png",

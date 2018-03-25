@@ -29,3 +29,6 @@
 //@@include('./states/play.js')
 
 //@@include('./states/test.js')
+
+//@@include('./states/levels/tutor.js')
+//@@include('./states/levels/level1.js')

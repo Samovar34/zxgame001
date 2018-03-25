@@ -20,7 +20,7 @@ AdslJumper.gameFunc.triggerHandler = function (player, trigger) {
     player.inTrigger = true;
 
     if (trigger._killOnOverlap) {
-        trigger.body.enable = false;
+        trigger.kill();
     }
 
     if (typeof trigger._event === "string") {
@@ -36,8 +36,8 @@ AdslJumper.gameFunc.triggerHandler = function (player, trigger) {
             
         } catch (err) {
             // force disable body
-            trigger.body.enable = false;
-            console.warn("Trigger handler error! Event not found or not function!");
+            //trigger.body.enable = false;
+            console.warn("Trigger handler error! Event '" + trigger._event + "' not found or not function!");
             console.error(err.toString());
         }
     }
