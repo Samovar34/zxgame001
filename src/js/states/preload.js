@@ -3,8 +3,13 @@ AdslJumper.preloadState = function (game) {};
 AdslJumper.preloadState.prototype = {
     preload: function () {
 
-        this.game.add.image(24, 176, "preloadBorder");
-        this.progress = this.game.add.image(28, 180, "progress");
+        this.progressBorder = this.game.add.image(24, 176, "atlas_0", "preloadBorder.png");
+        this.progressBorder.smoothed = false;
+        this.progressBorder.scale.setTo(2);
+
+        this.progress = this.game.add.image(28, 180, "atlas_0", "progress.png");
+        this.progress.smoothed = false;
+        this.progress.scale.setTo(2);
 
         this.game.load.tilemap('level1', "assets/levels/level1.json", null, Phaser.Tilemap.TILED_JSON);
 
@@ -12,8 +17,7 @@ AdslJumper.preloadState.prototype = {
         this.game.load.atlas("atlas_1", 'assets/images/atlas1/atlas.png', 'assets/images/atlas1/atlas.json'); 
         this.game.load.atlas("atlas_2", 'assets/images/atlas2/atlas.png', 'assets/images/atlas2/atlas.json'); 
 
-        // images
-        this.game.load.image("waitingAudio", "assets/images/waitAudioDecode.png");
+        // images and levels
 
         // audio
         this.load.audio('jump', 'assets/audio/jump.wav');
@@ -38,31 +42,25 @@ AdslJumper.preloadState.prototype = {
 
     create: function () {
 
+        // game modules and debug
         AdslJumper.modules.soundManager = new AdslJumper.SoundManager(this.game);
         AdslJumper.modules.inputManager = new AdslJumper.Input(this.game);
-        
-        // for waitDecodeAudio
-        // m = main code
-        AdslJumper.actionCode = {};
-        AdslJumper.actionCode.FROMPRELOADTOSTORY = 0; // m
-        AdslJumper.actionCode.FROMAUDIOTOSTORY = 1;
-        AdslJumper.actionCode.FROMMENUTOPLAY = 2; // m
-        AdslJumper.actionCode.FROMAUDIOTOPLAY = 3;
-        AdslJumper.actionCode.FROMPLAYTOAUDIO = 3; // m
+        AdslJumper.utils.enableDebug = !game.debug.isDisabled;
 
         // gama data
         AdslJumper.data = {
-            level: null,
-            score: 0,
-            actionCode: AdslJumper.actionCode.FROMPRELOADTOSTORY,
+            level: "story",
+            score: 0
         };
 
         // TODO del
-        var urlLevel = parseInt(window.location.hash.slice(-1));
-        console.log(urlLevel);
-        if (!isNaN(urlLevel)) {
+        var urlLevel = window.location.hash.slice(1).trim();
+        if (urlLevel) {
             AdslJumper.data.level = urlLevel;
         }
+
+        // TODO del debug info
+        AdslJumper.utils.info("preload", "urlLevel", urlLevel);
 
         this.game.state.start("waitDecodeAudio");
     }

@@ -41,3 +41,23 @@ AdslJumper.utils.findObjectsByType = function (type, map, layer) {
 
     return result;
 };
+
+// force => if true ignore enableDebug property
+AdslJumper.utils.info = function (state, message, value , force) {
+    if (AdslJumper.utils.enableDebug || force) {
+        console.log("> INFO (" + state + ") " + message + (value ? (": " + value) : ""));
+    }
+    
+};
+
+AdslJumper.utils.warn = function (state, message, value, force) {
+    if (AdslJumper.utils.enableDebug || force) {
+        console.warn("> WARN (" + state + ") " + message + (value ? (": " + value) : ""));
+    }
+};
+
+AdslJumper.utils.error = function (state, message, value, force) {
+    if (AdslJumper.utils.enableDebug || force) {
+        console.error("> ERR (" + state + ") " + message + (value ? (": " + value) : ""));
+    }
+}

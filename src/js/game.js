@@ -4,11 +4,11 @@ var AdslJumper = {};
 AdslJumper.modules = {};
 
 //@@include('./include.js')
-
+var game;
 
 window.onload = function () {
 
-    var game = new Phaser.Game({
+    game = new Phaser.Game({
         width: AdslJumper.gameOptions.gameWidth,
         height: AdslJumper.gameOptions.gameHeight,
         renderer: Phaser.AUTO,

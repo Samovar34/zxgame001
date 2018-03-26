@@ -5,9 +5,6 @@ var tryCount = 0;
 AdslJumper.level1State.prototype = {
     preload: function () {
         // TODO move preload function to waitAudioDecode
-        this.game.load.image("level", "assets/images/levels/level1.png");
-        this.game.load.tilemap('map', 'assets/levels/level1' + ".json", null, Phaser.Tilemap.TILED_JSON);
-        this.game.load.image("render", "assets/images/render.png");
     },
     create: function () {
         // set renderer
@@ -34,10 +31,10 @@ AdslJumper.level1State.prototype = {
 
         this.game.world.setBounds(0, 0, 768, 384);
 
-        this.background = this.game.add.image(0, 0, "level");
+        this.background = this.game.add.image(0, 0, "level1");
 
         // game world
-        this.map = this.game.add.tilemap("map", 32, 32);
+        this.map = this.game.add.tilemap("map1", 32, 32);
 
         this.gameObjectFactory.createDoors.call(this);
 

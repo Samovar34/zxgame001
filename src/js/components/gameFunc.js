@@ -37,8 +37,8 @@ AdslJumper.gameFunc.triggerHandler = function (player, trigger) {
         } catch (err) {
             // force disable body
             //trigger.body.enable = false;
-            console.warn("Trigger handler error! Event '" + trigger._event + "' not found or not function!");
-            console.error(err.toString());
+            AdslJumper.utils.warn("level1", "Trigger handler error! Event '" + trigger._event + "' not found or not function!")
+            AdslJumper.utils.error(err.toString());
         }
     }
 };
@@ -47,12 +47,13 @@ AdslJumper.gameFunc.triggerHandler = function (player, trigger) {
 // обработчик столкновений игрока с ловушками
 // context Phaser.State
 AdslJumper.gameFunc.trapHandler = function (player, trap) {
-    console.log(trap.tag);
+    // TODO delete
+    AdslJumper.utils.info(player.game.state.current, "trap tag", trap.tag);
     var handler = AdslJumper.gameFunc.trapHandlerCollection[trap.tag];
     if (handler !== undefined) {
         handler.call(this, player, trap);
     } else {
-        console.warn("handled not found for " + trap.tag);
+        AdslJumper.utils.warn(player.game.state.current, "handler not found for", trap.tag);
     }
 };
 

@@ -1,0 +1,100 @@
+{"frames": {
+
+"preloadBorder.png":
+{
+	"frame": {"x":0,"y":16,"w":300,"h":8},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":300,"h":8},
+	"sourceSize": {"w":300,"h":8}
+},
+"progress.png":
+{
+	"frame": {"x":0,"y":0,"w":1,"h":4},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":1,"h":4},
+	"sourceSize": {"w":1,"h":4}
+},
+"waitAudioDecodeText1.png":
+{
+	"frame": {"x":113,"y":0,"w":64,"h":11},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":11},
+	"sourceSize": {"w":64,"h":11}
+},
+"waitAudioDecodeText2.png":
+{
+	"frame": {"x":177,"y":0,"w":64,"h":11},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":11},
+	"sourceSize": {"w":64,"h":11}
+},
+"waitAudioDecodeTime1.png":
+{
+	"frame": {"x":81,"y":0,"w":16,"h":16},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
+	"sourceSize": {"w":16,"h":16}
+},
+"waitAudioDecodeTime2.png":
+{
+	"frame": {"x":65,"y":0,"w":16,"h":16},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
+	"sourceSize": {"w":16,"h":16}
+},
+"waitAudioDecodeTime3.png":
+{
+	"frame": {"x":49,"y":0,"w":16,"h":16},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
+	"sourceSize": {"w":16,"h":16}
+},
+"waitAudioDecodeTime4.png":
+{
+	"frame": {"x":1,"y":0,"w":16,"h":16},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
+	"sourceSize": {"w":16,"h":16}
+},
+"waitAudioDecodeTime5.png":
+{
+	"frame": {"x":17,"y":0,"w":16,"h":16},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
+	"sourceSize": {"w":16,"h":16}
+},
+"waitAudioDecodeTime6.png":
+{
+	"frame": {"x":33,"y":0,"w":16,"h":16},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
+	"sourceSize": {"w":16,"h":16}
+},
+"waitAudioDecodeTime7.png":
+{
+	"frame": {"x":97,"y":0,"w":16,"h":16},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
+	"sourceSize": {"w":16,"h":16}
+}},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "atlas.png",
+	"format": "RGBA8888",
+	"size": {"w":300,"h":24},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:68cff8a4269d7ce243cc9427e4bb3424:daafe361603a8277ecdd68a9d5cc07a3:cbce6b53f0f49e0bf15173c25c41f876$"
+}
+}

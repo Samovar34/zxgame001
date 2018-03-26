@@ -23,7 +23,7 @@ AdslJumper.Player = function (game, input, x, y) {
         inAirDrag: 0.1,
         groundDelay: 5, // delay in frames
         wallBreakTime: 15, // delay in frames
-        walkAnimationSpeed: 9,
+        walkAnimationSpeed: 11,
         doubleAnimationSpeed: 10,
         comeInAnimationSpeed: 10
     };

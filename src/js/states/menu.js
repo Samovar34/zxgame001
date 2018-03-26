@@ -63,13 +63,18 @@ AdslJumper.menuState.prototype.updateMenu = function () {
                 this.game.cache.removeTextureAtlas("atlas_1");
                 this.game.cache.removeSound("intro");
 
-                AdslJumper.data.actionCode = AdslJumper.actionCode.FROMMENUTOPLAY;
                 AdslJumper.data.level = "tutor";
 
                 // play
                 this.game.state.start("waitDecodeAudio");
             }, this);
-        } 
+        } else if (this.curItem === 1) {
+            console.log("начать с того места где остановился");
+        } else if (this.curItem === 2) {
+            console.log("показать настройки");
+        } else {
+            console.log("тут будет о игре");
+        }
     }
 };
 

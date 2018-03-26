@@ -3,7 +3,9 @@ AdslJumper.tutorState = function (game) {};
 AdslJumper.tutorState.prototype = {
     preload: function () {
         // load the loader bar
-        console.log("tutor state");
+
+        // TODO del debug info
+        AdslJumper.utils.info("tutor", "it's tutor state");
     },
 
     create: function () {
@@ -18,7 +20,7 @@ AdslJumper.tutorState.prototype = {
             this.soundManager.playTrack();
         };
         
-        AdslJumper.data.level = "level1";
+        AdslJumper.data.level = "level1"
         this.game.state.start("level1");
     }
 };
