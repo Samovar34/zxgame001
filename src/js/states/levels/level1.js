@@ -80,6 +80,12 @@ AdslJumper.level1State.prototype = {
         // player
         this.gameObjectFactory.createPlayer.call(this);
 
+        // GUI
+        this.gui = new AdslJumper.GUI(this.game);
+        this.gui.setRoom("79");
+        this.score = 10;
+        this.gui.setScore(this.score);
+
         this.game.camera.follow(this.player,  this.game.camera.FOLLOW_PLATFORMER, 0.2, 0.2);
 
         },
@@ -106,6 +112,7 @@ AdslJumper.level1State.prototype = {
         this.game.debug.text("random: " + this.randomeNumber, 8, 88, "#00ff00");
         this.game.debug.text("exist: " + this.thorn0.alive, 8, 104, "#00ff00");
 
+        this.gui.setScore(this.score++);
         if (this.player.isInteract) {
             // TODO show message
         }
