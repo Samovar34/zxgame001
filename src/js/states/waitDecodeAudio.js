@@ -29,6 +29,7 @@ AdslJumper.waitDecodeAudio.prototype = {
 
             // load asset for levels
             this.game.load.image("level1", "assets/images/levels/level1.png");
+            this.game.load.image("level1RedColor", "assets/images/levels/level1_redColor.png");
             this.game.load.tilemap('map1', 'assets/levels/level1' + ".json", null, Phaser.Tilemap.TILED_JSON);
 
         }

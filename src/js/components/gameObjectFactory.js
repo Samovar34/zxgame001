@@ -25,9 +25,9 @@ AdslJumper.gameObjectFactory = {
         return new AdslJumper.Mine(this.game, x, y + 18);
     },
 
-    // special
-    "Platform01": function (x, y, prop) {
-        return new AdslJumper.Platform01(this.game, x, y + 32);
+    // bonus
+    "Coin": function (x, y, prop) {
+        return new AdslJumper.Coin(this.game, x, y);
     },
 
     // fx
@@ -355,4 +355,35 @@ AdslJumper.gameObjectFactory.createTraps = function () {
 
     // play animation
     this.traps.callAll("animations.play", "animations", "default");
+};
+
+// void
+// call with binding context
+AdslJumper.gameObjectFactory.createBonus = function () {
+
+    this.bonus = this.game.add.group();
+    this.tempArray = AdslJumper.utils.findObjectsByType('bonus', this.map, 'bonus');
+    this.tempElement = null;
+
+    for (i = 0; i < this.tempArray.length; i++) {
+        this.tempElement = AdslJumper.gameObjectFactory[this.tempArray[i].name];
+        if (this.tempElement !== undefined) {
+            this.bonus.add(
+                this.tempElement.call(
+                    this,
+                    this.tempArray[i].x,
+                    this.tempArray[i].y,
+                    this.tempArray[i].properties
+                )
+            );
+        } else {
+            console.error(this.tempArray[i].name, "not found");
+        }
+    }
+
+    this.tempArray = null;
+    this.tempElement = null;
+
+    // play animation
+    this.bonus.callAll("animations.play", "animations", "default");
 };

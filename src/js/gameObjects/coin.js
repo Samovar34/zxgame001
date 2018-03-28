@@ -1,13 +1,12 @@
 // Coin class
 // extends Phaser.Sprite class
 // only for goup
-AdslJumper.Coin = function (game, soundManager, x, y) {
+AdslJumper.Coin = function (game, x, y) {
 
     // extend
     Phaser.Sprite.call(this, game, x, y, "atlas_2", "bitcoin1.png");
 
     this.game = game;
-    this.soundManager = soundManager;
 
     this.tag = "coin";
     this.name = "coin";
@@ -16,7 +15,7 @@ AdslJumper.Coin = function (game, soundManager, x, y) {
     this.game.physics.arcade.enable(this);
 
     // animation
-    this.animations.add("rotate", ["bitcoin1.png", 
+    this.animations.add("default", ["bitcoin1.png", 
         "bitcoin2.png", 
         "bitcoin3.png", 
         "bitcoin4.png", 
@@ -42,6 +41,5 @@ AdslJumper.Coin.prototype.constructor = AdslJumper.Coin;
 // play sound and animation
 AdslJumper.Coin.prototype.disableBodyAndKill = function () {
     this.body.enable = false;
-    this.soundManager.playCoin();
     this.animations.play("collected", 18, false, true);
 };

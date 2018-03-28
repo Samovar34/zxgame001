@@ -23,6 +23,7 @@ AdslJumper.level1State.prototype = {
         // for triggers and level variable
         this.randomeNumber = Math.floor(Math.random() * 100)/100;
         this.doorIsOpen = false;
+        this.playerScore = AdslJumper.data.score;
 
         // get modules
         this.input = new AdslJumper.Input(this.game);
@@ -38,15 +39,17 @@ AdslJumper.level1State.prototype = {
 
         this.gameObjectFactory.createDoors.call(this);
 
+        this.gameObjectFactory.createBonus.call(this);
+
         // for triggers
         this._events = {
-            "openDoor": blowMine,
-            "dropThorn0": dropThorn0,
-            "dropThorn1": dropThorn1,
-            "dropThorn2": dropThorn2,
-            "dropThorn3": dropThorn3,
-            "dropThorn4": dropThorn4,
-        }
+            "openDoor": this.openDoor,
+            "dropThorn0": this.dropThorn0,
+            "dropThorn1": this.dropThorn1,
+            "dropThorn2": this.dropThorn2,
+            "dropThorn3": this.dropThorn3,
+            "dropThorn4": this.dropThorn4,
+        };
 
         this.gameObjectFactory.createCollision.call(this);
         this.gameObjectFactory.createTriggers.call(this);
@@ -77,14 +80,26 @@ AdslJumper.level1State.prototype = {
         this.thorn5.outOfBoundsKill = true;
         this.thorn5.checkWorldBounds = true;
 
+        this.doorScreen = this.game.add.sprite(104, 100, "atlas_2", "level1Screen1.png");
+        this.doorToComputer = this.game.add.sprite(192, 116, "atlas_2", "level1Door1.png");
+        this.doorToComputer.animations.add("default", [
+            "level1Door1.png",
+            "level1Door2.png",
+            "level1Door3.png",
+            "level1Door4.png",
+            "level1Door5.png",
+            "level1Door6.png",
+            "level1Door7.png"
+        ], 18);
+
+
         // player
         this.gameObjectFactory.createPlayer.call(this);
 
         // GUI
         this.gui = new AdslJumper.GUI(this.game);
-        this.gui.setRoom("79");
-        this.score = 10;
-        this.gui.setScore(this.score);
+        this.gui.setRoom("01");
+        this.gui.setScore(this.playerScore);
 
         this.game.camera.follow(this.player,  this.game.camera.FOLLOW_PLATFORMER, 0.2, 0.2);
 
@@ -97,22 +112,24 @@ AdslJumper.level1State.prototype = {
         this.game.physics.arcade.collide(this.player, this.collision2d, AdslJumper.gameFunc.playerCollideHandler, null, this);
         this.game.physics.arcade.overlap(this.player, this.triggers, AdslJumper.gameFunc.triggerHandler, null, this);
         this.game.physics.arcade.overlap(this.player, this.traps, AdslJumper.gameFunc.trapHandler, null, this);
+        this.game.physics.arcade.overlap(this.player, this.bonus, AdslJumper.gameFunc.bonusHandler, null, this);
          
-        
         // TODO подумать о коллизиях со взрывом
         //this.game.physics.arcade.overlap(this.player, this.explosionSprites, AdslJumper.gameFunc.trapHandler, null, this);
 
     },
     
     render: function () {
-        this.game.debug.text("state: " + this.player.currentState.name, 8, 24, "#00ff00");
-        this.game.debug.text("isInteract: " + this.player.isInteract, 8, 40, "#00ff00");
-        this.game.debug.text("inTrigger: " + this.player.inTrigger, 8, 56, "#00ff00");
-        this.game.debug.text("tryCount: " + tryCount, 8, 72, "#00ff00");
-        this.game.debug.text("random: " + this.randomeNumber, 8, 88, "#00ff00");
-        this.game.debug.text("exist: " + this.thorn0.alive, 8, 104, "#00ff00");
+        if (!AdslJumper.utils.enableDebug) {
+            this.game.debug.text("state: " + this.player.currentState.name, 8, 24, "#00ff00");
+            this.game.debug.text("isInteract: " + this.player.isInteract, 8, 40, "#00ff00");
+            this.game.debug.text("inTrigger: " + this.player.inTrigger, 8, 56, "#00ff00");
+            this.game.debug.text("tryCount: " + tryCount, 8, 72, "#00ff00");
+            this.game.debug.text("random: " + this.randomeNumber, 8, 88, "#00ff00");
+            this.game.debug.text("exist: " + this.thorn0.alive, 8, 104, "#00ff00");
+        }
 
-        this.gui.setScore(this.score++);
+        
         if (this.player.isInteract) {
             // TODO show message
         }
@@ -122,21 +139,19 @@ AdslJumper.level1State.prototype = {
     }
 };
 
-function randomExplosion() {
-    var x = 64 + Math.floor(Math.random() * 640);
-    var y = 64 + Math.floor(Math.random() * 360);
-    AdslJumper.gameFunc.makeExplosion.call(this, x, y);
-}
+// Trigger events handlers
 
-function blowMine(trigger) {
+AdslJumper.level1State.prototype.openDoor = function (trigger) {
     if (trigger._killAfterInteract) {
         trigger.kill();
     }
+    this.doorScreen.frameName = "level1Screen2.png";
+    this.doorToComputer.animations.play("default");
     this.exitDoor.open();
     this.doorIsOpen = true;
-}
+};
 
-function dropThorn0(trigger) {
+AdslJumper.level1State.prototype.dropThorn0 = function (trigger) {
     if (tryCount === 0) {
         this.thorn0.body.gravity.y = 1900;
     } else if (tryCount === 1) {
@@ -150,30 +165,29 @@ function dropThorn0(trigger) {
             this.thorn4.body.gravity.y = 1900;
         }
     }
-    
-}
+};
 
-function dropThorn3(trigger) {
+AdslJumper.level1State.prototype.dropThorn3 = function (trigger) {
     if (tryCount === 2 ) {
         this.thorn4.body.gravity.y = 1900;
     }
-}
+};
 
-function dropThorn1(trigger) {
+AdslJumper.level1State.prototype.dropThorn1 = function (trigger) {
     this.thorn1.body.gravity.y = 1900;
-}
+};
 
-function dropThorn2(trigger) {
+AdslJumper.level1State.prototype.dropThorn2 = function (trigger) {
     this.thorn2.body.gravity.y = 1800;
-}
+};
 
-function dropThorn4(trigger) {
+AdslJumper.level1State.prototype.dropThorn4 = function (trigger) {
     console.log("outside");
     if (this.doorIsOpen) {
         console.log("inside");
         trigger.kill();
         this.thorn5.body.gravity.y = 1800;
     }
-    
-}
+};
 
+// END Trigger events handlers

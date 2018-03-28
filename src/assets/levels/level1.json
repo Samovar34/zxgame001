@@ -47,6 +47,28 @@
                  "width":768,
                  "x":0,
                  "y":384
+                }, 
+                {
+                 "gid":1,
+                 "height":384,
+                 "id":67,
+                 "name":"Bg",
+                 "properties":
+                    {
+                     "atlas":"atlas_2",
+                     "sprite":"level1"
+                    },
+                 "propertytypes":
+                    {
+                     "atlas":"string",
+                     "sprite":"string"
+                    },
+                 "rotation":0,
+                 "type":"bg",
+                 "visible":true,
+                 "width":768,
+                 "x":0,
+                 "y":384
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -71,14 +93,14 @@
                  "y":320
                 }, 
                 {
-                 "height":256,
+                 "height":52,
                  "id":13,
                  "name":"Collider",
                  "rotation":0,
                  "type":"box2d",
                  "visible":true,
-                 "width":32,
-                 "x":32,
+                 "width":16,
+                 "x":192,
                  "y":64
                 }, 
                 {
@@ -124,6 +146,17 @@
                  "width":224,
                  "x":64,
                  "y":160
+                }, 
+                {
+                 "height":256,
+                 "id":68,
+                 "name":"Collider",
+                 "rotation":0,
+                 "type":"box2d",
+                 "visible":true,
+                 "width":32,
+                 "x":32,
+                 "y":64
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -218,8 +251,8 @@
                  "rotation":0,
                  "type":"tr2d",
                  "visible":true,
-                 "width":96,
-                 "x":192,
+                 "width":104.5,
+                 "x":182,
                  "y":224
                 }, 
                 {
@@ -637,18 +670,6 @@
                 {
                  "gid":3,
                  "height":32,
-                 "id":24,
-                 "name":"Coin",
-                 "rotation":0,
-                 "type":"bonus",
-                 "visible":true,
-                 "width":32,
-                 "x":160,
-                 "y":256
-                }, 
-                {
-                 "gid":3,
-                 "height":32,
                  "id":30,
                  "name":"Coin",
                  "rotation":0,
@@ -681,6 +702,18 @@
                  "width":32,
                  "x":64,
                  "y":96
+                }, 
+                {
+                 "gid":3,
+                 "height":32,
+                 "id":66,
+                 "name":"Coin",
+                 "rotation":0,
+                 "type":"bonus",
+                 "visible":true,
+                 "width":32,
+                 "x":640,
+                 "y":256
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -728,7 +761,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":66,
+ "nextobjectid":69,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.0.3",

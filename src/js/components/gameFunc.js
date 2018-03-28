@@ -28,17 +28,16 @@ AdslJumper.gameFunc.triggerHandler = function (player, trigger) {
             if (trigger._interactable) {
                 player.isInteract = true;
                 if (this.input.jumpIsJustDown()) {
-                    this._events[trigger._event].call(this, trigger);
+                    this[trigger._event].call(this, trigger);
                 }
             } else {
-                this._events[trigger._event].call(this, trigger);
+                this[trigger._event].call(this, trigger);
             }
-            
         } catch (err) {
             // force disable body
-            //trigger.body.enable = false;
-            AdslJumper.utils.warn("level1", "Trigger handler error! Event '" + trigger._event + "' not found or not function!")
-            AdslJumper.utils.error(err.toString());
+            trigger.body.enable = false;
+            AdslJumper.utils.warn("level", "Trigger handler error! Event '" + trigger._event + "' not found or not function!", null, true)
+            AdslJumper.utils.error("level", err.toString(), null, true);
         }
     }
 };
@@ -49,6 +48,7 @@ AdslJumper.gameFunc.triggerHandler = function (player, trigger) {
 AdslJumper.gameFunc.trapHandler = function (player, trap) {
     // TODO delete
     AdslJumper.utils.info(player.game.state.current, "trap tag", trap.tag);
+
     var handler = AdslJumper.gameFunc.trapHandlerCollection[trap.tag];
     if (handler !== undefined) {
         handler.call(this, player, trap);
@@ -155,3 +155,36 @@ AdslJumper.gameFunc.makeExplosion = function (x, y) {
     explosion.animations.play("default", 24, false, true);
     this.soundManager.playExplosion();
 };
+
+// BONUS
+
+
+// void
+// context Phaser.State
+AdslJumper.gameFunc.bonusHandler = function (player, bonus) {
+    // TODO delete
+    AdslJumper.utils.info(player.game.state.current, "bonus tag", bonus.tag);
+
+    var handler = AdslJumper.gameFunc.bonusHadlerCollection[bonus.tag];
+    if (handler !== undefined) {
+        handler.call(this, player, bonus);
+    } else {
+        AdslJumper.utils.warn(player.game.state.current, "BONUS handler not found for", bonus.tag);
+    }
+
+};
+
+AdslJumper.gameFunc.coinHandler = function (player, coin) {
+    this.soundManager.playCoin();
+    coin.disableBodyAndKill();
+    this.playerScore += 10;
+    this.gui.setScore(this.playerScore);
+};
+
+// объект, который содержит в себе ссылки на обработчики ловушек
+AdslJumper.gameFunc.bonusHadlerCollection = {
+    "coin" : AdslJumper.gameFunc.coinHandler
+};
+
+
+// END BONUS

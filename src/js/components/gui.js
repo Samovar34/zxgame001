@@ -9,10 +9,10 @@ AdslJumper.GUI = function (game) {
     this.fixedToCamera = true;
 
     this.roomOffsetX = 80;
-    this.scoreOffsetX = 296;
+    this.scoreOffsetX = 320;
 
     this.roomText = this.addChild(this.game.make.sprite(0, 0, "atlas_2", "guiText4.png"));
-    this.scoreText = this.addChild(this.game.make.sprite(240, 0, "atlas_2", "guiText1.png"));
+    this.scoreText = this.addChild(this.game.make.sprite(this.scoreOffsetX - 54, 0, "atlas_2", "guiText1.png"));
 
     this.roomNumber0 = this.addChild(this.game.make.sprite(this.roomOffsetX, 0, "atlas_2", "numbers1.png"));
     this.roomNumber1 = this.addChild(this.game.make.sprite(this.roomOffsetX + 12, 0, "atlas_2", "numbers1.png"));
