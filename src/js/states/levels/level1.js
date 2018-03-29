@@ -53,10 +53,13 @@ AdslJumper.level1State.prototype = {
 
         this.gameObjectFactory.createCollision.call(this);
         this.gameObjectFactory.createTriggers.call(this);
-
+        this.gameObjectFactory.createFx.call(this);
+        
         this.blood = AdslJumper.gameObjectFactory.createBloodParticles.call(this);
 
         this.gameObjectFactory.createTraps.call(this);
+
+
 
         this.thorn0 = this.traps.getByName("dropThorn0");
         this.thorn0.outOfBoundsKill = true;

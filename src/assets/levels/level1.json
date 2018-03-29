@@ -384,7 +384,7 @@
                  "type":"trap",
                  "visible":true,
                  "width":16,
-                 "x":416,
+                 "x":424,
                  "y":320
                 }, 
                 {
@@ -502,7 +502,7 @@
                  "type":"trap",
                  "visible":true,
                  "width":16,
-                 "x":416,
+                 "x":434,
                  "y":160
                 }, 
                 {
@@ -724,7 +724,31 @@
         {
          "draworder":"topdown",
          "name":"fx",
-         "objects":[],
+         "objects":[
+                {
+                 "gid":11,
+                 "height":32,
+                 "id":69,
+                 "name":"Fan",
+                 "rotation":0,
+                 "type":"fx",
+                 "visible":true,
+                 "width":32,
+                 "x":224,
+                 "y":256
+                }, 
+                {
+                 "gid":11,
+                 "height":32,
+                 "id":70,
+                 "name":"Fan",
+                 "rotation":0,
+                 "type":"fx",
+                 "visible":true,
+                 "width":32,
+                 "x":640,
+                 "y":128
+                }],
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
@@ -761,7 +785,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":69,
+ "nextobjectid":71,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.0.3",
@@ -887,6 +911,20 @@
          "imagewidth":32,
          "margin":0,
          "name":"thorn4",
+         "spacing":0,
+         "tilecount":1,
+         "tileheight":32,
+         "tilewidth":32,
+         "transparentcolor":"#ff00ff"
+        }, 
+        {
+         "columns":1,
+         "firstgid":11,
+         "image":"..\/..\/..\/..\/..\/..\/13-YandexDisk\/art\/gamedev\/adsl_jumper\/images\/atlas_2\/fan01\/fan01.png",
+         "imageheight":32,
+         "imagewidth":32,
+         "margin":0,
+         "name":"fan01",
          "spacing":0,
          "tilecount":1,
          "tileheight":32,

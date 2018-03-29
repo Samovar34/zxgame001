@@ -92,6 +92,7 @@ AdslJumper.gameObjectFactory.createBackGround01 = function () {
     return gameObject;
 };
 
+//
 AdslJumper.gameObjectFactory.createMeatBlowSprite = function(x, y) {
     var gameObject = this.game.make.sprite(x, y, "atlas_2", "player16.png");
     gameObject.anchor.setTo(0.5);
@@ -386,4 +387,35 @@ AdslJumper.gameObjectFactory.createBonus = function () {
 
     // play animation
     this.bonus.callAll("animations.play", "animations", "default");
+};
+
+// call with binding context
+// this = Phaser.State
+AdslJumper.gameObjectFactory.createFx = function () {
+
+    this.fx = this.game.add.group();
+    this.tempArray = AdslJumper.utils.findObjectsByType('fx', this.map, 'fx');
+    this.tempElement = null;
+
+    for (i = 0; i < this.tempArray.length; i++) {
+        this.tempElement = AdslJumper.gameObjectFactory[this.tempArray[i].name];
+        if (this.tempElement !== undefined) {
+            this.fx.add(
+                this.tempElement.call(
+                    this,
+                    this.tempArray[i].x,
+                    this.tempArray[i].y,
+                    this.tempArray[i].properties
+                )
+            );
+        } else {
+            console.error(this.tempArray[i].name, "not found");
+        }
+    }
+
+    this.tempArray = null;
+    this.tempElement = null;
+
+    // play animation
+    this.fx.callAll("animations.play", "animations", "default");
 };
