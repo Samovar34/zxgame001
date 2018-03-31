@@ -7,13 +7,16 @@ AdslJumper.SoundManager = function (game) {
     this.SFXVOLUMEDEFAULT = 0.9;
 
     this.sfxVolume = 0.9;
-    this.musicVolume = 0.3;
+    this.musicVolume = 0.6;
 
     this.game = game;
 
     // sounds
     this.jump = this.game.add.audio('jump');
     this.jump.volume = this.sfxVolume * 0.75;
+
+    this.pickUp = this.game.add.audio('pickUp');
+    this.pickUp.volume = this.sfxVolume * 0.6;
 
     this.doubleJump = this.game.add.audio('doubleJump');
     this.doubleJump.volume = this.sfxVolume;
@@ -24,8 +27,8 @@ AdslJumper.SoundManager = function (game) {
     this.step02 = this.game.add.audio("step02");
     this.step02.volume = this.sfxVolume * 0.4;
 
-    this.closeDoor = this.game.add.sound("closeDoor");
-    this.closeDoor.volume = this.sfxVolume;
+    this.openDoor2 = this.game.add.sound("openDoor2");
+    this.openDoor2.volume = this.sfxVolume;
 
     this.openDoor = this.game.add.audio('openDoor');
     this.openDoor.volume = this.sfxVolume;
@@ -98,9 +101,9 @@ AdslJumper.SoundManager.prototype.playCoin = function () {
 };
 
 // void
-AdslJumper.SoundManager.prototype.playCloseDoor = function () {
-    if (!this.closeDoor.isPlaying) {
-        this.closeDoor.play();
+AdslJumper.SoundManager.prototype.playOpenDoor2 = function () {
+    if (!this.openDoor2.isPlaying) {
+        this.openDoor2.play();
     }
 };
 
@@ -115,6 +118,13 @@ AdslJumper.SoundManager.prototype.playOpenDoor = function () {
 AdslJumper.SoundManager.prototype.playDoubleJump = function () {
     if (!this.doubleJump.isPlaying) {
         this.doubleJump.play();
+    }
+};
+
+// void
+AdslJumper.SoundManager.prototype.playPickUp= function () {
+    if (!this.pickUp.isPlaying) {
+        this.pickUp.play();
     }
 };
 

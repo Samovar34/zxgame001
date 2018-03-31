@@ -31,6 +31,8 @@ AdslJumper.preloadState.prototype = {
         this.load.audio('explosion', 'assets/audio/explosion.wav');
         this.load.audio('menu_select_0', 'assets/audio/menu_select_0.wav');
         this.load.audio('menu_select_1', 'assets/audio/menu_select_1.wav');
+        this.load.audio('pickUp', ['assets/audio/pickUp.ogg', 'assets/audio/pickUp.mp3']);
+        this.load.audio('openDoor2', ['assets/audio/openDoor2.ogg', 'assets/audio/openDoor2.mp3']);
 
         // music
         this.load.audio('intro', ['assets/audio/music/intro.ogg', 'assets/audio/music/intro.mp3'], false);
@@ -50,7 +52,9 @@ AdslJumper.preloadState.prototype = {
         // gama data
         AdslJumper.data = {
             level: "story",
-            score: 0
+            score: 0,
+            deaths: 0,
+            levelDeaths: 0
         };
 
         // TODO del

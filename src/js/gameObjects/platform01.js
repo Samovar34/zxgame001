@@ -1,6 +1,6 @@
 // Platform01 class
 // extends Phaser.Sprite class
-// only for goup
+// only for group
 AdslJumper.Platform01 = function (game, x, y) {
 
     // extend

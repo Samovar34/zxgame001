@@ -187,7 +187,7 @@
                  "properties":
                     {
                      "event":"openDoor",
-                     "interactable":true,
+                     "interactable":false,
                      "killAfterInteract":true,
                      "killOnOverlap":false
                     },
@@ -201,8 +201,8 @@
                  "rotation":0,
                  "type":"tr2d",
                  "visible":true,
-                 "width":64,
-                 "x":96,
+                 "width":50,
+                 "x":108,
                  "y":128
                 }, 
                 {
@@ -329,6 +329,31 @@
                  "width":80,
                  "x":416,
                  "y":224
+                }, 
+                {
+                 "height":32,
+                 "id":72,
+                 "name":"Trigger",
+                 "properties":
+                    {
+                     "event":"openDoorToRoom",
+                     "interactable":false,
+                     "killAfterInteract":false,
+                     "killOnOverlap":false
+                    },
+                 "propertytypes":
+                    {
+                     "event":"string",
+                     "interactable":"bool",
+                     "killAfterInteract":"bool",
+                     "killOnOverlap":"bool"
+                    },
+                 "rotation":0,
+                 "type":"tr2d",
+                 "visible":true,
+                 "width":32,
+                 "x":224,
+                 "y":288
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -644,6 +669,28 @@
                  "width":32,
                  "x":448,
                  "y":96
+                }, 
+                {
+                 "gid":5,
+                 "height":32,
+                 "id":74,
+                 "name":"MovableThorn",
+                 "properties":
+                    {
+                     "direction":"right",
+                     "invert":true
+                    },
+                 "propertytypes":
+                    {
+                     "direction":"string",
+                     "invert":"bool"
+                    },
+                 "rotation":0,
+                 "type":"trap",
+                 "visible":true,
+                 "width":32,
+                 "x":256,
+                 "y":192
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -714,6 +761,18 @@
                  "width":32,
                  "x":640,
                  "y":256
+                }, 
+                {
+                 "gid":12,
+                 "height":16,
+                 "id":71,
+                 "name":"Card",
+                 "rotation":0,
+                 "type":"bonus",
+                 "visible":true,
+                 "width":16,
+                 "x":488,
+                 "y":136
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -748,6 +807,18 @@
                  "width":32,
                  "x":640,
                  "y":128
+                }, 
+                {
+                 "gid":13,
+                 "height":14,
+                 "id":73,
+                 "name":"level1ScreenA",
+                 "rotation":0,
+                 "type":"fx",
+                 "visible":true,
+                 "width":24,
+                 "x":230,
+                 "y":310
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -785,7 +856,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":71,
+ "nextobjectid":75,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.0.3",
@@ -929,6 +1000,34 @@
          "tilecount":1,
          "tileheight":32,
          "tilewidth":32,
+         "transparentcolor":"#ff00ff"
+        }, 
+        {
+         "columns":1,
+         "firstgid":12,
+         "image":"..\/..\/..\/..\/..\/..\/13-YandexDisk\/art\/gamedev\/adsl_jumper\/images\/atlas_2\/card\/card1.png",
+         "imageheight":16,
+         "imagewidth":16,
+         "margin":0,
+         "name":"card1",
+         "spacing":0,
+         "tilecount":1,
+         "tileheight":16,
+         "tilewidth":16,
+         "transparentcolor":"#ff00ff"
+        }, 
+        {
+         "columns":1,
+         "firstgid":13,
+         "image":"..\/..\/..\/..\/..\/..\/13-YandexDisk\/art\/gamedev\/adsl_jumper\/images\/atlas_2\/levele1ScreenA\/level1ScreenA2.png",
+         "imageheight":14,
+         "imagewidth":24,
+         "margin":0,
+         "name":"level1ScreenA2",
+         "spacing":0,
+         "tilecount":1,
+         "tileheight":14,
+         "tilewidth":24,
          "transparentcolor":"#ff00ff"
         }],
  "tilewidth":32,

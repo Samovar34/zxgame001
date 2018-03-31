@@ -1,66 +1,43 @@
 AdslJumper.level1State = function (game) {};
 
-var tryCount = 0;
-
 AdslJumper.level1State.prototype = {
-    preload: function () {
-        // TODO move preload function to waitAudioDecode
-    },
+    // CORE GAME FUNCTIONS
     create: function () {
         // set renderer
         this.game.renderer.renderSession.roundPixels = true;
         this.game.clearBeforeRender = false;
 
-        this.soundManager = AdslJumper.modules.soundManager;
-
-        // music
-        if (!this.soundManager.currentTrack) {
-            this.soundManager.currentTrack = this.soundManager.tempTrack;
-            this.soundManager.tempTrack = null;
-            this.soundManager.playTrack();
-        };
-
-        // for triggers and level variable
-        this.randomeNumber = Math.floor(Math.random() * 100)/100;
-        this.doorIsOpen = false;
-        this.playerScore = AdslJumper.data.score;
-
         // get modules
         this.input = new AdslJumper.Input(this.game);
         this.soundManager = AdslJumper.modules.soundManager;
-        this.gameObjectFactory = AdslJumper.gameObjectFactory;
+        this.gameObjectFactory = AdslJumper.gameObjectFactory; // alias
 
+        // for triggers and level variable
+        this.randomNumber = Math.floor(Math.random() * 100)/100;
+        this.doorIsOpen = false;
+        this.playerScore = AdslJumper.data.score;
+
+        // game world bounds
         this.game.world.setBounds(0, 0, 768, 384);
-
-        this.background = this.game.add.image(0, 0, "level1");
 
         // game world
         this.map = this.game.add.tilemap("map1", 32, 32);
 
+        // LEVEL ESSENTIAL
+        this.background = this.game.add.image(0, 0, "level1");
+        this.background.smoothed = false;
+        this.background.scale.setTo(2);
+        
         this.gameObjectFactory.createDoors.call(this);
-
-        this.gameObjectFactory.createBonus.call(this);
-
-        // for triggers
-        this._events = {
-            "openDoor": this.openDoor,
-            "dropThorn0": this.dropThorn0,
-            "dropThorn1": this.dropThorn1,
-            "dropThorn2": this.dropThorn2,
-            "dropThorn3": this.dropThorn3,
-            "dropThorn4": this.dropThorn4,
-        };
-
         this.gameObjectFactory.createCollision.call(this);
         this.gameObjectFactory.createTriggers.call(this);
         this.gameObjectFactory.createFx.call(this);
-        
+        this.gameObjectFactory.createTraps.call(this);
+        this.gameObjectFactory.createBonus.call(this);
+
         this.blood = AdslJumper.gameObjectFactory.createBloodParticles.call(this);
 
-        this.gameObjectFactory.createTraps.call(this);
-
-
-
+        // TRAPS WITH TRIGGERS
         this.thorn0 = this.traps.getByName("dropThorn0");
         this.thorn0.outOfBoundsKill = true;
         this.thorn0.checkWorldBounds = true;
@@ -83,114 +60,182 @@ AdslJumper.level1State.prototype = {
         this.thorn5.outOfBoundsKill = true;
         this.thorn5.checkWorldBounds = true;
 
+        // level special
         this.doorScreen = this.game.add.sprite(104, 100, "atlas_2", "level1Screen1.png");
+        
         this.doorToComputer = this.game.add.sprite(192, 116, "atlas_2", "level1Door1.png");
+        this.game.physics.arcade.enable(this.doorToComputer);
+        this.doorToComputer.body.immovable = true;
         this.doorToComputer.animations.add("default", [
             "level1Door1.png",
             "level1Door2.png",
             "level1Door3.png",
             "level1Door4.png",
-            "level1Door5.png",
-            "level1Door6.png",
-            "level1Door7.png"
-        ], 18);
+            "level1Door5.png"
+        ], 10);
 
-
-        // player
+        // PLAYER
         this.gameObjectFactory.createPlayer.call(this);
+        this.player.canInput = false;
 
         // GUI
+        this.guiArrow = new AdslJumper.GUIArrow(this.game, this.card.x, this.card.y - 16);
         this.gui = new AdslJumper.GUI(this.game);
         this.gui.setRoom("01");
         this.gui.setScore(this.playerScore);
 
-        this.game.camera.follow(this.player,  this.game.camera.FOLLOW_PLATFORMER, 0.2, 0.2);
+        // MUSIC
+        if (!this.soundManager.currentTrack) {
+            this.soundManager.currentTrack = this.soundManager.tempTrack;
+            this.soundManager.tempTrack = null;
+            this.soundManager.playTrack();
+        };
 
-        },
+
+        // CAMERA
+        this.game.camera.follow(this.player,  this.game.camera.FOLLOW_PLATFORMER, 0.2, 0.2);
+        this.game.camera.flash(0x000000, AdslJumper.gameOptions.cameraFlashTime);
+        this.game.camera.onFlashComplete.addOnce(AdslJumper.gameFunc.onFlashCompleteFunction, this);
+        this.game.camera.onShakeComplete.addOnce(AdslJumper.gameFunc.onShakeCompleteFunction, this); // gameOver
+    },
 
     update: function () {
         // reset player
         this.player.reset();
 
         this.game.physics.arcade.collide(this.player, this.collision2d, AdslJumper.gameFunc.playerCollideHandler, null, this);
+        this.game.physics.arcade.collide(this.player, this.doorToComputer);
         this.game.physics.arcade.overlap(this.player, this.triggers, AdslJumper.gameFunc.triggerHandler, null, this);
         this.game.physics.arcade.overlap(this.player, this.traps, AdslJumper.gameFunc.trapHandler, null, this);
         this.game.physics.arcade.overlap(this.player, this.bonus, AdslJumper.gameFunc.bonusHandler, null, this);
-         
-        // TODO подумать о коллизиях со взрывом
-        //this.game.physics.arcade.overlap(this.player, this.explosionSprites, AdslJumper.gameFunc.trapHandler, null, this);
+
+        if (this.doorIsOpen) {
+            this.game.physics.arcade.overlap(this.player, this.exitDoor, this.nextLevel, null, this);
+        }
 
     },
     
     render: function () {
-        if (!AdslJumper.utils.enableDebug) {
-            this.game.debug.text("state: " + this.player.currentState.name, 8, 24, "#00ff00");
-            this.game.debug.text("isInteract: " + this.player.isInteract, 8, 40, "#00ff00");
-            this.game.debug.text("inTrigger: " + this.player.inTrigger, 8, 56, "#00ff00");
-            this.game.debug.text("tryCount: " + tryCount, 8, 72, "#00ff00");
-            this.game.debug.text("random: " + this.randomeNumber, 8, 88, "#00ff00");
+        if (AdslJumper.utils.enableDebug) {
+            this.game.debug.text("tryCount: " + AdslJumper.data.levelDeaths, 8, 24, "#00ff00");
+            this.game.debug.text("random: " + this.randomNumber, 8, 88, "#00ff00");
             this.game.debug.text("exist: " + this.thorn0.alive, 8, 104, "#00ff00");
+            this.game.debug.body(this.exitDoor);
         }
+    },
 
-        
-        if (this.player.isInteract) {
-            // TODO show message
-        }
-        //this.game.debug.body(this.player);
-        //this.game.debug.body(this.exitDoor);
-        //this.game.debug.physicsGroup(this.triggers);
-    }
-};
-
-// Trigger events handlers
-
-AdslJumper.level1State.prototype.openDoor = function (trigger) {
-    if (trigger._killAfterInteract) {
-        trigger.kill();
-    }
-    this.doorScreen.frameName = "level1Screen2.png";
-    this.doorToComputer.animations.play("default");
-    this.exitDoor.open();
-    this.doorIsOpen = true;
-};
-
-AdslJumper.level1State.prototype.dropThorn0 = function (trigger) {
-    if (tryCount === 0) {
-        this.thorn0.body.gravity.y = 1900;
-    } else if (tryCount === 1) {
-        this.thorn3.body.gravity.y = 1900;
-    } else if (tryCount >= 3) {
-        if (this.randomeNumber < 0.1) {
+    // TRIGGER EVENTS HANDLER
+    dropThorn0: function (trigger) {
+        if (AdslJumper.data.levelDeaths === 0) {
             this.thorn0.body.gravity.y = 1900;
-        } else if (this.randomeNumber > 0.1 && this.randomeNumber < 0.2) {
+        } else if (AdslJumper.data.levelDeaths === 1) {
             this.thorn3.body.gravity.y = 1900;
-        } else if (this.randomeNumber > 0.5 && this.randomeNumber < 0.6) {
+        } else if (AdslJumper.data.levelDeaths >= 3) {
+            if (this.randomNumber < 0.1) {
+                this.thorn0.body.gravity.y = 1900;
+            } else if (this.randomNumber > 0.1 && this.randomNumber < 0.2) {
+                this.thorn3.body.gravity.y = 1900;
+            } else if (this.randomNumber > 0.5 && this.randomNumber < 0.6) {
+                this.thorn4.body.gravity.y = 1900;
+            }
+        }
+    },
+
+    dropThorn1: function (trigger) {
+        this.thorn1.body.gravity.y = 2000;
+    },
+
+    dropThorn2: function (trigger) {
+        this.thorn2.body.gravity.y = 1800;
+    },
+
+    dropThorn3: function (trigger) {
+        if (AdslJumper.data.levelDeaths === 2 ) {
             this.thorn4.body.gravity.y = 1900;
         }
+    },
+
+    dropThorn4: function (trigger) {
+        if (this.doorIsOpen) {
+            trigger.kill();
+            this.thorn5.body.gravity.y = 1800;
+        }
+    },
+
+    openDoor: function (trigger) {
+        if (trigger._killAfterInteract) {
+            trigger.kill();
+        }
+    
+        // kill gui arrow and show screen
+        this.guiArrow.kill();
+        this.doorScreen.frameName = "level1Screen2.png";
+    
+        // open door
+        this.exitDoor.open();
+        this.doorIsOpen = true;
+    },
+
+    openDoorToRoom: function (trigger) {
+        if (this.player.hasCard) {
+            trigger.kill();
+    
+            this.soundManager.playOpenDoor2();
+    
+            this.doorToComputer.body.enable = false;
+            this.doorToComputer.animations.play("default");
+    
+            this.levelScreen.frameName = "level1ScreenA1.png";
+    
+            this.guiArrow.x = 122;
+            this.guiArrow.y = 84;
+        }
+    },
+
+    onCardFunction: function () {
+        this.guiArrow.x = 232;
+        this.guiArrow.y = 278;
+    },
+
+    // next level
+    nextLevel: function (player, door) {
+        // запретить управление пользователем
+        this.player.canInput = false;
+
+        // Скрыть игрока
+        this.player.kill();
+        door.animations.play("close");
+
+        // save score
+        AdslJumper.data.score = this.playerScore;
+
+        // reset levelDeaths
+        AdslJumper.data.levelDeaths = 0;
+
+        // camera
+        this.game.camera.follow(door,  this.game.camera.FOLLOW_PLATFORMER, 0.1, 0.1);
+
+        // TODO проиграть анимация захода персонажа в дверь
+        this.game.camera.fade(0x000000, AdslJumper.gameOptions.cameraFadeTime);
+        this.game.camera.onFadeComplete.addOnce(function() {
+
+            AdslJumper.data.level = door.nextLevel;
+            this.game.state.start(this.game.state.current);
+        }, this);
     }
 };
 
-AdslJumper.level1State.prototype.dropThorn3 = function (trigger) {
-    if (tryCount === 2 ) {
-        this.thorn4.body.gravity.y = 1900;
-    }
-};
 
-AdslJumper.level1State.prototype.dropThorn1 = function (trigger) {
-    this.thorn1.body.gravity.y = 1900;
-};
 
-AdslJumper.level1State.prototype.dropThorn2 = function (trigger) {
-    this.thorn2.body.gravity.y = 1800;
-};
 
-AdslJumper.level1State.prototype.dropThorn4 = function (trigger) {
-    console.log("outside");
-    if (this.doorIsOpen) {
-        console.log("inside");
-        trigger.kill();
-        this.thorn5.body.gravity.y = 1800;
-    }
-};
+
+
+
+
+
+
+
+
 
 // END Trigger events handlers
+

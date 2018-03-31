@@ -46,6 +46,13 @@ AdslJumper.gameObjectFactory = {
     "ScreenD": function (x, y) {
         return new AdslJumper.ScreenD(this.game, x, y + 32);
     },
+
+    "level1ScreenA": function (x, y) {
+        // this = Phaser.State
+        this.levelScreen =  this.game.add.sprite(x, y + 18, "atlas_2", "level1ScreenA2.png");
+        return this.levelScreen;
+    },
+
     "Tutor1": function (x, y) {
         return this.game.add.sprite(x, y + 32, "atlas_2", "tutorial3.png");
     },
@@ -62,6 +69,7 @@ AdslJumper.gameObjectFactory = {
         return this.game.add.sprite(x, y + 32, "atlas_2", "tutorial11.png");
     }
 };
+
 
 AdslJumper.gameObjectFactory.createFartParticles = function () {
     // particles
@@ -191,6 +199,26 @@ AdslJumper.gameObjectFactory.createBackGround = function () {
     this.tempElement = null;
 };
 
+// return Phaser.Sprite
+// this = Phaser.State
+AdslJumper.gameObjectFactory.createCard = function (x, y) {
+    var gameObject = this.game.add.sprite(x, y + 16, "atlas_2", "card1.png");
+    gameObject.tag = "card";
+
+    this.game.physics.arcade.enable(gameObject);
+
+    // animation
+    gameObject.animations.add("default", [
+        "card1.png", 
+        "card2.png", 
+        "card3.png", 
+        "card4.png", 
+        "card5.png"
+    ], 9, true);
+    
+    return this.card = gameObject;
+}
+
 // call with binding context
 AdslJumper.gameObjectFactory.createCollision = function () {
     this.collision2d  = this.game.add.group();
@@ -259,7 +287,7 @@ AdslJumper.gameObjectFactory.createPlayer = function () {
         this.game,
         this.input,
         this.tempArray[0].x + 16,
-        this.tempArray[0].y - 16);
+        this.tempArray[0].y + 16);
 
     // clear temp variables
     this.tempArray = null;
@@ -419,3 +447,7 @@ AdslJumper.gameObjectFactory.createFx = function () {
     // play animation
     this.fx.callAll("animations.play", "animations", "default");
 };
+
+
+// alias TODO
+AdslJumper.gameObjectFactory.Card = AdslJumper.gameObjectFactory.createCard;

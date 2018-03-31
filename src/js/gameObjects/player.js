@@ -37,7 +37,7 @@ AdslJumper.Player = function (game, input, x, y) {
     this.inTrigger = false; // внутри триггера или нет?
 
     // items
-    this.hasKey = false; // взял ли игрок специальный ключ
+    this.hasCard = false; // взял ли игрок специальный ключ
     
     this.anchor.setTo(0.5);
     this.smoothed = false;

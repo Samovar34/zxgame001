@@ -1,12 +1,12 @@
 // Объект с игровыми функциями
-AdslJumper.gameFunc = {
-    
-};
+AdslJumper.gameFunc = {};
 
 // PLAYER
 
 // void
-// context Phaser.State
+// player Phaser.Sprite
+// collider Phaser.Sprite
+// this = Phaser.State
 AdslJumper.gameFunc.playerCollideHandler = function (player, collider) {
     this.player.customTouchUp = this.player.body.touching.up;
     this.player.customTouchRight = this.player.body.touching.right;
@@ -15,24 +15,21 @@ AdslJumper.gameFunc.playerCollideHandler = function (player, collider) {
 };
 
 // void
-// context Phaser.State
+// player Phaser.Sprite
+// trigger Phaser.Sprite
+// this = Phaser.State
 AdslJumper.gameFunc.triggerHandler = function (player, trigger) {
     player.inTrigger = true;
 
+    // kill trigger
     if (trigger._killOnOverlap) {
         trigger.kill();
     }
 
-    if (typeof trigger._event === "string") {
+    // trigger event
+    if (trigger._event) {
         try {
-            if (trigger._interactable) {
-                player.isInteract = true;
-                if (this.input.jumpIsJustDown()) {
-                    this[trigger._event].call(this, trigger);
-                }
-            } else {
-                this[trigger._event].call(this, trigger);
-            }
+            this[trigger._event].call(this, trigger);
         } catch (err) {
             // force disable body
             trigger.body.enable = false;
@@ -43,11 +40,12 @@ AdslJumper.gameFunc.triggerHandler = function (player, trigger) {
 };
 
 // TRAP HANDLERS
+
 // обработчик столкновений игрока с ловушками
-// context Phaser.State
+// this = Phaser.State
 AdslJumper.gameFunc.trapHandler = function (player, trap) {
     // TODO delete
-    AdslJumper.utils.info(player.game.state.current, "trap tag", trap.tag);
+    //AdslJumper.utils.info(player.game.state.current, "trap tag", trap.tag);
 
     var handler = AdslJumper.gameFunc.trapHandlerCollection[trap.tag];
     if (handler !== undefined) {
@@ -58,28 +56,42 @@ AdslJumper.gameFunc.trapHandler = function (player, trap) {
 };
 
 // столкновение игрока с миной
-// context Phaser.State
+// this = Phaser.State
 AdslJumper.gameFunc.mineHandler = function (player, mine) {
+    // disable physics body and destroy
     mine.body.enable = false;
     mine.pendingDestroy = true;
+
+    // explosion
     AdslJumper.gameFunc.makeExplosion.call(this, mine.x, mine.y);
-    this.blood.x = player.x;
-    this.blood.y = player.y;
-    this.blood.start(true, 2200, 20, 64, 100);
-    AdslJumper.gameFunc.gameOverMine.call(this);
-};
 
-AdslJumper.gameFunc.thornHandler = function (player, thorn) {
-
-    this.soundManager.playPlayerDeath();
-
+    // blood particals
     this.blood.x = player.x;
     this.blood.y = player.y;
     this.blood.start(true, 2200, 20, 64, 100);
 
+    // gameOver
     AdslJumper.gameFunc.gameOver.call(this);
 };
 
+// столкновение игрока с шипом
+// this = Phaser.State
+AdslJumper.gameFunc.thornHandler = function (player, thorn) {
+
+    // play sound
+    this.soundManager.playPlayerDeath();
+
+    // blood particals
+    this.blood.x = player.x;
+    this.blood.y = player.y;
+    this.blood.start(true, 2200, 20, 64, 100);
+
+    // gameOver
+    AdslJumper.gameFunc.gameOver.call(this);
+};
+
+// столкновение игрока с подвижным шипом
+// this = Phaser.State
 AdslJumper.gameFunc.movableThornHandler = function (player, thorn) {
     if (!thorn.isDangerous()) {
         return;
@@ -94,8 +106,9 @@ AdslJumper.gameFunc.movableThornHandler = function (player, thorn) {
     AdslJumper.gameFunc.gameOver.call(this);
 };
 
+// столкновение игрока со взрывом
+// this = Phaser.State
 AdslJumper.gameFunc.explosionHandler = function (player, explosion) {
-    console.log(explosion.frameName);
     if (explosion.frameName == "blow1.png" ||
         explosion.frameName == "blow2.png" ||
         explosion.frameName == "blow3.png" ||
@@ -116,32 +129,50 @@ AdslJumper.gameFunc.trapHandlerCollection = {
     "explosion": AdslJumper.gameFunc.explosionHandler
 };
 
-AdslJumper.gameFunc.gameOverMine = function () {
-    tryCount++;
-    AdslJumper.gameFunc.restartLevel.call(this);
-};
-
+// common game over function
 AdslJumper.gameFunc.gameOver = function () {
-    tryCount++;
+    AdslJumper.data.levelDeaths++;
+    AdslJumper.data.deaths++;
     AdslJumper.gameFunc.restartLevel.call(this);
 };
 
-// context Phaser.State
+// this = Phaser.State
 AdslJumper.gameFunc.restartLevel = function () {
     this.game.camera.unfollow();
 
+    // disallow input
+    this.player.canInput = false;
+
     // player dies
     this.player.pendingDestroy = true;
+    
+    // score -10 after death
+    AdslJumper.gameFunc.setScoreAfterGameOver();
 
+    // camera
     this.game.camera.shake(0.01, 500);
-    this.game.camera.onShakeComplete.addOnce(function() {
-        // restart level after camera shake
-        this.game.camera.fade(0x000000, 500);
-        this.game.camera.onFadeComplete.addOnce(function() {
-            // restart current state
-            this.game.state.start(this.game.state.current);
-        }, this);
-      }, this);
+    
+};
+
+AdslJumper.gameFunc.setScoreAfterGameOver = function () {
+    if (AdslJumper.data.score > 0) {
+        AdslJumper.data.score -= 10;
+    } 
+};
+
+// this = Phaser.State
+AdslJumper.gameFunc.onShakeCompleteFunction = function() {
+    // restart level after camera shake
+    this.game.camera.fade(0x000000, 500);
+    this.game.camera.onFadeComplete.addOnce(function() {
+        // restart current state
+        this.game.state.start(this.game.state.current);
+    }, this);
+};
+
+// this = Phaser.State
+AdslJumper.gameFunc.onFlashCompleteFunction = function() {
+    this.player.canInput = true;
 };
 
 // PLAY FX
@@ -160,7 +191,7 @@ AdslJumper.gameFunc.makeExplosion = function (x, y) {
 
 
 // void
-// context Phaser.State
+// this = Phaser.State
 AdslJumper.gameFunc.bonusHandler = function (player, bonus) {
     // TODO delete
     AdslJumper.utils.info(player.game.state.current, "bonus tag", bonus.tag);
@@ -179,11 +210,30 @@ AdslJumper.gameFunc.coinHandler = function (player, coin) {
     coin.disableBodyAndKill();
     this.playerScore += 10;
     this.gui.setScore(this.playerScore);
+
+    return false;
+};
+
+AdslJumper.gameFunc.cardHandler = function (player, card) {
+    // play special sound
+    this.soundManager.playPickUp();
+
+    card.body.enable = false;
+    card.pendingDestroy = true;
+
+    player.hasCard = true;
+
+    if (this.onCardFunction) {
+        this.onCardFunction();
+    } else {
+        AdslJumper.utils.info(this.game.state.current, "onCardFunction not exist");
+    }
 };
 
 // объект, который содержит в себе ссылки на обработчики ловушек
 AdslJumper.gameFunc.bonusHadlerCollection = {
-    "coin" : AdslJumper.gameFunc.coinHandler
+    "coin" : AdslJumper.gameFunc.coinHandler,
+    "card": AdslJumper.gameFunc.cardHandler
 };
 
 
