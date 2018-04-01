@@ -1,7 +1,7 @@
 // Coin class
 // extends Phaser.Sprite class
 // only for goup
-AdslJumper.Coin = function (game, x, y) {
+AdslJumper.Coin = function (game, x, y, properties) {
 
     // extend
     Phaser.Sprite.call(this, game, x, y, "atlas_2", "bitcoin1.png");
@@ -9,7 +9,9 @@ AdslJumper.Coin = function (game, x, y) {
     this.game = game;
 
     this.tag = "coin";
-    this.name = "coin";
+    this.name = properties ? properties.name : "coin";
+
+    console.log(properties);
 
     // enable physics
     this.game.physics.arcade.enable(this);

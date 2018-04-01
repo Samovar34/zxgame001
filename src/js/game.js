@@ -12,7 +12,7 @@ window.onload = function () {
         width: AdslJumper.gameOptions.gameWidth,
         height: AdslJumper.gameOptions.gameHeight,
         renderer: Phaser.AUTO,
-        enableDebug: false,
+        enableDebug: true,
         antialias: false
     });
     game.state.add("boot", AdslJumper.bootState);

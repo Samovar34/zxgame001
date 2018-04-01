@@ -1,7 +1,7 @@
 // Card class
 // extends Phaser.Sprite class
 // only for goup
-AdslJumper.Card = function (game, x, y) {
+AdslJumper.Card = function (game, x, y, properties) {
 
     // extend
     Phaser.Sprite.call(this, game, x, y, "atlas_2", "card1.png");
@@ -9,7 +9,7 @@ AdslJumper.Card = function (game, x, y) {
     this.game = game;
 
     this.tag = "card";
-    this.name = "card";
+    this.name = properties ? properties.name : "card";
 
     // enable physics
     this.game.physics.arcade.enable(this);

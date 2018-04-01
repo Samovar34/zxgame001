@@ -18,7 +18,7 @@ AdslJumper.gameFunc.playerCollideHandler = function (player, collider) {
 // player Phaser.Sprite
 // trigger Phaser.Sprite
 // this = Phaser.State
-AdslJumper.gameFunc.triggerHandler = function (player, trigger) {
+AdslJumper.gameFunc.playerTriggerHandler = function (player, trigger) {
     player.inTrigger = true;
 
     // kill trigger
@@ -235,6 +235,5 @@ AdslJumper.gameFunc.bonusHadlerCollection = {
     "coin" : AdslJumper.gameFunc.coinHandler,
     "card": AdslJumper.gameFunc.cardHandler
 };
-
 
 // END BONUS

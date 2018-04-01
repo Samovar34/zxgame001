@@ -1,7 +1,7 @@
 // Lef class
 // extends Phaser.Sprite class
 // only for goup
-AdslJumper.Led = function (game, x, y, color) {
+AdslJumper.Led = function (game, x, y, properties) {
 
     // extend
     Phaser.Sprite.call(this, game, x, y, "atlas_2", "led2.png");
@@ -11,7 +11,9 @@ AdslJumper.Led = function (game, x, y, color) {
     this.tag = "led";
     this.name = "led";
 
-    switch(color) {
+    this.color = properties ? properties.color : "green";
+
+    switch(this.color) {
         case "yellow":
             this.startFrame = 1;
             break;

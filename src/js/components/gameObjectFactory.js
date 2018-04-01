@@ -7,32 +7,32 @@ AdslJumper.gameObjectFactory = {
 
     // traps
     "ThornUp": function (x, y, properties) {
-        return new AdslJumper.Thorn(this.game, x, y, "up", properties.name);
+        return new AdslJumper.Thorn(this.game, x, y, "up", properties);
     },
     "ThornDown": function (x, y, properties) {
-        return new AdslJumper.Thorn(this.game, x, y, "down", properties.name);
+        return new AdslJumper.Thorn(this.game, x, y, "down", properties);
     },
     "ThornLeft": function (x, y, properties) {
-        return new AdslJumper.Thorn(this.game, x, y, "left", properties.name);
+        return new AdslJumper.Thorn(this.game, x, y, "left", properties);
     },
     "ThornRight": function (x, y, properties) {
-        return new AdslJumper.Thorn(this.game, x, y, "right", properties.name);
+        return new AdslJumper.Thorn(this.game, x, y, "right", properties);
     },
     "MovableThorn": function (x, y, properties) {
-        return new AdslJumper.MovableThorn(this.game, x, y, properties.invert, properties.direction);
+        return new AdslJumper.MovableThorn(this.game, x, y, properties);
     },
-    "Mine": function (x, y) {
-        return new AdslJumper.Mine(this.game, x, y + 18);
+    "Mine": function (x, y, properties) {
+        return new AdslJumper.Mine(this.game, x, y + 18, properties);
     },
 
     // bonus
-    "Coin": function (x, y, prop) {
-        return new AdslJumper.Coin(this.game, x, y);
+    "Coin": function (x, y, properties) {
+        return new AdslJumper.Coin(this.game, x, y, properties);
     },
 
     // fx
-    "Led": function (x, y, prop) {
-        return new AdslJumper.Led(this.game, x, y + 30, prop.color);
+    "Led": function (x, y, properties) {
+        return new AdslJumper.Led(this.game, x, y + 30, properties);
     },
     "Fan": function (x, y) {
         return new AdslJumper.Fan01(this.game, x, y);
@@ -201,7 +201,7 @@ AdslJumper.gameObjectFactory.createBackGround = function () {
 
 // return Phaser.Sprite
 // this = Phaser.State
-AdslJumper.gameObjectFactory.createCard = function (x, y) {
+AdslJumper.gameObjectFactory.createCard = function (x, y, name) {
     var gameObject = this.game.add.sprite(x, y + 16, "atlas_2", "card1.png");
     gameObject.tag = "card";
 
@@ -314,6 +314,7 @@ AdslJumper.gameObjectFactory.createRb = function () {
 };
 
 // call with binding context
+// this = Phaser.State
 AdslJumper.gameObjectFactory.createTriggers = function () {
     this.triggers = this.game.add.group();
     this.triggers.enableBody = true;
@@ -334,8 +335,6 @@ AdslJumper.gameObjectFactory.createTriggers = function () {
         this.tempElement.height = this.tempArray[i].height;
 
         this.tempElement._killOnOverlap = this.tempArray[i].properties.killOnOverlap;
-        this.tempElement._interactable = this.tempArray[i].properties.interactable;
-        this.tempElement._killAfterInteract = this.tempArray[i].properties.killAfterInteract;
         this.tempElement._event = this.tempArray[i].properties.event;
 
         // add to the group
@@ -349,6 +348,7 @@ AdslJumper.gameObjectFactory.createTriggers = function () {
 
 // void
 // call with binding context
+// this = Phaser.State
 AdslJumper.gameObjectFactory.createTraps = function () {
     this.explosionSprites = this.game.add.group();
     this.explosionSprites.enableBody = true;
@@ -388,6 +388,7 @@ AdslJumper.gameObjectFactory.createTraps = function () {
 
 // void
 // call with binding context
+// this = Phaser.State
 AdslJumper.gameObjectFactory.createBonus = function () {
 
     this.bonus = this.game.add.group();
@@ -447,7 +448,6 @@ AdslJumper.gameObjectFactory.createFx = function () {
     // play animation
     this.fx.callAll("animations.play", "animations", "default");
 };
-
 
 // alias TODO
 AdslJumper.gameObjectFactory.Card = AdslJumper.gameObjectFactory.createCard;

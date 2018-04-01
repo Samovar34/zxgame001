@@ -1,7 +1,7 @@
 // Mine class
 // extends Phaser.Sprite class
 // only for goup
-AdslJumper.Mine = function (game, x, y) {
+AdslJumper.Mine = function (game, x, y, properties) {
 
     // extend
     Phaser.Sprite.call(this, game, x, y, "atlas_2", "mine1.png");
@@ -9,7 +9,7 @@ AdslJumper.Mine = function (game, x, y) {
     this.game = game;
 
     this.tag = "mine";
-    this.name = "mine";
+    this.name = properties ? properties.name : "mine";
 
     // enable physics
     this.game.physics.arcade.enable(this);

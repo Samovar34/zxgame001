@@ -11,6 +11,12 @@ AdslJumper.level1State.prototype = {
         this.input = new AdslJumper.Input(this.game);
         this.soundManager = AdslJumper.modules.soundManager;
         this.gameObjectFactory = AdslJumper.gameObjectFactory; // alias
+        
+        // main game functions
+        this.playerCollideHandler = AdslJumper.gameFunc.playerCollideHandler;
+        this.playerTriggerHandler = AdslJumper.gameFunc.playerTriggerHandler;
+        this.playerTrapHandler = AdslJumper.gameFunc.trapHandler;
+        this.playerBonusHandler = AdslJumper.gameFunc.bonusHandler;
 
         // for triggers and level variable
         this.randomNumber = Math.floor(Math.random() * 100)/100;
@@ -103,11 +109,11 @@ AdslJumper.level1State.prototype = {
         // reset player
         this.player.reset();
 
-        this.game.physics.arcade.collide(this.player, this.collision2d, AdslJumper.gameFunc.playerCollideHandler, null, this);
+        this.game.physics.arcade.collide(this.player, this.collision2d, this.playerCollideHandler, null, this);
         this.game.physics.arcade.collide(this.player, this.doorToComputer);
-        this.game.physics.arcade.overlap(this.player, this.triggers, AdslJumper.gameFunc.triggerHandler, null, this);
-        this.game.physics.arcade.overlap(this.player, this.traps, AdslJumper.gameFunc.trapHandler, null, this);
-        this.game.physics.arcade.overlap(this.player, this.bonus, AdslJumper.gameFunc.bonusHandler, null, this);
+        this.game.physics.arcade.overlap(this.player, this.triggers, this.playerTriggerHandler, null, this);
+        this.game.physics.arcade.overlap(this.player, this.traps, this.playerTrapHandler, null, this);
+        this.game.physics.arcade.overlap(this.player, this.bonus, this.playerBonusHandler, null, this);
 
         if (this.doorIsOpen) {
             this.game.physics.arcade.overlap(this.player, this.exitDoor, this.nextLevel, null, this);
@@ -121,6 +127,7 @@ AdslJumper.level1State.prototype = {
             this.game.debug.text("random: " + this.randomNumber, 8, 88, "#00ff00");
             this.game.debug.text("exist: " + this.thorn0.alive, 8, 104, "#00ff00");
             this.game.debug.body(this.exitDoor);
+           // this.game.debug.physicsGroup(this.triggers);
         }
     },
 

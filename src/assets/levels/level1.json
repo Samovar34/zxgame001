@@ -187,22 +187,18 @@
                  "properties":
                     {
                      "event":"openDoor",
-                     "interactable":false,
-                     "killAfterInteract":true,
                      "killOnOverlap":false
                     },
                  "propertytypes":
                     {
                      "event":"string",
-                     "interactable":"bool",
-                     "killAfterInteract":"bool",
                      "killOnOverlap":"bool"
                     },
                  "rotation":0,
                  "type":"tr2d",
                  "visible":true,
-                 "width":50,
-                 "x":108,
+                 "width":32,
+                 "x":118,
                  "y":128
                 }, 
                 {
@@ -212,22 +208,18 @@
                  "properties":
                     {
                      "event":"dropThorn1",
-                     "interactable":false,
-                     "killAfterInteract":false,
                      "killOnOverlap":true
                     },
                  "propertytypes":
                     {
                      "event":"string",
-                     "interactable":"bool",
-                     "killAfterInteract":"bool",
                      "killOnOverlap":"bool"
                     },
                  "rotation":0,
                  "type":"tr2d",
                  "visible":true,
-                 "width":80,
-                 "x":368,
+                 "width":32,
+                 "x":378,
                  "y":224
                 }, 
                 {
@@ -237,48 +229,40 @@
                  "properties":
                     {
                      "event":"dropThorn0",
-                     "interactable":false,
-                     "killAfterInteract":false,
                      "killOnOverlap":true
                     },
                  "propertytypes":
                     {
                      "event":"string",
-                     "interactable":"bool",
-                     "killAfterInteract":"bool",
                      "killOnOverlap":"bool"
                     },
                  "rotation":0,
                  "type":"tr2d",
                  "visible":true,
-                 "width":104.5,
-                 "x":182,
+                 "width":32,
+                 "x":192,
                  "y":224
                 }, 
                 {
-                 "height":224,
+                 "height":32,
                  "id":56,
                  "name":"Trigger",
                  "properties":
                     {
                      "event":"dropThorn2",
-                     "interactable":false,
-                     "killAfterInteract":false,
                      "killOnOverlap":true
                     },
                  "propertytypes":
                     {
                      "event":"string",
-                     "interactable":"bool",
-                     "killAfterInteract":"bool",
                      "killOnOverlap":"bool"
                     },
                  "rotation":0,
                  "type":"tr2d",
                  "visible":true,
-                 "width":64,
-                 "x":640,
-                 "y":96
+                 "width":32,
+                 "x":672,
+                 "y":224
                 }, 
                 {
                  "height":96,
@@ -287,22 +271,18 @@
                  "properties":
                     {
                      "event":"dropThorn3",
-                     "interactable":false,
-                     "killAfterInteract":false,
                      "killOnOverlap":true
                     },
                  "propertytypes":
                     {
                      "event":"string",
-                     "interactable":"bool",
-                     "killAfterInteract":"bool",
                      "killOnOverlap":"bool"
                     },
                  "rotation":0,
                  "type":"tr2d",
                  "visible":true,
-                 "width":96,
-                 "x":224,
+                 "width":32,
+                 "x":256,
                  "y":224
                 }, 
                 {
@@ -312,15 +292,11 @@
                  "properties":
                     {
                      "event":"dropThorn4",
-                     "interactable":false,
-                     "killAfterInteract":false,
                      "killOnOverlap":false
                     },
                  "propertytypes":
                     {
                      "event":"string",
-                     "interactable":"bool",
-                     "killAfterInteract":"bool",
                      "killOnOverlap":"bool"
                     },
                  "rotation":0,
@@ -337,15 +313,11 @@
                  "properties":
                     {
                      "event":"openDoorToRoom",
-                     "interactable":false,
-                     "killAfterInteract":false,
                      "killOnOverlap":false
                     },
                  "propertytypes":
                     {
                      "event":"string",
-                     "interactable":"bool",
-                     "killAfterInteract":"bool",
                      "killOnOverlap":"bool"
                     },
                  "rotation":0,
@@ -405,6 +377,14 @@
                  "height":14,
                  "id":35,
                  "name":"Mine",
+                 "properties":
+                    {
+                     "name":""
+                    },
+                 "propertytypes":
+                    {
+                     "name":"string"
+                    },
                  "rotation":0,
                  "type":"trap",
                  "visible":true,
@@ -417,34 +397,20 @@
                  "height":14,
                  "id":36,
                  "name":"Mine",
+                 "properties":
+                    {
+                     "name":""
+                    },
+                 "propertytypes":
+                    {
+                     "name":"string"
+                    },
                  "rotation":0,
                  "type":"trap",
                  "visible":true,
                  "width":16,
                  "x":616,
                  "y":160
-                }, 
-                {
-                 "gid":5,
-                 "height":32,
-                 "id":38,
-                 "name":"MovableThorn",
-                 "properties":
-                    {
-                     "direction":"left",
-                     "invert":true
-                    },
-                 "propertytypes":
-                    {
-                     "direction":"string",
-                     "invert":"bool"
-                    },
-                 "rotation":0,
-                 "type":"trap",
-                 "visible":true,
-                 "width":32,
-                 "x":704,
-                 "y":192
                 }, 
                 {
                  "gid":7,
@@ -523,6 +489,14 @@
                  "height":14,
                  "id":53,
                  "name":"Mine",
+                 "properties":
+                    {
+                     "name":""
+                    },
+                 "propertytypes":
+                    {
+                     "name":"string"
+                    },
                  "rotation":0,
                  "type":"trap",
                  "visible":true,
@@ -567,7 +541,7 @@
                  "type":"trap",
                  "visible":true,
                  "width":32,
-                 "x":640,
+                 "x":672,
                  "y":96
                 }, 
                 {
@@ -595,14 +569,6 @@
                  "height":32,
                  "id":60,
                  "name":"ThornDown",
-                 "properties":
-                    {
-                     "name":""
-                    },
-                 "propertytypes":
-                    {
-                     "name":"string"
-                    },
                  "rotation":0,
                  "type":"trap",
                  "visible":true,
@@ -655,14 +621,6 @@
                  "height":32,
                  "id":63,
                  "name":"ThornDown",
-                 "properties":
-                    {
-                     "name":""
-                    },
-                 "propertytypes":
-                    {
-                     "name":"string"
-                    },
                  "rotation":0,
                  "type":"trap",
                  "visible":true,
@@ -678,18 +636,44 @@
                  "properties":
                     {
                      "direction":"right",
-                     "invert":true
+                     "invert":false,
+                     "name":""
                     },
                  "propertytypes":
                     {
                      "direction":"string",
-                     "invert":"bool"
+                     "invert":"bool",
+                     "name":"string"
                     },
                  "rotation":0,
                  "type":"trap",
                  "visible":true,
                  "width":32,
                  "x":256,
+                 "y":192
+                }, 
+                {
+                 "gid":5,
+                 "height":32,
+                 "id":75,
+                 "name":"MovableThorn",
+                 "properties":
+                    {
+                     "direction":"left",
+                     "invert":false,
+                     "name":""
+                    },
+                 "propertytypes":
+                    {
+                     "direction":"string",
+                     "invert":"bool",
+                     "name":"string"
+                    },
+                 "rotation":0,
+                 "type":"trap",
+                 "visible":true,
+                 "width":32,
+                 "x":704,
                  "y":192
                 }],
          "opacity":1,
@@ -715,9 +699,21 @@
                  "y":256
                 }, 
                 {
+                 "gid":12,
+                 "height":16,
+                 "id":71,
+                 "name":"Card",
+                 "rotation":0,
+                 "type":"bonus",
+                 "visible":true,
+                 "width":16,
+                 "x":488,
+                 "y":136
+                }, 
+                {
                  "gid":3,
                  "height":32,
-                 "id":30,
+                 "id":76,
                  "name":"Coin",
                  "rotation":0,
                  "type":"bonus",
@@ -729,7 +725,7 @@
                 {
                  "gid":3,
                  "height":32,
-                 "id":31,
+                 "id":77,
                  "name":"Coin",
                  "rotation":0,
                  "type":"bonus",
@@ -741,19 +737,7 @@
                 {
                  "gid":3,
                  "height":32,
-                 "id":32,
-                 "name":"Coin",
-                 "rotation":0,
-                 "type":"bonus",
-                 "visible":true,
-                 "width":32,
-                 "x":64,
-                 "y":96
-                }, 
-                {
-                 "gid":3,
-                 "height":32,
-                 "id":66,
+                 "id":78,
                  "name":"Coin",
                  "rotation":0,
                  "type":"bonus",
@@ -763,16 +747,16 @@
                  "y":256
                 }, 
                 {
-                 "gid":12,
-                 "height":16,
-                 "id":71,
-                 "name":"Card",
+                 "gid":3,
+                 "height":32,
+                 "id":79,
+                 "name":"Coin",
                  "rotation":0,
                  "type":"bonus",
                  "visible":true,
-                 "width":16,
-                 "x":488,
-                 "y":136
+                 "width":32,
+                 "x":64,
+                 "y":96
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -856,7 +840,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":75,
+ "nextobjectid":80,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.0.3",

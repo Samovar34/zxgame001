@@ -3,7 +3,7 @@
 // only for goup
 // perion int (0, 1) откуда начинается анимация
 // type string up, right, down, left
-AdslJumper.MovableThorn = function (game, x, y, period, type) {
+AdslJumper.MovableThorn = function (game, x, y, properties) {
 
     // extend
     Phaser.Sprite.call(this, game, x, y, "atlas_2", "movableThorn1.png");
@@ -18,7 +18,7 @@ AdslJumper.MovableThorn = function (game, x, y, period, type) {
     this.body.immovable = true;
     this.body.setSize(20, 20, 32, 6);
 
-    switch(type) {
+    switch(properties.direction) {
         case "right":
             this.name = "movableThornRight";
             break;
@@ -29,8 +29,10 @@ AdslJumper.MovableThorn = function (game, x, y, period, type) {
             break;
     }
 
+    this.name = properties.name || this.name;
+
     // animation
-    if (period === 0) {
+    if (!properties.invert) {
         this.animations.add("default", [
             // green
             "movableThorn1.png",
