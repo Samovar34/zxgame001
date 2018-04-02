@@ -1,6 +1,6 @@
-AdslJumper.tutorState = function (game) {};
+AdslJumper.tutor2State = function (game) {};
 
-AdslJumper.tutorState.prototype = {
+AdslJumper.tutor2State.prototype = {
     // CORE GAME FUNCTIONS
     create: function () {
         // set renderer
@@ -28,10 +28,10 @@ AdslJumper.tutorState.prototype = {
         this.game.world.setBounds(0, 0, 768, 384);
 
         // game world
-        this.map = this.game.add.tilemap("tutorMap1", 32, 32);
+        this.map = this.game.add.tilemap("tutorMap2", 32, 32);
 
         // LEVEL ESSENTIAL
-        this.background = this.game.add.image(0, 0, "tutor1");
+        this.background = this.game.add.image(0, 0, "tutor2");
         this.background.smoothed = false;
         //this.background.scale.setTo(2);
         
@@ -47,8 +47,7 @@ AdslJumper.tutorState.prototype = {
         this.blood = AdslJumper.gameObjectFactory.createBloodParticles.call(this);
 
         // TRAPS WITH TRIGGERS
-        this.flyingThorn1 = this.traps.getByName("flyingThorn1");
-        this.flyingThorn2 = this.traps.getByName("flyingThorn2");
+        this.flyingThorn = this.traps.getByName("flyingThorn");
 
         // this.thorn0 = this.traps.getByName("dropThorn0");
         // this.thorn0.outOfBoundsKill = true;
@@ -64,7 +63,7 @@ AdslJumper.tutorState.prototype = {
         // GUI
         //this.guiArrow = new AdslJumper.GUIArrow(this.game, this.card.x, this.card.y - 16);
         this.gui = new AdslJumper.GUI(this.game);
-        this.gui.setRoom("02");
+        this.gui.setRoom("03");
         this.gui.setScore(this.playerScore);
 
         // MUSIC
@@ -87,8 +86,7 @@ AdslJumper.tutorState.prototype = {
         this.player.reset();
 
         this.game.physics.arcade.collide(this.player, this.collision2d, this.playerCollideHandler, null, this);
-        this.game.physics.arcade.collide(this.flyingThorn1, this.collision2d, this.flyingThornCollideHandler, null, this);
-        this.game.physics.arcade.collide(this.flyingThorn2, this.collision2d, this.flyingThornCollideHandler, null, this);
+        this.game.physics.arcade.collide(this.flyingThorn, this.collision2d, this.flyingThornCollideHandler, null, this);
         this.game.physics.arcade.overlap(this.player, this.triggers, this.playerTriggerHandler, null, this);
         this.game.physics.arcade.overlap(this.player, this.traps, this.playerTrapHandler, null, this);
         this.game.physics.arcade.overlap(this.player, this.bonus, this.playerBonusHandler, null, this);
@@ -107,14 +105,9 @@ AdslJumper.tutorState.prototype = {
     },
 
     // TRIGGER EVENTS HANDLER
-    lanchRocket1: function (trigger) {
-        this.flyingThorn1.animations.play("fly");
-        this.flyingThorn1.body.gravity.y = - 2500;
-    },
-
-    lanchRocket2: function (trigger) {
-        this.flyingThorn2.animations.play("fly");
-        this.flyingThorn2.body.gravity.y = - 2500;
+    lanchRocket: function (trigger) {
+        this.flyingThorn.animations.play("fly");
+        this.flyingThorn.body.gravity.y = - 2500;
     },
 
     flyingThornCollideHandler: function (rocket, collider) {
@@ -145,9 +138,9 @@ AdslJumper.tutorState.prototype = {
         // TODO проиграть анимация захода персонажа в дверь
         this.game.camera.fade(0x000000, AdslJumper.gameOptions.cameraFadeTime);
         this.game.camera.onFadeComplete.addOnce(function() {
-            // add state
-            AdslJumper.data.level = "tutor2";
-            this.game.state.start("tutor2");
+
+            AdslJumper.data.level = "level1";
+            this.game.state.start("level1");
         }, this);
     }
 };

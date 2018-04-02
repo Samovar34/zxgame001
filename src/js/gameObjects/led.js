@@ -1,4 +1,4 @@
-// Lef class
+// Led class
 // extends Phaser.Sprite class
 // only for goup
 AdslJumper.Led = function (game, x, y, properties) {

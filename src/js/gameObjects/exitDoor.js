@@ -77,7 +77,7 @@ AdslJumper.ExitDoor.prototype.constructor = AdslJumper.ExitDoor;
 
 // open door
 // void
-AdslJumper.ExitDoor.prototype.open = function () {
+AdslJumper.ExitDoor.prototype.open = function (isMute) {
     // if door is open do nothing
     if (this.isOpen) {
         return;
@@ -94,7 +94,9 @@ AdslJumper.ExitDoor.prototype.open = function () {
     if (!this.isOpening) {
         this.isOpening = true;
         // play sound
-        AdslJumper.modules.soundManager.playOpenDoor();
+        if (!isMute) {
+            AdslJumper.modules.soundManager.playOpenDoor();
+        }        
 
         this.animations.play("open");
         this.animationOpenDoor.onComplete.addOnce(function () {

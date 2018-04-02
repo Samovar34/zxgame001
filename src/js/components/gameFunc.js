@@ -126,7 +126,8 @@ AdslJumper.gameFunc.trapHandlerCollection = {
     "mine": AdslJumper.gameFunc.mineHandler,
     "thorn": AdslJumper.gameFunc.thornHandler,
     "movableThorn": AdslJumper.gameFunc.movableThornHandler,
-    "explosion": AdslJumper.gameFunc.explosionHandler
+    "explosion": AdslJumper.gameFunc.explosionHandler,
+    "flyingThorn": AdslJumper.gameFunc.mineHandler
 };
 
 // common game over function

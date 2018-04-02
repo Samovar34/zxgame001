@@ -20,7 +20,8 @@ window.onload = function () {
     game.state.add("story", AdslJumper.storyState);
     game.state.add("menu", AdslJumper.menuState);
     game.state.add("waitDecodeAudio", AdslJumper.waitDecodeAudio);
-    game.state.add("tutor", AdslJumper.tutorState);
+    game.state.add("tutor1", AdslJumper.tutorState);
+    game.state.add("tutor2", AdslJumper.tutor2State);
     game.state.add("level1", AdslJumper.level1State);
 
     game.state.start("boot");

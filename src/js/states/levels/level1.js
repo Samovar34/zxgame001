@@ -27,7 +27,7 @@ AdslJumper.level1State.prototype = {
         this.game.world.setBounds(0, 0, 768, 384);
 
         // game world
-        this.map = this.game.add.tilemap("map1", 32, 32);
+        this.map = this.game.add.tilemap("levelMap1", 32, 32);
 
         // LEVEL ESSENTIAL
         this.background = this.game.add.image(0, 0, "level1");

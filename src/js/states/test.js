@@ -11,73 +11,31 @@ AdslJumper.testState.prototype = {
     create: function () {
         // set renderer
         this.game.renderer.renderSession.roundPixels = true;
-        this.game.clearBeforeRender = false;
+        this.game.clearBeforeRender = true;
 
-        // for triggers
-        this.randomeNumber = Math.floor(Math.random() * 100)/100;
+        this.rocket = this.game.add.sprite(10, 10, "atlas_2", "flyingThornUp1.png");
+        this.rocket.animations.add("fly", [
+            "flyingThornUp2.png",
+            "flyingThornUp3.png"
+        ], 12, true);
 
-        // get modules
-        this.input = new AdslJumper.Input(this.game);
-        this.soundManager = AdslJumper.modules.soundManager;
-        this.gameObjectFactory = AdslJumper.gameObjectFactory;
+        this.game.physics.arcade.enable(this.rocket);
+        this.rocket.body.immovable = true;
 
-        this.game.world.setBounds(0, 0, 768, 384);
+        this.rocket.body.setSize(32, 20, 0, 6);
 
-        this.background = this.game.add.image(0, 0, "level");
+        this.rocket.animations.play("fly");
 
-        // game world
-        this.map = this.game.add.tilemap("map", 32, 32);
+        this.count = 0;
 
-        this.gameObjectFactory.createDoors.call(this);
-
-        // for triggers
-        this._events = {
-            "openDoor": blowMine,
-            "dropThorn0": dropThorn0,
-            "dropThorn1": dropThorn1,
-            "dropThorn2": dropThorn2,
-            "dropThorn3": dropThorn3,
-        }
-
-        this.gameObjectFactory.createCollision.call(this);
-        this.gameObjectFactory.createTriggers.call(this);
-
-        this.blood = AdslJumper.gameObjectFactory.createBloodParticles.call(this);
-
-        this.gameObjectFactory.createTraps.call(this);
-
-        this.thorn0 = this.traps.getByName("dropThorn0");
-        this.thorn0.outOfBoundsKill = true;
-        this.thorn0.checkWorldBounds = true;
-        this.thorn3 = this.traps.getByName("dropThorn3");
-        this.thorn3.outOfBoundsKill = true;
-        this.thorn3.checkWorldBounds = true;
-        this.thorn4 = this.traps.getByName("dropThorn4");
-        this.thorn4.outOfBoundsKill = true;
-        this.thorn4.checkWorldBounds = true;
-
-        this.thorn1 = this.traps.getByName("dropThorn1");
-        this.thorn1.outOfBoundsKill = true;
-        this.thorn1.checkWorldBounds = true;
-        this.thorn2 = this.traps.getByName("dropThorn2");
-        this.thorn2.outOfBoundsKill = true;
-        this.thorn2.checkWorldBounds = true;
-
-        // player
-        this.gameObjectFactory.createPlayer.call(this);
-
-        this.game.camera.follow(this.player,  this.game.camera.FOLLOW_PLATFORMER, 0.2, 0.2);
-
-        },
+    },
 
     update: function () {
-        // reset player
-        this.player.reset();
+        this.count++;
+        if (this.count >= 200) {
+            this.rocket.animations.stop();
+        } 
 
-        this.game.physics.arcade.collide(this.player, this.collision2d, AdslJumper.gameFunc.playerCollideHandler, null, this);
-        this.game.physics.arcade.overlap(this.player, this.triggers, AdslJumper.gameFunc.triggerHandler, null, this);
-        this.game.physics.arcade.overlap(this.player, this.traps, AdslJumper.gameFunc.trapHandler, null, this);
-         
         
         // TODO подумать о коллизиях со взрывом
         //this.game.physics.arcade.overlap(this.player, this.explosionSprites, AdslJumper.gameFunc.trapHandler, null, this);
@@ -85,17 +43,9 @@ AdslJumper.testState.prototype = {
     },
     
     render: function () {
-        this.game.debug.text("state: " + this.player.currentState.name, 8, 24, "#00ff00");
-        this.game.debug.text("isInteract: " + this.player.isInteract, 8, 40, "#00ff00");
-        this.game.debug.text("inTrigger: " + this.player.inTrigger, 8, 56, "#00ff00");
-        this.game.debug.text("tryCount: " + tryCount, 8, 72, "#00ff00");
-        this.game.debug.text("random: " + this.randomeNumber, 8, 88, "#00ff00");
-        this.game.debug.text("exist: " + this.thorn0.alive, 8, 104, "#00ff00");
+        this.game.debug.text("state: test ", 8, 24, "#00ff00");
 
-        if (this.player.isInteract) {
-            // TODO show message
-        }
-        //this.game.debug.body(this.player);
+        this.game.debug.body(this.rocket);
         //this.game.debug.body(this.exitDoor);
         //this.game.debug.physicsGroup(this.triggers);
     }

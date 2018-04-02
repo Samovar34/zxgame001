@@ -33,4 +33,5 @@
 //@@include('./states/test.js')
 
 //@@include('./states/levels/tutor.js')
+//@@include('./states/levels/tutor2.js')
 //@@include('./states/levels/level1.js')

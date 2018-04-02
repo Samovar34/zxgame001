@@ -25,6 +25,24 @@ AdslJumper.gameObjectFactory = {
         return new AdslJumper.Mine(this.game, x, y + 18, properties);
     },
 
+    "FlyingThornUp": function (x, y, properties) {
+        var gameObject = this.game.add.sprite(x, y - 32, "atlas_2", "flyingThornUp1.png");
+
+        gameObject.name = properties ? properties.name : "flyingThorn";
+        gameObject.tag = "flyingThorn";
+        
+        gameObject.animations.add("fly", [
+            "flyingThornUp2.png",
+            "flyingThornUp3.png"
+        ], 12, true);
+
+        this.game.physics.arcade.enable(gameObject);
+        gameObject.body.immovable = true;
+        gameObject.body.setSize(32, 20, 0, 6);
+
+        return gameObject;
+    },
+
     // bonus
     "Coin": function (x, y, properties) {
         return new AdslJumper.Coin(this.game, x, y, properties);
@@ -296,7 +314,7 @@ AdslJumper.gameObjectFactory.createPlayer = function () {
 
 // call with binding context
 // call after createCollision2d
-AdslJumper.gameObjectFactory.createRb = function () {
+AdslJumper.gameObjectFactory.createRigidbodies = function () {
 
     //temp variables
     this.tempArray = AdslJumper.utils.findObjectsByType('rb2d', this.map, 'rigidbody');
@@ -350,14 +368,6 @@ AdslJumper.gameObjectFactory.createTriggers = function () {
 // call with binding context
 // this = Phaser.State
 AdslJumper.gameObjectFactory.createTraps = function () {
-    this.explosionSprites = this.game.add.group();
-    this.explosionSprites.enableBody = true;
-
-    for (var i = 0; i < 5; i++) {
-        this.explosionSprites.add(AdslJumper.gameObjectFactory.createExplosionSprite(this.game));
-    }
-
-    this.explosionSprites.killAll();
 
     this.traps = this.game.add.group();
     this.tempArray = AdslJumper.utils.findObjectsByType('trap', this.map, 'objects');
@@ -381,6 +391,16 @@ AdslJumper.gameObjectFactory.createTraps = function () {
 
     this.tempArray = null;
     this.tempElement = null;
+
+    //TODO перенести
+    this.explosionSprites = this.game.add.group();
+    this.explosionSprites.enableBody = true;
+
+    for (var i = 0; i < 5; i++) {
+        this.explosionSprites.add(AdslJumper.gameObjectFactory.createExplosionSprite(this.game));
+    }
+
+    this.explosionSprites.killAll();
 
     // play animation
     this.traps.callAll("animations.play", "animations", "default");

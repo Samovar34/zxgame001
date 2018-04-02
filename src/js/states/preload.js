@@ -11,7 +11,9 @@ AdslJumper.preloadState.prototype = {
         this.progress.smoothed = false;
         this.progress.scale.setTo(2);
 
-        this.game.load.tilemap('level1', "assets/levels/level1.json", null, Phaser.Tilemap.TILED_JSON);
+        // load in waitAudioDecode
+        // this.game.load.tilemap('tutorMap1', "assets/levels/tutor1.json", null, Phaser.Tilemap.TILED_JSON);
+        // this.game.load.tilemap('levelMap1', "assets/levels/level1.json", null, Phaser.Tilemap.TILED_JSON);
 
         // atlas
         this.game.load.atlas("atlas_1", 'assets/images/atlas1/atlas.png', 'assets/images/atlas1/atlas.json'); 

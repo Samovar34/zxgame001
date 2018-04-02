@@ -63,7 +63,7 @@ AdslJumper.menuState.prototype.updateMenu = function () {
                 this.game.cache.removeTextureAtlas("atlas_1");
                 this.game.cache.removeSound("intro");
 
-                AdslJumper.data.level = "tutor";
+                AdslJumper.data.level = "tutor0";
 
                 // play
                 this.game.state.start("waitDecodeAudio");
