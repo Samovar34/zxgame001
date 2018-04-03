@@ -43,6 +43,34 @@ AdslJumper.gameObjectFactory = {
         return gameObject;
     },
 
+    // rigidbodies
+
+    "PlatformA": function (x, y, mass, isTo) {
+        var gameObject = this.game.add.sprite(x, y, "atlas_2", "platformA1.png");
+        this.game.physics.arcade.enable(gameObject);
+        gameObject.body.mass = mass || 1;
+        gameObject.outOfBoundsKill = true;
+        gameObject.checkWorldBounds = true;
+
+        gameObject.tag = "platformA";
+
+        if (isTo) {
+            gameObject._tween = this.game.add.tween(gameObject).to({y: gameObject.y - 4}, 600, null, true, 0, -1, true);
+        } else {
+            gameObject._tween = this.game.add.tween(gameObject).to({y: gameObject.y + 4}, 600, null, true, 0, -1, true);
+        }
+        
+
+        gameObject.animations.add("default", [
+            "platformA1.png",
+            "platformA2.png"
+        ], 8, true);
+
+        gameObject.animations.play("default");
+
+        return gameObject;
+    },
+
     // bonus
     "Coin": function (x, y, properties) {
         return new AdslJumper.Coin(this.game, x, y, properties);

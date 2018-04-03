@@ -2,6 +2,10 @@ AdslJumper.tutor2State = function (game) {};
 
 AdslJumper.tutor2State.prototype = {
     // CORE GAME FUNCTIONS
+    preload: function () {
+        this.game.load.image("platform", "/assets/images/platform.png");
+    },
+
     create: function () {
         // set renderer
         this.game.renderer.renderSession.roundPixels = true;
@@ -41,6 +45,20 @@ AdslJumper.tutor2State.prototype = {
         this.gameObjectFactory.createFx.call(this);
         this.gameObjectFactory.createTraps.call(this);
         this.gameObjectFactory.createBonus.call(this);
+
+
+        this.platform = this.gameObjectFactory.PlatformA.call(this, 180, 176, 0.4, true);
+
+        this.platform2 = this.gameObjectFactory.PlatformA.call(this, 340, 168, 0.5, false);
+
+        this.platform3 = this.gameObjectFactory.PlatformA.call(this, 500, 160, 2.5, true);
+
+
+        this.platforms = this.game.add.group();
+
+        this.platforms.add(this.platform);
+        this.platforms.add(this.platform2);
+        this.platforms.add(this.platform3);
 
         this.exitDoor.open(true);
 
@@ -86,7 +104,8 @@ AdslJumper.tutor2State.prototype = {
         this.player.reset();
 
         this.game.physics.arcade.collide(this.player, this.collision2d, this.playerCollideHandler, null, this);
-        this.game.physics.arcade.collide(this.flyingThorn, this.collision2d, this.flyingThornCollideHandler, null, this);
+        this.game.physics.arcade.collide(this.player, this.platforms, this.rigidBodyHandler, null, this);
+        //this.game.physics.arcade.collide(this.flyingThorn, this.collision2d, this.flyingThornCollideHandler, null, this);
         this.game.physics.arcade.overlap(this.player, this.triggers, this.playerTriggerHandler, null, this);
         this.game.physics.arcade.overlap(this.player, this.traps, this.playerTrapHandler, null, this);
         this.game.physics.arcade.overlap(this.player, this.bonus, this.playerBonusHandler, null, this);
@@ -100,8 +119,17 @@ AdslJumper.tutor2State.prototype = {
     render: function () {
         if (AdslJumper.utils.enableDebug) {
             this.game.debug.text("tryCount: " + AdslJumper.data.levelDeaths, 8, 24, "#00ff00");
+            this.game.debug.text("alive: " + this.platform.alive, 8, 38, "#00ff00");
 
         }
+    },
+
+    rigidBodyHandler: function (player, rigidbody) {
+        rigidbody._tween.stop();
+        this.player.customTouchUp = this.player.body.touching.up;
+        this.player.customTouchRight = false;
+        this.player.customTouchDown = this.player.body.touching.down;
+        this.player.customTouchLeft = false;
     },
 
     // TRIGGER EVENTS HANDLER
