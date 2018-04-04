@@ -47,11 +47,11 @@ AdslJumper.tutor2State.prototype = {
         this.gameObjectFactory.createBonus.call(this);
 
 
-        this.platform = this.gameObjectFactory.PlatformA.call(this, 180, 176, 0.4, true);
+        this.platform = this.gameObjectFactory.PlatformA.call(this, 180, 176, 0.7, true);
 
-        this.platform2 = this.gameObjectFactory.PlatformA.call(this, 340, 168, 0.5, false);
+        this.platform2 = this.gameObjectFactory.PlatformA.call(this, 340, 168, 0.9, false);
 
-        this.platform3 = this.gameObjectFactory.PlatformA.call(this, 500, 160, 2.5, true);
+        this.platform3 = this.gameObjectFactory.PlatformA.call(this, 500, 160, 1, true);
 
 
         this.platforms = this.game.add.group();
@@ -90,7 +90,6 @@ AdslJumper.tutor2State.prototype = {
             this.soundManager.tempTrack = null;
             this.soundManager.playTrack();
         };
-
 
         // CAMERA
         this.game.camera.follow(this.player,  this.game.camera.FOLLOW_PLATFORMER, 0.2, 0.2);
@@ -135,7 +134,7 @@ AdslJumper.tutor2State.prototype = {
     // TRIGGER EVENTS HANDLER
     lanchRocket: function (trigger) {
         this.flyingThorn.animations.play("fly");
-        this.flyingThorn.body.gravity.y = - 2500;
+        this.flyingThorn.body.gravity.y = - 2300;
     },
 
     flyingThornCollideHandler: function (rocket, collider) {
