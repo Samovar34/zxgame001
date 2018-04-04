@@ -45,12 +45,15 @@ AdslJumper.gameObjectFactory = {
 
     // rigidbodies
 
-    "PlatformA": function (x, y, mass, isTo) {
+    "PlatformA": function (x, y, mass, isTo, maxVelocityY) {
         var gameObject = this.game.add.sprite(x, y, "atlas_2", "platformA1.png");
         this.game.physics.arcade.enable(gameObject);
         gameObject.body.mass = mass || 1;
         gameObject.outOfBoundsKill = true;
         gameObject.checkWorldBounds = true;
+        gameObject.body.maxVelocity.x = 0;
+        gameObject.body.maxVelocity.y = maxVelocityY || 424;
+       
 
         gameObject.tag = "platformA";
 

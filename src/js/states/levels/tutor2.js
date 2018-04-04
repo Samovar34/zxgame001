@@ -104,7 +104,7 @@ AdslJumper.tutor2State.prototype = {
 
         this.game.physics.arcade.collide(this.player, this.collision2d, this.playerCollideHandler, null, this);
         this.game.physics.arcade.collide(this.player, this.platforms, this.rigidBodyHandler, null, this);
-        //this.game.physics.arcade.collide(this.flyingThorn, this.collision2d, this.flyingThornCollideHandler, null, this);
+        this.game.physics.arcade.collide(this.platforms, this.collision2d, this.checkPlatformsCollide, null, this);
         this.game.physics.arcade.overlap(this.player, this.triggers, this.playerTriggerHandler, null, this);
         this.game.physics.arcade.overlap(this.player, this.traps, this.playerTrapHandler, null, this);
         this.game.physics.arcade.overlap(this.player, this.bonus, this.playerBonusHandler, null, this);
@@ -124,11 +124,18 @@ AdslJumper.tutor2State.prototype = {
     },
 
     rigidBodyHandler: function (player, rigidbody) {
+
         rigidbody._tween.stop();
+
         this.player.customTouchUp = this.player.body.touching.up;
         this.player.customTouchRight = false;
         this.player.customTouchDown = this.player.body.touching.down;
         this.player.customTouchLeft = false;
+    },
+
+    checkPlatformsCollide: function (platform, collider) {
+        this.makeExplosion(platform.x + 48, platform.y + 16);
+        platform.kill();
     },
 
     // TRIGGER EVENTS HANDLER
@@ -138,7 +145,7 @@ AdslJumper.tutor2State.prototype = {
     },
 
     flyingThornCollideHandler: function (rocket, collider) {
-            // explosion
+        // explosion
         this.makeExplosion(rocket.x + 16, rocket.y);
         rocket.animations.stop();
         rocket.kill();

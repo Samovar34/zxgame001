@@ -7,7 +7,7 @@ AdslJumper.SoundManager = function (game) {
     this.SFXVOLUMEDEFAULT = 0.9;
 
     this.sfxVolume = 0.9;
-    this.musicVolume = 0.0;
+    this.musicVolume = 0.5;
 
     this.game = game;
 

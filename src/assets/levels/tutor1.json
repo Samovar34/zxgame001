@@ -172,7 +172,7 @@
          "name":"triggers",
          "objects":[
                 {
-                 "height":96,
+                 "height":32,
                  "id":65,
                  "name":"Trigger",
                  "properties":
