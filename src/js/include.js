@@ -3,7 +3,10 @@
 //@@include('./components/soundManager.js')
 //@@include('./components/input.js')
 //@@include('./components/utils.js')
-//@@include('./components/gameFunc.js')
+//@@include('./components/gameFunctions/main.js')
+//@@include('./components/gameFunctions/create.js')
+//@@include('./components/gameFunctions/update.js')
+//@@include('./components/gameFunctions/events.js')
 //@@include('./components/gui.js')
 
 //@@include("./gameObjects/thorn.js")
@@ -22,6 +25,7 @@
 //@@include('./gameObjects/arrow.js')
 
 //@@include('./components/gameObjectFactory.js')
+//@@include('./components/world.js')
 
 //@@include('./states/boot.js')
 //@@include('./states/preload.js')

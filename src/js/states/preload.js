@@ -11,15 +11,15 @@ AdslJumper.preloadState.prototype = {
         this.progress.smoothed = false;
         this.progress.scale.setTo(2);
 
-        // load in waitAudioDecode
-        // this.game.load.tilemap('tutorMap1', "assets/levels/tutor1.json", null, Phaser.Tilemap.TILED_JSON);
-        // this.game.load.tilemap('levelMap1', "assets/levels/level1.json", null, Phaser.Tilemap.TILED_JSON);
+        // load levels
+        for (var i = 1; i < 4; i++) {
+            this.game.load.tilemap('level' + i, "assets/levels/level" + i + ".json", null, Phaser.Tilemap.TILED_JSON);
+        }
 
         // atlas
         this.game.load.atlas("atlas_1", 'assets/images/atlas1/atlas.png', 'assets/images/atlas1/atlas.json'); 
-        this.game.load.atlas("atlas_2", 'assets/images/atlas2/atlas.png', 'assets/images/atlas2/atlas.json'); 
-
-        // images and levels
+        this.game.load.atlas("atlas_2", 'assets/images/atlas2/atlas.png', 'assets/images/atlas2/atlas.json');
+        this.game.load.atlas("atlas_3", 'assets/images/atlas3/atlas.png', 'assets/images/atlas3/atlas.json'); 
 
         // audio
         this.load.audio('jump', 'assets/audio/jump.wav');
@@ -53,15 +53,15 @@ AdslJumper.preloadState.prototype = {
 
         // gama data
         AdslJumper.data = {
-            level: "story",
+            level: 0,
             score: 0,
             deaths: 0,
             levelDeaths: 0
         };
 
         // TODO del
-        var urlLevel = window.location.hash.slice(1).trim();
-        if (urlLevel) {
+        var urlLevel = parseInt(window.location.hash.slice(1).trim());
+        if (!isNaN(urlLevel)) {
             AdslJumper.data.level = urlLevel;
         }
 
@@ -69,10 +69,9 @@ AdslJumper.preloadState.prototype = {
         AdslJumper.utils.info("preload", "urlLevel", urlLevel);
 
         this.game.state.start("waitDecodeAudio");
+    },
+
+    doOnFIleLoad: function (progress, cacheKey, success, totalLoaded, totalFiles) {
+        this.progress.width = Math.floor(596 * progress/100);
     }
-};
-
-
-AdslJumper.preloadState.prototype.doOnFIleLoad = function (progress, cacheKey, success, totalLoaded, totalFiles) {
-    this.progress.width = Math.floor(596 * progress/100);
 };

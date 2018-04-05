@@ -11,8 +11,6 @@ AdslJumper.Coin = function (game, x, y, properties) {
     this.tag = "coin";
     this.name = properties ? properties.name : "coin";
 
-    console.log(properties);
-
     // enable physics
     this.game.physics.arcade.enable(this);
 

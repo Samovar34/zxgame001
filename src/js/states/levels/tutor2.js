@@ -47,18 +47,7 @@ AdslJumper.tutor2State.prototype = {
         this.gameObjectFactory.createBonus.call(this);
 
 
-        this.platform = this.gameObjectFactory.PlatformA.call(this, 180, 176, 0.7, true);
-
-        this.platform2 = this.gameObjectFactory.PlatformA.call(this, 340, 168, 0.9, false);
-
-        this.platform3 = this.gameObjectFactory.PlatformA.call(this, 500, 160, 1, true);
-
-
-        this.platforms = this.game.add.group();
-
-        this.platforms.add(this.platform);
-        this.platforms.add(this.platform2);
-        this.platforms.add(this.platform3);
+  
 
         this.exitDoor.open(true);
 

@@ -19,6 +19,8 @@ AdslJumper.tutorState.prototype = {
         this.playerBonusHandler = AdslJumper.gameFunc.bonusHandler;
         this.makeExplosion = AdslJumper.gameFunc.makeExplosion;
 
+        this.levelUpdate = AdslJumper.gameFunc.update[AdslJumper.data.level];
+
         // for triggers and level variable
         //this.randomNumber = Math.floor(Math.random() * 100)/100;
         this.doorIsOpen = true;
@@ -28,43 +30,37 @@ AdslJumper.tutorState.prototype = {
         this.game.world.setBounds(0, 0, 768, 384);
 
         // game world
-        this.map = this.game.add.tilemap("tutorMap1", 32, 32);
+        this.map = this.game.add.tilemap("level" + AdslJumper.data.level, 32, 32);
 
         // LEVEL ESSENTIAL
-        this.background = this.game.add.image(0, 0, "tutor1");
+        this.background = this.game.add.image(0, 0, "atlas_3", "level" + AdslJumper.data.level + ".png");
         this.background.smoothed = false;
-        //this.background.scale.setTo(2);
+        this.background.scale.setTo(2);
         
-        this.gameObjectFactory.createDoors.call(this);
-        this.gameObjectFactory.createCollision.call(this);
-        this.gameObjectFactory.createTriggers.call(this);
-        this.gameObjectFactory.createFx.call(this);
-        this.gameObjectFactory.createTraps.call(this);
-        this.gameObjectFactory.createBonus.call(this);
+        AdslJumper.world.createDoors.call(this);
+        AdslJumper.world.createCollision.call(this);
+        AdslJumper.world.createTriggers.call(this);
+        AdslJumper.world.createFx.call(this);
+        AdslJumper.world.createTraps.call(this);
+        AdslJumper.world.createBonus.call(this);
 
         this.exitDoor.open(true);
 
         this.blood = AdslJumper.gameObjectFactory.createBloodParticles.call(this);
 
-        // TRAPS WITH TRIGGERS
-        this.flyingThorn1 = this.traps.getByName("flyingThorn1");
-        this.flyingThorn2 = this.traps.getByName("flyingThorn2");
-
-        // this.thorn0 = this.traps.getByName("dropThorn0");
-        // this.thorn0.outOfBoundsKill = true;
-        // this.thorn0.checkWorldBounds = true;
-    
-
-        // level special
+        // TRAPS WITH TRIGGERS level specific
+        if (typeof AdslJumper.gameFunc.create[AdslJumper.data.level] === "function") {
+            AdslJumper.gameFunc.create[AdslJumper.data.level].call(this);
+        }
 
         // PLAYER
-        this.gameObjectFactory.createPlayer.call(this);
+        AdslJumper.world.createPlayer.call(this);
         this.player.canInput = false;
 
         // GUI
         //this.guiArrow = new AdslJumper.GUIArrow(this.game, this.card.x, this.card.y - 16);
         this.gui = new AdslJumper.GUI(this.game);
-        this.gui.setRoom("02");
+        this.gui.setRoom("0" + AdslJumper.data.level);
         this.gui.setScore(this.playerScore);
 
         // MUSIC
@@ -87,8 +83,6 @@ AdslJumper.tutorState.prototype = {
         this.player.reset();
 
         this.game.physics.arcade.collide(this.player, this.collision2d, this.playerCollideHandler, null, this);
-        this.game.physics.arcade.collide(this.flyingThorn1, this.collision2d, this.flyingThornCollideHandler, null, this);
-        this.game.physics.arcade.collide(this.flyingThorn2, this.collision2d, this.flyingThornCollideHandler, null, this);
         this.game.physics.arcade.overlap(this.player, this.triggers, this.playerTriggerHandler, null, this);
         this.game.physics.arcade.overlap(this.player, this.traps, this.playerTrapHandler, null, this);
         this.game.physics.arcade.overlap(this.player, this.bonus, this.playerBonusHandler, null, this);
@@ -96,6 +90,14 @@ AdslJumper.tutorState.prototype = {
         if (this.doorIsOpen) {
             this.game.physics.arcade.overlap(this.player, this.exitDoor, this.nextLevel, null, this);
         }
+
+        // level specific update functions
+        if (this.levelUpdate) {
+            this.levelUpdate();
+        }
+
+
+
 
     },
     
@@ -107,21 +109,36 @@ AdslJumper.tutorState.prototype = {
     },
 
     // TRIGGER EVENTS HANDLER
-    lanchRocket1: function (trigger) {
-        this.flyingThorn1.animations.play("fly");
-        this.flyingThorn1.body.gravity.y = - 2500;
-    },
+    // level2LaunchRocket1: function (trigger) {
+    //     this.flyingThorn1.animations.play("fly");
+    //     this.flyingThorn1.body.gravity.y = - 2500;
+    // },
 
-    lanchRocket2: function (trigger) {
-        this.flyingThorn2.animations.play("fly");
-        this.flyingThorn2.body.gravity.y = - 2500;
-    },
+    // level2LaunchRocket2: function (trigger) {
+    //     this.flyingThorn2.animations.play("fly");
+    //     this.flyingThorn2.body.gravity.y = - 2500;
+    // },
 
     flyingThornCollideHandler: function (rocket, collider) {
             // explosion
         this.makeExplosion(rocket.x + 16, rocket.y);
         rocket.animations.stop();
         rocket.kill();
+    },
+
+    rigidBodyHandler: function (player, rigidbody) {
+
+        rigidbody._tween.stop();
+
+        this.player.customTouchUp = this.player.body.touching.up;
+        this.player.customTouchRight = false;
+        this.player.customTouchDown = this.player.body.touching.down;
+        this.player.customTouchLeft = false;
+    },
+
+    checkPlatformsCollide: function (platform, collider) {
+        this.makeExplosion(platform.x + 48, platform.y + 16);
+        platform.kill();
     },
 
     // next level
@@ -139,6 +156,9 @@ AdslJumper.tutorState.prototype = {
         // reset levelDeaths
         AdslJumper.data.levelDeaths = 0;
 
+        // set next level
+        AdslJumper.data.level = door.nextLevel;
+
         // camera
         this.game.camera.follow(door,  this.game.camera.FOLLOW_PLATFORMER, 0.1, 0.1);
 
@@ -146,8 +166,7 @@ AdslJumper.tutorState.prototype = {
         this.game.camera.fade(0x000000, AdslJumper.gameOptions.cameraFadeTime);
         this.game.camera.onFadeComplete.addOnce(function() {
             // add state
-            AdslJumper.data.level = "tutor2";
-            this.game.state.start("tutor2");
+            this.game.state.start("tutor");
         }, this);
     }
 };

@@ -1,0 +1,36 @@
+{"frames": {
+
+"level1.png":
+{
+	"frame": {"x":0,"y":0,"w":384,"h":192},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":384,"h":192},
+	"sourceSize": {"w":384,"h":192}
+},
+"level2.png":
+{
+	"frame": {"x":386,"y":0,"w":384,"h":192},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":384,"h":192},
+	"sourceSize": {"w":384,"h":192}
+},
+"level3.png":
+{
+	"frame": {"x":772,"y":0,"w":384,"h":192},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":384,"h":192},
+	"sourceSize": {"w":384,"h":192}
+}},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "atlas.png",
+	"format": "RGBA8888",
+	"size": {"w":1156,"h":192},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:68d670c1aeec148a0e0cc5a7c12992cc:b5965b58a98a3be519237a792a0f244b:cbce6b53f0f49e0bf15173c25c41f876$"
+}
+}

@@ -16,38 +16,24 @@ AdslJumper.waitDecodeAudio.prototype = {
             "waitAudioDecodeTime6.png",
             "waitAudioDecodeTime7.png"
         ], 8, true);
+
+        this.textSprite = this.game.add.sprite(256, 330, "atlas_0", "waitAudioDecodeText2.png");
+        this.textSprite.smoothed = false;
+        this.textSprite.scale.setTo(2);
+
         this.clockSprite.animations.play("default");
 
-        //this.game.add.image(268, 148, "waitingAudio");
 
         // load music
-        if (AdslJumper.data.level === "tutor0" || 
-            AdslJumper.data.level === "tutor1" ||
-            AdslJumper.data.level === "tutor2" || 
-            AdslJumper.data.level === "tutor3" || 
-            AdslJumper.data.level === "level1") {
+        if (AdslJumper.data.level < 10) {
             this.load.audio('track01', ['assets/audio/music/track01.ogg', 'assets/audio/music/track01.mp3'], false);
-            this.textSprite = this.game.add.sprite(256, 330, "atlas_0", "waitAudioDecodeText2.png");
-            this.textSprite.smoothed = false;
-            this.textSprite.scale.setTo(2);
-
-            // load asset for levels
-            this.game.load.image("tutor1", "assets/images/levels/tutor1.png");
-            this.game.load.image("tutor2", "assets/images/levels/tutor2.png");
-            this.game.load.image("level1", "assets/images/levels/level1.png");
-            this.game.load.image("level1RedColor", "assets/images/levels/level1_redColor.png");
-            this.game.load.tilemap('tutorMap1', 'assets/levels/tutor1' + ".json", null, Phaser.Tilemap.TILED_JSON);
-            this.game.load.tilemap('tutorMap2', 'assets/levels/tutor2' + ".json", null, Phaser.Tilemap.TILED_JSON);
-            this.game.load.tilemap('levelMap1', 'assets/levels/level1' + ".json", null, Phaser.Tilemap.TILED_JSON);
-
         }
-
     },
 
     create: function () {
 
         switch (AdslJumper.data.level) {
-            case "story" :
+            case 0 :
                 this.beforeStory();
                 break;
             default :
@@ -80,19 +66,20 @@ AdslJumper.waitDecodeAudio.prototype.beforePlay = function () {
     this.textSprite.frameName = "waitAudioDecodeText1.png";
 
 
-    if (AdslJumper.data.level === "tutor0" || 
-        AdslJumper.data.level === "tutor1" ||
-        AdslJumper.data.level === "tutor2" || 
-        AdslJumper.data.level === "tutor3" || 
-        AdslJumper.data.level === "level1") {
+    if (AdslJumper.data.level < 10) {
         // add track
         AdslJumper.modules.soundManager.tempTrack = this.game.add.sound("track01");
         this.game.sound.decode("track01");
     }
 
-    // after decode start story
-    this.game.sound.setDecodedCallback([AdslJumper.modules.soundManager.tempTrack], function () {
-        this.state.start(AdslJumper.data.level);
-    }, this);
- 
+    this.game.sound.setDecodedCallback([AdslJumper.modules.soundManager.tempTrack], this.doOnDecodeTrack, this);
+};
+
+AdslJumper.waitDecodeAudio.prototype.doOnDecodeTrack = function () {
+    if (AdslJumper.data.level < 10) {
+        this.state.start("play");
+    } else {
+
+    }
+    
 };

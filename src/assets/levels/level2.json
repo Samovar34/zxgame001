@@ -5,9 +5,21 @@
          "name":"background",
          "objects":[
                 {
-                 "gid":16,
+                 "gid":5,
                  "height":384,
-                 "id":103,
+                 "id":80,
+                 "name":"Bg",
+                 "rotation":0,
+                 "type":"bg",
+                 "visible":true,
+                 "width":768,
+                 "x":0,
+                 "y":384
+                }, 
+                {
+                 "gid":5,
+                 "height":384,
+                 "id":85,
                  "name":"Bg",
                  "rotation":0,
                  "type":"bg",
@@ -28,25 +40,25 @@
          "name":"collision",
          "objects":[
                 {
-                 "height":128,
+                 "height":32,
                  "id":11,
                  "name":"Collider",
                  "rotation":0,
                  "type":"box2d",
                  "visible":true,
-                 "width":32,
+                 "width":128,
                  "x":64,
-                 "y":192
+                 "y":288
                 }, 
                 {
-                 "height":96,
+                 "height":224,
                  "id":14,
                  "name":"Collider",
                  "rotation":0,
                  "type":"box2d",
                  "visible":true,
                  "width":32,
-                 "x":736,
+                 "x":704,
                  "y":64
                 }, 
                 {
@@ -56,19 +68,19 @@
                  "rotation":0,
                  "type":"box2d",
                  "visible":true,
-                 "width":704,
-                 "x":32,
+                 "width":640,
+                 "x":64,
                  "y":32
                 }, 
                 {
-                 "height":96,
+                 "height":224,
                  "id":68,
                  "name":"Collider",
                  "rotation":0,
                  "type":"box2d",
                  "visible":true,
                  "width":32,
-                 "x":0,
+                 "x":32,
                  "y":64
                 }, 
                 {
@@ -78,9 +90,20 @@
                  "rotation":0,
                  "type":"box2d",
                  "visible":true,
+                 "width":96,
+                 "x":192,
+                 "y":320
+                }, 
+                {
+                 "height":32,
+                 "id":82,
+                 "name":"Collider",
+                 "rotation":0,
+                 "type":"box2d",
+                 "visible":true,
                  "width":64,
-                 "x":32,
-                 "y":160
+                 "x":352,
+                 "y":320
                 }, 
                 {
                  "height":32,
@@ -89,20 +112,31 @@
                  "rotation":0,
                  "type":"box2d",
                  "visible":true,
-                 "width":576,
-                 "x":96,
+                 "width":96,
+                 "x":480,
                  "y":320
                 }, 
                 {
-                 "height":128,
+                 "height":32,
+                 "id":86,
+                 "name":"Collider",
+                 "rotation":0,
+                 "type":"box2d",
+                 "visible":true,
+                 "width":64,
+                 "x":288,
+                 "y":288
+                }, 
+                {
+                 "height":32,
                  "id":87,
                  "name":"Collider",
                  "rotation":0,
                  "type":"box2d",
                  "visible":true,
-                 "width":32,
-                 "x":672,
-                 "y":192
+                 "width":64,
+                 "x":416,
+                 "y":288
                 }, 
                 {
                  "height":32,
@@ -111,9 +145,9 @@
                  "rotation":0,
                  "type":"box2d",
                  "visible":true,
-                 "width":64,
-                 "x":672,
-                 "y":160
+                 "width":128,
+                 "x":576,
+                 "y":288
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -128,7 +162,7 @@
          "objects":[],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }, 
@@ -138,12 +172,12 @@
          "name":"triggers",
          "objects":[
                 {
-                 "height":96,
+                 "height":32,
                  "id":65,
                  "name":"Trigger",
                  "properties":
                     {
-                     "event":"lanchRocket",
+                     "event":"level2LaunchRocket2",
                      "killOnOverlap":true
                     },
                  "propertytypes":
@@ -155,8 +189,29 @@
                  "type":"tr2d",
                  "visible":true,
                  "width":44,
-                 "x":468,
-                 "y":96
+                 "x":500,
+                 "y":192
+                }, 
+                {
+                 "height":10,
+                 "id":104,
+                 "name":"Trigger",
+                 "properties":
+                    {
+                     "event":"level2LaunchRocket1",
+                     "killOnOverlap":true
+                    },
+                 "propertytypes":
+                    {
+                     "event":"string",
+                     "killOnOverlap":"bool"
+                    },
+                 "rotation":0,
+                 "type":"tr2d",
+                 "visible":true,
+                 "width":64,
+                 "x":288,
+                 "y":278
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -173,12 +228,20 @@
                  "height":60,
                  "id":22,
                  "name":"ExitDoor",
+                 "properties":
+                    {
+                     "nextLevel":3
+                    },
+                 "propertytypes":
+                    {
+                     "nextLevel":"int"
+                    },
                  "rotation":0,
                  "type":"door",
                  "visible":true,
                  "width":48,
-                 "x":678,
-                 "y":160
+                 "x":632,
+                 "y":288
                 }, 
                 {
                  "gid":1,
@@ -189,8 +252,8 @@
                  "type":"door",
                  "visible":true,
                  "width":48,
-                 "x":40,
-                 "y":160
+                 "x":88,
+                 "y":288
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -204,7 +267,7 @@
          "name":"objects",
          "objects":[
                 {
-                 "gid":6,
+                 "gid":3,
                  "height":32,
                  "id":39,
                  "name":"Player",
@@ -212,11 +275,11 @@
                  "type":"playerStart",
                  "visible":true,
                  "width":32,
-                 "x":46,
-                 "y":160
+                 "x":96,
+                 "y":288
                 }, 
                 {
-                 "gid":8,
+                 "gid":4,
                  "height":32,
                  "id":89,
                  "name":"ThornUp",
@@ -228,7 +291,7 @@
                  "y":320
                 }, 
                 {
-                 "gid":8,
+                 "gid":4,
                  "height":32,
                  "id":90,
                  "name":"ThornUp",
@@ -236,11 +299,11 @@
                  "type":"trap",
                  "visible":true,
                  "width":32,
-                 "x":224,
+                 "x":384,
                  "y":320
                 }, 
                 {
-                 "gid":8,
+                 "gid":4,
                  "height":32,
                  "id":91,
                  "name":"ThornUp",
@@ -252,7 +315,7 @@
                  "y":320
                 }, 
                 {
-                 "gid":8,
+                 "gid":4,
                  "height":32,
                  "id":92,
                  "name":"ThornUp",
@@ -264,19 +327,7 @@
                  "y":320
                 }, 
                 {
-                 "gid":8,
-                 "height":32,
-                 "id":93,
-                 "name":"ThornUp",
-                 "rotation":0,
-                 "type":"trap",
-                 "visible":true,
-                 "width":32,
-                 "x":384,
-                 "y":320
-                }, 
-                {
-                 "gid":8,
+                 "gid":4,
                  "height":32,
                  "id":94,
                  "name":"ThornUp",
@@ -288,7 +339,7 @@
                  "y":320
                 }, 
                 {
-                 "gid":8,
+                 "gid":4,
                  "height":32,
                  "id":96,
                  "name":"ThornUp",
@@ -300,10 +351,18 @@
                  "y":320
                 }, 
                 {
-                 "gid":13,
+                 "gid":6,
                  "height":64,
                  "id":97,
                  "name":"FlyingThornUp",
+                 "properties":
+                    {
+                     "name":"flyingThorn2"
+                    },
+                 "propertytypes":
+                    {
+                     "name":"string"
+                    },
                  "rotation":0,
                  "type":"trap",
                  "visible":true,
@@ -312,220 +371,24 @@
                  "y":352
                 }, 
                 {
-                 "gid":8,
-                 "height":32,
-                 "id":104,
-                 "name":"ThornUp",
+                 "gid":6,
+                 "height":64,
+                 "id":103,
+                 "name":"FlyingThornUp",
+                 "properties":
+                    {
+                     "name":"flyingThorn1"
+                    },
+                 "propertytypes":
+                    {
+                     "name":"string"
+                    },
                  "rotation":0,
                  "type":"trap",
                  "visible":true,
                  "width":32,
-                 "x":160,
-                 "y":320
-                }, 
-                {
-                 "gid":8,
-                 "height":32,
-                 "id":105,
-                 "name":"ThornUp",
-                 "rotation":0,
-                 "type":"trap",
-                 "visible":true,
-                 "width":32,
-                 "x":128,
-                 "y":320
-                }, 
-                {
-                 "gid":8,
-                 "height":32,
-                 "id":106,
-                 "name":"ThornUp",
-                 "rotation":0,
-                 "type":"trap",
-                 "visible":true,
-                 "width":32,
-                 "x":96,
-                 "y":320
-                }, 
-                {
-                 "gid":8,
-                 "height":32,
-                 "id":107,
-                 "name":"ThornUp",
-                 "rotation":0,
-                 "type":"trap",
-                 "visible":true,
-                 "width":32,
-                 "x":288,
-                 "y":320
-                }, 
-                {
-                 "gid":8,
-                 "height":32,
-                 "id":108,
-                 "name":"ThornUp",
-                 "rotation":0,
-                 "type":"trap",
-                 "visible":true,
-                 "width":32,
-                 "x":320,
-                 "y":320
-                }, 
-                {
-                 "gid":8,
-                 "height":32,
-                 "id":109,
-                 "name":"ThornUp",
-                 "rotation":0,
-                 "type":"trap",
-                 "visible":true,
-                 "width":32,
-                 "x":416,
-                 "y":320
-                }, 
-                {
-                 "gid":8,
-                 "height":32,
-                 "id":110,
-                 "name":"ThornUp",
-                 "rotation":0,
-                 "type":"trap",
-                 "visible":true,
-                 "width":32,
-                 "x":448,
-                 "y":320
-                }, 
-                {
-                 "gid":8,
-                 "height":32,
-                 "id":111,
-                 "name":"ThornUp",
-                 "rotation":0,
-                 "type":"trap",
-                 "visible":true,
-                 "width":32,
-                 "x":576,
-                 "y":320
-                }, 
-                {
-                 "gid":8,
-                 "height":32,
-                 "id":112,
-                 "name":"ThornUp",
-                 "rotation":0,
-                 "type":"trap",
-                 "visible":true,
-                 "width":32,
-                 "x":608,
-                 "y":320
-                }, 
-                {
-                 "gid":8,
-                 "height":32,
-                 "id":113,
-                 "name":"ThornUp",
-                 "rotation":0,
-                 "type":"trap",
-                 "visible":true,
-                 "width":32,
-                 "x":640,
-                 "y":320
-                }, 
-                {
-                 "gid":9,
-                 "height":32,
-                 "id":117,
-                 "name":"ThornLeft",
-                 "rotation":0,
-                 "type":"trap",
-                 "visible":true,
-                 "width":32,
-                 "x":640,
-                 "y":192
-                }, 
-                {
-                 "gid":17,
-                 "height":32,
-                 "id":121,
-                 "name":"ThornRight",
-                 "rotation":0,
-                 "type":"trap",
-                 "visible":true,
-                 "width":32,
-                 "x":96,
-                 "y":192
-                }, 
-                {
-                 "gid":17,
-                 "height":32,
-                 "id":125,
-                 "name":"ThornRight",
-                 "rotation":0,
-                 "type":"trap",
-                 "visible":true,
-                 "width":32,
-                 "x":96,
-                 "y":224
-                }, 
-                {
-                 "gid":17,
-                 "height":32,
-                 "id":126,
-                 "name":"ThornRight",
-                 "rotation":0,
-                 "type":"trap",
-                 "visible":true,
-                 "width":32,
-                 "x":96,
-                 "y":256
-                }, 
-                {
-                 "gid":17,
-                 "height":32,
-                 "id":127,
-                 "name":"ThornRight",
-                 "rotation":0,
-                 "type":"trap",
-                 "visible":true,
-                 "width":32,
-                 "x":96,
-                 "y":288
-                }, 
-                {
-                 "gid":9,
-                 "height":32,
-                 "id":128,
-                 "name":"ThornLeft",
-                 "rotation":0,
-                 "type":"trap",
-                 "visible":true,
-                 "width":32,
-                 "x":640,
-                 "y":224
-                }, 
-                {
-                 "gid":9,
-                 "height":32,
-                 "id":129,
-                 "name":"ThornLeft",
-                 "rotation":0,
-                 "type":"trap",
-                 "visible":true,
-                 "width":32,
-                 "x":640,
-                 "y":256
-                }, 
-                {
-                 "gid":9,
-                 "height":32,
-                 "id":130,
-                 "name":"ThornLeft",
-                 "rotation":0,
-                 "type":"trap",
-                 "visible":true,
-                 "width":32,
-                 "x":640,
-                 "y":288
+                 "x":224,
+                 "y":352
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -547,7 +410,7 @@
                  "visible":true,
                  "width":32,
                  "x":160,
-                 "y":128
+                 "y":256
                 }, 
                 {
                  "gid":2,
@@ -558,8 +421,8 @@
                  "type":"bonus",
                  "visible":true,
                  "width":32,
-                 "x":288,
-                 "y":128
+                 "x":304,
+                 "y":256
                 }, 
                 {
                  "gid":2,
@@ -570,8 +433,8 @@
                  "type":"bonus",
                  "visible":true,
                  "width":32,
-                 "x":608,
-                 "y":128
+                 "x":512,
+                 "y":224
                 }, 
                 {
                  "gid":2,
@@ -582,8 +445,8 @@
                  "type":"bonus",
                  "visible":true,
                  "width":32,
-                 "x":448,
-                 "y":128
+                 "x":432,
+                 "y":256
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -596,28 +459,96 @@
          "name":"fx",
          "objects":[
                 {
-                 "gid":10,
-                 "height":32,
-                 "id":114,
-                 "name":"Fan",
+                 "gid":7,
+                 "height":2,
+                 "id":98,
+                 "name":"Led",
+                 "properties":
+                    {
+                     "color":"yellow"
+                    },
+                 "propertytypes":
+                    {
+                     "color":"string"
+                    },
                  "rotation":0,
                  "type":"fx",
                  "visible":true,
-                 "width":32,
-                 "x":128,
-                 "y":160
+                 "width":6,
+                 "x":644,
+                 "y":120
                 }, 
                 {
-                 "gid":10,
-                 "height":32,
-                 "id":116,
-                 "name":"Fan",
+                 "gid":7,
+                 "height":2,
+                 "id":99,
+                 "name":"Led",
+                 "properties":
+                    {
+                     "color":"yellow"
+                    },
+                 "propertytypes":
+                    {
+                     "color":"string"
+                    },
                  "rotation":0,
                  "type":"fx",
                  "visible":true,
-                 "width":32,
-                 "x":608,
-                 "y":160
+                 "width":6,
+                 "x":652,
+                 "y":120
+                }, 
+                {
+                 "gid":7,
+                 "height":2,
+                 "id":100,
+                 "name":"Led",
+                 "properties":
+                    {
+                     "color":"yellow"
+                    },
+                 "propertytypes":
+                    {
+                     "color":"string"
+                    },
+                 "rotation":0,
+                 "type":"fx",
+                 "visible":true,
+                 "width":6,
+                 "x":652,
+                 "y":136
+                }, 
+                {
+                 "gid":7,
+                 "height":2,
+                 "id":101,
+                 "name":"Led",
+                 "properties":
+                    {
+                     "color":"yellow"
+                    },
+                 "propertytypes":
+                    {
+                     "color":"string"
+                    },
+                 "rotation":0,
+                 "type":"fx",
+                 "visible":true,
+                 "width":6,
+                 "x":644,
+                 "y":136
+                }, 
+                {
+                 "gid":8,
+                 "height":18,
+                 "id":102,
+                 "name":"ScreenA",
+                 "rotation":0,
+                 "type":"fx",
+                 "visible":true,
+                 "width":18,
+                 "x":110,
+                 "y":124
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -631,7 +562,7 @@
          "objects":[],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }, 
@@ -641,7 +572,7 @@
          "objects":[],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }, 
@@ -651,11 +582,11 @@
          "objects":[],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }],
- "nextobjectid":131,
+ "nextobjectid":105,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.0.3",
@@ -692,34 +623,6 @@
         {
          "columns":1,
          "firstgid":3,
-         "image":"..\/..\/..\/..\/..\/..\/13-YandexDisk\/art\/gamedev\/adsl_jumper\/images\/atlas_2\/mine\/mine1.png",
-         "imageheight":14,
-         "imagewidth":16,
-         "margin":0,
-         "name":"mine1",
-         "spacing":0,
-         "tilecount":1,
-         "tileheight":14,
-         "tilewidth":16,
-         "transparentcolor":"#ff00ff"
-        }, 
-        {
-         "columns":2,
-         "firstgid":4,
-         "image":"..\/..\/..\/..\/..\/..\/13-YandexDisk\/art\/gamedev\/adsl_jumper\/images\/atlas_2\/movableThorn\/movableThorn7.png",
-         "imageheight":32,
-         "imagewidth":64,
-         "margin":0,
-         "name":"movableThorn7",
-         "spacing":0,
-         "tilecount":2,
-         "tileheight":32,
-         "tilewidth":32,
-         "transparentcolor":"#ff00ff"
-        }, 
-        {
-         "columns":1,
-         "firstgid":6,
          "image":"..\/..\/..\/..\/..\/..\/13-YandexDisk\/art\/gamedev\/adsl_jumper\/images\/atlas_2\/player\/player1.png",
          "imageheight":32,
          "imagewidth":32,
@@ -733,21 +636,7 @@
         }, 
         {
          "columns":1,
-         "firstgid":7,
-         "image":"..\/..\/..\/..\/..\/..\/13-YandexDisk\/art\/gamedev\/adsl_jumper\/images\/atlas_2\/thorn\/thorn3.png",
-         "imageheight":32,
-         "imagewidth":32,
-         "margin":0,
-         "name":"thorn3",
-         "spacing":0,
-         "tilecount":1,
-         "tileheight":32,
-         "tilewidth":32,
-         "transparentcolor":"#ff00ff"
-        }, 
-        {
-         "columns":1,
-         "firstgid":8,
+         "firstgid":4,
          "image":"..\/..\/..\/..\/..\/..\/13-YandexDisk\/art\/gamedev\/adsl_jumper\/images\/atlas_2\/thorn\/thorn1.png",
          "imageheight":32,
          "imagewidth":32,
@@ -761,63 +650,21 @@
         }, 
         {
          "columns":1,
-         "firstgid":9,
-         "image":"..\/..\/..\/..\/..\/..\/13-YandexDisk\/art\/gamedev\/adsl_jumper\/images\/atlas_2\/thorn\/thorn4.png",
-         "imageheight":32,
-         "imagewidth":32,
+         "firstgid":5,
+         "image":"..\/..\/..\/..\/..\/..\/13-YandexDisk\/art\/gamedev\/adsl_jumper\/images\/levels\/level2.png",
+         "imageheight":384,
+         "imagewidth":768,
          "margin":0,
-         "name":"thorn4",
+         "name":"tutor1",
          "spacing":0,
          "tilecount":1,
-         "tileheight":32,
-         "tilewidth":32,
+         "tileheight":384,
+         "tilewidth":768,
          "transparentcolor":"#ff00ff"
         }, 
         {
          "columns":1,
-         "firstgid":10,
-         "image":"..\/..\/..\/..\/..\/..\/13-YandexDisk\/art\/gamedev\/adsl_jumper\/images\/atlas_2\/fan01\/fan01.png",
-         "imageheight":32,
-         "imagewidth":32,
-         "margin":0,
-         "name":"fan01",
-         "spacing":0,
-         "tilecount":1,
-         "tileheight":32,
-         "tilewidth":32,
-         "transparentcolor":"#ff00ff"
-        }, 
-        {
-         "columns":1,
-         "firstgid":11,
-         "image":"..\/..\/..\/..\/..\/..\/13-YandexDisk\/art\/gamedev\/adsl_jumper\/images\/atlas_2\/card\/card1.png",
-         "imageheight":16,
-         "imagewidth":16,
-         "margin":0,
-         "name":"card1",
-         "spacing":0,
-         "tilecount":1,
-         "tileheight":16,
-         "tilewidth":16,
-         "transparentcolor":"#ff00ff"
-        }, 
-        {
-         "columns":1,
-         "firstgid":12,
-         "image":"..\/..\/..\/..\/..\/..\/13-YandexDisk\/art\/gamedev\/adsl_jumper\/images\/atlas_2\/levele1ScreenA\/level1ScreenA2.png",
-         "imageheight":14,
-         "imagewidth":24,
-         "margin":0,
-         "name":"level1ScreenA2",
-         "spacing":0,
-         "tilecount":1,
-         "tileheight":14,
-         "tilewidth":24,
-         "transparentcolor":"#ff00ff"
-        }, 
-        {
-         "columns":1,
-         "firstgid":13,
+         "firstgid":6,
          "image":"..\/..\/..\/..\/..\/..\/13-YandexDisk\/art\/gamedev\/adsl_jumper\/images\/atlas_2\/flyingThornUp\/flyingThornUp2.png",
          "imageheight":64,
          "imagewidth":32,
@@ -831,7 +678,7 @@
         }, 
         {
          "columns":1,
-         "firstgid":14,
+         "firstgid":7,
          "image":"..\/..\/..\/..\/..\/..\/13-YandexDisk\/art\/gamedev\/adsl_jumper\/images\/atlas_2\/led\/led3.png",
          "imageheight":2,
          "imagewidth":6,
@@ -845,7 +692,7 @@
         }, 
         {
          "columns":1,
-         "firstgid":15,
+         "firstgid":8,
          "image":"..\/..\/..\/..\/..\/..\/13-YandexDisk\/art\/gamedev\/adsl_jumper\/images\/atlas_2\/screenA\/screenA1.png",
          "imageheight":18,
          "imagewidth":18,
@@ -855,34 +702,6 @@
          "tilecount":1,
          "tileheight":18,
          "tilewidth":18,
-         "transparentcolor":"#ff00ff"
-        }, 
-        {
-         "columns":1,
-         "firstgid":16,
-         "image":"..\/..\/..\/..\/..\/..\/13-YandexDisk\/art\/gamedev\/adsl_jumper\/images\/levels\/tutor2.png",
-         "imageheight":384,
-         "imagewidth":768,
-         "margin":0,
-         "name":"tutor2",
-         "spacing":0,
-         "tilecount":1,
-         "tileheight":384,
-         "tilewidth":768,
-         "transparentcolor":"#ff00ff"
-        }, 
-        {
-         "columns":1,
-         "firstgid":17,
-         "image":"..\/..\/..\/..\/..\/..\/13-YandexDisk\/art\/gamedev\/adsl_jumper\/images\/atlas_2\/thorn\/thorn2.png",
-         "imageheight":32,
-         "imagewidth":32,
-         "margin":0,
-         "name":"thorn2",
-         "spacing":0,
-         "tilecount":1,
-         "tileheight":32,
-         "tilewidth":32,
          "transparentcolor":"#ff00ff"
         }],
  "tilewidth":32,

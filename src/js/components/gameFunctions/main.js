@@ -29,7 +29,7 @@ AdslJumper.gameFunc.playerTriggerHandler = function (player, trigger) {
     // trigger event
     if (trigger._event) {
         try {
-            this[trigger._event].call(this, trigger);
+            AdslJumper.gameFunc.events[trigger._event].call(this, trigger);
         } catch (err) {
             // force disable body
             trigger.body.enable = false;
@@ -132,43 +132,39 @@ AdslJumper.gameFunc.trapHandlerCollection = {
 
 // common game over function
 AdslJumper.gameFunc.gameOver = function () {
-    AdslJumper.data.levelDeaths++;
-    AdslJumper.data.deaths++;
-    AdslJumper.gameFunc.restartLevel.call(this);
-};
+    // что бы быть уверенным что функция вызывается один раз
+    if (this.player.canInput) {
+        this.player.canInput = false;
 
-// this = Phaser.State
-AdslJumper.gameFunc.restartLevel = function () {
-    this.game.camera.unfollow();
+        AdslJumper.data.levelDeaths++;
+        AdslJumper.data.deaths++;
 
-    // disallow input
-    this.player.canInput = false;
+        this.game.camera.unfollow();
 
-    // player dies
-    this.player.pendingDestroy = true;
+        // player dies
+        this.player.pendingDestroy = true;
+        
+        // score -10 after death
+        if (AdslJumper.data.score > 0) {
+            AdslJumper.data.score -= 10;
+        }
     
-    // score -10 after death
-    AdslJumper.gameFunc.setScoreAfterGameOver();
+        // camera
+        // onShakeCompleteFunction call restart level
+        this.game.camera.shake(0.01, 500);
+    }
 
-    // camera
-    this.game.camera.shake(0.01, 500);
-    
-};
-
-AdslJumper.gameFunc.setScoreAfterGameOver = function () {
-    if (AdslJumper.data.score > 0) {
-        AdslJumper.data.score -= 10;
-    } 
 };
 
 // this = Phaser.State
 AdslJumper.gameFunc.onShakeCompleteFunction = function() {
     // restart level after camera shake
     this.game.camera.fade(0x000000, 500);
-    this.game.camera.onFadeComplete.addOnce(function() {
-        // restart current state
-        this.game.state.start(this.game.state.current);
-    }, this);
+    this.game.camera.onFadeComplete.addOnce(AdslJumper.gameFunc.restartLevel, this);
+};
+
+AdslJumper.gameFunc.restartLevel = function () {
+    this.game.state.start(this.game.state.current);
 };
 
 // this = Phaser.State

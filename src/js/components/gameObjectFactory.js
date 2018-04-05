@@ -93,7 +93,7 @@ AdslJumper.gameObjectFactory = {
         return new AdslJumper.ScreenA(this.game, x, y + 14);
     },
     "ScreenD": function (x, y) {
-        return new AdslJumper.ScreenD(this.game, x, y + 32);
+        return new AdslJumper.ScreenD(this.game, x, y + 22);
     },
 
     "level1ScreenA": function (x, y) {
@@ -102,20 +102,20 @@ AdslJumper.gameObjectFactory = {
         return this.levelScreen;
     },
 
-    "Tutor1": function (x, y) {
-        return this.game.add.sprite(x, y + 32, "atlas_2", "tutorial3.png");
+    "Tutorial1": function (x, y) {
+        return this.game.add.sprite(x, y - 32, "atlas_2", "tutorial3.png");
     },
-    "Tutor2": function (x, y) {
-        return this.game.add.sprite(x, y + 32, "atlas_2", "tutorial5.png");
+    "Tutorial2": function (x, y) {
+        return this.game.add.sprite(x, y - 32, "atlas_2", "tutorial5.png");
     },
-    "Tutor3": function (x, y) {
-        return this.game.add.sprite(x, y + 32, "atlas_2", "tutorial7.png");
+    "Tutorial3": function (x, y) {
+        return this.game.add.sprite(x, y - 32, "atlas_2", "tutorial7.png");
     },
-    "Tutor4": function (x, y) {
-        return this.game.add.sprite(x, y + 32, "atlas_2", "tutorial9.png");
+    "Tutorial4": function (x, y) {
+        return this.game.add.sprite(x, y  - 32, "atlas_2", "tutorial9.png");
     },
-    "Tutor5": function (x, y) {
-        return this.game.add.sprite(x, y + 32, "atlas_2", "tutorial11.png");
+    "Tutorial5": function (x, y) {
+        return this.game.add.sprite(x, y - 32, "atlas_2", "tutorial11.png");
     }
 };
 
@@ -267,238 +267,6 @@ AdslJumper.gameObjectFactory.createCard = function (x, y, name) {
     
     return this.card = gameObject;
 }
-
-// call with binding context
-AdslJumper.gameObjectFactory.createCollision = function () {
-    this.collision2d  = this.game.add.group();
-    this.collision2d.enableBody = true;
-
-    //temp variables
-    this.tempArray = AdslJumper.utils.findObjectsByType('box2d', this.map, 'collision');
-    this.tempElement = null;
-
-    for (var i = 0; i < this.tempArray.length; i++) {
-        // create element
-        this.tempElement = this.game.make.sprite(this.tempArray[i].x, this.tempArray[i].y + 32);
-        this.tempElement.width = this.tempArray[i].width;
-        this.tempElement.height = this.tempArray[i].height;
-
-        // add to group
-        this.collision2d.add(this.tempElement);
-    }
-
-    this.collision2d.setAll("body.immovable", "true");
-
-    // clear temp variables
-    this.tempArray = null;
-    this.tempElement = null;
-};
-
-// call with binding context
-AdslJumper.gameObjectFactory.createDoors = function () {
-    //temp variables
-    this.tempArray = AdslJumper.utils.findObjectsByType('door', this.map, 'doors');
-    this.tempElement = null;
-
-    for (var i = 0; i < this.tempArray.length; i++) {
-        if (this.tempArray[i].name === "ExitDoor") {
-            // create exit Door
-            this.exitDoor = new AdslJumper.ExitDoor(
-                this.game,
-                this.tempArray[i].x,
-                this.tempArray[i].y - 28
-            );
-        } else {
-            // create enter Door
-            this.enterDoor = this.game.add.sprite(
-                this.tempArray[i].x,
-                this.tempArray[i].y - 28,
-                "atlas_2",
-                "door1.png"
-            );
-            this.enterDoor.animations.add("default", ["door1.png", "door2.png"], 2, true);
-            this.enterDoor.animations.play("default");
-        }
-    }
-
-    // clear temp variables
-    this.tempArray = null;
-    this.tempElement = null;
-};
-
-// call with binding context
-AdslJumper.gameObjectFactory.createPlayer = function () {
-    //temp variables
-    this.tempArray = AdslJumper.utils.findObjectsByType('playerStart', this.map, 'objects');
-    this.tempElement = null;
-
-    this.player = new AdslJumper.Player(
-        this.game,
-        this.input,
-        this.tempArray[0].x + 16,
-        this.tempArray[0].y + 16);
-
-    // clear temp variables
-    this.tempArray = null;
-    this.tempElement = null;
-};
-
-// call with binding context
-// call after createCollision2d
-AdslJumper.gameObjectFactory.createRigidbodies = function () {
-
-    //temp variables
-    this.tempArray = AdslJumper.utils.findObjectsByType('rb2d', this.map, 'rigidbody');
-    this.tempElement = null;
-
-    for (var i = 0; i < this.tempArray.length; i++) {
-        // TODO logic here
-    }
-
-    this.collision2d.setAll("body.immovable", "true");
-
-    // clear temp variables
-    this.tempArray = null;
-    this.tempElement = null;
-};
-
-// call with binding context
-// this = Phaser.State
-AdslJumper.gameObjectFactory.createTriggers = function () {
-    this.triggers = this.game.add.group();
-    this.triggers.enableBody = true;
-
-    //temp variables
-    this.tempArray = AdslJumper.utils.findObjectsByType('tr2d', this.map, 'triggers');
-    this.tempElement = null;
-
-    for (var i = 0; i < this.tempArray.length; i++) {
-        // create an element
-        this.tempElement = this.game.make.sprite(
-            this.tempArray[i].x,
-            this.tempArray[i].y + 32
-        );
-
-        // setup the element
-        this.tempElement.width = this.tempArray[i].width;
-        this.tempElement.height = this.tempArray[i].height;
-
-        this.tempElement._killOnOverlap = this.tempArray[i].properties.killOnOverlap;
-        this.tempElement._event = this.tempArray[i].properties.event;
-
-        // add to the group
-        this.triggers.add(this.tempElement);
-    }
-
-    // clear temp variables
-    this.tempArray = null;
-    this.tempElement = null;
-};
-
-// void
-// call with binding context
-// this = Phaser.State
-AdslJumper.gameObjectFactory.createTraps = function () {
-
-    this.traps = this.game.add.group();
-    this.tempArray = AdslJumper.utils.findObjectsByType('trap', this.map, 'objects');
-    this.tempElement = null;
-
-    for (i = 0; i < this.tempArray.length; i++) {
-        this.tempElement = AdslJumper.gameObjectFactory[this.tempArray[i].name];
-        if (this.tempElement !== undefined) {
-            this.traps.add(
-                this.tempElement.call(
-                    this,
-                    this.tempArray[i].x,
-                    this.tempArray[i].y,
-                    this.tempArray[i].properties
-                )
-            );
-        } else {
-            console.error(this.tempArray[i].name, "not found");
-        }
-    }
-
-    this.tempArray = null;
-    this.tempElement = null;
-
-    //TODO перенести
-    this.explosionSprites = this.game.add.group();
-    this.explosionSprites.enableBody = true;
-
-    for (var i = 0; i < 5; i++) {
-        this.explosionSprites.add(AdslJumper.gameObjectFactory.createExplosionSprite(this.game));
-    }
-
-    this.explosionSprites.killAll();
-
-    // play animation
-    this.traps.callAll("animations.play", "animations", "default");
-};
-
-// void
-// call with binding context
-// this = Phaser.State
-AdslJumper.gameObjectFactory.createBonus = function () {
-
-    this.bonus = this.game.add.group();
-    this.tempArray = AdslJumper.utils.findObjectsByType('bonus', this.map, 'bonus');
-    this.tempElement = null;
-
-    for (i = 0; i < this.tempArray.length; i++) {
-        this.tempElement = AdslJumper.gameObjectFactory[this.tempArray[i].name];
-        if (this.tempElement !== undefined) {
-            this.bonus.add(
-                this.tempElement.call(
-                    this,
-                    this.tempArray[i].x,
-                    this.tempArray[i].y,
-                    this.tempArray[i].properties
-                )
-            );
-        } else {
-            console.error(this.tempArray[i].name, "not found");
-        }
-    }
-
-    this.tempArray = null;
-    this.tempElement = null;
-
-    // play animation
-    this.bonus.callAll("animations.play", "animations", "default");
-};
-
-// call with binding context
-// this = Phaser.State
-AdslJumper.gameObjectFactory.createFx = function () {
-
-    this.fx = this.game.add.group();
-    this.tempArray = AdslJumper.utils.findObjectsByType('fx', this.map, 'fx');
-    this.tempElement = null;
-
-    for (i = 0; i < this.tempArray.length; i++) {
-        this.tempElement = AdslJumper.gameObjectFactory[this.tempArray[i].name];
-        if (this.tempElement !== undefined) {
-            this.fx.add(
-                this.tempElement.call(
-                    this,
-                    this.tempArray[i].x,
-                    this.tempArray[i].y,
-                    this.tempArray[i].properties
-                )
-            );
-        } else {
-            console.error(this.tempArray[i].name, "not found");
-        }
-    }
-
-    this.tempArray = null;
-    this.tempElement = null;
-
-    // play animation
-    this.fx.callAll("animations.play", "animations", "default");
-};
 
 // alias TODO
 AdslJumper.gameObjectFactory.Card = AdslJumper.gameObjectFactory.createCard;

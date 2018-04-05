@@ -1,6 +1,6 @@
 // ExitDoor class
 // inheritance Phaser.Sprite class
-AdslJumper.ExitDoor = function (game, x, y, nextLevel, exitLabel) {
+AdslJumper.ExitDoor = function (game, x, y, nextLevel) {
     Phaser.Sprite.call(this, game, x, y, "atlas_2", "door1.png");
 
     this.game = game;

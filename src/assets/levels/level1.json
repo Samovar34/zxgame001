@@ -5,66 +5,12 @@
          "name":"background",
          "objects":[
                 {
-                 "gid":1,
+                 "gid":4,
                  "height":384,
-                 "id":20,
-                 "name":"Bg",
-                 "properties":
-                    {
-                     "atlas":"atlas_2",
-                     "sprite":"level1"
-                    },
-                 "propertytypes":
-                    {
-                     "atlas":"string",
-                     "sprite":"string"
-                    },
+                 "id":105,
+                 "name":"",
                  "rotation":0,
-                 "type":"bg",
-                 "visible":true,
-                 "width":768,
-                 "x":0,
-                 "y":384
-                }, 
-                {
-                 "gid":1,
-                 "height":384,
-                 "id":44,
-                 "name":"Bg",
-                 "properties":
-                    {
-                     "atlas":"atlas_2",
-                     "sprite":"level1"
-                    },
-                 "propertytypes":
-                    {
-                     "atlas":"string",
-                     "sprite":"string"
-                    },
-                 "rotation":0,
-                 "type":"bg",
-                 "visible":true,
-                 "width":768,
-                 "x":0,
-                 "y":384
-                }, 
-                {
-                 "gid":1,
-                 "height":384,
-                 "id":67,
-                 "name":"Bg",
-                 "properties":
-                    {
-                     "atlas":"atlas_2",
-                     "sprite":"level1"
-                    },
-                 "propertytypes":
-                    {
-                     "atlas":"string",
-                     "sprite":"string"
-                    },
-                 "rotation":0,
-                 "type":"bg",
+                 "type":"",
                  "visible":true,
                  "width":768,
                  "x":0,
@@ -90,21 +36,10 @@
                  "visible":true,
                  "width":640,
                  "x":64,
-                 "y":320
+                 "y":352
                 }, 
                 {
-                 "height":52,
-                 "id":13,
-                 "name":"Collider",
-                 "rotation":0,
-                 "type":"box2d",
-                 "visible":true,
-                 "width":16,
-                 "x":192,
-                 "y":64
-                }, 
-                {
-                 "height":256,
+                 "height":288,
                  "id":14,
                  "name":"Collider",
                  "rotation":0,
@@ -126,29 +61,7 @@
                  "y":32
                 }, 
                 {
-                 "height":32,
-                 "id":16,
-                 "name":"Collider",
-                 "rotation":0,
-                 "type":"box2d",
-                 "visible":true,
-                 "width":256,
-                 "x":384,
-                 "y":160
-                }, 
-                {
-                 "height":32,
-                 "id":18,
-                 "name":"Collider",
-                 "rotation":0,
-                 "type":"box2d",
-                 "visible":true,
-                 "width":224,
-                 "x":64,
-                 "y":160
-                }, 
-                {
-                 "height":256,
+                 "height":288,
                  "id":68,
                  "name":"Collider",
                  "rotation":0,
@@ -179,154 +92,7 @@
          "color":"#ffff00",
          "draworder":"topdown",
          "name":"triggers",
-         "objects":[
-                {
-                 "height":32,
-                 "id":6,
-                 "name":"Trigger",
-                 "properties":
-                    {
-                     "event":"openDoor",
-                     "killOnOverlap":false
-                    },
-                 "propertytypes":
-                    {
-                     "event":"string",
-                     "killOnOverlap":"bool"
-                    },
-                 "rotation":0,
-                 "type":"tr2d",
-                 "visible":true,
-                 "width":32,
-                 "x":118,
-                 "y":128
-                }, 
-                {
-                 "height":96,
-                 "id":48,
-                 "name":"Trigger",
-                 "properties":
-                    {
-                     "event":"dropThorn1",
-                     "killOnOverlap":true
-                    },
-                 "propertytypes":
-                    {
-                     "event":"string",
-                     "killOnOverlap":"bool"
-                    },
-                 "rotation":0,
-                 "type":"tr2d",
-                 "visible":true,
-                 "width":32,
-                 "x":378,
-                 "y":224
-                }, 
-                {
-                 "height":96,
-                 "id":49,
-                 "name":"Trigger",
-                 "properties":
-                    {
-                     "event":"dropThorn0",
-                     "killOnOverlap":true
-                    },
-                 "propertytypes":
-                    {
-                     "event":"string",
-                     "killOnOverlap":"bool"
-                    },
-                 "rotation":0,
-                 "type":"tr2d",
-                 "visible":true,
-                 "width":32,
-                 "x":192,
-                 "y":224
-                }, 
-                {
-                 "height":32,
-                 "id":56,
-                 "name":"Trigger",
-                 "properties":
-                    {
-                     "event":"dropThorn2",
-                     "killOnOverlap":true
-                    },
-                 "propertytypes":
-                    {
-                     "event":"string",
-                     "killOnOverlap":"bool"
-                    },
-                 "rotation":0,
-                 "type":"tr2d",
-                 "visible":true,
-                 "width":32,
-                 "x":672,
-                 "y":224
-                }, 
-                {
-                 "height":96,
-                 "id":64,
-                 "name":"Trigger",
-                 "properties":
-                    {
-                     "event":"dropThorn3",
-                     "killOnOverlap":true
-                    },
-                 "propertytypes":
-                    {
-                     "event":"string",
-                     "killOnOverlap":"bool"
-                    },
-                 "rotation":0,
-                 "type":"tr2d",
-                 "visible":true,
-                 "width":32,
-                 "x":256,
-                 "y":224
-                }, 
-                {
-                 "height":96,
-                 "id":65,
-                 "name":"Trigger",
-                 "properties":
-                    {
-                     "event":"dropThorn4",
-                     "killOnOverlap":false
-                    },
-                 "propertytypes":
-                    {
-                     "event":"string",
-                     "killOnOverlap":"bool"
-                    },
-                 "rotation":0,
-                 "type":"tr2d",
-                 "visible":true,
-                 "width":80,
-                 "x":416,
-                 "y":224
-                }, 
-                {
-                 "height":32,
-                 "id":72,
-                 "name":"Trigger",
-                 "properties":
-                    {
-                     "event":"openDoorToRoom",
-                     "killOnOverlap":false
-                    },
-                 "propertytypes":
-                    {
-                     "event":"string",
-                     "killOnOverlap":"bool"
-                    },
-                 "rotation":0,
-                 "type":"tr2d",
-                 "visible":true,
-                 "width":32,
-                 "x":224,
-                 "y":288
-                }],
+         "objects":[],
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
@@ -338,19 +104,27 @@
          "name":"doors",
          "objects":[
                 {
-                 "gid":2,
+                 "gid":1,
                  "height":60,
                  "id":22,
                  "name":"ExitDoor",
+                 "properties":
+                    {
+                     "nextLevel":2
+                    },
+                 "propertytypes":
+                    {
+                     "nextLevel":"int"
+                    },
                  "rotation":0,
                  "type":"door",
                  "visible":true,
                  "width":48,
-                 "x":646,
-                 "y":320
+                 "x":640,
+                 "y":352
                 }, 
                 {
-                 "gid":2,
+                 "gid":1,
                  "height":60,
                  "id":21,
                  "name":"EnterDoor",
@@ -358,8 +132,8 @@
                  "type":"door",
                  "visible":true,
                  "width":48,
-                 "x":70,
-                 "y":320
+                 "x":72,
+                 "y":352
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -373,47 +147,7 @@
          "name":"objects",
          "objects":[
                 {
-                 "gid":4,
-                 "height":14,
-                 "id":35,
-                 "name":"Mine",
-                 "properties":
-                    {
-                     "name":""
-                    },
-                 "propertytypes":
-                    {
-                     "name":"string"
-                    },
-                 "rotation":0,
-                 "type":"trap",
-                 "visible":true,
-                 "width":16,
-                 "x":424,
-                 "y":320
-                }, 
-                {
-                 "gid":4,
-                 "height":14,
-                 "id":36,
-                 "name":"Mine",
-                 "properties":
-                    {
-                     "name":""
-                    },
-                 "propertytypes":
-                    {
-                     "name":"string"
-                    },
-                 "rotation":0,
-                 "type":"trap",
-                 "visible":true,
-                 "width":16,
-                 "x":616,
-                 "y":160
-                }, 
-                {
-                 "gid":7,
+                 "gid":3,
                  "height":32,
                  "id":39,
                  "name":"Player",
@@ -422,259 +156,7 @@
                  "visible":true,
                  "width":32,
                  "x":78,
-                 "y":320
-                }, 
-                {
-                 "gid":8,
-                 "height":32,
-                 "id":40,
-                 "name":"ThornDown",
-                 "properties":
-                    {
-                     "name":"dropThorn0"
-                    },
-                 "propertytypes":
-                    {
-                     "name":"string"
-                    },
-                 "rotation":0,
-                 "type":"trap",
-                 "visible":true,
-                 "width":32,
-                 "x":224,
-                 "y":224
-                }, 
-                {
-                 "gid":8,
-                 "height":32,
-                 "id":42,
-                 "name":"ThornDown",
-                 "properties":
-                    {
-                     "name":"dropThorn3"
-                    },
-                 "propertytypes":
-                    {
-                     "name":"string"
-                    },
-                 "rotation":0,
-                 "type":"trap",
-                 "visible":true,
-                 "width":32,
-                 "x":192,
-                 "y":224
-                }, 
-                {
-                 "gid":10,
-                 "height":32,
-                 "id":46,
-                 "name":"ThornLeft",
-                 "properties":
-                    {
-                     "name":""
-                    },
-                 "propertytypes":
-                    {
-                     "name":"string"
-                    },
-                 "rotation":0,
-                 "type":"trap",
-                 "visible":true,
-                 "width":32,
-                 "x":352,
-                 "y":192
-                }, 
-                {
-                 "gid":4,
-                 "height":14,
-                 "id":53,
-                 "name":"Mine",
-                 "properties":
-                    {
-                     "name":""
-                    },
-                 "propertytypes":
-                    {
-                     "name":"string"
-                    },
-                 "rotation":0,
-                 "type":"trap",
-                 "visible":true,
-                 "width":16,
-                 "x":434,
-                 "y":160
-                }, 
-                {
-                 "gid":8,
-                 "height":32,
-                 "id":57,
-                 "name":"ThornDown",
-                 "properties":
-                    {
-                     "name":"dropThorn1"
-                    },
-                 "propertytypes":
-                    {
-                     "name":"string"
-                    },
-                 "rotation":0,
-                 "type":"trap",
-                 "visible":true,
-                 "width":32,
-                 "x":384,
-                 "y":224
-                }, 
-                {
-                 "gid":8,
-                 "height":32,
-                 "id":58,
-                 "name":"ThornDown",
-                 "properties":
-                    {
-                     "name":"dropThorn2"
-                    },
-                 "propertytypes":
-                    {
-                     "name":"string"
-                    },
-                 "rotation":0,
-                 "type":"trap",
-                 "visible":true,
-                 "width":32,
-                 "x":672,
-                 "y":96
-                }, 
-                {
-                 "gid":8,
-                 "height":32,
-                 "id":59,
-                 "name":"ThornDown",
-                 "properties":
-                    {
-                     "name":"dropThorn4"
-                    },
-                 "propertytypes":
-                    {
-                     "name":"string"
-                    },
-                 "rotation":0,
-                 "type":"trap",
-                 "visible":true,
-                 "width":32,
-                 "x":256,
-                 "y":224
-                }, 
-                {
-                 "gid":8,
-                 "height":32,
-                 "id":60,
-                 "name":"ThornDown",
-                 "rotation":0,
-                 "type":"trap",
-                 "visible":true,
-                 "width":32,
-                 "x":416,
-                 "y":224
-                }, 
-                {
-                 "gid":8,
-                 "height":32,
-                 "id":61,
-                 "name":"ThornDown",
-                 "properties":
-                    {
-                     "name":"dropThorn5"
-                    },
-                 "propertytypes":
-                    {
-                     "name":"string"
-                    },
-                 "rotation":0,
-                 "type":"trap",
-                 "visible":true,
-                 "width":32,
-                 "x":448,
-                 "y":224
-                }, 
-                {
-                 "gid":9,
-                 "height":32,
-                 "id":62,
-                 "name":"ThornUp",
-                 "properties":
-                    {
-                     "name":""
-                    },
-                 "propertytypes":
-                    {
-                     "name":"string"
-                    },
-                 "rotation":0,
-                 "type":"trap",
-                 "visible":true,
-                 "width":32,
-                 "x":544,
-                 "y":160
-                }, 
-                {
-                 "gid":8,
-                 "height":32,
-                 "id":63,
-                 "name":"ThornDown",
-                 "rotation":0,
-                 "type":"trap",
-                 "visible":true,
-                 "width":32,
-                 "x":448,
-                 "y":96
-                }, 
-                {
-                 "gid":5,
-                 "height":32,
-                 "id":74,
-                 "name":"MovableThorn",
-                 "properties":
-                    {
-                     "direction":"right",
-                     "invert":false,
-                     "name":""
-                    },
-                 "propertytypes":
-                    {
-                     "direction":"string",
-                     "invert":"bool",
-                     "name":"string"
-                    },
-                 "rotation":0,
-                 "type":"trap",
-                 "visible":true,
-                 "width":32,
-                 "x":256,
-                 "y":192
-                }, 
-                {
-                 "gid":5,
-                 "height":32,
-                 "id":75,
-                 "name":"MovableThorn",
-                 "properties":
-                    {
-                     "direction":"left",
-                     "invert":false,
-                     "name":""
-                    },
-                 "propertytypes":
-                    {
-                     "direction":"string",
-                     "invert":"bool",
-                     "name":"string"
-                    },
-                 "rotation":0,
-                 "type":"trap",
-                 "visible":true,
-                 "width":32,
-                 "x":704,
-                 "y":192
+                 "y":352
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -687,7 +169,7 @@
          "name":"bonus",
          "objects":[
                 {
-                 "gid":3,
+                 "gid":2,
                  "height":32,
                  "id":23,
                  "name":"Coin",
@@ -695,47 +177,11 @@
                  "type":"bonus",
                  "visible":true,
                  "width":32,
-                 "x":160,
-                 "y":256
+                 "x":224,
+                 "y":352
                 }, 
                 {
-                 "gid":12,
-                 "height":16,
-                 "id":71,
-                 "name":"Card",
-                 "rotation":0,
-                 "type":"bonus",
-                 "visible":true,
-                 "width":16,
-                 "x":488,
-                 "y":136
-                }, 
-                {
-                 "gid":3,
-                 "height":32,
-                 "id":76,
-                 "name":"Coin",
-                 "rotation":0,
-                 "type":"bonus",
-                 "visible":true,
-                 "width":32,
-                 "x":320,
-                 "y":192
-                }, 
-                {
-                 "gid":3,
-                 "height":32,
-                 "id":77,
-                 "name":"Coin",
-                 "rotation":0,
-                 "type":"bonus",
-                 "visible":true,
-                 "width":32,
-                 "x":512,
-                 "y":256
-                }, 
-                {
-                 "gid":3,
+                 "gid":2,
                  "height":32,
                  "id":78,
                  "name":"Coin",
@@ -743,20 +189,8 @@
                  "type":"bonus",
                  "visible":true,
                  "width":32,
-                 "x":640,
-                 "y":256
-                }, 
-                {
-                 "gid":3,
-                 "height":32,
-                 "id":79,
-                 "name":"Coin",
-                 "rotation":0,
-                 "type":"bonus",
-                 "visible":true,
-                 "width":32,
-                 "x":64,
-                 "y":96
+                 "x":512,
+                 "y":288
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -769,40 +203,40 @@
          "name":"fx",
          "objects":[
                 {
-                 "gid":11,
-                 "height":32,
-                 "id":69,
-                 "name":"Fan",
-                 "rotation":0,
-                 "type":"fx",
-                 "visible":true,
-                 "width":32,
-                 "x":224,
-                 "y":256
-                }, 
-                {
-                 "gid":11,
-                 "height":32,
-                 "id":70,
-                 "name":"Fan",
-                 "rotation":0,
-                 "type":"fx",
-                 "visible":true,
-                 "width":32,
-                 "x":640,
-                 "y":128
-                }, 
-                {
-                 "gid":13,
-                 "height":14,
-                 "id":73,
-                 "name":"level1ScreenA",
+                 "gid":5,
+                 "height":10,
+                 "id":106,
+                 "name":"ScreenD",
                  "rotation":0,
                  "type":"fx",
                  "visible":true,
                  "width":24,
-                 "x":230,
-                 "y":310
+                 "x":388,
+                 "y":338
+                }, 
+                {
+                 "gid":6,
+                 "height":64,
+                 "id":107,
+                 "name":"Tutorial1",
+                 "rotation":0,
+                 "type":"fx",
+                 "visible":true,
+                 "width":192,
+                 "x":144,
+                 "y":240
+                }, 
+                {
+                 "gid":6,
+                 "height":64,
+                 "id":108,
+                 "name":"Tutorial3",
+                 "rotation":0,
+                 "type":"fx",
+                 "visible":true,
+                 "width":192,
+                 "x":432,
+                 "y":240
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -840,7 +274,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":80,
+ "nextobjectid":109,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.0.3",
@@ -849,20 +283,6 @@
         {
          "columns":1,
          "firstgid":1,
-         "image":"..\/..\/..\/..\/..\/..\/13-YandexDisk\/art\/gamedev\/adsl_jumper\/images\/levels\/l1.png",
-         "imageheight":384,
-         "imagewidth":768,
-         "margin":0,
-         "name":"l1",
-         "spacing":0,
-         "tilecount":1,
-         "tileheight":384,
-         "tilewidth":768,
-         "transparentcolor":"#ff00ff"
-        }, 
-        {
-         "columns":1,
-         "firstgid":2,
          "image":"..\/..\/..\/..\/..\/..\/13-YandexDisk\/art\/gamedev\/adsl_jumper\/images\/atlas_2\/door\/door1.png",
          "imageheight":60,
          "imagewidth":48,
@@ -876,7 +296,7 @@
         }, 
         {
          "columns":1,
-         "firstgid":3,
+         "firstgid":2,
          "image":"..\/..\/..\/..\/..\/..\/13-YandexDisk\/art\/gamedev\/adsl_jumper\/images\/atlas_2\/bitcoin\/bitcoin1.png",
          "imageheight":32,
          "imagewidth":32,
@@ -890,35 +310,7 @@
         }, 
         {
          "columns":1,
-         "firstgid":4,
-         "image":"..\/..\/..\/..\/..\/..\/13-YandexDisk\/art\/gamedev\/adsl_jumper\/images\/atlas_2\/mine\/mine1.png",
-         "imageheight":14,
-         "imagewidth":16,
-         "margin":0,
-         "name":"mine1",
-         "spacing":0,
-         "tilecount":1,
-         "tileheight":14,
-         "tilewidth":16,
-         "transparentcolor":"#ff00ff"
-        }, 
-        {
-         "columns":2,
-         "firstgid":5,
-         "image":"..\/..\/..\/..\/..\/..\/13-YandexDisk\/art\/gamedev\/adsl_jumper\/images\/atlas_2\/movableThorn\/movableThorn7.png",
-         "imageheight":32,
-         "imagewidth":64,
-         "margin":0,
-         "name":"movableThorn7",
-         "spacing":0,
-         "tilecount":2,
-         "tileheight":32,
-         "tilewidth":32,
-         "transparentcolor":"#ff00ff"
-        }, 
-        {
-         "columns":1,
-         "firstgid":7,
+         "firstgid":3,
          "image":"..\/..\/..\/..\/..\/..\/13-YandexDisk\/art\/gamedev\/adsl_jumper\/images\/atlas_2\/player\/player1.png",
          "imageheight":32,
          "imagewidth":32,
@@ -932,86 +324,44 @@
         }, 
         {
          "columns":1,
-         "firstgid":8,
-         "image":"..\/..\/..\/..\/..\/..\/13-YandexDisk\/art\/gamedev\/adsl_jumper\/images\/atlas_2\/thorn\/thorn3.png",
-         "imageheight":32,
-         "imagewidth":32,
+         "firstgid":4,
+         "image":"..\/..\/..\/..\/..\/..\/13-YandexDisk\/art\/gamedev\/adsl_jumper\/images\/levels\/level1.png",
+         "imageheight":384,
+         "imagewidth":768,
          "margin":0,
-         "name":"thorn3",
+         "name":"level1",
          "spacing":0,
          "tilecount":1,
-         "tileheight":32,
-         "tilewidth":32,
+         "tileheight":384,
+         "tilewidth":768,
          "transparentcolor":"#ff00ff"
         }, 
         {
          "columns":1,
-         "firstgid":9,
-         "image":"..\/..\/..\/..\/..\/..\/13-YandexDisk\/art\/gamedev\/adsl_jumper\/images\/atlas_2\/thorn\/thorn1.png",
-         "imageheight":32,
-         "imagewidth":32,
-         "margin":0,
-         "name":"thorn1",
-         "spacing":0,
-         "tilecount":1,
-         "tileheight":32,
-         "tilewidth":32,
-         "transparentcolor":"#ff00ff"
-        }, 
-        {
-         "columns":1,
-         "firstgid":10,
-         "image":"..\/..\/..\/..\/..\/..\/13-YandexDisk\/art\/gamedev\/adsl_jumper\/images\/atlas_2\/thorn\/thorn4.png",
-         "imageheight":32,
-         "imagewidth":32,
-         "margin":0,
-         "name":"thorn4",
-         "spacing":0,
-         "tilecount":1,
-         "tileheight":32,
-         "tilewidth":32,
-         "transparentcolor":"#ff00ff"
-        }, 
-        {
-         "columns":1,
-         "firstgid":11,
-         "image":"..\/..\/..\/..\/..\/..\/13-YandexDisk\/art\/gamedev\/adsl_jumper\/images\/atlas_2\/fan01\/fan01.png",
-         "imageheight":32,
-         "imagewidth":32,
-         "margin":0,
-         "name":"fan01",
-         "spacing":0,
-         "tilecount":1,
-         "tileheight":32,
-         "tilewidth":32,
-         "transparentcolor":"#ff00ff"
-        }, 
-        {
-         "columns":1,
-         "firstgid":12,
-         "image":"..\/..\/..\/..\/..\/..\/13-YandexDisk\/art\/gamedev\/adsl_jumper\/images\/atlas_2\/card\/card1.png",
-         "imageheight":16,
-         "imagewidth":16,
-         "margin":0,
-         "name":"card1",
-         "spacing":0,
-         "tilecount":1,
-         "tileheight":16,
-         "tilewidth":16,
-         "transparentcolor":"#ff00ff"
-        }, 
-        {
-         "columns":1,
-         "firstgid":13,
-         "image":"..\/..\/..\/..\/..\/..\/13-YandexDisk\/art\/gamedev\/adsl_jumper\/images\/atlas_2\/levele1ScreenA\/level1ScreenA2.png",
-         "imageheight":14,
+         "firstgid":5,
+         "image":"..\/..\/..\/..\/..\/..\/13-YandexDisk\/art\/gamedev\/adsl_jumper\/images\/atlas_2\/screenD\/screenD1.png",
+         "imageheight":10,
          "imagewidth":24,
          "margin":0,
-         "name":"level1ScreenA2",
+         "name":"screenD1",
          "spacing":0,
          "tilecount":1,
-         "tileheight":14,
+         "tileheight":10,
          "tilewidth":24,
+         "transparentcolor":"#ff00ff"
+        }, 
+        {
+         "columns":1,
+         "firstgid":6,
+         "image":"..\/..\/..\/..\/..\/..\/13-YandexDisk\/art\/gamedev\/adsl_jumper\/images\/atlas_2\/tutorial\/tutorial1.png",
+         "imageheight":64,
+         "imagewidth":192,
+         "margin":0,
+         "name":"tutorial1",
+         "spacing":0,
+         "tilecount":1,
+         "tileheight":64,
+         "tilewidth":192,
          "transparentcolor":"#ff00ff"
         }],
  "tilewidth":32,
