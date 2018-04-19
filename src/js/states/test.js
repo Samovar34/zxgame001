@@ -13,16 +13,27 @@ AdslJumper.testState.prototype = {
         this.game.renderer.renderSession.roundPixels = true;
         this.game.clearBeforeRender = true;
 
-        this.rocket = this.game.add.sprite(10, 10, "atlas_2", "flyingThornUp1.png");
-        this.rocket.animations.add("fly", [
-            "flyingThornUp2.png",
-            "flyingThornUp3.png"
-        ], 12, true);
+        this.rocket = this.game.add.sprite(128, 128, "atlas_2", "electric1.png");
+        this.flyAnimation = this.rocket.animations.add("fly", [
+            "electric3.png",
+            "electric4.png",
+            "electric5.png",
+            "electric4.png"
+        ], 14, true);
+
+        this.disapearAnimation = this.rocket.animations.add("disapear", [
+            "platformB9.png",
+            "platformB10.png",
+            "platformB11.png",
+            "platformB12.png",
+            "platformB13.png",
+            "platformB14.png"
+        ]);
 
         this.game.physics.arcade.enable(this.rocket);
         this.rocket.body.immovable = true;
 
-        this.rocket.body.setSize(32, 20, 0, 6);
+        this.rocket.body.setSize(28, 96, 2, 0);
 
         this.rocket.animations.play("fly");
 
@@ -31,10 +42,7 @@ AdslJumper.testState.prototype = {
     },
 
     update: function () {
-        this.count++;
-        if (this.count >= 200) {
-            this.rocket.animations.stop();
-        } 
+
 
         
         // TODO подумать о коллизиях со взрывом

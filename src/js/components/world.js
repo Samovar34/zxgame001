@@ -206,6 +206,7 @@ AdslJumper.world.createTriggers = function () {
 
         tempElement._killOnOverlap = tempArray[i].properties.killOnOverlap;
         tempElement._event = tempArray[i].properties.event;
+        tempElement._target = tempArray[i].properties.target;
 
         // add to the group
         this.triggers.add(tempElement);

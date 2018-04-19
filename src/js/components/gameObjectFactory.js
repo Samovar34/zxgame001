@@ -6,6 +6,39 @@
 AdslJumper.gameObjectFactory = {
 
     // traps
+    "Electric": function (x, y, properties) {
+        var gameObject = this.game.make.sprite(x, y - 96, "atlas_2", "electric1.png");
+
+        gameObject.name = "electric";
+        gameObject.tag = "electric";
+
+        gameObject.scale.setTo(1, (properties ? properties.scale : 1));
+
+        if (gameObject.scale.y < 0) {
+            gameObject.y += 224;
+        }
+
+        gameObject.animations.add("default", [
+            "electric3.png",
+            "electric4.png",
+            "electric5.png",
+            "electric4.png"
+        ], 14, true);
+
+        gameObject.animations.add("off", [
+            "electric4.png",
+            "electric2.png",
+            "electric1.png"
+        ], 4, false);
+
+        this.game.physics.arcade.enable(gameObject);
+        gameObject.body.immovable = true;
+
+        gameObject.body.setSize(28, 96, 2, 6);
+
+        return gameObject;
+    },
+
     "ThornUp": function (x, y, properties) {
         return new AdslJumper.Thorn(this.game, x, y, "up", properties);
     },
@@ -74,6 +107,56 @@ AdslJumper.gameObjectFactory = {
         return gameObject;
     },
 
+    "PlatformB": function (x, y, mass, isTo, maxVelocityY) {
+        var gameObject = this.game.make.sprite(x, y, "atlas_2", "platformB1.png");
+        
+        // physics
+        this.game.physics.arcade.enable(gameObject);
+        gameObject.body.setSize(64, 8, 0, 0);
+        gameObject.body.immovable = true;
+        gameObject.alpha = 0.9;
+        
+        gameObject.animations.add("default", [
+            "platformB1.png",
+            "platformB2.png",
+            "platformB3.png",
+            "platformB4.png",
+            "platformB5.png",
+            "platformB6.png",
+            "platformB7.png",
+            "platformB8.png",
+            "platformB7.png",
+            "platformB6.png",
+            "platformB5.png",
+            "platformB4.png",
+            "platformB3.png",
+            "platformB2.png"
+        ], 12, true);
+
+        gameObject.animations.add("disapear", [
+            "platformB9.png",
+            "platformB10.png",
+            "platformB11.png",
+            "platformB12.png",
+            "platformB13.png",
+            "platformB14.png"
+        ]);
+
+        gameObject.animations.add("apear", [
+            "platformB14.png",
+            "platformB13.png",
+            "platformB12.png",
+            "platformB11.png",
+            "platformB10.png",
+            "platformB9.png",
+            
+        ]);
+
+        gameObject.animations.play("default");
+
+        return gameObject;
+    },
+
     // bonus
     "Coin": function (x, y, properties) {
         return new AdslJumper.Coin(this.game, x, y, properties);
@@ -92,6 +175,18 @@ AdslJumper.gameObjectFactory = {
     "ScreenA": function (x, y) {
         return new AdslJumper.ScreenA(this.game, x, y + 14);
     },
+    "ScreenC": function (x, y) {
+        var gameObject = this.game.make.sprite(x, y + 22, "atlas_2", "screenC1.png");
+
+        gameObject.animations.add("default", [
+            "screenC1.png",
+            "screenC2.png",
+            "screenC3.png",
+            "screenC4.png"
+        ], 2, true);
+
+        return gameObject;
+    },
     "ScreenD": function (x, y) {
         return new AdslJumper.ScreenD(this.game, x, y + 22);
     },
@@ -102,20 +197,17 @@ AdslJumper.gameObjectFactory = {
         return this.levelScreen;
     },
 
-    "Tutorial1": function (x, y) {
-        return this.game.add.sprite(x, y - 32, "atlas_2", "tutorial3.png");
-    },
     "Tutorial2": function (x, y) {
-        return this.game.add.sprite(x, y - 32, "atlas_2", "tutorial5.png");
-    },
-    "Tutorial3": function (x, y) {
-        return this.game.add.sprite(x, y - 32, "atlas_2", "tutorial7.png");
+        return this.game.add.sprite(x, y - 32, "atlas_2", "tutorial3.png"); // rus
     },
     "Tutorial4": function (x, y) {
-        return this.game.add.sprite(x, y  - 32, "atlas_2", "tutorial9.png");
+        return this.game.add.sprite(x, y - 32, "atlas_2", "tutorial5.png"); // rus
     },
-    "Tutorial5": function (x, y) {
-        return this.game.add.sprite(x, y - 32, "atlas_2", "tutorial11.png");
+    "Tutorial8": function (x, y) {
+        return this.game.add.sprite(x, y + 32, "atlas_2", "tutorial9.png"); // rus
+    },
+    "Tutorial10": function (x, y) {
+        return this.game.add.sprite(x, y + 32, "atlas_2", "tutorial11.png"); // rus
     }
 };
 

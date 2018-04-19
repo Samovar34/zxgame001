@@ -12,7 +12,7 @@ AdslJumper.preloadState.prototype = {
         this.progress.scale.setTo(2);
 
         // load levels
-        for (var i = 1; i < 4; i++) {
+        for (var i = 1; i <= 5; i++) {
             this.game.load.tilemap('level' + i, "assets/levels/level" + i + ".json", null, Phaser.Tilemap.TILED_JSON);
         }
 

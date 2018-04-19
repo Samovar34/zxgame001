@@ -1,6 +1,7 @@
 AdslJumper.playState = function (game) {};
 
 AdslJumper.playState.prototype = {
+    //core
     // CORE GAME FUNCTIONS
     create: function () {
         // set renderer
@@ -19,10 +20,10 @@ AdslJumper.playState.prototype = {
         this.playerBonusHandler = AdslJumper.gameFunc.bonusHandler;
         this.makeExplosion = AdslJumper.gameFunc.makeExplosion;
 
-        this.levelUpdate = AdslJumper.gameFunc.update[AdslJumper.data.level];
+        this.levelUpdate = AdslJumper.gameFunc.update[AdslJumper.data.level] || false;
 
         // for triggers and level variable
-        //this.randomNumber = Math.floor(Math.random() * 100)/100;
+        this.randomNumber = Math.floor(Math.random() * 100)/100;
         this.doorIsOpen = true;
         this.playerScore = AdslJumper.data.score;
 
@@ -41,16 +42,20 @@ AdslJumper.playState.prototype = {
         AdslJumper.world.createCollision.call(this);
         AdslJumper.world.createTriggers.call(this);
         AdslJumper.world.createFx.call(this);
+
+        this.foreGround = this.game.add.group();
+
         AdslJumper.world.createTraps.call(this);
         AdslJumper.world.createBonus.call(this);
 
-        this.exitDoor.open(true);
-
+    
         this.blood = AdslJumper.gameObjectFactory.createBloodParticles.call(this);
 
         // TRAPS WITH TRIGGERS level specific
         if (typeof AdslJumper.gameFunc.create[AdslJumper.data.level] === "function") {
             AdslJumper.gameFunc.create[AdslJumper.data.level].call(this);
+        } else {
+            this.exitDoor.open(true);
         }
 
         // PLAYER
@@ -74,7 +79,7 @@ AdslJumper.playState.prototype = {
         // CAMERA
         this.game.camera.follow(this.player,  this.game.camera.FOLLOW_PLATFORMER, 0.2, 0.2);
         this.game.camera.flash(0x000000, AdslJumper.gameOptions.cameraFlashTime);
-        this.game.camera.onFlashComplete.addOnce(AdslJumper.gameFunc.onFlashCompleteFunction, this);
+        this.game.camera.onFlashComplete.addOnce(AdslJumper.gameFunc.onFlashCompleteFunction, this); // canInput = true
         this.game.camera.onShakeComplete.addOnce(AdslJumper.gameFunc.onShakeCompleteFunction, this); // gameOver
     },
 
@@ -104,16 +109,16 @@ AdslJumper.playState.prototype = {
         }
     },
 
-
-
-    flyingThornCollideHandler: function (rocket, collider) {
+    //2
+    l2_FlyingThornCollideHandler: function (rocket, collider) {
             // explosion
         this.makeExplosion(rocket.x + 16, rocket.y);
         rocket.animations.stop();
         rocket.kill();
     },
 
-    rigidBodyHandler: function (player, rigidbody) {
+    //3
+    l3_rigidBodyHandler: function (player, rigidbody) {
 
         rigidbody._tween.stop();
 
@@ -123,11 +128,25 @@ AdslJumper.playState.prototype = {
         this.player.customTouchLeft = false;
     },
 
-    checkPlatformsCollide: function (platform, collider) {
+    l3_checkPlatformsCollide: function (platform, collider) {
         this.makeExplosion(platform.x + 48, platform.y + 16);
         platform.kill();
     },
 
+    //4
+
+    // проверка столкновения игрока с летающей платформой
+    l4_checkPlatform: function (player, platform) {
+
+        this.player.customTouchUp = this.player.body.touching.up;
+        this.player.customTouchRight = false;
+        this.player.customTouchDown = this.player.body.touching.down;
+        this.player.customTouchLeft = false;
+
+        platform.animations.play("disapear", 42, false, true);
+    },
+
+    //common
     // next level
     nextLevel: function (player, door) {
         // запретить управление пользователем

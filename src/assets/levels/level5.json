@@ -1,32 +1,32 @@
-{ "height":12,
+{ "height":15,
  "layers":[
         {
          "draworder":"topdown",
          "name":"background",
          "objects":[
                 {
-                 "gid":5,
-                 "height":384,
-                 "id":80,
-                 "name":"Bg",
+                 "gid":11,
+                 "height":480,
+                 "id":153,
+                 "name":"",
                  "rotation":0,
-                 "type":"bg",
+                 "type":"",
                  "visible":true,
-                 "width":768,
+                 "width":640,
                  "x":0,
-                 "y":384
+                 "y":480
                 }, 
                 {
-                 "gid":5,
-                 "height":384,
-                 "id":85,
-                 "name":"Bg",
+                 "gid":11,
+                 "height":480,
+                 "id":161,
+                 "name":"",
                  "rotation":0,
-                 "type":"bg",
+                 "type":"",
                  "visible":true,
-                 "width":768,
+                 "width":640,
                  "x":0,
-                 "y":384
+                 "y":480
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -41,91 +41,14 @@
          "objects":[
                 {
                  "height":32,
-                 "id":11,
-                 "name":"Collider",
-                 "rotation":0,
-                 "type":"box2d",
-                 "visible":true,
-                 "width":128,
-                 "x":64,
-                 "y":288
-                }, 
-                {
-                 "height":224,
-                 "id":14,
-                 "name":"Collider",
-                 "rotation":0,
-                 "type":"box2d",
-                 "visible":true,
-                 "width":32,
-                 "x":704,
-                 "y":64
-                }, 
-                {
-                 "height":32,
-                 "id":15,
-                 "name":"Collider",
-                 "rotation":0,
-                 "type":"box2d",
-                 "visible":true,
-                 "width":640,
-                 "x":64,
-                 "y":32
-                }, 
-                {
-                 "height":224,
-                 "id":68,
-                 "name":"Collider",
-                 "rotation":0,
-                 "type":"box2d",
-                 "visible":true,
-                 "width":32,
-                 "x":32,
-                 "y":64
-                }, 
-                {
-                 "height":32,
-                 "id":81,
-                 "name":"Collider",
-                 "rotation":0,
-                 "type":"box2d",
-                 "visible":true,
-                 "width":96,
-                 "x":192,
-                 "y":320
-                }, 
-                {
-                 "height":32,
-                 "id":82,
-                 "name":"Collider",
-                 "rotation":0,
-                 "type":"box2d",
-                 "visible":true,
-                 "width":64,
-                 "x":352,
-                 "y":320
-                }, 
-                {
-                 "height":32,
                  "id":84,
                  "name":"Collider",
                  "rotation":0,
                  "type":"box2d",
                  "visible":true,
-                 "width":96,
-                 "x":480,
-                 "y":320
-                }, 
-                {
-                 "height":32,
-                 "id":86,
-                 "name":"Collider",
-                 "rotation":0,
-                 "type":"box2d",
-                 "visible":true,
-                 "width":64,
-                 "x":288,
-                 "y":288
+                 "width":288,
+                 "x":64,
+                 "y":416
                 }, 
                 {
                  "height":32,
@@ -134,20 +57,53 @@
                  "rotation":0,
                  "type":"box2d",
                  "visible":true,
-                 "width":64,
-                 "x":416,
-                 "y":288
+                 "width":512,
+                 "x":64,
+                 "y":32
                 }, 
                 {
-                 "height":32,
-                 "id":88,
+                 "height":352,
+                 "id":154,
                  "name":"Collider",
                  "rotation":0,
                  "type":"box2d",
                  "visible":true,
-                 "width":128,
+                 "width":32,
                  "x":576,
-                 "y":288
+                 "y":64
+                }, 
+                {
+                 "height":32,
+                 "id":155,
+                 "name":"Collider",
+                 "rotation":0,
+                 "type":"box2d",
+                 "visible":true,
+                 "width":96,
+                 "x":480,
+                 "y":416
+                }, 
+                {
+                 "height":32,
+                 "id":156,
+                 "name":"Collider",
+                 "rotation":0,
+                 "type":"box2d",
+                 "visible":true,
+                 "width":96,
+                 "x":320,
+                 "y":256
+                }, 
+                {
+                 "height":352,
+                 "id":167,
+                 "name":"Collider",
+                 "rotation":0,
+                 "type":"box2d",
+                 "visible":true,
+                 "width":32,
+                 "x":32,
+                 "y":64
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -172,50 +128,25 @@
          "name":"triggers",
          "objects":[
                 {
-                 "height":32,
-                 "id":65,
+                 "height":28,
+                 "id":137,
                  "name":"Trigger",
                  "properties":
                     {
-                     "event":"level2LaunchRocket",
-                     "killOnOverlap":true,
-                     "target":"flyingThorn2"
+                     "event":"gameOver",
+                     "killOnOverlap":true
                     },
                  "propertytypes":
                     {
                      "event":"string",
-                     "killOnOverlap":"bool",
-                     "target":"string"
+                     "killOnOverlap":"bool"
                     },
                  "rotation":0,
                  "type":"tr2d",
                  "visible":true,
-                 "width":44,
-                 "x":500,
-                 "y":192
-                }, 
-                {
-                 "height":10,
-                 "id":104,
-                 "name":"Trigger",
-                 "properties":
-                    {
-                     "event":"level2LaunchRocket",
-                     "killOnOverlap":true,
-                     "target":"flyingThorn1"
-                    },
-                 "propertytypes":
-                    {
-                     "event":"string",
-                     "killOnOverlap":"bool",
-                     "target":"string"
-                    },
-                 "rotation":0,
-                 "type":"tr2d",
-                 "visible":true,
-                 "width":64,
-                 "x":288,
-                 "y":278
+                 "width":128,
+                 "x":352,
+                 "y":452
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -230,11 +161,23 @@
                 {
                  "gid":1,
                  "height":60,
-                 "id":22,
+                 "id":21,
+                 "name":"EnterDoor",
+                 "rotation":0,
+                 "type":"door",
+                 "visible":true,
+                 "width":48,
+                 "x":72,
+                 "y":416
+                }, 
+                {
+                 "gid":1,
+                 "height":60,
+                 "id":159,
                  "name":"ExitDoor",
                  "properties":
                     {
-                     "nextLevel":3
+                     "nextLevel":6
                     },
                  "propertytypes":
                     {
@@ -244,20 +187,8 @@
                  "type":"door",
                  "visible":true,
                  "width":48,
-                 "x":647,
-                 "y":288
-                }, 
-                {
-                 "gid":1,
-                 "height":60,
-                 "id":21,
-                 "name":"EnterDoor",
-                 "rotation":0,
-                 "type":"door",
-                 "visible":true,
-                 "width":48,
-                 "x":76,
-                 "y":288
+                 "x":512,
+                 "y":416
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -279,120 +210,44 @@
                  "type":"playerStart",
                  "visible":true,
                  "width":32,
-                 "x":84,
+                 "x":79,
+                 "y":416
+                }, 
+                {
+                 "gid":8,
+                 "height":32,
+                 "id":151,
+                 "name":"ThornRight",
+                 "rotation":0,
+                 "type":"trap",
+                 "visible":true,
+                 "width":32,
+                 "x":416,
                  "y":288
                 }, 
                 {
-                 "gid":4,
+                 "gid":5,
                  "height":32,
-                 "id":89,
-                 "name":"ThornUp",
+                 "id":157,
+                 "name":"ThornLeft",
                  "rotation":0,
                  "type":"trap",
                  "visible":true,
                  "width":32,
-                 "x":192,
-                 "y":320
+                 "x":288,
+                 "y":288
                 }, 
                 {
-                 "gid":4,
-                 "height":32,
-                 "id":90,
-                 "name":"ThornUp",
+                 "gid":12,
+                 "height":128,
+                 "id":158,
+                 "name":"Electric",
                  "rotation":0,
                  "type":"trap",
                  "visible":true,
                  "width":32,
-                 "x":384,
-                 "y":320
-                }, 
-                {
-                 "gid":4,
-                 "height":32,
-                 "id":91,
-                 "name":"ThornUp",
-                 "rotation":0,
-                 "type":"trap",
-                 "visible":true,
-                 "width":32,
-                 "x":256,
-                 "y":320
-                }, 
-                {
-                 "gid":4,
-                 "height":32,
-                 "id":92,
-                 "name":"ThornUp",
-                 "rotation":0,
-                 "type":"trap",
-                 "visible":true,
-                 "width":32,
-                 "x":352,
-                 "y":320
-                }, 
-                {
-                 "gid":4,
-                 "height":32,
-                 "id":94,
-                 "name":"ThornUp",
-                 "rotation":0,
-                 "type":"trap",
-                 "visible":true,
-                 "width":32,
-                 "x":480,
-                 "y":320
-                }, 
-                {
-                 "gid":4,
-                 "height":32,
-                 "id":96,
-                 "name":"ThornUp",
-                 "rotation":0,
-                 "type":"trap",
-                 "visible":true,
-                 "width":32,
-                 "x":544,
-                 "y":320
-                }, 
-                {
-                 "gid":6,
-                 "height":64,
-                 "id":97,
-                 "name":"FlyingThornUp",
-                 "properties":
-                    {
-                     "name":"flyingThorn2"
-                    },
-                 "propertytypes":
-                    {
-                     "name":"string"
-                    },
-                 "rotation":0,
-                 "type":"trap",
-                 "visible":true,
-                 "width":32,
-                 "x":512,
-                 "y":352
-                }, 
-                {
-                 "gid":6,
-                 "height":64,
-                 "id":103,
-                 "name":"FlyingThornUp",
-                 "properties":
-                    {
-                     "name":"flyingThorn1"
-                    },
-                 "propertytypes":
-                    {
-                     "name":"string"
-                    },
-                 "rotation":0,
-                 "type":"trap",
-                 "visible":true,
-                 "width":32,
-                 "x":224,
-                 "y":352
+                 "x":160,
+                 "y":448
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -407,38 +262,14 @@
                 {
                  "gid":2,
                  "height":32,
-                 "id":23,
-                 "name":"Coin",
-                 "rotation":0,
-                 "type":"bonus",
-                 "visible":true,
-                 "width":32,
-                 "x":160,
-                 "y":256
-                }, 
-                {
-                 "gid":2,
-                 "height":32,
                  "id":76,
                  "name":"Coin",
                  "rotation":0,
                  "type":"bonus",
                  "visible":true,
                  "width":32,
-                 "x":304,
-                 "y":256
-                }, 
-                {
-                 "gid":2,
-                 "height":32,
-                 "id":77,
-                 "name":"Coin",
-                 "rotation":0,
-                 "type":"bonus",
-                 "visible":true,
-                 "width":32,
-                 "x":512,
-                 "y":224
+                 "x":160,
+                 "y":314
                 }, 
                 {
                  "gid":2,
@@ -449,8 +280,56 @@
                  "type":"bonus",
                  "visible":true,
                  "width":32,
-                 "x":432,
-                 "y":256
+                 "x":224,
+                 "y":352
+                }, 
+                {
+                 "gid":2,
+                 "height":32,
+                 "id":144,
+                 "name":"Coin",
+                 "rotation":0,
+                 "type":"bonus",
+                 "visible":true,
+                 "width":32,
+                 "x":384,
+                 "y":384
+                }, 
+                {
+                 "gid":2,
+                 "height":32,
+                 "id":148,
+                 "name":"Coin",
+                 "rotation":0,
+                 "type":"bonus",
+                 "visible":true,
+                 "width":32,
+                 "x":544,
+                 "y":288
+                }, 
+                {
+                 "gid":2,
+                 "height":32,
+                 "id":149,
+                 "name":"Coin",
+                 "rotation":0,
+                 "type":"bonus",
+                 "visible":true,
+                 "width":32,
+                 "x":320,
+                 "y":248
+                }, 
+                {
+                 "gid":2,
+                 "height":32,
+                 "id":163,
+                 "name":"Coin",
+                 "rotation":0,
+                 "type":"bonus",
+                 "visible":true,
+                 "width":32,
+                 "x":64,
+                 "y":224
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -463,96 +342,38 @@
          "name":"fx",
          "objects":[
                 {
-                 "gid":7,
-                 "height":2,
-                 "id":98,
-                 "name":"Led",
-                 "properties":
-                    {
-                     "color":"yellow"
-                    },
-                 "propertytypes":
-                    {
-                     "color":"string"
-                    },
+                 "gid":6,
+                 "height":32,
+                 "id":135,
+                 "name":"Fan",
                  "rotation":0,
                  "type":"fx",
                  "visible":true,
-                 "width":6,
-                 "x":644,
-                 "y":120
+                 "width":32,
+                 "x":288,
+                 "y":224
                 }, 
                 {
-                 "gid":7,
-                 "height":2,
-                 "id":99,
-                 "name":"Led",
-                 "properties":
-                    {
-                     "color":"yellow"
-                    },
-                 "propertytypes":
-                    {
-                     "color":"string"
-                    },
+                 "height":64,
+                 "id":164,
+                 "name":"Tutorial8",
                  "rotation":0,
                  "type":"fx",
                  "visible":true,
-                 "width":6,
-                 "x":652,
-                 "y":120
+                 "width":192,
+                 "x":80,
+                 "y":176
                 }, 
                 {
-                 "gid":7,
-                 "height":2,
-                 "id":100,
-                 "name":"Led",
-                 "properties":
-                    {
-                     "color":"yellow"
-                    },
-                 "propertytypes":
-                    {
-                     "color":"string"
-                    },
+                 "height":64,
+                 "id":166,
+                 "name":"Tutorial10",
                  "rotation":0,
                  "type":"fx",
                  "visible":true,
-                 "width":6,
-                 "x":652,
-                 "y":136
-                }, 
-                {
-                 "gid":7,
-                 "height":2,
-                 "id":101,
-                 "name":"Led",
-                 "properties":
-                    {
-                     "color":"yellow"
-                    },
-                 "propertytypes":
-                    {
-                     "color":"string"
-                    },
-                 "rotation":0,
-                 "type":"fx",
-                 "visible":true,
-                 "width":6,
-                 "x":644,
-                 "y":136
-                }, 
-                {
-                 "gid":8,
-                 "height":18,
-                 "id":102,
-                 "name":"ScreenA",
-                 "rotation":0,
-                 "type":"fx",
-                 "visible":true,
-                 "width":18,
-                 "x":110,
-                 "y":124
+                 "width":192,
+                 "x":336,
+                 "y":176
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -566,7 +387,7 @@
          "objects":[],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }, 
@@ -576,7 +397,7 @@
          "objects":[],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }, 
@@ -586,11 +407,11 @@
          "objects":[],
          "opacity":1,
          "type":"objectgroup",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }],
- "nextobjectid":105,
+ "nextobjectid":170,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.0.3",
@@ -655,20 +476,34 @@
         {
          "columns":1,
          "firstgid":5,
-         "image":"..\/..\/..\/..\/..\/..\/13-YandexDisk\/art\/gamedev\/adsl_jumper\/images\/levels\/level2.png",
-         "imageheight":384,
-         "imagewidth":768,
+         "image":"..\/..\/..\/..\/..\/..\/13-YandexDisk\/art\/gamedev\/adsl_jumper\/images\/atlas_2\/thorn\/thorn4.png",
+         "imageheight":32,
+         "imagewidth":32,
          "margin":0,
-         "name":"tutor1",
+         "name":"thorn4",
          "spacing":0,
          "tilecount":1,
-         "tileheight":384,
-         "tilewidth":768,
+         "tileheight":32,
+         "tilewidth":32,
          "transparentcolor":"#ff00ff"
         }, 
         {
          "columns":1,
          "firstgid":6,
+         "image":"..\/..\/..\/..\/..\/..\/13-YandexDisk\/art\/gamedev\/adsl_jumper\/images\/atlas_2\/fan01\/fan01.png",
+         "imageheight":32,
+         "imagewidth":32,
+         "margin":0,
+         "name":"fan01",
+         "spacing":0,
+         "tilecount":1,
+         "tileheight":32,
+         "tilewidth":32,
+         "transparentcolor":"#ff00ff"
+        }, 
+        {
+         "columns":1,
+         "firstgid":7,
          "image":"..\/..\/..\/..\/..\/..\/13-YandexDisk\/art\/gamedev\/adsl_jumper\/images\/atlas_2\/flyingThornUp\/flyingThornUp2.png",
          "imageheight":64,
          "imagewidth":32,
@@ -682,34 +517,76 @@
         }, 
         {
          "columns":1,
-         "firstgid":7,
-         "image":"..\/..\/..\/..\/..\/..\/13-YandexDisk\/art\/gamedev\/adsl_jumper\/images\/atlas_2\/led\/led3.png",
-         "imageheight":2,
-         "imagewidth":6,
+         "firstgid":8,
+         "image":"..\/..\/..\/..\/..\/..\/13-YandexDisk\/art\/gamedev\/adsl_jumper\/images\/atlas_2\/thorn\/thorn2.png",
+         "imageheight":32,
+         "imagewidth":32,
          "margin":0,
-         "name":"led3",
+         "name":"thorn2",
          "spacing":0,
          "tilecount":1,
-         "tileheight":2,
-         "tilewidth":6,
+         "tileheight":32,
+         "tilewidth":32,
          "transparentcolor":"#ff00ff"
         }, 
         {
          "columns":1,
-         "firstgid":8,
-         "image":"..\/..\/..\/..\/..\/..\/13-YandexDisk\/art\/gamedev\/adsl_jumper\/images\/atlas_2\/screenA\/screenA1.png",
-         "imageheight":18,
-         "imagewidth":18,
+         "firstgid":9,
+         "image":"..\/..\/..\/..\/..\/..\/13-YandexDisk\/art\/gamedev\/adsl_jumper\/images\/atlas_2\/platformA\/platformA1.png",
+         "imageheight":32,
+         "imagewidth":96,
          "margin":0,
-         "name":"screenA1",
+         "name":"platformA1",
          "spacing":0,
          "tilecount":1,
-         "tileheight":18,
-         "tilewidth":18,
+         "tileheight":32,
+         "tilewidth":96,
+         "transparentcolor":"#ff00ff"
+        }, 
+        {
+         "columns":1,
+         "firstgid":10,
+         "image":"..\/..\/..\/..\/..\/..\/13-YandexDisk\/art\/gamedev\/adsl_jumper\/images\/atlas_2\/screenC\/screenC1.png",
+         "imageheight":10,
+         "imagewidth":24,
+         "margin":0,
+         "name":"screenC1",
+         "spacing":0,
+         "tilecount":1,
+         "tileheight":10,
+         "tilewidth":24,
+         "transparentcolor":"#ff00ff"
+        }, 
+        {
+         "columns":1,
+         "firstgid":11,
+         "image":"..\/..\/..\/..\/..\/..\/13-YandexDisk\/art\/gamedev\/adsl_jumper\/images\/levels\/level5.png",
+         "imageheight":480,
+         "imagewidth":640,
+         "margin":0,
+         "name":"level5",
+         "spacing":0,
+         "tilecount":1,
+         "tileheight":480,
+         "tilewidth":640,
+         "transparentcolor":"#ff00ff"
+        }, 
+        {
+         "columns":1,
+         "firstgid":12,
+         "image":"..\/..\/..\/..\/..\/..\/13-YandexDisk\/art\/gamedev\/adsl_jumper\/images\/atlas_2\/electric\/electric1.png",
+         "imageheight":128,
+         "imagewidth":32,
+         "margin":0,
+         "name":"electric1",
+         "spacing":0,
+         "tilecount":1,
+         "tileheight":128,
+         "tilewidth":32,
          "transparentcolor":"#ff00ff"
         }],
  "tilewidth":32,
  "type":"map",
  "version":1,
- "width":24
+ "width":20
 }

@@ -29,7 +29,7 @@ AdslJumper.gameFunc.playerTriggerHandler = function (player, trigger) {
     // trigger event
     if (trigger._event) {
         try {
-            AdslJumper.gameFunc.events[trigger._event].call(this, trigger);
+            AdslJumper.gameFunc.events[trigger._event].call(this, player, trigger);
         } catch (err) {
             // force disable body
             trigger.body.enable = false;
@@ -127,7 +127,8 @@ AdslJumper.gameFunc.trapHandlerCollection = {
     "thorn": AdslJumper.gameFunc.thornHandler,
     "movableThorn": AdslJumper.gameFunc.movableThornHandler,
     "explosion": AdslJumper.gameFunc.explosionHandler,
-    "flyingThorn": AdslJumper.gameFunc.mineHandler
+    "flyingThorn": AdslJumper.gameFunc.mineHandler,
+    "electric": AdslJumper.gameFunc.thornHandler
 };
 
 // common game over function
