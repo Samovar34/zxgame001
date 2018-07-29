@@ -269,7 +269,8 @@ AdslJumper.Player.prototype.airState = function airState() {
     } else if (this.body.velocity.y < 0) {
         this.frameName  = "player6.png";
     } else {
-        this.frameName = "player7.png";
+        //this.frameName = "player7.png";
+        this.frameName = "player11.png";
     }
 
     // player sliding wall (pre wall-jump)

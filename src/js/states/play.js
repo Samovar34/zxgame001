@@ -36,7 +36,7 @@ AdslJumper.playState.prototype = {
         // LEVEL ESSENTIAL
         this.background = this.game.add.image(0, 0, "atlas_3", "level" + AdslJumper.data.level + ".png");
         this.background.smoothed = false;
-        this.background.scale.setTo(2);
+        //this.background.scale.setTo(1);
         
         AdslJumper.world.createDoors.call(this);
         AdslJumper.world.createCollision.call(this);
