@@ -23,8 +23,8 @@ AdslJumper.Player = function (game, input, x, y) {
         inAirDrag: 0.1,
         groundDelay: 5, // delay in frames
         wallBreakTime: 15, // delay in frames
-        walkAnimationSpeed: 11,
-        doubleAnimationSpeed: 10,
+        walkAnimationSpeed: 10,
+        doubleAnimationSpeed: 8,
         comeInAnimationSpeed: 10
     };
 
@@ -111,9 +111,9 @@ AdslJumper.Player.prototype.update = function () {
         this.canDoubleJump = false;
     }
 
-    this.currentState();
-
     this.input.update();
+
+    this.currentState();
 
     if (this.canInput && this.input.jumpIsJustDown()) {
         this.jump();
@@ -157,7 +157,7 @@ AdslJumper.Player.prototype.jump = function () {
 
     // дополнительный прыжок
     // TODO false
-    } else if (!this._onFloor() && this.canDoubleJump && false) {
+    } else if (!this._onFloor() && this.canDoubleJump) {
         this.canDoubleJump = false;
         this.body.velocity.y = this.options.doubleJump * -1;
         this.settable = true;

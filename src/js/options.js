@@ -1,7 +1,7 @@
 // game parameters
 AdslJumper.gameOptions = {
-    gameWidth: 640,
-    gameHeight: 360, 
+    gameWidth: 640, // 512
+    gameHeight: 360, // 288
     scaleFactor: 1,
     bgColor: 0x000000,
     cameraFadeTime: 500, // ms

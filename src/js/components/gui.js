@@ -56,5 +56,5 @@ AdslJumper.GUI.prototype.zero = {
     "4" : "00",
     "5" : "0",
     "6" : ""
-}
+};
 
