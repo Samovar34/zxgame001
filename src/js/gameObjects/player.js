@@ -12,7 +12,7 @@ AdslJumper.Player = function (game, input, x, y) {
     this.options = {
         gravity: 1000,
         grip: 120,
-        speed: 276,
+        speed: 232, // 276
         maxFallSpeed: 720,
         runSpeedUpRate: 1.5,
         acceleration: 4800,
@@ -43,18 +43,23 @@ AdslJumper.Player = function (game, input, x, y) {
     this.smoothed = false;
 
     // animation
+    this.animations.add("idle", [
+        "player1.png",
+        "player2.png"
+    ], 2);
+
     this.animations.add("walk", [
-        "player2.png",
         "player3.png",
         "player4.png",
-        "player3.png"
+        "player5.png",
+        "player6.png"
     ], this.options.walkAnimationSpeed);
     
     this.doubleJumpAnimation = this.animations.add("doubleJump", [
-        "player8.png",
-        "player9.png",
         "player10.png",
-        "player11.png"
+        "player11.png",
+        "player12.png",
+        "player13.png"
     ], this.options.doubleAnimationSpeed);
 
     // physics
@@ -226,11 +231,17 @@ AdslJumper.Player.prototype.groundState = function groundState() {
     this.move();
 
     if (this.currentAcceleration === 0) {
-        this.frameName = "player1.png";
+        this.animations.play("idle");
+        //this.frameName = "player2.png";
     }
     
     // play sound
-    if (this.frameName === "player2.png" || this.frameName === "player3.png" || this.frameName === "player4.png") {
+    if (
+        this.frameName === "player3.png" ||
+        this.frameName === "player4.png" ||
+        this.frameName === "player5.png" ||
+        this.frameName === "player6.png"
+    ) {
         this.soundManager.playStep01();
     }
 
@@ -267,10 +278,14 @@ AdslJumper.Player.prototype.airState = function airState() {
     if (this.doubleJumpAnimation.isPlaying) {
         // do nothing
     } else if (this.body.velocity.y < 0) {
-        this.frameName  = "player6.png";
+        this.frameName  = "player8.png";
     } else {
-        //this.frameName = "player7.png";
-        this.frameName = "player11.png";
+        if (this.body.velocity.x !== 0) {
+            this.frameName = "player13.png";
+        } else {
+            this.frameName = "player9.png";
+        }
+
     }
 
     // player sliding wall (pre wall-jump)
@@ -296,7 +311,11 @@ AdslJumper.Player.prototype.wallSlideState = function wallSlideState() {
         this.settable = false;
     }
 
-    this.frameName = "player12.png";
+    // stop any animation
+    this.animations.stop();
+
+    // display frame
+    this.frameName = "player14.png";
 
     // state logic
     if ((this.input.leftIsDown() && this.facing === "left") || (this.input.rightIsDown() && this.facing === "right")) {
@@ -345,7 +364,7 @@ AdslJumper.Player.prototype._onRoof = function () {
 
 AdslJumper.Player.prototype._isToucn = function () {
     return this.customTouchUp  ||
-    this.customTouchRight  ||
-    this.customTouchDown  ||
-    this.customTouchLeft;
+        this.customTouchRight  ||
+        this.customTouchDown  ||
+        this.customTouchLeft;
 };

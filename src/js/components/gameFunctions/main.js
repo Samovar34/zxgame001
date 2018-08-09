@@ -194,20 +194,20 @@ AdslJumper.gameFunc.bonusHandler = function (player, bonus) {
     // TODO delete
     AdslJumper.utils.info(player.game.state.current, "bonus tag", bonus.tag);
 
-    var handler = AdslJumper.gameFunc.bonusHadlerCollection[bonus.tag];
-    if (handler !== undefined) {
-        handler.call(this, player, bonus);
-    } else {
+    try {
+        AdslJumper.gameFunc[bonus.tag + "Handler"].call(this, player, bonus);
+    } catch (err) {
         AdslJumper.utils.warn(player.game.state.current, "BONUS handler not found for", bonus.tag);
     }
 
 };
 
+// this Phaser.State
 AdslJumper.gameFunc.coinHandler = function (player, coin) {
-    this.soundManager.playCoin();
     coin.disableBodyAndKill();
-    this.playerScore += 10;
-    this.gui.setScore(this.playerScore);
+    AdslJumper.modules.soundManager.playCoin();
+    AdslJumper.data.score += 10;
+    this.gui.setScore(AdslJumper.data.score);
 
     return false;
 };
@@ -226,12 +226,6 @@ AdslJumper.gameFunc.cardHandler = function (player, card) {
     } else {
         AdslJumper.utils.info(this.game.state.current, "onCardFunction not exist");
     }
-};
-
-// объект, который содержит в себе ссылки на обработчики ловушек
-AdslJumper.gameFunc.bonusHadlerCollection = {
-    "coin" : AdslJumper.gameFunc.coinHandler,
-    "card": AdslJumper.gameFunc.cardHandler
 };
 
 // END BONUS

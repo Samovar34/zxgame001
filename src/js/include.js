@@ -32,7 +32,8 @@
 //@@include('./states/story.js')
 //@@include('./states/menu.js')
 //@@include('./states/waitDecodeAudio.js')
-//@@include('./states/play.js')
+
+//@@include('./states/levels/level1.js')
 
 //@@include('./states/test.js')
 

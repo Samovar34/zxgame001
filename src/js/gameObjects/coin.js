@@ -15,15 +15,16 @@ AdslJumper.Coin = function (game, x, y, properties) {
     this.game.physics.arcade.enable(this);
 
     // animation
-    this.animations.add("default", ["bitcoin1.png", 
+    this.animations.add("default", [
+        "bitcoin1.png",
         "bitcoin2.png", 
         "bitcoin3.png", 
         "bitcoin4.png", 
         "bitcoin5.png", 
         "bitcoin6.png", 
-        "bitcoin1.png", 
-        "bitcoin7.png"
-    ], 9, true);
+        "bitcoin7.png",
+        "bitcoin8.png"
+    ], 8, true);
     this.animations.add("collected", [
         "bitcoin8.png", 
         "bitcoin9.png", 
@@ -31,7 +32,8 @@ AdslJumper.Coin = function (game, x, y, properties) {
         "bitcoin11.png", 
         "bitcoin12.png", 
         "bitcoin13.png",
-        "bitcoin14.png"
+        "bitcoin14.png",
+        "bitcoin15.png"
     ]);
 };
 
@@ -41,5 +43,5 @@ AdslJumper.Coin.prototype.constructor = AdslJumper.Coin;
 // play sound and animation
 AdslJumper.Coin.prototype.disableBodyAndKill = function () {
     this.body.enable = false;
-    this.animations.play("collected", 18, false, true);
+    this.animations.play("collected", 24, false, true);
 };

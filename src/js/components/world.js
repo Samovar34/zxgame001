@@ -55,13 +55,13 @@ AdslJumper.world.createDoors = function () {
 };
 
 // this = Phaser.State
-AdslJumper.world.createPlayer = function () {
+AdslJumper.world.createPlayer = function (game, map) {
     //temp variables
-    var tempArray = AdslJumper.utils.findObjectsByType('playerStart', this.map, 'objects');
+    var tempArray = AdslJumper.utils.findObjectsByType('playerStart', map, 'objects');
 
-    this.player = new AdslJumper.Player(
-        this.game,
-        this.input,
+    return new AdslJumper.Player(
+        game,
+        AdslJumper.modules.inputManager,
         tempArray[0].x + 16,
         tempArray[0].y + 16
     );
@@ -94,7 +94,7 @@ AdslJumper.world.createTraps = function () {
 
     //TODO перенести
     this.explosionSprites = this.game.add.group();
-    this.explosionSprites.enableBody = true;
+    //this.explosionSprites.enableBody = true;
 
     for (var i = 0; i < 5; i++) {
         this.explosionSprites.add(AdslJumper.gameObjectFactory.createExplosionSprite(this.game));
@@ -146,7 +146,7 @@ AdslJumper.world.createFx = function () {
     var tempArray = AdslJumper.utils.findObjectsByType('fx', this.map, 'fx');
     var tempElement = null;
 
-    for (i = 0; i < tempArray.length; i++) {
+    for (var i = 0; i < tempArray.length; i++) {
         tempElement = AdslJumper.gameObjectFactory[tempArray[i].name];
         if (typeof tempElement === "function") {
             this.fx.add(

@@ -77,7 +77,7 @@ AdslJumper.waitDecodeAudio.prototype.beforePlay = function () {
 
 AdslJumper.waitDecodeAudio.prototype.doOnDecodeTrack = function () {
     if (AdslJumper.data.level < 10) {
-        this.state.start("play");
+        this.state.start("level1");
     } else {
 
     }

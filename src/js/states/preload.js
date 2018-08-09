@@ -51,6 +51,19 @@ AdslJumper.preloadState.prototype = {
         AdslJumper.modules.inputManager = new AdslJumper.Input(this.game);
         AdslJumper.utils.enableDebug = !game.debug.isDisabled;
 
+        AdslJumper.cache = {};
+
+        AdslJumper.cache.player = new AdslJumper.Player(
+            this.game,
+            AdslJumper.modules.inputManager,
+            0,
+            0
+        );
+
+        AdslJumper.cache.img = this.game.add.image(64, 64, "atlas_2", "card1.png");
+
+        AdslJumper.cache.player.kill();
+
         // gama data
         AdslJumper.data = {
             level: 0,
