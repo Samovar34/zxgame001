@@ -73,7 +73,7 @@ AdslJumper.playState.prototype = {
             this.soundManager.currentTrack = this.soundManager.tempTrack;
             this.soundManager.tempTrack = null;
             this.soundManager.playTrack();
-        };
+        }
 
 
         // CAMERA
@@ -105,7 +105,6 @@ AdslJumper.playState.prototype = {
     render: function () {
         if (AdslJumper.utils.enableDebug) {
             this.game.debug.text("tryCount: " + AdslJumper.data.levelDeaths, 8, 24, "#00ff00");
-
         }
     },
 

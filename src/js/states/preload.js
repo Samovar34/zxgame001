@@ -12,8 +12,8 @@ AdslJumper.preloadState.prototype = {
         this.progress.scale.setTo(2);
 
         // load levels
-        for (var i = 1; i <= 5; i++) {
-            this.game.load.tilemap('level' + i, "assets/levels/level" + i + ".json", null, Phaser.Tilemap.TILED_JSON);
+        for (var i = 1; i <= 3; i++) {
+            this.game.load.json("level" + i, "assets/levels/level" + i + ".json");
         }
 
         // atlas
@@ -47,35 +47,15 @@ AdslJumper.preloadState.prototype = {
     create: function () {
 
         // game modules and debug
-        AdslJumper.modules.soundManager = new AdslJumper.SoundManager(this.game);
-        AdslJumper.modules.inputManager = new AdslJumper.Input(this.game);
-        AdslJumper.utils.enableDebug = !game.debug.isDisabled;
-
-        AdslJumper.cache = {};
-
-        AdslJumper.cache.player = new AdslJumper.Player(
-            this.game,
-            AdslJumper.modules.inputManager,
-            0,
-            0
-        );
-
-        AdslJumper.cache.img = this.game.add.image(64, 64, "atlas_2", "card1.png");
-
-        AdslJumper.cache.player.kill();
-
-        // gama data
-        AdslJumper.data = {
-            level: 0,
-            score: 0,
-            deaths: 0,
-            levelDeaths: 0
-        };
+        SoundManager = new AdslJumper.SoundManager(_game);
+        Input = new AdslJumper.Input(_game);
+        AdslJumper.utils.enableDebug = _game.debug.isDisabled;
 
         // TODO del
         var urlLevel = parseInt(window.location.hash.slice(1).trim());
         if (!isNaN(urlLevel)) {
-            AdslJumper.data.level = urlLevel;
+
+            _level = urlLevel;
         }
 
         // TODO del debug info

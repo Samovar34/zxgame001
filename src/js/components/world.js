@@ -1,74 +1,45 @@
-// create world's object
-
+/**
+ * world functions
+ * @type {{}}
+ */
 AdslJumper.world = {};
 
-// this = Phaser.State
-AdslJumper.world.createCollision = function () {
+/**
+ * init world object
+ * @param {Phaser.State} state
+ */
+AdslJumper.world.init = function (state) {
+    this.state = state;
+};
 
-    // create collision group and activate physics
-    this.collision2d  = this.game.add.group();
-    this.collision2d.enableBody = true;
+/**
+ * create collision group for player
+ * @param {[]}arr
+ * @returns {Phaser.Group}
 
-    //temp variables
-    var tempArray = AdslJumper.utils.findObjectsByType('box2d', this.map, 'collision');
-    var tempElement = null;
+ */
+AdslJumper.world.createCollision = function (arr) {
 
-    for (var i = 0; i < tempArray.length; i++) {
-        // create element
-        tempElement = this.game.make.sprite(tempArray[i].x, tempArray[i].y + 32);
-        tempElement.width = tempArray[i].width;
-        tempElement.height = tempArray[i].height;
+    var collision2d = this.state.add.group();
+    collision2d.enableBody = true;
 
-        // add to group
-        this.collision2d.add(tempElement);
+    var tempSprite = null;
+
+    for (var i = 0; i < arr.length; i += 4) {
+        tempSprite = this.state.make.sprite(arr[i] *_scaleFactor, arr[i + 1] * _scaleFactor);
+        tempSprite.width = arr[i + 2] * _scaleFactor;
+        tempSprite.height = arr[i + 3] * _scaleFactor;
+
+        collision2d.add(tempSprite);
     }
 
-    this.collision2d.setAll("body.immovable", "true");
+    collision2d.setAll("body.immovable", "true");
+
+    return collision2d;
 };
 
 // this = Phaser.State
-AdslJumper.world.createDoors = function () {
-    //temp variables
-    var tempArray = AdslJumper.utils.findObjectsByType('door', this.map, 'doors');
-
-    for (var i = 0; i < tempArray.length; i++) {
-        if (tempArray[i].name === "ExitDoor") {
-            // create exit Door
-            this.exitDoor = new AdslJumper.ExitDoor(
-                this.game,
-                tempArray[i].x,
-                tempArray[i].y - 28,
-                tempArray[i].properties.nextLevel
-            );
-        } else {
-            // create enter Door
-            this.enterDoor = this.game.add.sprite(
-                tempArray[i].x,
-                tempArray[i].y - 28,
-                "atlas_2",
-                "door1.png"
-            );
-            this.enterDoor.animations.add("default", ["door1.png", "door2.png"], 2, true);
-            this.enterDoor.animations.play("default");
-        }
-    }
-};
-
-// this = Phaser.State
-AdslJumper.world.createPlayer = function (game, map) {
-    //temp variables
-    var tempArray = AdslJumper.utils.findObjectsByType('playerStart', map, 'objects');
-
-    return new AdslJumper.Player(
-        game,
-        AdslJumper.modules.inputManager,
-        tempArray[0].x + 16,
-        tempArray[0].y + 16
-    );
-};
-
-// this = Phaser.State
-AdslJumper.world.createTraps = function () {
+AdslJumper.world.createTraps = function (game, map) {
 
     // create traps group
     this.traps = this.game.add.group();
@@ -106,109 +77,106 @@ AdslJumper.world.createTraps = function () {
     this.traps.callAll("animations.play", "animations", "default");
 };
 
-// void
-// call with binding context
-// this = Phaser.State
-AdslJumper.world.createBonus = function () {
+/**
+ * create group with bonus
+ * @param arr
+ * @returns {Phaser.Group}
+ * @this AdslJumper.world
+ */
+AdslJumper.world.createBonus = function (arr) {
 
-    // create bonus group
-    this.bonus = this.game.add.group();
+    var group = this.state.add.group();
 
-    var tempArray = AdslJumper.utils.findObjectsByType('bonus', this.map, 'bonus');
-    var tempElement = null;
+    for (var i = 0; i < arr.length; i += 3) {
+        group.add(AdslJumper.gameObjectFactory[arr[i]](arr[i + 1], arr[i + 2]));
+    }
 
-    for (i = 0; i < tempArray.length; i++) {
-        tempElement = AdslJumper.gameObjectFactory[tempArray[i].name];
-        if (typeof tempElement === "function") {
-            this.bonus.add(
-                tempElement.call(
-                    this,
-                    tempArray[i].x,
-                    tempArray[i].y,
-                    tempArray[i].properties
-                )
-            );
-        } else {
-            console.error(tempArray[i].name, "not found");
+    group.callAll("animations.play", "animations", "default");
+
+    return group;
+};
+
+/**
+ * create fx group
+ * @param {[]} arr
+ * @returns {Phaser.Group}
+ * @this AdslJumper.world
+ */
+AdslJumper.world.createFx = function (arr) {
+
+    var group = this.state.add.group();
+
+    for (var i = 0; i < arr.length; i += 3) {
+        try {
+            group.add(AdslJumper.gameObjectFactory[arr[i]](arr[i + 1], arr[i + 2]));
+        } catch (err) {
+            console.warn("createFx: " + arr[i] + " not gameObject(function)");
         }
+
     }
 
-    // play animation
-    this.bonus.callAll("animations.play", "animations", "default");
+    group.callAll("animations.play", "animations", "default");
+
+    return group;
 };
 
-// this = Phaser.State
-AdslJumper.world.createFx = function () {
-
-    // create fx group
-    this.fx = this.game.add.group();
-
-    var tempArray = AdslJumper.utils.findObjectsByType('fx', this.map, 'fx');
-    var tempElement = null;
-
-    for (var i = 0; i < tempArray.length; i++) {
-        tempElement = AdslJumper.gameObjectFactory[tempArray[i].name];
-        if (typeof tempElement === "function") {
-            this.fx.add(
-                tempElement.call(
-                    this,
-                    tempArray[i].x,
-                    tempArray[i].y,
-                    tempArray[i].properties
-                )
-            );
-        } else {
-            console.error(tempArray[i].name, "not found");
-        }
-    }
-
-    // play animation
-    this.fx.callAll("animations.play", "animations", "default");
-};
-
-// call with binding context
-// call after createCollision2d
-// this = Phaser.State
-AdslJumper.world.createRigidbodies = function () {
-
-    //temp variables
-    var tempArray = AdslJumper.utils.findObjectsByType('rb2d', this.map, 'rigidbody');
-    var tempElement = null;
-
-    for (var i = 0; i < tempArray.length; i++) {
-        // TODO logic here
-    }
-
-};
-
-// call with binding context
-// this = Phaser.State
-AdslJumper.world.createTriggers = function () {
+/**
+ * create trigger group
+ * @param {[]} arr
+ * @returns {Phaser.Group}
+ * @this {AdslJumper.world}
+ */
+AdslJumper.world.createTriggers = function (arr) {
     
     // create triggers group and activate physics
-    this.triggers = this.game.add.group();
-    this.triggers.enableBody = true;
+    var group = this.state.add.group();
+    group.enableBody = true;
 
     //temp variables
-    var tempArray = AdslJumper.utils.findObjectsByType('tr2d', this.map, 'triggers');
     var tempElement = null;
 
-    for (var i = 0; i < tempArray.length; i++) {
+    for (var i = 0; i < arr.length; i += 5) {
         // create an element
-        tempElement = this.game.make.sprite(
-            tempArray[i].x,
-            tempArray[i].y + 32
-        );
+        tempElement = this.state.make.sprite(arr[i] * _scaleFactor, arr[i+1] * _scaleFactor);
 
         // setup the element
-        tempElement.width = tempArray[i].width;
-        tempElement.height = tempArray[i].height;
+        tempElement.width = arr[i+2] * _scaleFactor;
+        tempElement.height = arr[i+3] * _scaleFactor;
 
-        tempElement._killOnOverlap = tempArray[i].properties.killOnOverlap;
-        tempElement._event = tempArray[i].properties.event;
-        tempElement._target = tempArray[i].properties.target;
+        tempElement._event = arr[i+4];
 
         // add to the group
-        this.triggers.add(tempElement);
+        group.add(tempElement);
     }
+
+    return group;
+};
+
+/**
+ * create game world
+ * @this {Phaser.State}
+ */
+AdslJumper.world.createWorld = function () {
+    // enter door
+    AdslJumper.gameObjectFactory.createEnterDoor(this.state.map.enterDoor.x, this.state.map.enterDoor.y);
+
+    // exit door
+    this.state.exitDoor = new AdslJumper.ExitDoor
+    (
+        this.state.game,
+        this.state.map.exitDoor.x * _scaleFactor,
+        (this.state.map.exitDoor.y - 60) * _scaleFactor,
+        this.state.map.exitDoor.nextLevel
+    );
+
+    // create collision
+    this.state.collision2d = this.createCollision(this.state.map.collision);
+
+    // create traps
+
+    // create fx
+    this.state.fx = this.createFx(this.state.map.fx);
+
+    // create bonus
+    this.state.bonus = this.createBonus(this.state.map.bonus);
 };

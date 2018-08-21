@@ -3,10 +3,7 @@
 //@@include('./components/soundManager.js')
 //@@include('./components/input.js')
 //@@include('./components/utils.js')
-//@@include('./components/gameFunctions/main.js')
-//@@include('./components/gameFunctions/create.js')
-//@@include('./components/gameFunctions/update.js')
-//@@include('./components/gameFunctions/events.js')
+//@@include('./components/gameFunc.js')
 //@@include('./components/gui.js')
 
 //@@include("./gameObjects/thorn.js")
@@ -20,7 +17,6 @@
 //@@include('./gameObjects/fan01.js')
 //@@include('./gameObjects/doorSensor.js')
 //@@include('./gameObjects/screenA.js')
-//@@include('./gameObjects/screenD.js')
 //@@include('./gameObjects/platform01.js')
 //@@include('./gameObjects/arrow.js')
 
@@ -34,6 +30,16 @@
 //@@include('./states/waitDecodeAudio.js')
 
 //@@include('./states/levels/level1.js')
+//@@include('./states/levels/level2.js')
+//@@include('./states/levels/level3.js')
+//@@include('./states/levels/level4.js')
+//@@include('./states/levels/level5.js')
+//@@include('./states/levels/level6.js')
+//@@include('./states/levels/level7.js')
+//@@include('./states/levels/level8.js')
+//@@include('./states/levels/level9.js')
+//@@include('./states/levels/level10.js')
+
 
 //@@include('./states/test.js')
 

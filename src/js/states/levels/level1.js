@@ -1,41 +1,69 @@
 AdslJumper.level1 = function () {};
 
 AdslJumper.level1.prototype = {
+
     create: function () {
         // set renderer
-        this.game.renderer.renderSession.roundPixels = true;
+        //this.game.renderer.renderSession.roundPixels = true;
         this.game.clearBeforeRender = false;
 
-        // for triggers and level variable
-        this.doorIsOpen = true;
+        // init modules
+        AdslJumper.gameObjectFactory.init(this);
+        AdslJumper.world.init(this);
 
         // game world bounds
-        this.game.world.setBounds(0, 0, 768, 384);
-
-        // game world
-        this.map = this.game.add.tilemap("level1", 32, 32);
+        this.game.world.setBounds(0, 0, 768 * _scaleFactor, 320 * _scaleFactor);
 
         // level essential
+        this.map = this.game.cache.getJSON("level1");
+
+        // bg
         this.background = this.game.add.image(0, 0, "atlas_3", "level1.png");
         this.background.smoothed = false;
+        this.background.scale.setTo(_scaleFactor);
 
-        AdslJumper.world.createDoors.call(this);
-        AdslJumper.world.createCollision.call(this);
-        AdslJumper.world.createTriggers.call(this);
-        AdslJumper.world.createFx.call(this);
-        AdslJumper.world.createTraps.call(this);
-        AdslJumper.world.createBonus.call(this);
+        /** @type {Phaser.Image}*/
+        var tutorImage1 = null;
 
-        this.blood = AdslJumper.gameObjectFactory.createBloodParticles.call(this);
+        /** @type {Phaser.Image}*/
+        var tutorImage2 = null;
 
+        // add tutors
+        if (_lang === "ru") {
+            tutorImage1 = this.game.add.image(144 * _scaleFactor, 112 * _scaleFactor, "atlas_2", "tutorial3.png"); // ru
+            tutorImage2 = this.game.add.image(432 * _scaleFactor, 112 * _scaleFactor, "atlas_2", "tutorial5.png"); // ru
+        } else {
+            tutorImage1 = this.game.add.image(144 * _scaleFactor, 112 * _scaleFactor, "atlas_2", "tutorial2.png"); // en
+            tutorImage2 =this.game.add.image(432 * _scaleFactor, 112 * _scaleFactor, "atlas_2", "tutorial4.png"); // en
+        }
+
+        tutorImage1.smoothed = false;
+        tutorImage2.smoothed = false;
+
+        tutorImage1.scale.setTo(_scaleFactor);
+        tutorImage2.scale.setTo(_scaleFactor);
+
+        // create world
+        AdslJumper.world.createWorld();
+
+        /**
+         * @type {AdslJumper.Player}
+         */
         // PLAYER
-        this.player = AdslJumper.world.createPlayer.call(this, this.game, this.map);
+        this.player = new AdslJumper.Player(
+            this.game,
+            AdslJumper.modules.inputManager,
+            (this.map.player.x + 16) *_scaleFactor,
+            (this.map.player.y - 16) * _scaleFactor
+        );
         this.player.canInput = false;
+        this.player.allowDoubleJump = false;
+        this.player.allowWallSliding = false;
 
         // GUI
         this.gui = new AdslJumper.GUI(this.game);
-        this.gui.setRoom("0" + AdslJumper.data.level);
-        this.gui.setScore(AdslJumper.data.score);
+        this.gui.setRoom("0" + _level);
+        this.gui.setScore(_score);
 
         // MUSIC
         if (!AdslJumper.modules.soundManager.currentTrack) {
@@ -47,7 +75,6 @@ AdslJumper.level1.prototype = {
         this.game.camera.follow(this.player,  this.game.camera.FOLLOW_PLATFORMER, 0.2, 0.2);
         this.game.camera.flash(0x000000, AdslJumper.gameOptions.cameraFlashTime);
         this.game.camera.onFlashComplete.addOnce(AdslJumper.gameFunc.onFlashCompleteFunction, this); // canInput = true
-        this.game.camera.onShakeComplete.addOnce(AdslJumper.gameFunc.onShakeCompleteFunction, this); // gameOver
 
         this.exitDoor.open(true);
     },
@@ -57,16 +84,16 @@ AdslJumper.level1.prototype = {
         this.player.reset();
 
         this.game.physics.arcade.collide(this.player, this.collision2d, AdslJumper.gameFunc.playerCollideHandler, null, this);
-        this.game.physics.arcade.overlap(this.player, this.triggers, AdslJumper.gameFunc.playerTriggerHandler, null, this);
-        this.game.physics.arcade.overlap(this.player, this.traps, AdslJumper.gameFunc.trapHandler, null, this);
-        this.game.physics.arcade.overlap(this.player, this.bonus, AdslJumper.gameFunc.bonusHandler, null, this);
+        this.game.physics.arcade.overlap(this.player, this.bonus, AdslJumper.gameFunc.playerBonusHandler, null, this);
 
-        if (this.doorIsOpen) {
-            this.game.physics.arcade.overlap(this.player, this.exitDoor, this.nextLevel, null, this);
+        if (this.exitDoor.isOpen) {
+            this.game.physics.arcade.overlap(this.player, this.exitDoor, AdslJumper.gameFunc.nextLevel, null, this);
         }
     },
 
     render: function () {
-
+        this.game.debug.text(this.player.currentState.name, 8, 24);
+        this.game.debug.text(this.player.frameName, 8, 32);
+        this.game.debug.text(this.player.y, 8, 42);
     }
 };

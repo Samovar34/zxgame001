@@ -1,4 +1,8 @@
-// INPUT Class
+/**
+ * input manager
+ * @param {Phaser.Game} game
+ * @constructor
+ */
 AdslJumper.Input = function (game) {
     this.game = game;
 
@@ -31,6 +35,9 @@ AdslJumper.Input = function (game) {
 
 AdslJumper.Input.prototype.constructor = AdslJumper.Input;
 
+/**
+ * input manager update
+ */
 AdslJumper.Input.prototype.update = function () {
     if (this.game.input.gamepad.supported && this.game.input.gamepad.active && this.pad1.connected) {
         this.usingPad = true;
@@ -39,6 +46,10 @@ AdslJumper.Input.prototype.update = function () {
     }
 };
 
+/**
+ *
+ * @type {number}
+ */
 AdslJumper.Input.prototype.DURATION = 32;
 
 // Get button objects
@@ -52,6 +63,10 @@ AdslJumper.Input.prototype.leftIsDown = function () {
     return this.cursors.left.isDown || this.moveLeftButton.isDown;
 };
 
+/**
+ * check right button
+ * @returns {boolean}
+ */
 AdslJumper.Input.prototype.rightIsDown = function () {
     if (this.usingPad) {
         return this.cursors.right.isDown ||

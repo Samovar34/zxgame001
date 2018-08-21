@@ -11,11 +11,21 @@ AdslJumper.GUI = function (game) {
     this.roomOffsetX = 80;
     this.scoreOffsetX = 320;
 
-    this.roomText = this.addChild(this.game.make.sprite(0, 0, "atlas_2", "guiText4.png"));
-    this.scoreText = this.addChild(this.game.make.sprite(this.scoreOffsetX - 54, 0, "atlas_2", "guiText1.png"));
+    // lang specific
+    if (_lang === "ru") {
+        this.roomText = this.addChild(this.game.make.sprite(0, 0, "atlas_2", "guiText4.png"));
+        this.scoreText = this.addChild(this.game.make.sprite(this.scoreOffsetX - 54, 0, "atlas_2", "guiText2.png"));
 
-    this.roomNumber0 = this.addChild(this.game.make.sprite(this.roomOffsetX, 0, "atlas_2", "numbers1.png"));
-    this.roomNumber1 = this.addChild(this.game.make.sprite(this.roomOffsetX + 12, 0, "atlas_2", "numbers1.png"));
+        this.roomNumber0 = this.addChild(this.game.make.sprite(this.roomOffsetX, 0, "atlas_2", "numbers1.png"));
+        this.roomNumber1 = this.addChild(this.game.make.sprite(this.roomOffsetX + 12, 0, "atlas_2", "numbers1.png"));
+    } else {
+        this.roomText = this.addChild(this.game.make.sprite(0, 0, "atlas_2", "guiText3.png"));
+        this.scoreText = this.addChild(this.game.make.sprite(this.scoreOffsetX - 54, 0, "atlas_2", "guiText1.png"));
+
+        this.roomNumber0 = this.addChild(this.game.make.sprite(this.roomOffsetX - 30, 0, "atlas_2", "numbers1.png"));
+        this.roomNumber1 = this.addChild(this.game.make.sprite(this.roomOffsetX - 18, 0, "atlas_2", "numbers1.png"));
+    }
+
 
     this.scoreNumber0 = this.addChild(this.game.make.sprite(this.scoreOffsetX, 0, "atlas_2", "numbers1.png"));
     this.scoreNumber1 = this.addChild(this.game.make.sprite(this.scoreOffsetX + 12, 0, "atlas_2", "numbers1.png"));

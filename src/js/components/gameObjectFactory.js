@@ -1,9 +1,134 @@
-// creates game objects
+/**
+ * create game objects
+ * @type {{}}
+ */
+AdslJumper.gameObjectFactory = {};
 
-// Call only with binding context
-// call, apply, bind
+/**
+ * set this.state property for creating gameObjects
+ * @param {Phaser.State} state
+ */
+AdslJumper.gameObjectFactory.init = function (state) {
+    this.state = state;
+};
 
-AdslJumper.gameObjectFactory = {
+/**
+ * create enter door
+ * @param {number} x
+ * @param {number} y
+ * @returns {Phaser.Sprite}
+ */
+AdslJumper.gameObjectFactory.createEnterDoor = function (x, y) {
+    var sprite = this.state.add.sprite(x * _scaleFactor, (y - 60) * _scaleFactor, "atlas_2", "door1.png");
+    sprite.smoothed = false;
+    sprite.scale.setTo(_scaleFactor);
+    sprite.animations.add("default", ["door1.png", "door2.png"], 2, true);
+    sprite.animations.play("default");
+
+    return sprite;
+};
+
+/**
+ * create coin
+ * @param {number} x
+ * @param {number} y
+ * @returns {AdslJumper.Coin}
+ */
+AdslJumper.gameObjectFactory.coin = function (x, y) {
+    return new AdslJumper.Coin(this.state.game, x * _scaleFactor, (y - 22) * _scaleFactor);
+};
+
+
+/**
+ *
+ * @param {number} x
+ * @param {number} y
+ * @returns {Phaser.Sprite}
+ */
+AdslJumper.gameObjectFactory.screenD = function (x, y) {
+
+    var sprite = this.state.make.sprite(x * _scaleFactor, (y - 10) * _scaleFactor, "atlas_2", "screenD1.png");
+
+    sprite.animations.add("default", [
+        "screenD1.png",
+        "screenD2.png",
+        "screenD3.png",
+        "screenD4.png",
+        "screenD5.png",
+        "screenD6.png",
+        "screenD7.png"
+    ], 12, true);
+
+    sprite.smoothed = false;
+    sprite.scale.setTo(_scaleFactor);
+
+    return sprite;
+};
+
+/**
+ * create led game object
+ * @param {number} x
+ * @param {number} y
+ * @returns {AdslJumper.Led}
+ */
+AdslJumper.gameObjectFactory.led = function (x, y) {
+    return new AdslJumper.Led(this.state.game, x * _scaleFactor, (y - 2) *_scaleFactor);
+};
+
+/**
+ * create fan game object
+ * @param {number} x
+ * @param {number} y
+ * @returns {Phaser.Sprite}
+ */
+AdslJumper.gameObjectFactory.fan = function (x, y) {
+    var sprite = this.state.add.sprite(x * _scaleFactor, (y - 32) * _scaleFactor, "atlas_2", "fan01.png");
+
+    sprite.smoothed = false;
+    sprite.scale.setTo(_scaleFactor);
+
+    sprite.animations.add("default", ["fan01.png", "fan02.png"], 18, true);
+
+    return sprite;
+};
+
+/**
+ * create blood particles
+ * @returns {Phaser.Particles.Arcade.Emitter}
+ */
+AdslJumper.gameObjectFactory.createBloodParticles = function () {
+    var gameObject = this.state.add.emitter(0, 0, 64);
+    gameObject.makeParticles("atlas_2", ['blood1.png', 'blood2.png']);
+    gameObject.minRotation = 0;
+    gameObject.maxRotation = 0;
+    gameObject.setYSpeed(-1512, 512);
+    gameObject.setXSpeed(-1900, 1900);
+    gameObject.setScale(1, 2, 1, 2);
+    gameObject.gravity = 900;
+
+    return gameObject;
+};
+
+/**
+ * create fart particles for player
+ * @returns {Phaser.Particles.Arcade.Emitter}
+ */
+AdslJumper.gameObjectFactory.createFartParticles = function () {
+    // particles
+    var gameObject = this.state.add.emitter(0, 0, 10);
+    gameObject.makeParticles("atlas_2", ["sparks2.png", "sparks3.png"]);
+    gameObject.setYSpeed(-6, 32);
+    gameObject.setXSpeed(-24, 24);
+    gameObject.setScale(1, 2, 1, 2);
+    gameObject.minRotation = 0;
+    gameObject.maxRotation = 0;
+    gameObject.alpha = 0.4;
+
+    return gameObject;
+};
+
+
+AdslJumper.gameObjectFactory1 = {
 
     // traps
     "Electric": function (x, y, properties) {
@@ -211,20 +336,6 @@ AdslJumper.gameObjectFactory = {
     }
 };
 
-
-AdslJumper.gameObjectFactory.createFartParticles = function () {
-    // particles
-    var gameObject = this.game.add.emitter(0, 0, 10);
-    gameObject.makeParticles("atlas_2", ["sparks2.png", "sparks3.png"]);
-    gameObject.setYSpeed(-6, 32);
-    gameObject.setXSpeed(-24, 24);
-    gameObject.minRotation = 0;
-    gameObject.maxRotation = 0;
-    gameObject.alpha = 0.4;
-
-    return gameObject;
-};
-
 AdslJumper.gameObjectFactory.createBackGround01 = function () {
 
     var gameObject = this.game.add.sprite();
@@ -279,18 +390,6 @@ AdslJumper.gameObjectFactory.createExplosionSprite = function (game) {
 
     return gameObject;
 }
-
-AdslJumper.gameObjectFactory.createBloodParticles = function () {
-    var gameObject = this.game.add.emitter(0, 0, 64);
-    gameObject.makeParticles("atlas_2", ['blood1.png', 'blood2.png']);
-    gameObject.minRotation = 0;
-    gameObject.maxRotation = 0;
-    gameObject.setYSpeed(-1052, 1576/10);
-    gameObject.setXSpeed(-900, 900);
-    gameObject.gravity = 900;
-
-    return gameObject;
-};
 
 AdslJumper.gameObjectFactory.createSparks = function () {
     var gameObject = this.game.add.emitter(0, 0, 24);

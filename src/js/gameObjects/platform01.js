@@ -69,5 +69,5 @@ AdslJumper.Platform01.prototype.update = function () {
     } else {
         this.body.enable = true;
     }
-}
+};
 

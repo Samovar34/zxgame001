@@ -1,32 +1,94 @@
-var AdslJumper = {};
+var test = null;
+var AdslJumper = (function () {
+    /** @global
+	 * 	@type object
+	 * */
+	var AdslJumper = {};
 
-// loaded game components, such Input, BoomBox
-AdslJumper.modules = {};
+	// global game variables
+    /** @global
+     * 	@type {number}
+     * */
+	var _level = 0;
+    /** @global
+     * 	@type {number}
+     * */
+	var _score = 0;
+    /**
+	 * 	@global
+     * 	@type {string}
+     * */
+	var _lang = "ru";
+    /** @global
+     * 	@type {number}
+     * */
+    var _deaths = 0;
+    /** @global
+     * 	@type {number}
+     * */
+    var _levelDeaths = 0;
 
-//@@include('./include.js')
-var game;
+    /**
+	 * @global
+     * @type {number}
+     */
+    var _scaleFactor = 2;
 
-window.onload = function () {
+    /** @global
+	 * @type {Phaser.Game}
+	 * */
+    var _game;
 
-	game = new Phaser.Game({
-		width: AdslJumper.gameOptions.gameWidth,
-		height: AdslJumper.gameOptions.gameHeight,
-		renderer: Phaser.AUTO,
-		enableDebug: true,
-		antialias: false
-	});
-	game.state.add("boot", AdslJumper.bootState);
-	game.state.add("preload", AdslJumper.preloadState);
-	game.state.add("story", AdslJumper.storyState);
-	game.state.add("menu", AdslJumper.menuState);
-	game.state.add("waitDecodeAudio", AdslJumper.waitDecodeAudio);
-	game.state.add("play", AdslJumper.playState);
-    game.state.add("level1", AdslJumper.level1);
-	//game.state.add("tutor2", AdslJumper.tutor2State);
-	//game.state.add("lvl", AdslJumper.level1State);
+    /**
+     * input manager instance
+     * @global
+     * @type {AdslJumper.Input}
+     */
+    var Input;
 
-	game.state.start("boot");
-};
+    /**
+     * sound manager instance
+     * @global
+     * @type {AdslJumper.SoundManager}
+     */
+    var SoundManager;
+
+    /**
+	 * loaded game components, such Input, SoundManager
+     * @type {{}}
+     */
+    AdslJumper.modules = {};
+
+    //@@include('./include.js')
+
+    /**
+	 * init game, create states and run boot state
+     */
+	AdslJumper.init = function () {
+        _game = new Phaser.Game(
+            {
+                width: 960, // 1136 1024
+                height: 540, // 640  576
+                renderer: Phaser.AUTO,
+                enableDebug: true,
+                antialias: false
+            }
+        );
+        _game.state.add("boot", AdslJumper.bootState);
+        _game.state.add("preload", AdslJumper.preloadState);
+        _game.state.add("story", AdslJumper.storyState);
+        _game.state.add("menu", AdslJumper.menuState);
+        _game.state.add("waitDecodeAudio", AdslJumper.waitDecodeAudio);
+        _game.state.add("level1", AdslJumper.level1);
+        _game.state.add("level2", AdslJumper.level2);
+
+        _game.state.start("boot");
+	};
+
+	return AdslJumper;
+})();
+
+window.onload = AdslJumper.init;
 
 
 

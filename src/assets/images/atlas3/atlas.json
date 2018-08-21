@@ -2,31 +2,31 @@
 
 "level1.png":
 {
-	"frame": {"x":642,"y":0,"w":768,"h":384},
+	"frame": {"x":0,"y":0,"w":768,"h":320},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":768,"h":384},
-	"sourceSize": {"w":768,"h":384}
+	"spriteSourceSize": {"x":0,"y":0,"w":768,"h":320},
+	"sourceSize": {"w":768,"h":320}
 },
 "level2.png":
 {
-	"frame": {"x":770,"y":482,"w":768,"h":384},
+	"frame": {"x":770,"y":0,"w":768,"h":320},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":768,"h":384},
-	"sourceSize": {"w":768,"h":384}
+	"spriteSourceSize": {"x":0,"y":0,"w":768,"h":320},
+	"sourceSize": {"w":768,"h":320}
 },
 "level3.png":
 {
-	"frame": {"x":0,"y":482,"w":768,"h":384},
+	"frame": {"x":1540,"y":0,"w":480,"h":288},
 	"rotated": false,
 	"trimmed": false,
-	"spriteSourceSize": {"x":0,"y":0,"w":768,"h":384},
-	"sourceSize": {"w":768,"h":384}
+	"spriteSourceSize": {"x":0,"y":0,"w":480,"h":288},
+	"sourceSize": {"w":480,"h":288}
 },
 "level4.png":
 {
-	"frame": {"x":0,"y":868,"w":992,"h":512},
+	"frame": {"x":0,"y":322,"w":992,"h":512},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":992,"h":512},
@@ -34,7 +34,7 @@
 },
 "level5.png":
 {
-	"frame": {"x":0,"y":0,"w":640,"h":480},
+	"frame": {"x":994,"y":322,"w":640,"h":480},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":640,"h":480},
@@ -45,8 +45,8 @@
 	"version": "1.0",
 	"image": "atlas.png",
 	"format": "RGBA8888",
-	"size": {"w":1538,"h":1380},
+	"size": {"w":2020,"h":834},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:ae07aeda06dc6dfe659e16bd5d14baad:3ee204caa54a1a7db09790bdd556d88e:cbce6b53f0f49e0bf15173c25c41f876$"
+	"smartupdate": "$TexturePacker:SmartUpdate:9db07ff02f178cb252a5d8ab1e59a437:a99cd0ef2205b3ab2914226868b749e3:cbce6b53f0f49e0bf15173c25c41f876$"
 }
 }

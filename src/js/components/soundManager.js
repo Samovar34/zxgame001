@@ -1,75 +1,103 @@
-// компонент отвечает за все звуки в игре
-// вызывать нужно один раз во время инициализации
-// SoundManager Class
+/**
+ * sound manager
+ * @param {Phaser.Game} game
+ * @constructor
+ */
 AdslJumper.SoundManager = function (game) {
 
+    /** @type {number} */
     this.MUSICVOLUMEDEFAULT = 0.7;
+    /** @type {number} */
     this.SFXVOLUMEDEFAULT = 0.9;
 
+    /** @type {number} */
     this.sfxVolume = 0.9;
+    /** @type {number} */
     this.musicVolume = 0.0;
 
+    /** @type {Phaser.Game} */
     this.game = game;
 
-    // sounds
+    /** @type {Phaser.Sound} */
     this.jump = this.game.add.audio('jump');
     this.jump.volume = this.sfxVolume * 0.75;
 
+    /** @type {Phaser.Sound} */
     this.pickUp = this.game.add.audio('pickUp');
     this.pickUp.volume = this.sfxVolume * 0.6;
 
+    /** @type {Phaser.Sound} */
     this.doubleJump = this.game.add.audio('doubleJump');
     this.doubleJump.volume = this.sfxVolume;
 
+    /** @type {Phaser.Sound} */
     this.step01 = this.game.add.audio("step01");
     this.step01.volume = this.sfxVolume * 0.4;
 
+    /** @type {Phaser.Sound} */
     this.step02 = this.game.add.audio("step02");
     this.step02.volume = this.sfxVolume * 0.4;
 
+    /** @type {Phaser.Sound} */
     this.openDoor2 = this.game.add.sound("openDoor2");
     this.openDoor2.volume = this.sfxVolume;
 
+    /** @type {Phaser.Sound} */
     this.openDoor = this.game.add.audio('openDoor');
     this.openDoor.volume = this.sfxVolume;
 
+    /** @type {Phaser.Sound} */
     this.coin = this.game.add.sound("getCoin");
     this.coin.volume = this.sfxVolume * 0.75;
 
+    /** @type {Phaser.Sound} */
     this.playerDeath = this.game.add.sound("playerDeath");
     this.playerDeath.volume = this.sfxVolume;
 
+    /** @type {Phaser.Sound} */
     this.punch = this.game.add.sound("punch");
     this.punch.volume = this.sfxVolume;
 
+    /** @type {Phaser.Sound} */
     this.explosion = this.game.add.sound("explosion");
     this.explosion.volume = this.sfxVolume;
-    
+
+    /** @type {Phaser.Sound} */
     this.menuSelect0 = this.game.add.sound("menu_select_0");
     this.menuSelect0.volume = this.sfxVolume;
 
+    /** @type {Phaser.Sound} */
     this.menuSelect1 = this.game.add.sound("menu_select_1");
     this.menuSelect1.volume = this.sfxVolume;
 
     // music
+    /** @type {Phaser.Sound} */
     this.currentTrack = null;
+    /** @type {Phaser.Sound} */
     this.tempTrack = null;
 };
 
-// TODO подумать нужно ли это
 AdslJumper.SoundManager.prototype.constructor = AdslJumper.SoundManager;
 
-// void
+/**
+ * set music volume
+ * @param {number} value
+ */
 AdslJumper.SoundManager.prototype.setMusicVolume = function (value) {
-
+    // TODO logic here
 };
 
-// void
+/**
+ * set sfx volume
+ * @param {number} value
+ */
 AdslJumper.SoundManager.prototype.setSFXVolume = function (value) {
-    
+    // TODO logic here
 };
 
-// void
+/**
+ * play music
+ */
 AdslJumper.SoundManager.prototype.playTrack = function () {
     if (this.currentTrack) {
         this.currentTrack.loopFull(this.musicVolume);
@@ -150,10 +178,4 @@ AdslJumper.SoundManager.prototype.playExplosion = function () {
 // void
 AdslJumper.SoundManager.prototype.playMenuSelect = function (val) {
     this["menuSelect"+ val].play();
-};
-
-
-// boolean
-AdslJumper.SoundManager.prototype.isMusicPlaying = function () {
-
 };
