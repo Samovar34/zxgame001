@@ -156,27 +156,27 @@ AdslJumper.world.createTriggers = function (arr) {
  * create game world
  * @this {Phaser.State}
  */
-AdslJumper.world.createWorld = function () {
+AdslJumper.world.createWorld = function (map) {
     // enter door
-    AdslJumper.gameObjectFactory.createEnterDoor(this.state.map.enterDoor.x, this.state.map.enterDoor.y);
+    AdslJumper.gameObjectFactory.createEnterDoor(map.enterDoor.x, map.enterDoor.y);
 
     // exit door
     this.state.exitDoor = new AdslJumper.ExitDoor
     (
         this.state.game,
-        this.state.map.exitDoor.x * _scaleFactor,
-        (this.state.map.exitDoor.y - 60) * _scaleFactor,
-        this.state.map.exitDoor.nextLevel
+        map.exitDoor.x * _scaleFactor,
+        (map.exitDoor.y - 60) * _scaleFactor,
+        map.exitDoor.nextLevel
     );
 
     // create collision
-    this.state.collision2d = this.createCollision(this.state.map.collision);
+    this.state.collision2d = this.createCollision(map.collision);
 
     // create traps
 
     // create fx
-    this.state.fx = this.createFx(this.state.map.fx);
+    this.state.fx = this.createFx(map.fx);
 
     // create bonus
-    this.state.bonus = this.createBonus(this.state.map.bonus);
+    this.state.bonus = this.createBonus(map.bonus);
 };

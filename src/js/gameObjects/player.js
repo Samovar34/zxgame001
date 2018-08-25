@@ -9,6 +9,9 @@ AdslJumper.Player = function (game, x, y) {
     
     // extend
     Phaser.Sprite.call(this, game, x, y, "atlas_2", "player1.png");
+
+    this.anchor.setTo(0.5);
+    this.smoothed = false;
     
     // components
     this.game = game;
@@ -21,7 +24,7 @@ AdslJumper.Player = function (game, x, y) {
         acceleration: 2500, // 2500
         jump: 564, // 624
         doubleJump: 484,
-        drag: 3050, // 2950
+        drag: 3050, // 3050
         inAirAccelerationRate: 1.2, // acceleration *= inAirAccelerationRate
         inAirDrag: 0.1,
         groundDelay: 5, // delay in frames
@@ -32,20 +35,15 @@ AdslJumper.Player = function (game, x, y) {
     };
 
     // player variables
-    this.facing = "right";
     this.settable = true; // проверка на возможность настроить игрока для текущего состояния
     this.canInput = true; // возможно ли управление персонажем
-    this.isComeIn = false; // входит ли игрок в дверь
     this.isInteract = false; // может ли взаимодействовать игрок с тригерром
     this.inTrigger = false; // внутри триггера или нет?
     this.allowDoubleJump = true;
     this.allowWallSliding = true;
-
-    // items
     this.hasCard = false; // взял ли игрок специальный ключ
     
-    this.anchor.setTo(0.5);
-    this.smoothed = false;
+
 
 
     // animation
@@ -68,16 +66,35 @@ AdslJumper.Player = function (game, x, y) {
         "player13.png"
     ], this.options.doubleAnimationSpeed);
 
+    this.respawnAnimation = this.animations.add("respawn", [
+        "player15.png",
+        "player16.png",
+        "player17.png",
+        "player18.png",
+        "player19.png",
+        "player20.png",
+        "player21.png",
+        "player22.png",
+        "player23.png"
+    ], 12);
+
+    this.deathAnimation = this.animations.add("death", [
+        "player24.png",
+        "player25.png",
+        "player26.png",
+        "player27.png",
+        "player28.png",
+        "player29.png"
+    ], 16);
+
     // physics
     this.game.physics.arcade.enable(this);
-    this.body.setSize(26, 30, 4, 2);
+    this.body.setSize(28, 30, 0, 2);
     this.body.gravity.y = this.options.gravity;
-    //this.body.collideWorldBounds = true;
     this.body.acceleration.x = 0;
     this.body.maxVelocity.x = this.options.speed;
     this.body.maxVelocity.y = this.options.maxFallSpeed;
     this.body.drag.x = this.options.drag;
-    this.currentSpeed = 0; 
     this.groundDelay = this.options.groundDelay; // player can jump a few frames after leaving ground
     this.groundDelayTimer = 0;
     this.wasOnGround = true; // for custom ground check
@@ -88,7 +105,8 @@ AdslJumper.Player = function (game, x, y) {
     this.canJump = true;
     this.canDoubleJump = false;
     this.onWall = false;
-    this.acceleration = 0;
+    this.doubleJumpDelay = 10; // time when can do double jump
+    this.doubleJumpClock = 0;
     
     this.customTouchUp = false;
     this.customTouchRight = false;
@@ -110,12 +128,13 @@ AdslJumper.Player = function (game, x, y) {
 AdslJumper.Player.prototype = Object.create(Phaser.Sprite.prototype);
 AdslJumper.Player.prototype.constructor = AdslJumper.Player;
 
-AdslJumper.Player.prototype._reset = function () {
+/**
+ * restore player's variables to default
+ */
+AdslJumper.Player.prototype.restoreDefault = function () {
     // physics
     this.body.acceleration.x = 0;
 
-
-    this.currentSpeed = 0;
     this.groundDelayTimer = 0;
     this.wasOnGround = true; // for custom ground check
     this.wallBreakClock = 0; // for custom wall check
@@ -124,20 +143,27 @@ AdslJumper.Player.prototype._reset = function () {
     this.canJump = true;
     this.canDoubleJump = false;
     this.onWall = false;
-    this.acceleration = 0;
 
     this.customTouchUp = false;
     this.customTouchRight = false;
     this.customTouchDown = false;
     this.customTouchLeft = false;
 
+    this.scale.x = _scaleFactor;
+
     // player state
     this.currentState = this.groundState;
+
+    this.settable = true;
 };
 
+/**
+ * Phaser call update function. Call after State.update
+ */
 AdslJumper.Player.prototype.update = function () {
 
 
+    //TODO разобраться почему возникает прыжок если вызывать хардкорно
     if (!this.canInput) {
         return;
     }
@@ -155,17 +181,20 @@ AdslJumper.Player.prototype.update = function () {
 
     this.currentState();
 
-    if (this.canInput && Input.jumpIsJustDown()) {
+
+    if (this.canInput && Input.dy > 0) {
         this.jump();
     }
 };
 
-// player jump Y axis
-// void
-AdslJumper.Player.prototype.jump = function () {  
+/**
+ * player's jump
+ */
+AdslJumper.Player.prototype.jump = function (force) {
+
 
     // jump from wall
-    if (this._onWall() && !this._onFloor() && this.allowWallSliding) {
+    if (this._onWall() && !this._onFloor() && this.canJump && this.allowWallSliding) {
         this.wasOnGround = false;
         this.canDoubleJump = true;
         this.body.maxVelocity.y = this.options.maxFallSpeed;
@@ -183,20 +212,27 @@ AdslJumper.Player.prototype.jump = function () {
         this.currentState = this.airState;
 
     // jump from ground
-    } else if (this._onFloor() || this.wasOnGround) {
+    } else if (
+        (this._onFloor() || this.wasOnGround) &&
+        this.canJump
+    ) {
         // simple jump
         this.wasOnGround = false;
         this.canDoubleJump = true;
         // play sound
         SoundManager.playJump();
-        this.animations.play("jump");
 
         this.body.velocity.y = this.options.jump * -1;
         this.settable = true;
         this.currentState = this.airState;
 
     // double jump
-    } else if (!this._onFloor() && this.canDoubleJump && this.allowDoubleJump) {
+    } else if (
+        !this._onFloor() &&
+        this.canDoubleJump &&
+        this.allowDoubleJump &&
+        this.doubleJumpClock > this.doubleJumpDelay
+    ) {
         this.canDoubleJump = false;
         this.body.velocity.y = this.options.doubleJump * -1;
         this.settable = true;
@@ -213,49 +249,26 @@ AdslJumper.Player.prototype.jump = function () {
     }
 };
 
-// moving X axis player 
-// void
+/**
+ * X axis movement
+ */
 AdslJumper.Player.prototype.move = function () {
 
-    if (!this.body.enable) {
-        return;
-    }
+    if (this.canInput && Input.dx !== 0) {
+        this.scale.x = _scaleFactor * Input.dx;
 
-    // reset current acceleration
-    this.currentAcceleration = 0;
-
-    if (this.canInput && Input.leftIsDown()) {
-        this.facing = "left";
-        this.scale.x = _scaleFactor * -1;
-        this.currentAcceleration -= this.options.acceleration;
-
-        // play animation
-        if (this.currentState === this.groundState) {
-            this.animations.play("walk");
-        }
-    }
-    
-    if (this.canInput && Input.rightIsDown()) {
-        this.facing = "right";
-        this.scale.x = _scaleFactor;
-        this.currentAcceleration += this.options.acceleration;
-
-        // play animation
         if (this.currentState === this.groundState) {
             this.animations.play("walk");
         }
     }
 
-    // less acceleration if in air
-    if (this.currentState === this.airState) {
-        this.currentAcceleration *= this.options.inAirAccelerationRate ;
-    }
+    this.body.acceleration.x = this.options.acceleration * Input.dx;
 
-
-    this.body.acceleration.x = this.currentAcceleration;
 };
 
-// states
+/**
+ * ground state
+ */
 AdslJumper.Player.prototype.groundState = function groundState() {
     // setup player
     if (this.settable) {
@@ -264,13 +277,18 @@ AdslJumper.Player.prototype.groundState = function groundState() {
         this.settable = false;
     }
 
-    // stae logic
+    this.doubleJumpClock = 0;
+    this.canJump = true;
+
+
+    // state logic
     this.wasOnGround = true;
 
     // X axis movement
     this.move();
 
-    if (this.currentAcceleration === 0) {
+    // this.currentAcceleration
+    if (this.body.acceleration.x === 0) {
         this.animations.play("idle");
         //this.frameName = "player2.png";
     }
@@ -292,6 +310,9 @@ AdslJumper.Player.prototype.groundState = function groundState() {
     }
 };
 
+/**
+ * air state
+ */
 AdslJumper.Player.prototype.airState = function airState() {
     // setup player
     if (this.settable) {
@@ -301,12 +322,15 @@ AdslJumper.Player.prototype.airState = function airState() {
         this.settable = false; // deny set player
     }
 
+    this.doubleJumpClock++;
+
     // state logic
     if (this.wasOnGround) {
         this.groundDelayTimer++;
         if (this.groundDelayTimer > this.groundDelay) {
             this.groundDelayTimer = 0;
             this.wasOnGround = false;
+            this.canJump = false;
         }
     } else {
         this.groundDelayTimer = 0;
@@ -332,24 +356,28 @@ AdslJumper.Player.prototype.airState = function airState() {
     if (this._onWall() && this.allowWallSliding) {
         // play sound
         SoundManager.playStep02();
-
         this.settable = true; // allow set player for next state
         this.currentState = this.wallSlideState;
     } else if (this._onFloor()) { // player hit ground
         // play sound
         SoundManager.playStep02();
-        
         this.settable = true; // allow set player for next state
         this.currentState = this.groundState;
     }
 };
 
+/**
+ * wall slide state
+ */
 AdslJumper.Player.prototype.wallSlideState = function wallSlideState() {
     // setup player
     if (this.settable) {
         this.body.maxVelocity.y = this.options.grip;
         this.settable = false;
     }
+
+    this.doubleJumpClock = 0;
+    this.canJump = true;
 
     // stop any animation
     this.animations.stop();
@@ -358,7 +386,7 @@ AdslJumper.Player.prototype.wallSlideState = function wallSlideState() {
     this.frameName = "player14.png";
 
     // state logic
-    if ((Input.leftIsDown() && this.facing === "left") || (Input.rightIsDown() && this.facing === "right")) {
+    if ((Input.dx < 0 && this.scale.x < 0) || (Input.dx > 0 && this.scale.x >= 0)) {
         this.wallBreakClock = 0;
     } else {
         this.wallBreakClock++;
@@ -379,7 +407,10 @@ AdslJumper.Player.prototype.wallSlideState = function wallSlideState() {
     }
 };
 
-AdslJumper.Player.prototype.reset = function () {
+/**
+ * custom reset function
+ */
+AdslJumper.Player.prototype._reset = function () {
     this.isInteract = false;
     this.inTrigger = false;
     this.hasKey = false;
@@ -390,21 +421,56 @@ AdslJumper.Player.prototype.reset = function () {
     this.customTouchLeft = false;
 };
 
+/**
+ * custom wall check
+ * @returns {boolean}
+ */
 AdslJumper.Player.prototype._onWall = function () {
     return this.customTouchLeft || this.customTouchRight;
 };
 
+/**
+ * custom floor check
+ * @returns {boolean}
+ */
 AdslJumper.Player.prototype._onFloor = function () {
     return this.customTouchDown;
 };
 
+/**
+ * custom roof check
+ * @returns {boolean}
+ */
 AdslJumper.Player.prototype._onRoof = function () {
     return this.customTouchUp;
 };
 
+/**
+ * custom touch check
+ * @returns {boolean}
+ */
 AdslJumper.Player.prototype._isToucn = function () {
     return this.customTouchUp  ||
         this.customTouchRight  ||
         this.customTouchDown  ||
         this.customTouchLeft;
+};
+
+
+/**
+ * set callback
+ * @param {Function} fn
+ * @param {any} context
+ */
+AdslJumper.Player.prototype.setOnDeathCompleteCallback = function (fn, context) {
+    this.deathAnimation.onComplete.add(fn, context);
+};
+
+/**
+ * set callback
+ * @param {Function} fn
+ * @param {any} context
+ */
+AdslJumper.Player.prototype.setOnRespawnCompleteCallback = function (fn, context) {
+    this.respawnAnimation.onComplete.add(fn, context);
 };

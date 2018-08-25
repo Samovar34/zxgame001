@@ -12,7 +12,7 @@ AdslJumper.preloadState.prototype = {
         this.progress.scale.setTo(2);
 
         // load levels
-        for (var i = 1; i <= 3; i++) {
+        for (var i = 1; i <= 4; i++) {
             this.game.load.json("level" + i, "assets/levels/level" + i + ".json");
         }
 
@@ -21,12 +21,15 @@ AdslJumper.preloadState.prototype = {
         this.game.load.atlas("atlas_2", 'assets/images/atlas2/atlas.png', 'assets/images/atlas2/atlas.json');
         this.game.load.atlas("atlas_3", 'assets/images/atlas3/atlas.png', 'assets/images/atlas3/atlas.json'); 
 
-        // audio
+        // audio skyNetEyes
         this.load.audio('jump', 'assets/audio/jump.wav');
-        this.load.audio('openDoor', 'assets/audio/openDoor.mp3');
+        this.load.audio('openDoor', ['assets/audio/doorOpen.wav', 'assets/audio/doorOpen.ogg']);
         this.load.audio('getCoin', 'assets/audio/coin.wav');
         this.load.audio('doubleJump', 'assets/audio/doubleJump.wav');
-        this.load.audio('playerDeath', 'assets/audio/playerDeath.wav');
+        this.load.audio('playerDeath', ['assets/audio/playerDeath.wav', 'assets/audio/playerDeath.ogg']);
+        this.load.audio('playerRespawn', ['assets/audio/playerRespawn.wav', 'assets/audio/playerRespawn.ogg']);
+        this.load.audio('skyNetEyes', ['assets/audio/skynetEyes.wav', 'assets/audio/skynetEyes.ogg']);
+        this.load.audio('jumpForce', ['assets/audio/jumpForce.wav', 'assets/audio/jumpForce.ogg']);
         this.load.audio('step01', 'assets/audio/step01.wav');
         this.load.audio('step02', 'assets/audio/step02.wav');
         this.load.audio('punch', 'assets/audio/punch.wav');

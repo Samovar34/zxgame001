@@ -4,12 +4,15 @@ AdslJumper.level1.prototype = {
 
     create: function () {
         // set renderer
-        //this.game.renderer.renderSession.roundPixels = true;
+        this.game.renderer.renderSession.roundPixels = false;
         this.game.clearBeforeRender = false;
 
         // init modules
         AdslJumper.gameObjectFactory.init(this);
         AdslJumper.world.init(this);
+
+        // level variables
+        this.coinCollected = 0;
 
         // game world bounds
         this.game.world.setBounds(0, 0, 768 * _scaleFactor, 320 * _scaleFactor);
@@ -17,7 +20,9 @@ AdslJumper.level1.prototype = {
         // level essential
         this.map = this.game.cache.getJSON("level1");
 
-        // bg
+        /**
+         * @type {Phaser.Image}
+         */
         this.background = this.game.add.image(0, 0, "atlas_3", "level1.png");
         this.background.smoothed = false;
         this.background.scale.setTo(_scaleFactor);
@@ -30,11 +35,11 @@ AdslJumper.level1.prototype = {
 
         // add tutors
         if (_lang === "ru") {
-            tutorImage1 = this.game.add.image(144 * _scaleFactor, 112 * _scaleFactor, "atlas_2", "tutorial3.png"); // ru
-            tutorImage2 = this.game.add.image(432 * _scaleFactor, 112 * _scaleFactor, "atlas_2", "tutorial5.png"); // ru
+            tutorImage1 = this.game.add.image(144 * _scaleFactor, 112 * _scaleFactor, "atlas_2", "tutorial2.png"); // ru
+            tutorImage2 = this.game.add.image(432 * _scaleFactor, 112 * _scaleFactor, "atlas_2", "tutorial4.png"); // ru
         } else {
-            tutorImage1 = this.game.add.image(144 * _scaleFactor, 112 * _scaleFactor, "atlas_2", "tutorial2.png"); // en
-            tutorImage2 =this.game.add.image(432 * _scaleFactor, 112 * _scaleFactor, "atlas_2", "tutorial4.png"); // en
+            tutorImage1 = this.game.add.image(144 * _scaleFactor, 112 * _scaleFactor, "atlas_2", "tutorial1.png"); // en
+            tutorImage2 =this.game.add.image(432 * _scaleFactor, 112 * _scaleFactor, "atlas_2", "tutorial3.png"); // en
         }
 
         tutorImage1.smoothed = false;
@@ -44,7 +49,7 @@ AdslJumper.level1.prototype = {
         tutorImage2.scale.setTo(_scaleFactor);
 
         // create world
-        AdslJumper.world.createWorld();
+        AdslJumper.world.createWorld(this.map);
 
         /**
          * @type {AdslJumper.Player}
@@ -52,7 +57,6 @@ AdslJumper.level1.prototype = {
         // PLAYER
         this.player = new AdslJumper.Player(
             this.game,
-            AdslJumper.modules.inputManager,
             (this.map.player.x + 16) *_scaleFactor,
             (this.map.player.y - 16) * _scaleFactor
         );
@@ -66,34 +70,34 @@ AdslJumper.level1.prototype = {
         this.gui.setScore(_score);
 
         // MUSIC
-        if (!AdslJumper.modules.soundManager.currentTrack) {
-            AdslJumper.modules.soundManager.currentTrack = AdslJumper.modules.soundManager.tempTrack;
-            AdslJumper.modules.soundManager.tempTrack = null;
-            AdslJumper.modules.soundManager.playTrack();
+        if (!SoundManager.currentTrack) {
+            SoundManager.currentTrack = SoundManager.tempTrack;
+            SoundManager.tempTrack = null;
+            SoundManager.playTrack();
         }
 
         this.game.camera.follow(this.player,  this.game.camera.FOLLOW_PLATFORMER, 0.2, 0.2);
         this.game.camera.flash(0x000000, AdslJumper.gameOptions.cameraFlashTime);
         this.game.camera.onFlashComplete.addOnce(AdslJumper.gameFunc.onFlashCompleteFunction, this); // canInput = true
 
-        this.exitDoor.open(true);
     },
 
     update: function () {
+        Input.update();
         // reset player
-        this.player.reset();
+        this.player._reset();
 
         this.game.physics.arcade.collide(this.player, this.collision2d, AdslJumper.gameFunc.playerCollideHandler, null, this);
-        this.game.physics.arcade.overlap(this.player, this.bonus, AdslJumper.gameFunc.playerBonusHandler, null, this);
+        this.game.physics.arcade.overlap(this.player, this.bonus, AdslJumper.gameFunc.playerBonusHandler, this.doOnCoin, this);
 
         if (this.exitDoor.isOpen) {
             this.game.physics.arcade.overlap(this.player, this.exitDoor, AdslJumper.gameFunc.nextLevel, null, this);
         }
     },
 
-    render: function () {
-        this.game.debug.text(this.player.currentState.name, 8, 24);
-        this.game.debug.text(this.player.frameName, 8, 32);
-        this.game.debug.text(this.player.y, 8, 42);
+    doOnCoin: function () {
+        if (++this.coinCollected >= this.bonus.length) {
+            this.exitDoor.open(false);
+        }
     }
 };

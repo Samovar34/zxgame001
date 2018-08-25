@@ -59,12 +59,13 @@ AdslJumper.gameFunc.playerBonusHandler = function (player, bonus) {
     // TODO delete
     AdslJumper.utils.info(player.game.state.current, "bonus tag", bonus.tag);
 
-    try {
-        AdslJumper.gameFunc[bonus.tag + "Handler"].call(this, player, bonus);
-    } catch (err) {
-        AdslJumper.utils.warn(player.game.state.current, "BONUS handler not found for", bonus.tag);
+    if (player.canInput) {
+        try {
+            AdslJumper.gameFunc[bonus.tag + "Handler"].call(this, player, bonus);
+        } catch (err) {
+            AdslJumper.utils.warn(player.game.state.current, "BONUS handler not found for", bonus.tag);
+        }
     }
-
 };
 
 // столкновение игрока с миной
@@ -137,62 +138,67 @@ AdslJumper.gameFunc.explosionHandler = function (player, explosion) {
  * @param {AdslJumper.Player} player
  * @param {Phaser.Sprite} other
  */
-AdslJumper.gameFunc.gameOver = function (player, other) {
+AdslJumper.gameFunc.gameOver = function (player, other, playSound) {
+
+    playSound = typeof playSound === "boolean" ? playSound : true;
 
     // что бы быть уверенным что функция вызывается один раз
     if (this.player.canInput) {
         this.player.canInput = false;
 
+
+
         // play player death sound
-        SoundManager.playPlayerDeath();
+        if (playSound) {
+            SoundManager.playPlayerDeath();
+        }
 
         _levelDeaths++;
         _deaths++;
 
-        this.game.camera.unfollow();
+        this.player.body.stop();
+        this.player.body.gravity.y = -300;
+        this.player.animations.play("death");
 
-        // player dies
-        //this.player.pendingDestroy = true;
-        //this.player.kill();
-
-        // this.blood.x = this.player.x;
-        // this.blood.y = this.player.y;
-        // this.blood.start(true, 2200, 20, 64, 100);
-
-        // score -10 after death
+        // TODO убрать биткойн
+        // score -1 after death
         if (_score > 0) {
-            _score -= 10;
+            _score -= 1;
         }
-    
-        // camera
-        // onShakeCompleteFunction call restart level
+
+        this.gui.setScore(_score);
+
         this.game.camera.shake(0.01, 500);
     }
 
 };
 
 /**
+ * on player's death animation complete function
+ */
+AdslJumper.gameFunc.onPlayerDeathComplete = function () {
+    this.player.body.gravity.y = 0;
+    this.player.body.stop();
+    this.player.reset((this.map.player.x + 16) *_scaleFactor, (this.map.player.y - 16) *_scaleFactor);
+    this.player.restoreDefault();
+    this.player.animations.play("respawn");
+    // play player respawn sound
+    SoundManager.playPlayerRespawn();
+};
+
+/**
+ *
+ */
+AdslJumper.gameFunc.onPlayerRespawnComplete = function () {
+    this.player.body.gravity.y = this.player.options.gravity;
+    this.player.canInput = true;
+    this.player.body.velocity.y = 0;
+};
+
+/**
  *  restart level after camera shake
  */
 AdslJumper.gameFunc.onShakeCompleteFunction = function() {
-
-    this.player.body.gravity.y = 0;
-    this.player.body.stop();
-    this.player.position.setTo((this.map.player.x + 16) *_scaleFactor, (this.map.player.y - 32) *_scaleFactor);
-
-
-
-
-
-
-    setTimeout(()=> {
-        console.log(this.player);
-        this.player._reset();
-        this.player.body.gravity.y = 1000;
-        this.player.canInput = true;
-    }, 1000);
-
-    this.game.camera.follow(this.player,  this.game.camera.FOLLOW_PLATFORMER, 0.1, 0.1);
 
     // this.game.camera.fade(0x000000, 500);
     // this.game.camera.onFadeComplete.addOnce(AdslJumper.gameFunc.restartLevel, this);
@@ -231,7 +237,7 @@ AdslJumper.gameFunc.makeExplosion = function (x, y) {
 AdslJumper.gameFunc.coinHandler = function (player, coin) {
     coin.disableBodyAndKill();
     SoundManager.playCoin();
-    _score += 10;
+    _score += 1;
     this.gui.setScore(_score);
 
     return false;
@@ -270,17 +276,14 @@ AdslJumper.gameFunc.nextLevel = function (player, door) {
     player.pendingDestroy = true;
     door.animations.play("close");
 
-    // save score
-    _score = this.playerScore;
-
     // reset levelDeaths
-    _levelDeaths = 0;
+    //_levelDeaths = 0;
 
     // set next level
     _level = door.nextLevel;
 
     // camera
-    this.game.camera.follow(door,  _game.camera.FOLLOW_PLATFORMER, 0.1, 0.1);
+    this.game.camera.follow(door,  this.game.camera.FOLLOW_PLATFORMER, 0.1, 0.1);
 
     this.game.camera.fade(0x000000, AdslJumper.gameOptions.cameraFadeTime);
     this.game.camera.onFadeComplete.addOnce(AdslJumper.gameFunc.startNewLevelState, this);
@@ -290,5 +293,5 @@ AdslJumper.gameFunc.nextLevel = function (player, door) {
  * start new level
  */
 AdslJumper.gameFunc.startNewLevelState = function () {
-    _game.state.start("level" + _level);
+    this.game.state.start("level" + _level);
 };

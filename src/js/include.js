@@ -14,7 +14,6 @@
 //@@include('./gameObjects/led.js')
 //@@include('./gameObjects/mine.js')
 //@@include('./gameObjects/error01.js')
-//@@include('./gameObjects/fan01.js')
 //@@include('./gameObjects/doorSensor.js')
 //@@include('./gameObjects/screenA.js')
 //@@include('./gameObjects/platform01.js')

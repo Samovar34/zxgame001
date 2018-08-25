@@ -11,20 +11,20 @@ AdslJumper.SoundManager = function (game) {
     this.SFXVOLUMEDEFAULT = 0.9;
 
     /** @type {number} */
-    this.sfxVolume = 0.9;
+    this.sfxVolume = 0.7;
     /** @type {number} */
-    this.musicVolume = 0.0;
+    this.musicVolume = 0.8;
 
     /** @type {Phaser.Game} */
     this.game = game;
 
     /** @type {Phaser.Sound} */
     this.jump = this.game.add.audio('jump');
-    this.jump.volume = this.sfxVolume * 0.75;
+    this.jump.volume = this.sfxVolume;
 
     /** @type {Phaser.Sound} */
     this.pickUp = this.game.add.audio('pickUp');
-    this.pickUp.volume = this.sfxVolume * 0.6;
+    this.pickUp.volume = this.sfxVolume;
 
     /** @type {Phaser.Sound} */
     this.doubleJump = this.game.add.audio('doubleJump');
@@ -32,11 +32,11 @@ AdslJumper.SoundManager = function (game) {
 
     /** @type {Phaser.Sound} */
     this.step01 = this.game.add.audio("step01");
-    this.step01.volume = this.sfxVolume * 0.4;
+    this.step01.volume = this.sfxVolume;
 
     /** @type {Phaser.Sound} */
     this.step02 = this.game.add.audio("step02");
-    this.step02.volume = this.sfxVolume * 0.4;
+    this.step02.volume = this.sfxVolume;
 
     /** @type {Phaser.Sound} */
     this.openDoor2 = this.game.add.sound("openDoor2");
@@ -48,7 +48,7 @@ AdslJumper.SoundManager = function (game) {
 
     /** @type {Phaser.Sound} */
     this.coin = this.game.add.sound("getCoin");
-    this.coin.volume = this.sfxVolume * 0.75;
+    this.coin.volume = this.sfxVolume;
 
     /** @type {Phaser.Sound} */
     this.playerDeath = this.game.add.sound("playerDeath");
@@ -69,6 +69,18 @@ AdslJumper.SoundManager = function (game) {
     /** @type {Phaser.Sound} */
     this.menuSelect1 = this.game.add.sound("menu_select_1");
     this.menuSelect1.volume = this.sfxVolume;
+
+    /** @type {Phaser.Sound} */
+    this.playerRespawn = this.game.add.audio('playerRespawn');
+    this.playerRespawn.volume = this.sfxVolume;
+
+    /** @type {Phaser.Sound} */
+    this.skyNetEyes = this.game.add.audio('skyNetEyes');
+    this.skyNetEyes.volume = this.sfxVolume;
+
+    /** @type {Phaser.Sound} */
+    this.jumpForce = this.game.add.audio('jumpForce');
+    this.jumpForce.volume = this.sfxVolume;
 
     // music
     /** @type {Phaser.Sound} */
@@ -167,6 +179,27 @@ AdslJumper.SoundManager.prototype.playPlayerDeath = function () {
 AdslJumper.SoundManager.prototype.playPunch = function () {
     if (!this.punch.isPlaying) {
         this.punch.play();
+    }
+};
+
+// void
+AdslJumper.SoundManager.prototype.playPlayerRespawn = function () {
+    if (!this.playerRespawn.isPlaying) {
+        this.playerRespawn.play();
+    }
+};
+
+// void
+AdslJumper.SoundManager.prototype.playSkyNetEyes = function () {
+    if (!this.skyNetEyes.isPlaying) {
+        this.skyNetEyes.play();
+    }
+};
+
+// void
+AdslJumper.SoundManager.prototype.playJumpForce = function () {
+    if (!this.jumpForce.isPlaying) {
+        this.jumpForce.play();
     }
 };
 

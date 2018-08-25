@@ -31,6 +31,9 @@ AdslJumper.Input = function (game) {
     this.runButton = this.game.input.keyboard.addKey(Phaser.Keyboard.L);
 
     this.jumpButtonBuffer = 0;
+
+    this.dx = 0;
+    this.dy = 0;
 };
 
 AdslJumper.Input.prototype.constructor = AdslJumper.Input;
@@ -39,11 +42,21 @@ AdslJumper.Input.prototype.constructor = AdslJumper.Input;
  * input manager update
  */
 AdslJumper.Input.prototype.update = function () {
+    // reset
+    this.dx = 0;
+    this.dy = 0;
+
     if (this.game.input.gamepad.supported && this.game.input.gamepad.active && this.pad1.connected) {
         this.usingPad = true;
     } else {
         this.usingPad = false;
     }
+
+    if (this.leftIsDown()) this.dx += - 1;
+    if (this.rightIsDown()) this.dx += 1;
+    if (this.jumpIsJustDown()) this.dy += 1;
+
+
 };
 
 /**

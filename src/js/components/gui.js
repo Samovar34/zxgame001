@@ -1,5 +1,9 @@
-// GUI component
-// extends Phaser.Sprite class
+/**
+ * Game GUI component
+ * @param {Phaser.Game} game
+ * @this {Phaser.Sprite}
+ * @constructor
+ */
 AdslJumper.GUI = function (game) {
 
     // extend
@@ -42,12 +46,20 @@ AdslJumper.GUI = function (game) {
 AdslJumper.GUI.prototype = Object.create(Phaser.Sprite.prototype);
 AdslJumper.GUI.prototype.constructor = AdslJumper.GUI;
 
+/**
+ * set room
+ * @param {String | Number} room
+ */
 AdslJumper.GUI.prototype.setRoom = function (room) {
-    room = room + "";
+    room += "";
     this.roomNumber0.frameName = "numbers" + (parseInt(room[0]) + 1) + ".png";
     this.roomNumber1.frameName = "numbers" + (parseInt(room[1]) + 1) + ".png";
 };
 
+/**
+ * set score
+ * @param {String | Number} score
+ */
 AdslJumper.GUI.prototype.setScore = function (score) {
     score += "";
     score = this.zero[score.length + ""] + score;

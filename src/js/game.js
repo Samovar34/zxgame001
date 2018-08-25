@@ -18,7 +18,7 @@ var AdslJumper = (function () {
 	 * 	@global
      * 	@type {string}
      * */
-	var _lang = "ru";
+	var _lang = "en"; // ru en de
     /** @global
      * 	@type {number}
      * */
@@ -67,8 +67,8 @@ var AdslJumper = (function () {
 	AdslJumper.init = function () {
         _game = new Phaser.Game(
             {
-                width: 960, // 1136 1024
-                height: 540, // 640  576
+                width: 1280, // 1136 1024
+                height: 720, // 640  576
                 renderer: Phaser.AUTO,
                 enableDebug: true,
                 antialias: false
@@ -79,8 +79,12 @@ var AdslJumper = (function () {
         _game.state.add("story", AdslJumper.storyState);
         _game.state.add("menu", AdslJumper.menuState);
         _game.state.add("waitDecodeAudio", AdslJumper.waitDecodeAudio);
+
+        // levels
         _game.state.add("level1", AdslJumper.level1);
         _game.state.add("level2", AdslJumper.level2);
+        _game.state.add("level3", AdslJumper.level3);
+        _game.state.add("level4", AdslJumper.level4);
 
         _game.state.start("boot");
 	};

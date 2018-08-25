@@ -98,7 +98,7 @@ AdslJumper.ExitDoor.prototype.open = function (isMute) {
         this.isOpening = true;
         // play sound
         if (!isMute) {
-            AdslJumper.modules.soundManager.playOpenDoor();
+            SoundManager.playOpenDoor();
         }        
 
         this.animations.play("open");

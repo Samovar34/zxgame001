@@ -119,12 +119,31 @@ AdslJumper.gameObjectFactory.createFartParticles = function () {
     gameObject.makeParticles("atlas_2", ["sparks2.png", "sparks3.png"]);
     gameObject.setYSpeed(-6, 32);
     gameObject.setXSpeed(-24, 24);
-    gameObject.setScale(1, 2, 1, 2);
+    gameObject.setScale(1, _scaleFactor, 1, _scaleFactor);
     gameObject.minRotation = 0;
     gameObject.maxRotation = 0;
     gameObject.alpha = 0.4;
 
     return gameObject;
+};
+
+/**
+ * create jumpForce game object
+ * @param {number} x
+ * @param {number} y
+ * @returns {Phaser.Sprite}
+ */
+AdslJumper.gameObjectFactory.jumpForce = function (x, y) {
+    var sprite = this.state.add.sprite(x * _scaleFactor, y * _scaleFactor, "atlas_2", "jumpForce1.png");
+
+    sprite.smoothed = false;
+    sprite.scale.setTo(_scaleFactor);
+
+    sprite.animations.add("default", ["jumpForce1.png", "jumpForce2.png", "jumpForce3.png"], 4, true);
+
+    sprite.animations.play("default");
+
+    return sprite;
 };
 
 
