@@ -67,9 +67,9 @@ var AdslJumper = (function () {
 	AdslJumper.init = function () {
         _game = new Phaser.Game(
             {
-                width: 1280, // 1136 1024
-                height: 720, // 640  576
-                renderer: Phaser.AUTO,
+                width: 960, // 1136 1024
+                height: 540, // 640  576
+                renderer: Phaser.CANVAS,
                 enableDebug: true,
                 antialias: false
             }

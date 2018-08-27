@@ -12,18 +12,18 @@ AdslJumper.level2.prototype = {
         AdslJumper.world.init(this);
 
         // game world bounds
-        this.game.world.setBounds(0, 0, 768 * _scaleFactor, 320 * _scaleFactor);
+        this.game.world.setBounds(0, 0, 640 * _scaleFactor, 272 * _scaleFactor);
 
         // level essential
         this.map = this.game.cache.getJSON("level2");
 
         // bg
-        this.background = this.game.add.image(0, 0, "atlas_3", "level2.png");
+        this.background = this.game.add.image(0, 0,"level2bg");
         this.background.smoothed = false;
         this.background.scale.setTo(_scaleFactor);
 
         // special level sprite
-        this.scyNet = this.add.sprite(391 * _scaleFactor, (107 - 32) * _scaleFactor, "atlas_2", "screenF1.png");
+        this.scyNet = this.add.sprite(311 * _scaleFactor, 107 * _scaleFactor, "atlas_2", "screenF1.png");
         this.scyNet.smoothed = false;
         this.scyNet.scale.setTo(_scaleFactor);
         this.playSkyNetSound = true;
@@ -39,8 +39,8 @@ AdslJumper.level2.prototype = {
             (this.map.player.y - 16) * _scaleFactor
         );
         this.player.canInput = false;
-        this.player.allowDoubleJump = true;
-        this.player.allowWallSliding = true;
+        this.player.allowDoubleJump = false;
+        this.player.allowWallSliding = false;
 
         // essential
         this.player.setOnDeathCompleteCallback(AdslJumper.gameFunc.onPlayerDeathComplete, this);

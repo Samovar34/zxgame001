@@ -22,7 +22,7 @@ AdslJumper.level4.prototype = {
         /**
          * @type {Phaser.Image}
          */
-        this.background = this.game.add.image(0, 0, "atlas_3", "level4.png");
+        this.background = this.game.add.image(0, 0, "level4bg.png");
         this.background.smoothed = false;
         this.background.scale.setTo(_scaleFactor);
 

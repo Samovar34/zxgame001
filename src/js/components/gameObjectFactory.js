@@ -139,13 +139,46 @@ AdslJumper.gameObjectFactory.jumpForce = function (x, y) {
     sprite.smoothed = false;
     sprite.scale.setTo(_scaleFactor);
 
-    sprite.animations.add("default", ["jumpForce1.png", "jumpForce2.png", "jumpForce3.png"], 4, true);
+    sprite.animations.add("default", ["jumpForce1.png", "jumpForce2.png", "jumpForce3.png", "jumpForce4.png"], 8, true);
 
     sprite.animations.play("default");
 
     return sprite;
 };
 
+/**
+ * create arrowRight game object
+ * @param {number} x
+ * @param {number} y
+ * @returns {Phaser.Sprite}
+ */
+AdslJumper.gameObjectFactory.arrowRight = function (x, y) {
+    var sprite = this.state.add.sprite(x * _scaleFactor, (y - 16) * _scaleFactor, "atlas_2", "arrowRight1.png");
+
+    sprite.smoothed = false;
+    sprite.scale.setTo(_scaleFactor);
+
+    sprite.animations.add("default", ["arrowRight1.png", "arrowRight2.png", "arrowRight3.png"], 8, true);
+
+    return sprite;
+};
+
+/**
+ * create wallLight game object
+ * @param {number} x
+ * @param {number} y
+ * @returns {Phaser.Sprite}
+ */
+AdslJumper.gameObjectFactory.wallLight = function (x, y) {
+    var sprite = this.state.add.sprite(x * _scaleFactor, (y - 16) * _scaleFactor, "atlas_2", "wallLight1.png");
+
+    sprite.smoothed = false;
+    sprite.scale.setTo(_scaleFactor);
+
+    sprite.animations.add("default", ["wallLight1.png", "wallLight2.png"], 1, true);
+
+    return sprite;
+};
 
 AdslJumper.gameObjectFactory1 = {
 

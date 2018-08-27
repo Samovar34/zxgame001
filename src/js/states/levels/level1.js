@@ -15,7 +15,7 @@ AdslJumper.level1.prototype = {
         this.coinCollected = 0;
 
         // game world bounds
-        this.game.world.setBounds(0, 0, 768 * _scaleFactor, 320 * _scaleFactor);
+        this.game.world.setBounds(0, 0, 480 * _scaleFactor, 272 * _scaleFactor);
 
         // level essential
         this.map = this.game.cache.getJSON("level1");
@@ -23,30 +23,30 @@ AdslJumper.level1.prototype = {
         /**
          * @type {Phaser.Image}
          */
-        this.background = this.game.add.image(0, 0, "atlas_3", "level1.png");
+        this.background = this.game.add.image(0, 0, "level1bg");
         this.background.smoothed = false;
         this.background.scale.setTo(_scaleFactor);
 
-        /** @type {Phaser.Image}*/
-        var tutorImage1 = null;
-
-        /** @type {Phaser.Image}*/
-        var tutorImage2 = null;
-
-        // add tutors
-        if (_lang === "ru") {
-            tutorImage1 = this.game.add.image(144 * _scaleFactor, 112 * _scaleFactor, "atlas_2", "tutorial2.png"); // ru
-            tutorImage2 = this.game.add.image(432 * _scaleFactor, 112 * _scaleFactor, "atlas_2", "tutorial4.png"); // ru
-        } else {
-            tutorImage1 = this.game.add.image(144 * _scaleFactor, 112 * _scaleFactor, "atlas_2", "tutorial1.png"); // en
-            tutorImage2 =this.game.add.image(432 * _scaleFactor, 112 * _scaleFactor, "atlas_2", "tutorial3.png"); // en
-        }
-
-        tutorImage1.smoothed = false;
-        tutorImage2.smoothed = false;
-
-        tutorImage1.scale.setTo(_scaleFactor);
-        tutorImage2.scale.setTo(_scaleFactor);
+        // /** @type {Phaser.Image}*/
+        // var tutorImage1 = null;
+        //
+        // /** @type {Phaser.Image}*/
+        // var tutorImage2 = null;
+        //
+        // // add tutors
+        // if (_lang === "ru") {
+        //     tutorImage1 = this.game.add.image(144 * _scaleFactor, 112 * _scaleFactor, "atlas_2", "tutorial2.png"); // ru
+        //     tutorImage2 = this.game.add.image(432 * _scaleFactor, 112 * _scaleFactor, "atlas_2", "tutorial4.png"); // ru
+        // } else {
+        //     tutorImage1 = this.game.add.image(144 * _scaleFactor, 112 * _scaleFactor, "atlas_2", "tutorial1.png"); // en
+        //     tutorImage2 =this.game.add.image(432 * _scaleFactor, 112 * _scaleFactor, "atlas_2", "tutorial3.png"); // en
+        // }
+        //
+        // tutorImage1.smoothed = false;
+        // tutorImage2.smoothed = false;
+        //
+        // tutorImage1.scale.setTo(_scaleFactor);
+        // tutorImage2.scale.setTo(_scaleFactor);
 
         // create world
         AdslJumper.world.createWorld(this.map);
@@ -79,7 +79,6 @@ AdslJumper.level1.prototype = {
         this.game.camera.follow(this.player,  this.game.camera.FOLLOW_PLATFORMER, 0.2, 0.2);
         this.game.camera.flash(0x000000, AdslJumper.gameOptions.cameraFlashTime);
         this.game.camera.onFlashComplete.addOnce(AdslJumper.gameFunc.onFlashCompleteFunction, this); // canInput = true
-
     },
 
     update: function () {

@@ -16,10 +16,14 @@ AdslJumper.preloadState.prototype = {
             this.game.load.json("level" + i, "assets/levels/level" + i + ".json");
         }
 
+        // level images
+        for (i = 1; i <= 4; i++) {
+            this.load.image("level" + i + "bg", "assets/images/levels/level" + i + ".png");
+        }
+
         // atlas
         this.game.load.atlas("atlas_1", 'assets/images/atlas1/atlas.png', 'assets/images/atlas1/atlas.json'); 
         this.game.load.atlas("atlas_2", 'assets/images/atlas2/atlas.png', 'assets/images/atlas2/atlas.json');
-        this.game.load.atlas("atlas_3", 'assets/images/atlas3/atlas.png', 'assets/images/atlas3/atlas.json'); 
 
         // audio skyNetEyes
         this.load.audio('jump', 'assets/audio/jump.wav');
