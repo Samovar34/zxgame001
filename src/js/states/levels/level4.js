@@ -1,6 +1,4 @@
-AdslJumper.level4 = function () {};
-
-AdslJumper.level4.prototype = {
+AdslJumper.level4 = {
 
     create: function () {
         // set renderer
@@ -14,7 +12,7 @@ AdslJumper.level4.prototype = {
         // level variables
 
         // game world bounds
-        this.game.world.setBounds(0, 0, 768 * _scaleFactor, 512 * _scaleFactor);
+        this.game.world.setBounds(0, 0, 736 * _scaleFactor, 448 * _scaleFactor);
 
         // level essential
         this.map = this.game.cache.getJSON("level4");
@@ -22,11 +20,11 @@ AdslJumper.level4.prototype = {
         /**
          * @type {Phaser.Image}
          */
-        this.background = this.game.add.image(0, 0, "level4bg.png");
+        this.background = this.game.add.image(0, 0, "level4bg");
         this.background.smoothed = false;
         this.background.scale.setTo(_scaleFactor);
 
-        AdslJumper.gameObjectFactory.jumpForce(684, 384);
+        AdslJumper.gameObjectFactory.jumpForce(662, 320);
 
         // create world
         AdslJumper.world.createWorld(this.map);
@@ -49,8 +47,6 @@ AdslJumper.level4.prototype = {
         // essential
         this.player.setOnDeathCompleteCallback(AdslJumper.gameFunc.onPlayerDeathComplete, this);
         this.player.setOnRespawnCompleteCallback(AdslJumper.gameFunc.onPlayerRespawnComplete, this);
-
-        console.log(this.triggers);
 
         // GUI
         this.gui = new AdslJumper.GUI(this.game);
@@ -87,6 +83,7 @@ AdslJumper.level4.prototype = {
 
     strongJump: function () {
         SoundManager.playJumpForce();
+        this.player.canJump = false;
         this.player.body.velocity.y = - 1200;
 
     },

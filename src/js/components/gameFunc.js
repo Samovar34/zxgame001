@@ -164,6 +164,10 @@ AdslJumper.gameFunc.gameOver = function (player, other, playSound) {
         // score -1 after death
         if (_score > 0) {
             _score -= 1;
+            this.gui.flash();
+        } else {
+            // continue state
+            alert("ГАМОВЕР");
         }
 
         this.gui.setScore(_score);

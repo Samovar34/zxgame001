@@ -54,9 +54,9 @@ AdslJumper.preloadState.prototype = {
     create: function () {
 
         // game modules and debug
-        SoundManager = new AdslJumper.SoundManager(_game);
-        Input = new AdslJumper.Input(_game);
-        AdslJumper.utils.enableDebug = _game.debug.isDisabled;
+        SoundManager = new AdslJumper.SoundManager(Game);
+        Input = new AdslJumper.Input(Game);
+        AdslJumper.utils.enableDebug = Game.debug.isDisabled;
 
         // TODO del
         var urlLevel = parseInt(window.location.hash.slice(1).trim());

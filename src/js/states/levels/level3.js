@@ -1,6 +1,4 @@
-AdslJumper.level3 = function () {};
-
-AdslJumper.level3.prototype = {
+AdslJumper.level3 = {
 
     create: function () {
         // set renderer
@@ -11,11 +9,9 @@ AdslJumper.level3.prototype = {
         AdslJumper.gameObjectFactory.init(this);
         AdslJumper.world.init(this);
 
-        // level variables
-        this.coinCollected = 0;
 
         // game world bounds
-        this.game.world.setBounds(0, 0, 480 * _scaleFactor, 288 * _scaleFactor);
+        this.game.world.setBounds(0, 0, 480 * _scaleFactor, 272 * _scaleFactor);
 
         // level essential
         this.map = this.game.cache.getJSON("level3");
@@ -43,13 +39,11 @@ AdslJumper.level3.prototype = {
         );
         this.player.canInput = false;
         this.player.allowDoubleJump = true;
-        this.player.allowWallSliding = false;
+        this.player.allowWallSliding = true;
 
         // essential
         this.player.setOnDeathCompleteCallback(AdslJumper.gameFunc.onPlayerDeathComplete, this);
         this.player.setOnRespawnCompleteCallback(AdslJumper.gameFunc.onPlayerRespawnComplete, this);
-
-        console.log(this.triggers);
 
         // GUI
         this.gui = new AdslJumper.GUI(this.game);

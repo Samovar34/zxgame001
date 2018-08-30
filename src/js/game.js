@@ -34,10 +34,12 @@ var AdslJumper = (function () {
      */
     var _scaleFactor = 2;
 
-    /** @global
+    /**
+     * Phaser.Game instance
+     * @global
 	 * @type {Phaser.Game}
 	 * */
-    var _game;
+    var Game;
 
     /**
      * input manager instance
@@ -53,40 +55,34 @@ var AdslJumper = (function () {
      */
     var SoundManager;
 
-    /**
-	 * loaded game components, such Input, SoundManager
-     * @type {{}}
-     */
-    AdslJumper.modules = {};
-
     //@@include('./include.js')
 
     /**
 	 * init game, create states and run boot state
      */
 	AdslJumper.init = function () {
-        _game = new Phaser.Game(
+        Game = new Phaser.Game(
             {
                 width: 960, // 1136 1024
                 height: 540, // 640  576
-                renderer: Phaser.CANVAS,
+                renderer: Phaser.AUTO,
                 enableDebug: true,
                 antialias: false
             }
         );
-        _game.state.add("boot", AdslJumper.bootState);
-        _game.state.add("preload", AdslJumper.preloadState);
-        _game.state.add("story", AdslJumper.storyState);
-        _game.state.add("menu", AdslJumper.menuState);
-        _game.state.add("waitDecodeAudio", AdslJumper.waitDecodeAudio);
+        Game.state.add("boot", AdslJumper.bootState);
+        Game.state.add("preload", AdslJumper.preloadState);
+        Game.state.add("story", AdslJumper.storyState);
+        Game.state.add("menu", AdslJumper.menuState);
+        Game.state.add("waitDecodeAudio", AdslJumper.waitDecodeAudio);
 
         // levels
-        _game.state.add("level1", AdslJumper.level1);
-        _game.state.add("level2", AdslJumper.level2);
-        _game.state.add("level3", AdslJumper.level3);
-        _game.state.add("level4", AdslJumper.level4);
+        Game.state.add("level1", AdslJumper.level1);
+        Game.state.add("level2", AdslJumper.level2);
+        Game.state.add("level3", AdslJumper.level3);
+        Game.state.add("level4", AdslJumper.level4);
 
-        _game.state.start("boot");
+        Game.state.start("boot");
 	};
 
 	return AdslJumper;

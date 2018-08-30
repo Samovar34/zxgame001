@@ -42,7 +42,7 @@ AdslJumper.ExitDoor = function (game, x, y, nextLevel) {
     
     // physics
     this.game.physics.arcade.enable(this);
-    this.body.setSize(40, 46, 4, 6);
+    this.body.setSize(16, 40, 16, 20);
     this.body.immovable = true;
 
     

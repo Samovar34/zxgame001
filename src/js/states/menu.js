@@ -1,10 +1,6 @@
-AdslJumper.menuState = function (game) {};
-
-AdslJumper.menuState.prototype = {
+AdslJumper.menuState = {
     create: function () {
-        this.gameObjectFactory = AdslJumper.modules.gameObjectFactory;
-        this.soundManager = AdslJumper.modules.soundManager;
-        this.input = new AdslJumper.Input(this.game);
+        AdslJumper.gameObjectFactory.init(this);
 
         // variables
         this.menuX = 272;
@@ -14,9 +10,6 @@ AdslJumper.menuState.prototype = {
         this.curItem = 0;
         this.currentState;
         this.canInput = true;
-
-        // background image or WebGL Shader
-        //this.background = this.gameObjectFactory.createBackGround01();
 
         var logo = this.game.add.sprite(0, 0, "atlas_1", "logo.png");
         logo.scale.setTo(1);
@@ -36,68 +29,66 @@ AdslJumper.menuState.prototype = {
     },
     
     update: function () {
-        this.input.update();
+        Input.update();
         this.currentState();
-    }    
-};
+    },
 
-AdslJumper.menuState.prototype.updateMenu = function () {
-    if (this.input.jumpIsJustDown() && this.canInput) {
-        this.setMenu("down");
-    } else if(this.input.downIsJustDown() && this.canInput) {
-        this.setMenu("up");
-    } else if (this.input.selectButtonIsJustDown() && this.canInput) {
-        this.soundManager.playMenuSelect(1);
+    updateMenu: function () {
+        if (Input.jumpIsJustDown() && this.canInput) {
+            this.setMenu("down");
+        } else if (Input.downIsJustDown() && this.canInput) {
+            this.setMenu("up");
+        } else if (Input.selectButtonIsJustDown() && this.canInput) {
+            SoundManager.playMenuSelect(1);
 
-        // start new game
-        if (this.curItem === 0) {
-            this.game.camera.fade(0x000000, 800);
-            this.continue.kill();
-            this.options.kill();
-            this.about.kill();
-            this.game.camera.onFadeComplete.addOnce(function() {
-                this.soundManager.currentTrack.stop();
-                this.soundManager.currentTrack = null;
+            // start new game
+            if (this.curItem === 0) {
+                this.game.camera.fade(0x000000, 800);
+                this.continue.kill();
+                this.options.kill();
+                this.about.kill();
+                this.game.camera.onFadeComplete.addOnce(function () {
+                    SoundManager.currentTrack.stop();
+                    SoundManager.currentTrack = null;
 
-                // clear cache
-                this.game.cache.removeTextureAtlas("atlas_1");
-                this.game.cache.removeSound("intro");
+                    // clear cache
+                    this.game.cache.removeTextureAtlas("atlas_1");
+                    this.game.cache.removeSound("intro");
 
-                AdslJumper.data.level = 1;
+                    _level = 1;
 
-                // play
-                this.game.state.start("waitDecodeAudio");
-            }, this);
-        } else if (this.curItem === 1) {
-            console.log("начать с того места где остановился");
-        } else if (this.curItem === 2) {
-            console.log("показать настройки");
-        } else {
-            console.log("тут будет о игре");
+                    // play
+                    this.game.state.start("waitDecodeAudio");
+                }, this);
+            } else if (this.curItem === 1) {
+                console.log("начать с того места где остановился");
+            } else if (this.curItem === 2) {
+                console.log("показать настройки");
+            } else {
+                console.log("тут будет о игре");
+            }
         }
+    },
+
+    setMenu: function (val) {
+        if (val === "down") {
+            this.curItem--;
+            if (this.curItem < 0) {
+                this.curItem = this.menuItems;
+            }
+            this.arrow.y =this.munuY + this.menuOffsetY*this.curItem;
+            SoundManager.playMenuSelect(0);
+        } else if (val === "up") {
+            this.curItem++;
+            if (this.curItem > this.menuItems) {
+                this.curItem = 0;
+            }
+            this.arrow.y = this.munuY + this.menuOffsetY*this.curItem;
+            SoundManager.playMenuSelect(0);
+        }
+    },
+
+    topMenu: function () {
+        this.updateMenu();
     }
-};
-
-// void
-AdslJumper.menuState.prototype.setMenu = function (val) {
-    if (val === "down") {
-        this.curItem--;
-        if (this.curItem < 0) {
-            this.curItem = this.menuItems;
-        }
-        this.arrow.y =this.munuY + this.menuOffsetY*this.curItem;
-        this.soundManager.playMenuSelect(0);
-    } else if (val === "up") {
-        this.curItem++;
-        if (this.curItem > this.menuItems) {
-            this.curItem = 0;
-        }
-        this.arrow.y = this.munuY + this.menuOffsetY*this.curItem;
-        this.soundManager.playMenuSelect(0);
-    }
-};
-
-// void
-AdslJumper.menuState.prototype.topMenu = function () {
-    this.updateMenu();
 };

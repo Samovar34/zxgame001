@@ -47,12 +47,12 @@ AdslJumper.Player = function (game, x, y) {
 
 
     // animation
-    this.animations.add("idle", [
+    this.idleAnimation = this.animations.add("idle", [
         "player1.png",
         "player2.png"
     ], 2);
 
-    this.animations.add("walk", [
+    this.walkAnimation = this.animations.add("walk", [
         "player3.png",
         "player4.png",
         "player5.png",
@@ -89,7 +89,7 @@ AdslJumper.Player = function (game, x, y) {
 
     // physics
     this.game.physics.arcade.enable(this);
-    this.body.setSize(28, 30, 0, 2);
+    this.body.setSize(20, 30, 7, 2);
     this.body.gravity.y = this.options.gravity;
     this.body.acceleration.x = 0;
     this.body.maxVelocity.x = this.options.speed;
@@ -258,7 +258,10 @@ AdslJumper.Player.prototype.move = function () {
         this.scale.x = _scaleFactor * Input.dx;
 
         if (this.currentState === this.groundState) {
-            this.animations.play("walk");
+            if (!this.walkAnimation.isPlaying) {
+                this.animations.play("walk");
+            }
+
         }
     }
 
@@ -289,8 +292,12 @@ AdslJumper.Player.prototype.groundState = function groundState() {
 
     // this.currentAcceleration
     if (this.body.acceleration.x === 0) {
-        this.animations.play("idle");
-        //this.frameName = "player2.png";
+        if (this.walkAnimation.isPlaying) {
+            this.walkAnimation.stop();
+        }
+        if (!this.idleAnimation.isPlaying) {
+            this.animations.play("idle");
+        }
     }
     
     // play sound

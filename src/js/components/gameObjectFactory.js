@@ -128,7 +128,7 @@ AdslJumper.gameObjectFactory.createFartParticles = function () {
 };
 
 /**
- * create jumpForce game object
+ * create jumpForce game object and add to the game world
  * @param {number} x
  * @param {number} y
  * @returns {Phaser.Sprite}
@@ -153,7 +153,7 @@ AdslJumper.gameObjectFactory.jumpForce = function (x, y) {
  * @returns {Phaser.Sprite}
  */
 AdslJumper.gameObjectFactory.arrowRight = function (x, y) {
-    var sprite = this.state.add.sprite(x * _scaleFactor, (y - 16) * _scaleFactor, "atlas_2", "arrowRight1.png");
+    var sprite = this.state.make.sprite(x * _scaleFactor, (y - 16) * _scaleFactor, "atlas_2", "arrowRight1.png");
 
     sprite.smoothed = false;
     sprite.scale.setTo(_scaleFactor);
@@ -170,7 +170,7 @@ AdslJumper.gameObjectFactory.arrowRight = function (x, y) {
  * @returns {Phaser.Sprite}
  */
 AdslJumper.gameObjectFactory.wallLight = function (x, y) {
-    var sprite = this.state.add.sprite(x * _scaleFactor, (y - 16) * _scaleFactor, "atlas_2", "wallLight1.png");
+    var sprite = this.state.make.sprite(x * _scaleFactor, (y - 16) * _scaleFactor, "atlas_2", "wallLight1.png");
 
     sprite.smoothed = false;
     sprite.scale.setTo(_scaleFactor);
@@ -179,6 +179,205 @@ AdslJumper.gameObjectFactory.wallLight = function (x, y) {
 
     return sprite;
 };
+
+/**
+ * create fx game object
+ * @param {number} x
+ * @param {number} y
+ * @returns {Phaser.Sprite}
+ */
+AdslJumper.gameObjectFactory.screenErrorBig = function (x, y) {
+    var sprite = this.state.make.sprite(x * _scaleFactor, (y - 32) * _scaleFactor, "atlas_2", "screenErrorBig1.png");
+
+    sprite.smoothed = false;
+    sprite.scale.setTo(_scaleFactor);
+
+    sprite.animations.add("default", [
+        "screenErrorBig1.png", // E
+        "screenErrorBig4.png",
+        "screenErrorBig2.png", // R
+        "screenErrorBig4.png",
+        "screenErrorBig2.png", // R
+        "screenErrorBig4.png",
+        "screenErrorBig3.png", // O
+        "screenErrorBig4.png",
+        "screenErrorBig2.png", // R
+        "screenErrorBig4.png",
+        "screenErrorBig4.png",
+        "screenErrorBig4.png",
+        "screenErrorBig4.png"
+    ], 6, true);
+
+
+    return sprite;
+};
+
+/**
+ * create fx game object
+ * @param {number} x
+ * @param {number} y
+ * @returns {Phaser.Sprite}
+ */
+AdslJumper.gameObjectFactory.screenErrorFace = function (x, y) {
+    var sprite = this.state.make.sprite(x * _scaleFactor, (y - 22) * _scaleFactor, "atlas_2", "screenErrorFace1.png");
+
+    sprite.smoothed = false;
+    sprite.scale.setTo(_scaleFactor);
+
+    sprite.animations.add("default", [
+        "screenErrorFace1.png",
+        "screenErrorFace2.png",
+    ], 4, true);
+
+    return sprite;
+};
+
+/**
+ * create fx game object
+ * @param {number} x
+ * @param {number} y
+ * @returns {Phaser.Sprite}
+ */
+AdslJumper.gameObjectFactory.screenLan = function (x, y) {
+    var sprite = this.state.make.sprite(x * _scaleFactor, (y - 32) * _scaleFactor, "atlas_2", "screenLan1.png");
+
+    sprite.smoothed = false;
+    sprite.scale.setTo(_scaleFactor);
+
+    sprite.animations.add("default", [
+        "screenLan1.png",
+        "screenLan2.png",
+        "screenLan3.png",
+        "screenLan4.png"
+    ], 8, true);
+
+    return sprite;
+};
+
+/**
+ * create fx game object
+ * @param {number} x
+ * @param {number} y
+ * @returns {Phaser.Sprite}
+ */
+AdslJumper.gameObjectFactory.screenPercentage = function (x, y) {
+    var sprite = this.state.make.sprite(x * _scaleFactor, (y - 10) * _scaleFactor, "atlas_2", "screenPercentage1.png");
+
+    sprite.smoothed = false;
+    sprite.scale.setTo(_scaleFactor);
+
+    sprite.animations.add("default", [
+        "screenPercentage1.png",
+        "screenPercentage2.png",
+        "screenPercentage3.png",
+        "screenPercentage4.png",
+        "screenPercentage5.png",
+        "screenPercentage6.png",
+        "screenPercentage7.png",
+        "screenPercentage6.png",
+        "screenPercentage5.png",
+        "screenPercentage3.png",
+        "screenPercentage2.png"
+    ], 4, true);
+
+    return sprite;
+};
+
+/**
+ * create fx game object
+ * @param {number} x
+ * @param {number} y
+ * @returns {Phaser.Sprite}
+ */
+AdslJumper.gameObjectFactory.screenSad = function (x, y) {
+    var sprite = this.state.make.sprite(x * _scaleFactor, (y - 32) * _scaleFactor, "atlas_2", "screenSad1.png");
+
+    sprite.smoothed = false;
+    sprite.scale.setTo(_scaleFactor);
+
+    sprite.animations.add("default", [
+        "screenSad1.png",
+        "screenSad2.png",
+        "screenSad3.png",
+        "screenSad4.png",
+        "screenSad5.png",
+        "screenSad6.png",
+        "screenSad7.png"
+    ], 8, true);
+
+    return sprite;
+};
+
+/**
+ * create fx game object
+ * @param {number} x
+ * @param {number} y
+ * @returns {Phaser.Sprite}
+ */
+AdslJumper.gameObjectFactory.fxCableLed = function (x, y) {
+    var sprite = this.state.make.sprite(x * _scaleFactor, (y - 16) * _scaleFactor, "atlas_2", "fxCableLed1.png");
+
+    sprite.smoothed = false;
+    sprite.scale.setTo(_scaleFactor);
+
+    sprite.animations.add("default", [
+        "fxCableLed1.png",
+        "fxCableLed2.png"
+    ], 8, true);
+
+    return sprite;
+};
+
+/**
+ * create fx game object
+ * @param {number} x
+ * @param {number} y
+ * @returns {Phaser.Sprite}
+ */
+AdslJumper.gameObjectFactory.fxSquare = function (x, y) {
+    var sprite = this.state.make.sprite(x * _scaleFactor, (y - 16) * _scaleFactor, "atlas_2", "fxSquare1.png");
+
+    sprite.smoothed = false;
+    sprite.scale.setTo(_scaleFactor);
+
+    sprite.animations.add("default", [
+        "fxSquare1.png",
+        "fxSquare2.png"
+    ], 1/2, true);
+
+    return sprite;
+};
+
+/**
+ * create platformA game object
+ * @param {number} x
+ * @param {number} y
+ * @returns {Phaser.Sprite}
+ */
+AdslJumper.gameObjectFactory.platformA = function (x, y, mass, isTo, maxVelocityY) {
+    var gameObject = this.state.game.make.sprite(x * _scaleFactor, y * _scaleFactor, "atlas_2", "platformA1.png");
+
+    gameObject.smoothed = false;
+    gameObject.scale.setTo(_scaleFactor);
+
+    this.state.game.physics.arcade.enable(gameObject);
+    gameObject.body.mass = mass || 1;
+    gameObject.outOfBoundsKill = true;
+    gameObject.checkWorldBounds = true;
+    gameObject.body.maxVelocity.x = 0;
+    gameObject.body.maxVelocity.y = maxVelocityY || 100;
+
+    gameObject.tag = "platformA";
+
+    gameObject.animations.add("default", [
+        "platformA1.png",
+        "platformA2.png"
+    ], 8, true);
+
+    gameObject.animations.play("default");
+
+    return gameObject;
+},
 
 AdslJumper.gameObjectFactory1 = {
 

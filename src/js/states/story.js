@@ -3,8 +3,6 @@ AdslJumper.storyState = function (game) {};
 AdslJumper.storyState.prototype = {
     create: function () {
         // modules
-        this.soundManager = AdslJumper.modules.soundManager;
-        this.input = new AdslJumper.Input(this.game);
 
         // variables
         this.isRunning = false;
@@ -20,19 +18,19 @@ AdslJumper.storyState.prototype = {
         this.textLayer = this.game.add.group();
 
         // music
-        if (this.soundManager.currentTrack) {
-            this.soundManager.playTrack();
+        if (SoundManager.currentTrack) {
+            SoundManager.playTrack();
         } else {
             console.error("story state without music!");
         }
     },
     update: function () {
-        this.input.update();
+        Input.update();
         this.currentState();
 
         // skip
-        if (this.input.selectButtonIsJustDown()) {
-            if (this.currentState != this.showSlide0 && this.currentState != this.showSlide1) {
+        if (Input.selectButtonIsJustDown()) {
+            if (this.currentState !== this.showSlide0 && this.currentState !== this.showSlide1) {
 
                 this.game.state.start("menu");
             }

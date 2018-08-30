@@ -1,6 +1,6 @@
-AdslJumper.level1 = function () {};
+//AdslJumper.level1 = function () {};
 
-AdslJumper.level1.prototype = {
+AdslJumper.level1 = {
 
     create: function () {
         // set renderer
@@ -26,27 +26,6 @@ AdslJumper.level1.prototype = {
         this.background = this.game.add.image(0, 0, "level1bg");
         this.background.smoothed = false;
         this.background.scale.setTo(_scaleFactor);
-
-        // /** @type {Phaser.Image}*/
-        // var tutorImage1 = null;
-        //
-        // /** @type {Phaser.Image}*/
-        // var tutorImage2 = null;
-        //
-        // // add tutors
-        // if (_lang === "ru") {
-        //     tutorImage1 = this.game.add.image(144 * _scaleFactor, 112 * _scaleFactor, "atlas_2", "tutorial2.png"); // ru
-        //     tutorImage2 = this.game.add.image(432 * _scaleFactor, 112 * _scaleFactor, "atlas_2", "tutorial4.png"); // ru
-        // } else {
-        //     tutorImage1 = this.game.add.image(144 * _scaleFactor, 112 * _scaleFactor, "atlas_2", "tutorial1.png"); // en
-        //     tutorImage2 =this.game.add.image(432 * _scaleFactor, 112 * _scaleFactor, "atlas_2", "tutorial3.png"); // en
-        // }
-        //
-        // tutorImage1.smoothed = false;
-        // tutorImage2.smoothed = false;
-        //
-        // tutorImage1.scale.setTo(_scaleFactor);
-        // tutorImage2.scale.setTo(_scaleFactor);
 
         // create world
         AdslJumper.world.createWorld(this.map);

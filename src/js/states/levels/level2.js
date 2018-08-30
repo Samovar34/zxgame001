@@ -1,6 +1,4 @@
-AdslJumper.level2 = function () {};
-
-AdslJumper.level2.prototype = {
+AdslJumper.level2 = {
 
     create: function () {
         // set renderer
@@ -26,7 +24,6 @@ AdslJumper.level2.prototype = {
         this.scyNet = this.add.sprite(311 * _scaleFactor, 107 * _scaleFactor, "atlas_2", "screenF1.png");
         this.scyNet.smoothed = false;
         this.scyNet.scale.setTo(_scaleFactor);
-        this.playSkyNetSound = true;
 
         // create world
         AdslJumper.world.createWorld(this.map);
@@ -47,7 +44,7 @@ AdslJumper.level2.prototype = {
         this.player.setOnRespawnCompleteCallback(AdslJumper.gameFunc.onPlayerRespawnComplete, this);
 
         // GUI
-        this.gui = new AdslJumper.GUI(_game);
+        this.gui = new AdslJumper.GUI(this.game);
         this.gui.setRoom("0" + _level);
         this.gui.setScore(_score);
 
