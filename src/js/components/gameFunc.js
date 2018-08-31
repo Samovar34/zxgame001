@@ -299,3 +299,14 @@ AdslJumper.gameFunc.nextLevel = function (player, door) {
 AdslJumper.gameFunc.startNewLevelState = function () {
     this.game.state.start("level" + _level);
 };
+
+/**
+ * common render function
+ * @this {Phaser.State}
+ */
+AdslJumper.gameFunc.render = function () {
+    /**
+     * @type {AdslJumper.GUI}
+     */
+    this.gui.updateTime(Math.floor(this.game.time.elapsedSecondsSince(START_TIME)));
+};

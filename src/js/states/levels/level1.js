@@ -62,8 +62,9 @@ AdslJumper.level1 = {
 
     update: function () {
         Input.update();
-        // reset player
         this.player._reset();
+
+        if (!this.player.alive) return;
 
         this.game.physics.arcade.collide(this.player, this.collision2d, AdslJumper.gameFunc.playerCollideHandler, null, this);
         this.game.physics.arcade.overlap(this.player, this.bonus, AdslJumper.gameFunc.playerBonusHandler, this.doOnCoin, this);
@@ -72,6 +73,8 @@ AdslJumper.level1 = {
             this.game.physics.arcade.overlap(this.player, this.exitDoor, AdslJumper.gameFunc.nextLevel, null, this);
         }
     },
+
+    render: AdslJumper.gameFunc.render,
 
     doOnCoin: function () {
         if (++this.coinCollected >= this.bonus.length) {

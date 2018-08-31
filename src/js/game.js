@@ -9,7 +9,7 @@ var AdslJumper = (function () {
     /** @global
      * 	@type {number}
      * */
-	var _level = 0;
+	var _level = 0; // 0 - story
     /** @global
      * 	@type {number}
      * */
@@ -54,6 +54,13 @@ var AdslJumper = (function () {
      * @type {AdslJumper.SoundManager}
      */
     var SoundManager;
+
+    /**
+     * start game time in ms
+     * @global
+     * @type {number}
+     */
+    var START_TIME = 0; // значение задается либо в 1уровне либо загружается из localStorage
 
     //@@include('./include.js')
 

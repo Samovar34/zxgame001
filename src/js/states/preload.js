@@ -61,7 +61,6 @@ AdslJumper.preloadState.prototype = {
         // TODO del
         var urlLevel = parseInt(window.location.hash.slice(1).trim());
         if (!isNaN(urlLevel)) {
-
             _level = urlLevel;
         }
 

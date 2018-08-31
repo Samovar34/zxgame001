@@ -1,7 +1,5 @@
 // декодирование и дозагрузка файлов
-AdslJumper.waitDecodeAudio = function (game) {};
-
-AdslJumper.waitDecodeAudio.prototype = {
+AdslJumper.waitDecodeAudio = {
 
     preload: function () {
         this.clockSprite = this.game.add.sprite(300, 160, "atlas_0", "waitAudioDecodeTime1.png");
@@ -33,19 +31,16 @@ AdslJumper.waitDecodeAudio.prototype = {
 
     create: function () {
 
-        switch (_level) {
-            case 0 :
-                this.beforeStory();
-                break;
-            default :
-                this.beforePlay();
-                break;
+        if (_level === 0) {
+            this.beforeStory();
+        } else {
+            this.beforePlay();
         }
     }
 };
 
 // before story
-AdslJumper.waitDecodeAudio.prototype.beforeStory = function () {
+AdslJumper.waitDecodeAudio.beforeStory = function () {
 
     // add track
     SoundManager.currentTrack = this.game.add.sound("intro");
@@ -64,7 +59,7 @@ AdslJumper.waitDecodeAudio.prototype.beforeStory = function () {
  
 };
 
-AdslJumper.waitDecodeAudio.prototype.beforePlay = function () {
+AdslJumper.waitDecodeAudio.beforePlay = function () {
     this.textSprite.frameName = "waitAudioDecodeText1.png";
 
 
@@ -77,11 +72,13 @@ AdslJumper.waitDecodeAudio.prototype.beforePlay = function () {
     this.game.sound.setDecodedCallback([SoundManager.tempTrack], this.doOnDecodeTrack, this);
 };
 
-AdslJumper.waitDecodeAudio.prototype.doOnDecodeTrack = function () {
+AdslJumper.waitDecodeAudio.doOnDecodeTrack = function () {
+    if (START_TIME === 0) {
+        START_TIME = (new Date).getTime();
+    }
     if (_level < 10) {
         this.state.start("level" + _level);
     } else {
 
     }
-    
 };

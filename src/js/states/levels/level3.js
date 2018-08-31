@@ -78,5 +78,8 @@ AdslJumper.level3 = {
         }
     },
 
+    render: AdslJumper.gameFunc.render,
+
+
     gameOver: AdslJumper.gameFunc.gameOver
 };

@@ -13,6 +13,8 @@ AdslJumper.Coin = function (game, x, y) {
     // enable physics
     this.game.physics.arcade.enable(this);
 
+    this.body.setSize(16, 16, 3, 3);
+
     this.smoothed = false;
     this.scale.setTo(_scaleFactor);
 

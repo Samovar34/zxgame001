@@ -69,6 +69,8 @@ AdslJumper.level4 = {
 
     update: function () {
         Input.update();
+
+        if (!this.player.alive) return;
         // reset player
         this.player._reset();
 
@@ -81,7 +83,10 @@ AdslJumper.level4 = {
         }
     },
 
+    render: AdslJumper.gameFunc.render,
+
     strongJump: function () {
+        this.player.inTrigger = true;
         SoundManager.playJumpForce();
         this.player.canJump = false;
         this.player.body.velocity.y = - 1200;

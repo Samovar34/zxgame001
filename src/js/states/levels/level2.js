@@ -89,6 +89,8 @@ AdslJumper.level2 = {
 
     },
 
+    render: AdslJumper.gameFunc.render,
+
     gameOver: function (player, trigger) {
         AdslJumper.gameFunc.gameOver.call(this, player, trigger);
         this.scyNet.frameName = "screenF2.png";
