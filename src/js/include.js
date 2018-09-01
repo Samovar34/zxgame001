@@ -28,6 +28,7 @@
 //@@include('./states/menu.js')
 //@@include('./states/waitDecodeAudio.js')
 
+//@@include('./components/state.js')
 //@@include('./states/levels/level1.js')
 //@@include('./states/levels/level2.js')
 //@@include('./states/levels/level3.js')

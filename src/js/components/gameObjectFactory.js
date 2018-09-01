@@ -201,13 +201,13 @@ AdslJumper.gameObjectFactory.fxSquare = function (x, y) {
 };
 
 /**
- * create jumpForce game object and add to the game world
+ * create jumpForce game
  * @param {number} x
  * @param {number} y
  * @returns {Phaser.Sprite}
  */
 AdslJumper.gameObjectFactory.jumpForce = function (x, y) {
-    var sprite = this.state.add.sprite(x * _scaleFactor, y * _scaleFactor, "atlas_2", "jumpForce1.png");
+    var sprite = this.state.make.sprite(x * _scaleFactor, y * _scaleFactor, "atlas_2", "jumpForce1.png");
 
     sprite.smoothed = false;
     sprite.scale.setTo(_scaleFactor);

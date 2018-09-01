@@ -88,6 +88,7 @@ var AdslJumper = (function () {
         Game.state.add("level2", AdslJumper.level2);
         Game.state.add("level3", AdslJumper.level3);
         Game.state.add("level4", AdslJumper.level4);
+        Game.state.add("level5", AdslJumper.level5);
 
         Game.state.start("boot");
 	};

@@ -179,7 +179,7 @@ AdslJumper.GUI.prototype.setScore = function (score) {
 };
 
 AdslJumper.GUI.prototype.zeroBitcoin = [null, "00", "0", ""];
-AdslJumper.GUI.prototype.zeroTime = [null, "000", "00", "0", ""]
+AdslJumper.GUI.prototype.zeroTime = [null, "000", "00", "0", ""];
 
 AdslJumper.GUI.prototype.flash = function () {
     this.bg.animations.play("default");
