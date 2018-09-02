@@ -1,5 +1,5 @@
 var test = null;
-var AdslJumper = (function () {
+var game = (function () {
     /** @global
 	 * 	@type object
 	 * */
@@ -10,6 +10,7 @@ var AdslJumper = (function () {
      * 	@type {number}
      * */
 	var _level = 0; // 0 - story
+
     /** @global
      * 	@type {number}
      * */
@@ -60,7 +61,14 @@ var AdslJumper = (function () {
      * @global
      * @type {number}
      */
-    var START_TIME = 0; // значение задается либо в 1уровне либо загружается из localStorage
+    var START_TIME = 0; // значение задается в waitAudioDecode
+
+    /**
+     * elapsed time in sec after
+     * @global
+     * @type {number}
+     */
+    var ELAPSED_TIME = 0; // время в секундаx после загрузки
 
     //@@include('./include.js')
 
@@ -89,14 +97,52 @@ var AdslJumper = (function () {
         Game.state.add("level3", AdslJumper.level3);
         Game.state.add("level4", AdslJumper.level4);
         Game.state.add("level5", AdslJumper.level5);
+        Game.state.add("level6", AdslJumper.level6);
+        Game.state.add("level7", AdslJumper.level7);
+        Game.state.add("level8", AdslJumper.level8);
+        Game.state.add("level9", AdslJumper.level9);
+        Game.state.add("level10", AdslJumper.level10);
 
         Game.state.start("boot");
 	};
 
-	return AdslJumper;
+	// TODO delete degub methods
+    return {
+        init: AdslJumper.init,
+
+        restart: function () {
+            Game.state.restart(Game.state.current);
+        },
+
+        setBitCoins: function (val) {
+            _score = val;
+            Game.state.getCurrentState().gui.setScore(_score);
+        },
+
+        setLvl: function (val) {
+            _level = val;
+            Game.state.start("level" + _level);
+        },
+
+        getState: function () {
+            return Game.state.getCurrentState();
+        },
+
+        etElapsedTime: function (val) {
+            ELAPSED_TIME = val;
+        },
+
+        resetStartTime: function () {
+            START_TIME = (new Date).getTime();
+        },
+
+        setLang: function(val) {
+            _lang = val;
+        }
+    }
 })();
 
-window.onload = AdslJumper.init;
+window.onload = game.init;
 
 
 

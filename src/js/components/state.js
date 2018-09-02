@@ -228,7 +228,7 @@ AdslJumper.State.prototype = {
     },
     
     render: function () {
-        this.gui.updateTime(Math.floor(this.game.time.elapsedSecondsSince(START_TIME)));
+        this.gui.updateTime(ELAPSED_TIME + Math.floor(this.game.time.elapsedSecondsSince(START_TIME)));
     },
 
     gameOver: AdslJumper.gameFunc.gameOver

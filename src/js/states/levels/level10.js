@@ -1,0 +1,1 @@
+AdslJumper.level10 = new AdslJumper.State(Game, 480, 272, true, true);
