@@ -41,6 +41,7 @@ AdslJumper.Player = function (game, x, y) {
     this.inTrigger = false; // внутри триггера или нет?
     this.allowDoubleJump = true;
     this.allowWallSliding = true;
+    this.stopUpdate = false; // вызывать ли Update
     this.hasCard = false; // взял ли игрок специальный ключ
     
 
@@ -164,7 +165,7 @@ AdslJumper.Player.prototype.update = function () {
 
 
     //TODO разобраться почему возникает прыжок если вызывать хардкорно
-    if (!this.canInput) {
+    if (this.stopUpdate) {
         return;
     }
 
@@ -256,7 +257,9 @@ AdslJumper.Player.prototype.jump = function (force) {
  */
 AdslJumper.Player.prototype.move = function () {
 
-    if (this.canInput && Input.dx !== 0) {
+    if (!this.canInput) return;
+
+    if (Input.dx !== 0) {
         this.scale.x = _scaleFactor * Input.dx;
 
         if (this.currentState === this.groundState) {
@@ -268,7 +271,6 @@ AdslJumper.Player.prototype.move = function () {
     }
 
     this.body.acceleration.x = this.options.acceleration * Input.dx;
-
 };
 
 /**

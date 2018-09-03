@@ -1,4 +1,10 @@
-AdslJumper.level5 = new AdslJumper.State(Game, 480, 272, true, true);
+AdslJumper.level5 = new AdslJumper.State(Game, {
+    width: 480,
+    height: 272,
+    inputOnFlash: true,
+    openDoor: true,
+    createExplosions: true
+});
 
 AdslJumper.level5.doAfterCreate = function () {
     if (_lang === "ru") {

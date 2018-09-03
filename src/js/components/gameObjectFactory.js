@@ -12,6 +12,20 @@ AdslJumper.gameObjectFactory.init = function (state) {
     this.state = state;
 };
 
+AdslJumper.gameObjectFactory.arrow = function (x, y) {
+    var sprite = this.state.add.sprite(x, y, "atlas_2", "arrowD1.png");
+    sprite.animations.add("default", [
+        "arrowD1.png",
+        "arrowD2.png",
+        "arrowD3.png",
+        "arrowD2.png"
+    ], 6, true);
+
+    sprite.animations.play("default");
+
+    return sprite;
+};
+
 /**
  * create arrowRight game object
  * @param {number} x
@@ -122,6 +136,10 @@ AdslJumper.gameObjectFactory.createSparks = function () {
  */
 AdslJumper.gameObjectFactory.explosion = function () {
     var gameObject = this.state.make.sprite(0, 0, "atlas_2", "blow1.png");
+
+    gameObject.anchor.setTo(0.5);
+    gameObject.smoothed = false;
+    gameObject.scale.setTo(_scaleFactor);
     gameObject.name = "explosion";
     gameObject.animations.add("default", [
         "blow1.png",
@@ -135,10 +153,10 @@ AdslJumper.gameObjectFactory.explosion = function () {
         "blow9.png",
         "blow10.png",
         "blow11.png",
-        "blow12.png",
-        "blow13.png",
-        "blow14.png"
-    ], 24);
+        "blow12.png"
+        //"blow13.png"
+        // "blow14.png"
+    ], 12);
 
     return gameObject;
 };
@@ -476,6 +494,24 @@ AdslJumper.gameObjectFactory.wallLight = function (x, y) {
     sprite.scale.setTo(_scaleFactor);
 
     sprite.animations.add("default", ["wallLight1.png", "wallLight2.png"], 1, true);
+
+    return sprite;
+};
+
+AdslJumper.gameObjectFactory.mine = function (x, y) {
+    var sprite = this.state.make.sprite(x * _scaleFactor, (y - 14) * _scaleFactor, "atlas_2", "mine1.png");
+
+    // enable physics
+    this.state.game.physics.arcade.enable(sprite);
+    sprite.body.setSize(12, 6, 2, 8);
+
+    sprite.smoothed = false;
+    sprite.scale.setTo(_scaleFactor);
+    sprite._event = "mineGameOver";
+
+    sprite.animations.add("default", ["mine1.png", "mine2.png"], 1, true);
+
+    sprite.animations.play("default");
 
     return sprite;
 };

@@ -1,4 +1,8 @@
-AdslJumper.level1 = new AdslJumper.State(Game, 480, 272, true, false);
+AdslJumper.level1 = new AdslJumper.State(Game, {
+    width: 480,
+    height: 272,
+    inputOnFlash: true
+});
 
 AdslJumper.level1.doAfterCreate = function () {
 

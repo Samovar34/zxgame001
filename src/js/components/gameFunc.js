@@ -5,33 +5,32 @@
  */
 AdslJumper.gameFunc = {};
 
-/**
- * player's collision with the platform
- * @param {AdslJumper.Player} layer
- * @param {Phaser.Sprite} collider
- */
-AdslJumper.gameFunc.playerCollideHandler = function (player, collider) {
-    player.customTouchUp = player.body.touching.up;
-    player.customTouchRight = player.body.touching.right;
-    player.customTouchDown = player.body.touching.down;
-    player.customTouchLeft = player.body.touching.left;
-};
+// /**
+//  * player's collision with the platform
+//  * @param {AdslJumper.Player} layer
+//  * @param {Phaser.Sprite} collider
+//  */
+// AdslJumper.gameFunc.playerCollideHandler = function (player, collider) {
+//     player.customTouchUp = player.body.touching.up;
+//     player.customTouchRight = player.body.touching.right;
+//     player.customTouchDown = player.body.touching.down;
+//     player.customTouchLeft = player.body.touching.left;
+// };
 
-/**
- * player's overlap with the trigger
- * @param player
- * @param trigger
- * @this {Phaser.State}
- */
-AdslJumper.gameFunc.playerTriggerHandler = function (player, trigger) {
-    player.inTrigger = true;
-    try {
-        this[trigger._event](player, trigger);
-    } catch (err) {
-        console.warn("no handler for " + trigger._event);
-    }
-
-};
+// /**
+//  * player's overlap with the trigger
+//  * @param player
+//  * @param trigger
+//  * @this {Phaser.State}
+//  */
+// AdslJumper.gameFunc.playerTriggerHandler = function (player, trigger) {
+//     player.inTrigger = true;
+//     try {
+//         this[trigger._event](player, trigger);
+//     } catch (err) {
+//         console.warn("no handler for " + trigger._event);
+//     }
+// };
 
 /**
  * player's overlap with the trap
@@ -50,23 +49,23 @@ AdslJumper.gameFunc.playerTrapHandler = function (player, trap) {
     }
 };
 
-/**
- * player's overlap with bonus
- * @param {AdslJumper.Player} player
- * @param {Phaser.Sprite} bonus
- */
-AdslJumper.gameFunc.playerBonusHandler = function (player, bonus) {
-    // TODO delete
-    AdslJumper.utils.info(player.game.state.current, "bonus tag", bonus.tag);
-
-    if (player.canInput) {
-        try {
-            AdslJumper.gameFunc[bonus.tag + "Handler"].call(this, player, bonus);
-        } catch (err) {
-            AdslJumper.utils.warn(player.game.state.current, "BONUS handler not found for", bonus.tag);
-        }
-    }
-};
+// /**
+//  * player's overlap with bonus
+//  * @param {AdslJumper.Player} player
+//  * @param {Phaser.Sprite} bonus
+//  */
+// AdslJumper.gameFunc.playerBonusHandler = function (player, bonus) {
+//     // TODO delete
+//     AdslJumper.utils.info(player.game.state.current, "bonus tag", bonus.tag);
+//
+//     if (player.canInput) {
+//         try {
+//             AdslJumper.gameFunc[bonus.tag + "Handler"].call(this, player, bonus);
+//         } catch (err) {
+//             AdslJumper.utils.warn(player.game.state.current, "BONUS handler not found for", bonus.tag);
+//         }
+//     }
+// };
 
 // столкновение игрока с миной
 // this = Phaser.State
@@ -133,71 +132,71 @@ AdslJumper.gameFunc.explosionHandler = function (player, explosion) {
 };
 
 
-/**
- * game over function
- * @param {AdslJumper.Player} player
- * @param {Phaser.Sprite} other
- */
-AdslJumper.gameFunc.gameOver = function (player, other, playSound) {
+// /**
+//  * game over function
+//  * @param {AdslJumper.Player} player
+//  * @param {Phaser.Sprite} other
+//  */
+// AdslJumper.gameFunc.gameOver = function (player, other, playSound) {
+//
+//     playSound = typeof playSound === "boolean" ? playSound : true;
+//
+//     // что бы быть уверенным что функция вызывается один раз
+//     if (this.player.canInput) {
+//         this.player.canInput = false;
+//
+//
+//
+//         // play player death sound
+//         if (playSound) {
+//             SoundManager.playPlayerDeath();
+//         }
+//
+//         _levelDeaths++;
+//         _deaths++;
+//
+//         this.player.body.stop();
+//         this.player.body.gravity.y = -300;
+//         this.player.animations.play("death");
+//
+//         // TODO убрать биткойн
+//         // score -1 after death
+//         if (_score > 0) {
+//             _score -= 1;
+//             this.gui.flash();
+//         } else {
+//             // continue state
+//             alert("ГАМОВЕР");
+//         }
+//
+//         this.gui.setScore(_score);
+//
+//         this.game.camera.shake(0.01, 500);
+//     }
+//
+// };
 
-    playSound = typeof playSound === "boolean" ? playSound : true;
+// /**
+//  * on player's death animation complete function
+//  */
+// AdslJumper.gameFunc.onPlayerDeathComplete = function () {
+//     this.player.body.gravity.y = 0;
+//     this.player.body.stop();
+//     this.player.reset((this.map.player.x + 16) *_scaleFactor, (this.map.player.y - 16) *_scaleFactor);
+//     this.player.restoreDefault();
+//     this.player.animations.play("respawn");
+//     // play player respawn sound
+//     SoundManager.playPlayerRespawn();
+// };
 
-    // что бы быть уверенным что функция вызывается один раз
-    if (this.player.canInput) {
-        this.player.canInput = false;
-
-
-
-        // play player death sound
-        if (playSound) {
-            SoundManager.playPlayerDeath();
-        }
-
-        _levelDeaths++;
-        _deaths++;
-
-        this.player.body.stop();
-        this.player.body.gravity.y = -300;
-        this.player.animations.play("death");
-
-        // TODO убрать биткойн
-        // score -1 after death
-        if (_score > 0) {
-            _score -= 1;
-            this.gui.flash();
-        } else {
-            // continue state
-            alert("ГАМОВЕР");
-        }
-
-        this.gui.setScore(_score);
-
-        this.game.camera.shake(0.01, 500);
-    }
-
-};
-
-/**
- * on player's death animation complete function
- */
-AdslJumper.gameFunc.onPlayerDeathComplete = function () {
-    this.player.body.gravity.y = 0;
-    this.player.body.stop();
-    this.player.reset((this.map.player.x + 16) *_scaleFactor, (this.map.player.y - 16) *_scaleFactor);
-    this.player.restoreDefault();
-    this.player.animations.play("respawn");
-    // play player respawn sound
-    SoundManager.playPlayerRespawn();
-};
-
-/**
- *
- */
-AdslJumper.gameFunc.onPlayerRespawnComplete = function () {
-    this.player.body.gravity.y = this.player.options.gravity;
-    this.player.canInput = true;
-    this.player.body.velocity.y = 0;
-};
+// /**
+//  *
+//  */
+// AdslJumper.gameFunc.onPlayerRespawnComplete = function () {
+//     this.player.body.gravity.y = this.player.options.gravity;
+//     this.player.canInput = true;
+//     this.player.body.velocity.y = 0;
+// };
 
 /**
  *  restart level after camera shake
@@ -208,44 +207,44 @@ AdslJumper.gameFunc.onShakeCompleteFunction = function() {
     // this.game.camera.onFadeComplete.addOnce(AdslJumper.gameFunc.restartLevel, this);
 };
 
-AdslJumper.gameFunc.restartLevel = function () {
-    this.game.state.restart(this.game.state.current);
-};
+// AdslJumper.gameFunc.restartLevel = function () {
+//     this.game.state.restart(this.game.state.current);
+// };
 
-/**
- * on camera flash complete function
- */
-AdslJumper.gameFunc.onFlashCompleteFunction = function() {
-    this.player.canInput = true;
-};
+// /**
+//  * on camera flash complete function
+//  */
+// AdslJumper.gameFunc.onFlashCompleteFunction = function() {
+//     this.player.canInput = true;
+// };
 
 // PLAY FX
 
-// TODO move to world function
-AdslJumper.gameFunc.makeExplosion = function (x, y) {
-    var explosion = this.explosionSprites.getFirstDead();
-    explosion.x = x - 64;
-    explosion.y = y - 64;
-    explosion.revive();
-    explosion.animations.play("default", 24, false, true);
-    SoundManager.playExplosion();
-};
+// // TODO move to world function
+// AdslJumper.gameFunc.makeExplosion = function (x, y) {
+//     var explosion = this.explosionSprites.getFirstDead();
+//     explosion.x = x - 64;
+//     explosion.y = y - 64;
+//     explosion.revive();
+//     explosion.animations.play("default", 24, false, true);
+//     SoundManager.playExplosion();
+// };
 
-/**
- * player coin overlap handler
- * @param {AdslJumper.Player} player
- * @param {AdslJumper.Coin} coin
- * @this {Phaser.State}
- * @returns {boolean}
- */
-AdslJumper.gameFunc.coinHandler = function (player, coin) {
-    coin.disableBodyAndKill();
-    SoundManager.playCoin();
-    _score += 1;
-    this.gui.setScore(_score);
-
-    return false;
-};
+// /**
+//  * player coin overlap handler
+//  * @param {AdslJumper.Player} player
+//  * @param {AdslJumper.Coin} coin
+//  * @this {Phaser.State}
+//  * @returns {boolean}
+//  */
+// AdslJumper.gameFunc.coinHandler = function (player, coin) {
+//     coin.disableBodyAndKill();
+//     SoundManager.playCoin();
+//     _score += 1;
+//     this.gui.setScore(_score);
+//
+//     return false;
+// };
 
 AdslJumper.gameFunc.cardHandler = function (player, card) {
     // play special sound
@@ -265,37 +264,37 @@ AdslJumper.gameFunc.cardHandler = function (player, card) {
 
 // END BONUS
 
-/**
- * prepare for new level
- * @param {AdslJumper.Player} player
- * @param {AdslJumper.ExitDoor} door
- * @this {Phaser.State}
- */
-AdslJumper.gameFunc.nextLevel = function (player, door) {
-    // запретить управление пользователем
-    player.canInput = false;
-
-    // Скрыть игрока
-    player.kill();
-    player.pendingDestroy = true;
-    door.animations.play("close");
-
-    // reset levelDeaths
-    //_levelDeaths = 0;
-
-    // set next level
-    _level = door.nextLevel;
-
-    // camera
-    this.game.camera.follow(door,  this.game.camera.FOLLOW_PLATFORMER, 0.1, 0.1);
-
-    this.game.camera.fade(0x000000, AdslJumper.gameOptions.cameraFadeTime);
-    this.game.camera.onFadeComplete.addOnce(AdslJumper.gameFunc.startNewLevelState, this);
-};
-
-/**
- * start new level
- */
-AdslJumper.gameFunc.startNewLevelState = function () {
-    this.game.state.start("level" + _level);
-};
+// /**
+//  * prepare for new level
+//  * @param {AdslJumper.Player} player
+//  * @param {AdslJumper.ExitDoor} door
+//  * @this {Phaser.State}
+//  */
+// AdslJumper.gameFunc.nextLevel = function (player, door) {
+//     // запретить управление пользователем
+//     player.canInput = false;
+//
+//     // Скрыть игрока
+//     player.kill();
+//     player.pendingDestroy = true;
+//     door.animations.play("close");
+//
+//     // reset levelDeaths
+//     //_levelDeaths = 0;
+//
+//     // set next level
+//     _level = door.nextLevel;
+//
+//     // camera
+//     this.game.camera.follow(door,  this.game.camera.FOLLOW_PLATFORMER, 0.1, 0.1);
+//
+//     this.game.camera.fade(0x000000, AdslJumper.gameOptions.cameraFadeTime);
+//     this.game.camera.onFadeComplete.addOnce(AdslJumper.gameFunc.startNewLevelState, this);
+// };
+//
+// /**
+//  * start new level
+//  */
+// AdslJumper.gameFunc.startNewLevelState = function () {
+//     this.game.state.start("level" + _level);
+// };

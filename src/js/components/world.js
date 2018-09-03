@@ -38,43 +38,19 @@ AdslJumper.world.createCollision = function (arr) {
     return collision2d;
 };
 
-// this = Phaser.State
-AdslJumper.world.createTraps = function (game, map) {
+/**
+ *
+ * @param {[]} arr
+ */
+AdslJumper.world.createTraps = function (arr) {
 
-    // create traps group
-    this.traps = this.game.add.group();
+    for (var i = 0; i < arr.length; i++) {
 
-    var tempArray = AdslJumper.utils.findObjectsByType('trap', this.map, 'objects');
-    var tempElement = null;
-
-    for (i = 0; i < tempArray.length; i++) {
-        tempElement = AdslJumper.gameObjectFactory[tempArray[i].name];
-        if (typeof tempElement === "function") {
-            this.traps.add(
-                tempElement.call(
-                    this,
-                    tempArray[i].x,
-                    tempArray[i].y,
-                    tempArray[i].properties
-                )
-            );
-        } else {
-            console.error(tempArray[i].name, "not found");
-        }
+        // add to the group
+        this.state.triggers.add(AdslJumper.gameObjectFactory[arr[i].name](arr[i].x, arr[i].y));
     }
 
-    //TODO перенести
-    this.explosionSprites = this.game.add.group();
-    //this.explosionSprites.enableBody = true;
-
-    for (var i = 0; i < 5; i++) {
-        this.explosionSprites.add(AdslJumper.gameObjectFactory.createExplosionSprite(this.game));
-    }
-
-    this.explosionSprites.killAll();
-
-    // play animation
-    this.traps.callAll("animations.play", "animations", "default");
+    this.state.triggers.callAll("animations.play", "animations", "default");
 };
 
 /**

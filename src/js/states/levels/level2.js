@@ -1,4 +1,8 @@
-AdslJumper.level2 = new AdslJumper.State(Game, 640, 272, true, false);
+AdslJumper.level2 = new AdslJumper.State(Game, {
+    width: 640,
+    height: 272,
+    inputOnFlash: true
+});
 
 AdslJumper.level2.doAfterCreate = function () {
      // special level sprite
