@@ -19,7 +19,7 @@ var game = (function () {
 	 * 	@global
      * 	@type {string}
      * */
-	var _lang = "en"; // ru en de
+	var _lang = "ru"; // ru en de
     /** @global
      * 	@type {number}
      * */
