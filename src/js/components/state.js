@@ -1,10 +1,7 @@
 /**
  * Basic state Class
  * @param {Phaser.Game} game
- * @param {number} width world width
- * @param {number} height world height
- * @param {boolean} isCanInputOnFlash
- * @param {boolean} isOpenDoor=true]
+ * @param {Object} game properties
  * @constructor
  */
 AdslJumper.State = function (game, prop) {
@@ -134,13 +131,17 @@ AdslJumper.State = function (game, prop) {
 
 AdslJumper.State.prototype = {
     create: function () {
+        // save game
+        AdslJumper.storage.save(ELAPSED_TIME + Math.floor(this.game.time.elapsedSecondsSince(START_TIME)));
+
+        AdslJumper.storage.load();
+
         // set renderer
         this.game.renderer.renderSession.roundPixels = false;
         this.game.clearBeforeRender = false;
 
         // init modules
         AdslJumper.gameObjectFactory.init(this);
-        AdslJumper.world.init(this);
 
         // game world bounds
         this.game.world.setBounds(0, 0, this._width * _scaleFactor, this._height * _scaleFactor);
@@ -164,20 +165,24 @@ AdslJumper.State.prototype = {
             this.map.exitDoor.nextLevel
         );
 
-        this.collision2d = AdslJumper.world.createCollision(this.map.collision);
-        this.fx = AdslJumper.world.createFx(this.map.fx);
+        // this.collision2d = AdslJumper.world.createCollision(this.map.collision);
+        // this.fx = AdslJumper.world.createFx(this.map.fx);
+
+        this.createCollision();
+        this.createFx();
 
         if (this.map.triggers.length > 0) {
-            this.triggers = AdslJumper.world.createTriggers(this.map.triggers);
+            // this.triggers = AdslJumper.world.createTriggers(this.map.triggers);
+            this.createTriggers();
             this.hasTriggers = true;
         }
 
         if (this.map.traps.length > 0) {
-            AdslJumper.world.createTraps(this.map.traps);
+            this.createTraps();
         }
 
         if (this.map.bonus.length > 0) {
-            this.bonus = AdslJumper.world.createBonus(this.map.bonus);
+            this.createBonus();
             this.hasBonus = true;
         }
 
@@ -269,22 +274,14 @@ AdslJumper.State.prototype = {
 
     /**
      * game over function
-     * @param {AdslJumper.Player} player
-     * @param {Phaser.Sprite} other
      */
-    gameOver: function (player, other, playSound) {
-        playSound = typeof playSound === "boolean" ? playSound : true;
-
+    gameOver: function () {
         // что бы быть уверенным что функция вызывается один раз
         if (this.player.canInput) {
             this.player.canInput = false;
             this.player.stopUpdate = true;
 
-
-            // play player death sound
-            if (playSound) {
-                SoundManager.playPlayerDeath();
-            }
+            SoundManager.playPlayerDeath();
 
             _levelDeaths++;
             _deaths++;
@@ -307,6 +304,17 @@ AdslJumper.State.prototype = {
 
             this.game.camera.shake(0.01, 500);
         }
+    },
+
+    /**
+     *
+     * @param {AdslJumper.Player} player
+     * @param {Phaser.Sprite} trigger
+     */
+    mineGameOver: function (player, trigger) {
+        trigger.kill();
+        this.makeExplosion(trigger.x, trigger.y);
+        this.gameOver();
     },
 
     /**
@@ -442,6 +450,105 @@ AdslJumper.State.prototype = {
     // WORLD
 
     /**
+     * create collision group for player
+     */
+    createCollision: function () {
+        this.collision2d = this.add.group();
+        this.collision2d.enableBody = true;
+
+        var tempSprite = null;
+
+        for (var i = 0; i < this.map.collision.length; i += 4) {
+            tempSprite = this.make.sprite(
+                this.map.collision[i] *_scaleFactor,
+                this.map.collision[i + 1] * _scaleFactor
+            );
+            tempSprite.width = this.map.collision[i + 2] * _scaleFactor;
+            tempSprite.height = this.map.collision[i + 3] * _scaleFactor;
+
+            this.collision2d.add(tempSprite);
+        }
+
+        this.collision2d.setAll("body.immovable", "true");
+    },
+    /**
+     * create group with bonus
+     */
+    createBonus: function () {
+
+        this.bonus = this.add.group();
+
+        for (var i = 0; i < this.map.bonus.length; i += 3) {
+            this.bonus.add(
+                AdslJumper.gameObjectFactory[this.map.bonus[i]](this.map.bonus[i + 1], this.map.bonus[i + 2])
+            );
+        }
+
+        this.bonus.callAll("animations.play", "animations", "default");
+    },
+
+    /**
+     * create fx group
+     */
+    createFx: function () {
+
+        this.fx = this.add.group();
+
+        for (var i = 0; i < this.map.fx.length; i += 3) {
+            try {
+                this.fx.add(AdslJumper.gameObjectFactory[this.map.fx[i]](this.map.fx[i + 1], this.map.fx[i + 2]));
+            } catch (err) {
+                console.warn("createFx: " + this.map.fx[i] + " not gameObject(function)");
+            }
+
+        }
+
+        this.fx.callAll("animations.play", "animations", "default");
+    },
+
+    /**
+     * create triggers group
+     */
+    createTriggers: function () {
+        // create triggers group and activate physics
+        this.triggers = this.add.group();
+        this.triggers.enableBody = true;
+
+        //temp variables
+        var tempElement = null;
+
+        for (var i = 0; i < this.map.triggers.length; i += 5) {
+            // create an element
+            tempElement = this.make.sprite(
+                this.map.triggers[i] * _scaleFactor,
+                this.map.triggers[i+1] * _scaleFactor);
+
+            // setup the element
+            tempElement.width = this.map.triggers[i+2] * _scaleFactor;
+            tempElement.height = this.map.triggers[i+3] * _scaleFactor;
+
+            tempElement._event = this.map.triggers[i+4];
+
+            // add to the group
+            this.triggers.add(tempElement);
+        }
+    },
+
+    /**
+     * create traps
+     */
+    createTraps: function () {
+
+        for (var i = 0; i < this.map.traps.length; i++) {
+
+            // add to the group
+            this.triggers.add(AdslJumper.gameObjectFactory[this.map.traps[i].name](this.map.traps[i].x, this.map.traps[i].y));
+        }
+
+        this.triggers.callAll("animations.play", "animations", "default");
+    },
+
+    /**
      * show explosion animation and play sound
      * @param {number} x
      * @param {number} y
@@ -453,12 +560,6 @@ AdslJumper.State.prototype = {
         explosion.revive();
         explosion.animations.play("default", 16, false, true);
         SoundManager.playExplosion();
-    },
-
-    mineGameOver: function (player, trigger) {
-        trigger.kill();
-        this.makeExplosion(trigger.x, trigger.y);
-        this.gameOver();
     }
 
 };

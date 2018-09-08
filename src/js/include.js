@@ -4,6 +4,7 @@
 //@@include('./components/input.js')
 //@@include('./components/utils.js')
 //@@include('./components/gui.js')
+//@@include('./components/storage.js')
 
 //@@include("./gameObjects/thorn.js")
 //@@include("./gameObjects/coin.js")
@@ -19,7 +20,6 @@
 //@@include('./gameObjects/arrow.js')
 
 //@@include('./components/gameObjectFactory.js')
-//@@include('./components/world.js')
 
 //@@include('./states/boot.js')
 //@@include('./states/preload.js')

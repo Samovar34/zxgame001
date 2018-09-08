@@ -11,6 +11,9 @@ AdslJumper.storyState.prototype = {
         this.stateTime = 1500;
         this.longStateTime = 4500;
 
+        this.firstImage = null;
+        this.secondImage = null;
+
         this.currentState = this.showSlide0;
 
         // display layers
@@ -44,7 +47,10 @@ AdslJumper.storyState.prototype.showSlide0 = function () {
     if (!this.isRunning) {
         this.isRunning = true;
         // add image to display
-        this.imagesLayer.add(this.game.make.sprite(0, 0, "atlas_1", "samovar_screen.png"));
+        this.firstImage = this.imagesLayer.add(this.game.make.sprite(0, 0, "atlas_1", "samovar_screen.png"));
+        this.firstImage.smoothed = false;
+        this.firstImage.scale.setTo(_scaleFactor);
+
         this.game.camera.flash(0x000000, this.flashTime);
         this.game.camera.onFlashComplete.addOnce(this.beforeSlide0, this);
     }
