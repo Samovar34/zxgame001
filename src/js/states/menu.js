@@ -3,28 +3,37 @@ AdslJumper.menuState = {
         AdslJumper.gameObjectFactory.init(this);
 
         // variables
-        this.menuX = 272;
-        this.munuY = 150;
-        this.menuOffsetY = 20;
+        this.menuX = 440;
+        this.munuY = 380;
+        this.menuOffsetY = 24;
         this.menuItems = 3;
         this.curItem = 0;
         this.currentState;
         this.canInput = true;
 
-        var logo = this.game.add.sprite(0, 0, "atlas_1", "logo.png");
-        logo.scale.setTo(1);
-        logo.alpha = 0.4;
+        this.logo = this.game.add.sprite(160, 0, "atlas_1", "logo.png");
+        this.logo.smoothed = false;
+        this.logo.scale.setTo(_scaleFactor);
+        //logo.alpha = 0.4;
 
 
-        this.newGame = this.game.add.sprite(this.menuX, this.munuY + this.menuOffsetY*0, "atlas_1", "menu_items7.png");
-        this.continue = this.game.add.sprite(this.menuX, this.munuY + this.menuOffsetY*1, "atlas_1", "menu_items9.png");
-        this.options = this.game.add.sprite(this.menuX, this.munuY + this.menuOffsetY*2, "atlas_1", "menu_items10.png");
-        this.about = this.game.add.sprite(this.menuX, this.munuY + this.menuOffsetY*3, "atlas_1", "menu_items11.png");
-        this.game.add.sprite(this.menuX+25, 340, "atlas_1", "menu_items13.png");
+        this.newGame = this.game.add.image(this.menuX, this.munuY, "atlas_1", "menu_items7.png");
+        this.continue = this.game.add.image(this.menuX, this.munuY + this.menuOffsetY, "atlas_1", "menu_items9.png");
+        this.options = this.game.add.image(this.menuX, this.munuY + this.menuOffsetY*2, "atlas_1", "menu_items10.png");
+        this.about = this.game.add.image(this.menuX, this.munuY + this.menuOffsetY*3, "atlas_1", "menu_items11.png");
+        this.game.add.image(this.menuX+25, 520, "atlas_1", "menu_items13.png");
 
-        this.arrow = this.game.add.sprite(250, this.munuY + this.menuOffsetY*0, "atlas_1", "arrow.png");
+        if (_lang === "en") {
+            this.newGame.frameName = "menu_items1.png";
+            this.continue.frameName = "menu_items3.png";
+            this.options.frameName = "menu_items4.png";
+            this.about.frameName = "menu_items5.png";
+        }
+
+        this.arrow = this.game.add.image(this.menuX - 20, this.munuY, "atlas_1", "arrow.png");
 
         this.game.camera.flash(0x000000, 300);
+
         this.currentState = this.topMenu;
     },
     
@@ -34,15 +43,16 @@ AdslJumper.menuState = {
     },
 
     updateMenu: function () {
-        if (Input.jumpIsJustDown() && this.canInput) {
+        if (Input.dy === 1 && this.canInput) {
             this.setMenu("down");
-        } else if (Input.downIsJustDown() && this.canInput) {
+        } else if (Input.dy === -1 && this.canInput) {
             this.setMenu("up");
-        } else if (Input.selectButtonIsJustDown() && this.canInput) {
+        } else if (Input.dz === 1 && this.canInput) {
             SoundManager.playMenuSelect(1);
 
             // start new game
             if (this.curItem === 0) {
+                this.canInput = false;
                 this.game.camera.fade(0x000000, 800);
                 this.continue.kill();
                 this.options.kill();
@@ -66,6 +76,7 @@ AdslJumper.menuState = {
                 console.log("показать настройки");
             } else {
                 console.log("тут будет о игре");
+                this.logo.alpha = 0.4;
             }
         }
     },

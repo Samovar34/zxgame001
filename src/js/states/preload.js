@@ -3,13 +3,13 @@ AdslJumper.preloadState = function (game) {};
 AdslJumper.preloadState.prototype = {
     preload: function () {
 
-        this.progressBorder = this.game.add.image(24, 176, "atlas_0", "preloadBorder.png");
+        this.progressBorder = this.game.add.image(180, 262, "atlas_0", "preloadBorder.png");
         this.progressBorder.smoothed = false;
-        this.progressBorder.scale.setTo(2);
+        this.progressBorder.scale.setTo(_scaleFactor);
 
-        this.progress = this.game.add.image(28, 180, "atlas_0", "progress.png");
+        this.progress = this.game.add.image(184, 266, "atlas_0", "progress.png");
         this.progress.smoothed = false;
-        this.progress.scale.setTo(2);
+        this.progress.scale.setTo(_scaleFactor);
 
         // load levels
         for (var i = 1; i <= 6; i++) {
@@ -67,6 +67,6 @@ AdslJumper.preloadState.prototype = {
     },
 
     doOnFIleLoad: function (progress, cacheKey, success, totalLoaded, totalFiles) {
-        this.progress.width = Math.floor(596 * progress/100);
+        this.progress.width = Math.floor(592 * progress/100);
     }
 };

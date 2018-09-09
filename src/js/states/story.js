@@ -9,36 +9,108 @@ AdslJumper.storyState.prototype = {
         this.flashTime = 500;
         this.fadeTime = 500;
         this.stateTime = 1500;
-        this.longStateTime = 4500;
+        this.longStateTime = 6000;
 
-        this.firstImage = null;
-        this.secondImage = null;
+        this.textOffestX = 360;
 
-        this.currentState = this.showSlide0;
+        this.chooseLangComplete = false;
+
+
+        this.currentState = this.chooseLang;
 
         // display layers
         this.imagesLayer = this.game.add.group();
         this.textLayer = this.game.add.group();
 
-        // music
-        if (SoundManager.currentTrack) {
-            SoundManager.playTrack();
-        } else {
-            console.error("story state without music!");
-        }
+        // // music
+        // if (SoundManager.currentTrack) {
+        //     SoundManager.playTrack();
+        // } else {
+        //     console.error("story state without music!");
+        // }
     },
     update: function () {
         Input.update();
         this.currentState();
 
         // skip
-        if (Input.selectButtonIsJustDown()) {
+        if (Input.dz === 1) {
+            if (this.currentState === this.chooseLang && !this.chooseLangComplete) {
+                console.log("bals");
+                this.chooseLangComplete = true;
+                if (this.arrow.position.y === 280) {
+                    _lang = "en";
+                } else {
+                    _lang = "ru";
+                }
+
+                SoundManager.playMenuSelect(1);
+
+                this.game.camera.fade(0x000000, this.fadeTime);
+                this.game.camera.onFadeComplete.addOnce(this.afterChooseLang, this);
+
+                return;
+            }
+
             if (this.currentState !== this.showSlide0 && this.currentState !== this.showSlide1) {
 
+                // remove all callbacks
+                this.camera.onFadeComplete.removeAll();
+                this.camera.onFadeComplete.removeAll();
                 this.game.state.start("menu");
             }
 
         }
+    }
+};
+
+AdslJumper.storyState.prototype.chooseLang = function () {
+    if (!this.isRunning) {
+        this.isRunning = true;
+        this.arrow = this.game.add.sprite(320, 220, "atlas_1", "arrow.png");
+        this.arrow.smoothed = false;
+        this.arrow.scale.setTo(_scaleFactor);
+
+        var langRuImg = this.imagesLayer.add(this.make.image(370, 220, "atlas_1", "lang_ru.png"));
+        langRuImg.smoothed = false;
+        langRuImg.scale.setTo(_scaleFactor);
+
+        var langEnImg = this.imagesLayer.add(this.make.image(370, 280, "atlas_1", "lang_en.png"));
+        langEnImg.smoothed = false;
+        langEnImg.scale.setTo(_scaleFactor);
+    } else {
+        if (Input.dy === 1) {
+            if (this.arrow.position.y === 280) {
+                this.arrow.position.y = 220;
+            } else {
+                this.arrow.position.y = 280;
+            }
+
+            SoundManager.playMenuSelect(0);
+        } else if (Input.dy === -1) {
+            if (this.arrow.position.y === 280) {
+                this.arrow.position.y = 220;
+            } else {
+                this.arrow.position.y = 280;
+            }
+
+            SoundManager.playMenuSelect(0);
+        }
+    }
+};
+
+AdslJumper.storyState.prototype.afterChooseLang = function() {
+
+    this.currentState = this.showSlide0;
+    this.clearLayers();
+    this.arrow.kill();
+    this.isRunning = false;
+
+    // music
+    if (SoundManager.currentTrack) {
+        SoundManager.playTrack();
+    } else {
+        console.error("story state without music!");
     }
 };
 
@@ -47,9 +119,13 @@ AdslJumper.storyState.prototype.showSlide0 = function () {
     if (!this.isRunning) {
         this.isRunning = true;
         // add image to display
-        this.firstImage = this.imagesLayer.add(this.game.make.sprite(0, 0, "atlas_1", "samovar_screen.png"));
-        this.firstImage.smoothed = false;
-        this.firstImage.scale.setTo(_scaleFactor);
+        var image1 = this.imagesLayer.add(this.game.make.image(290, 180, "atlas_1", "vendor.png"));
+        image1.smoothed = false;
+        image1.scale.setTo(_scaleFactor);
+
+        var image2 = this.imagesLayer.add(this.game.make.image(448, 500, "atlas_1", "year.png"));
+        image2.smoothed = false;
+        image2.scale.setTo(_scaleFactor);
 
         this.game.camera.flash(0x000000, this.flashTime);
         this.game.camera.onFlashComplete.addOnce(this.beforeSlide0, this);
@@ -75,8 +151,15 @@ AdslJumper.storyState.prototype.afterSlide0 = function () {
 AdslJumper.storyState.prototype.showSlide1 = function () {
     if (!this.isRunning) {
         this.isRunning = true;
-        this.imagesLayer.add(this.game.make.sprite(134, 32, "atlas_1", "phaser_logo.png"));
-        this.imagesLayer.add(this.game.make.sprite(274, 200, "atlas_1", "icon_html5.png"));
+
+        var image1 = this.imagesLayer.add(this.game.make.image(200, 190, "atlas_1", "phaser_logo.png"));
+        image1.smoothed = false;
+        image1.scale.setTo(_scaleFactor);
+
+        var image2 = this.imagesLayer.add(this.game.make.image(652, 210, "atlas_1", "icon_html5.png"));
+        image2.smoothed = false;
+        image2.scale.setTo(_scaleFactor);
+
         this.game.camera.flash(0x000000, this.flashTime);
         this.game.camera.onFlashComplete.addOnce(this.beforeSlide1, this);
     }
@@ -93,6 +176,7 @@ AdslJumper.storyState.prototype.afterSlide1 = function () {
         this.clearLayers();
 
         this.isRunning = false;
+
         this.currentState = this.showSlide2;
     }, this);
 };
@@ -101,15 +185,33 @@ AdslJumper.storyState.prototype.afterSlide1 = function () {
 AdslJumper.storyState.prototype.showSlide2 = function () {
     if (!this.isRunning) {
         this.isRunning = true;
-        this.imagesLayer.add(this.game.make.sprite(32, 88, "atlas_1", "town.png"));
+
+        var image = this.imagesLayer.add(this.game.make.image(64, 144, "atlas_1", "town.png"));
+        image.smoothed = false;
+        image.scale.setTo(_scaleFactor);
         
-        // skip button
-        this.game.add.sprite(540, 340, "atlas_1", "menu_items15.png");
-        // text
-        this.stringToSprite(280, 90, "Это самый обычный вечер.");
-        this.stringToSprite(280, 112    , "Народ сидит в интернете");
-        this.stringToSprite(280, 134    , "либо перед телеком. И");
-        this.stringToSprite(280, 156    , "все счастливы!");
+
+
+        if (_lang === "ru") {
+
+            // skip button
+            this.game.add.sprite(840, 516, "atlas_1", "menu_items15.png");
+            // text ru
+            this.stringToSprite(this.textOffestX, 144, "Это самый обычный вечер.");
+            this.stringToSprite(this.textOffestX, 144 + 30, "Народ сидит в интернете");
+            this.stringToSprite(this.textOffestX, 144 + 30 * 2, "либо перед телеком.");
+            this.stringToSprite(this.textOffestX, 144 + 30 * 3  , "И все счастливы.");
+        } else {
+
+            // skip button
+            this.game.add.sprite(900, 516, "atlas_1", "menu_items14.png");
+            // text en
+            this.stringToSprite(this.textOffestX, 144, "It was the most normal of evenings.");
+            this.stringToSprite(this.textOffestX, 144 + 30, "People were sat at home,");
+            this.stringToSprite(this.textOffestX, 144 + 30 * 2, "browsing the internet or watching TV.");
+            this.stringToSprite(this.textOffestX, 144 + 30 * 3  , "Everyone was just happy.");
+        }
+
 
         this.game.camera.flash(0x000000, this.flashTime);
         this.game.camera.onFlashComplete.addOnce(this.beforeSlide2, this);
@@ -135,7 +237,14 @@ AdslJumper.storyState.prototype.afterSlide2 = function () {
 AdslJumper.storyState.prototype.showSlide3 = function () {
     if (!this.isRunning) {
         this.isRunning = true;
-        this.imagesLayer.add( this.game.make.sprite(310, 170, "atlas_1", "menu_items12.png"));
+        var image = this.imagesLayer.add( this.game.make.image(464, 252, "atlas_1", "menu_items12.png"));
+        image.smoothed = false;
+        image.scale.setTo(_scaleFactor);
+
+        if (_lang === "en") {
+            image.frameName = "menu_items6.png";
+        }
+
         this.game.camera.flash(0x000000, this.flashTime);
         this.game.camera.onFlashComplete.addOnce(this.beforeSlide3, this);
     }
@@ -161,13 +270,22 @@ AdslJumper.storyState.prototype.showSlide4 = function () {
     if (!this.isRunning) {
         this.isRunning = true;
         
-        this.imagesLayer.add(this.game.make.sprite(-16, 0, "atlas_1", "lag.png"));
+        var image = this.imagesLayer.add(this.make.image(32, 90, "atlas_1", "lag.png"));
+        image.smoothed = false;
+        image.scale.setTo(_scaleFactor);
 
-        // text
-        this.stringToSprite(300, 90,  "Из внешнего мира");
-        this.stringToSprite(300, 112, "появился злодей по");
-        this.stringToSprite(300, 134, "имени ЛАГ! Он похи");
-        this.stringToSprite(300, 156, "тил интернет!");
+        if (_lang === "ru") {
+            // text ru
+            this.stringToSprite(this.textOffestX, 144,  "Из внешнего мира появился");
+            this.stringToSprite(this.textOffestX, 144 + 30, "злодей по имени ЛАГ. Он");
+            this.stringToSprite(this.textOffestX, 144 + 60, "похитил интернет!");
+        } else {
+            // text en
+            this.stringToSprite(this.textOffestX, 144,  "From the real world emerged a villain,");
+            this.stringToSprite(this.textOffestX, 144 + 30, "he name was LAG! He kidnapped");
+            this.stringToSprite(this.textOffestX, 144 + 60, "the internet!");
+        }
+
 
         this.game.camera.flash(0x000000, this.flashTime);
         this.game.camera.onFlashComplete.addOnce(this.beforeSlide4, this);
@@ -194,12 +312,23 @@ AdslJumper.storyState.prototype.showSlide5 = function () {
     if (!this.isRunning) {
         this.isRunning = true;
         
-        this.imagesLayer.add(this.game.make.sprite(2, 60, "atlas_1", "no_internet.png"));
+        var image = this.imagesLayer.add(this.game.make.image(54, 144, "atlas_1", "no_internet.png"));
+        image.smoothed = false;
+        image.scale.setTo(_scaleFactor);
 
-        // text
-        this.stringToSprite(270, 90,  "Перестал работать интернет.");
-        this.stringToSprite(270, 112, "Жизнь остановилась...");
-        this.stringToSprite(270, 134, "а люди стали несчастными!");
+
+        if (_lang === "ru") {
+            // text ru
+            this.stringToSprite(this.textOffestX, 144,  "Перестал работать интернет.");
+            this.stringToSprite(this.textOffestX, 144 + 30, "Жизнь остановилась...");
+            this.stringToSprite(this.textOffestX, 144 + 60, "а люди стали несчастными!");
+        } else {
+            // text en
+            this.stringToSprite(this.textOffestX, 144,  "The internet stopped working.");
+            this.stringToSprite(this.textOffestX, 144 + 30, "Life had stopped...");
+            this.stringToSprite(this.textOffestX, 144 + 60, "and the people became miserable!");
+        }
+
 
         this.game.camera.flash(0x000000, this.flashTime);
         this.game.camera.onFlashComplete.addOnce(this.beforeSlide5, this);
@@ -226,13 +355,23 @@ AdslJumper.storyState.prototype.showSlide6 = function () {
     if (!this.isRunning) {
         this.isRunning = true;
         
-        this.imagesLayer.add(this.game.make.sprite(-32, 0, "atlas_1", "hero.png"));
+        var image = this.imagesLayer.add(this.game.make.image(32, 122, "atlas_1", "hero.png"));
+        image.smoothed = false;
+        image.scale.setTo(_scaleFactor);
 
-        // text
-        this.stringToSprite(290, 90,  "Единственный кто может");
-        this.stringToSprite(290, 112, "спасти интернет это ");
-        this.stringToSprite(290, 134, "бравый мастер местного ");
-        this.stringToSprite(290, 156, "провайдера! ");
+        if (_lang === "ru") {
+            // text ru
+            this.stringToSprite(this.textOffestX, 144,      "Единственный кто может");
+            this.stringToSprite(this.textOffestX, 144 + 30, "спасти интернет это ");
+            this.stringToSprite(this.textOffestX, 144 + 60, "бравый мастер местного ");
+            this.stringToSprite(this.textOffestX, 144 + 90, "провайдера! ");
+        } else {
+            // text en
+            this.stringToSprite(this.textOffestX, 144,      "The only one who could save the");
+            this.stringToSprite(this.textOffestX, 144 + 30, "internet was a brave repairman from");
+            this.stringToSprite(this.textOffestX, 144 + 60, "a local provider.");
+        }
+
 
         this.game.camera.flash(0x000000, this.flashTime);
         this.game.camera.onFlashComplete.addOnce(this.beforeSlide6, this);
@@ -258,12 +397,24 @@ AdslJumper.storyState.prototype.afterSlide6 = function () {
 AdslJumper.storyState.prototype.showSlide7 = function () {
     if (!this.isRunning) {
         this.isRunning = true;
-        this.imagesLayer.add(this.game.make.sprite(-32, 0, "atlas_1", "drop_bitcoins.png"));
-        // text
-        this.stringToSprite(280, 90,  "Интернет верит что его");
-        this.stringToSprite(280, 112, "спасут. По этому он");
-        this.stringToSprite(280, 134, "раскидал по пути биткоины");
-        this.stringToSprite(280, 156, "что бы его смогли найти.");
+        var image = this.imagesLayer.add(this.game.make.image(42, 90, "atlas_1", "drop_bitcoins.png"));
+        image.smoothed = false;
+        image.scale.setTo(_scaleFactor);
+
+        if (_lang === "ru") {
+            // text ru
+            this.stringToSprite(this.textOffestX, 144,      "Интернет верит что его");
+            this.stringToSprite(this.textOffestX, 144 + 30, "спасут. По этому он");
+            this.stringToSprite(this.textOffestX, 144 + 60, "раскидал по пути биткоины");
+            this.stringToSprite(this.textOffestX, 144 + 90, "что бы его смогли найти.");
+        } else {
+            // text en
+            this.stringToSprite(this.textOffestX, 144,      "The internet believes that it will");
+            this.stringToSprite(this.textOffestX, 144 + 30, "be saved. Thats why it has dropped");
+            this.stringToSprite(this.textOffestX, 144 + 60, "bitcoins along the path, leading");
+            this.stringToSprite(this.textOffestX, 144 + 90, "to its rescue.");
+        }
+
 
         this.game.camera.flash(0x000000, this.flashTime);
         this.game.camera.onFlashComplete.addOnce(this.beforeSlide7, this);
@@ -290,12 +441,22 @@ AdslJumper.storyState.prototype.showSlide8 = function () {
     if (!this.isRunning) {
         this.isRunning = true;
         
-        this.imagesLayer.add(this.game.add.sprite(0, 0, "atlas_1", "hero_run.png"));
+        var image = this.imagesLayer.add(this.game.add.image(48, 90, "atlas_1", "hero_run.png"));
+        image.smoothed = false;
+        image.scale.setTo(_scaleFactor);
 
-        // text
-        this.stringToSprite(290, 90,  "Ничто его не остановит!");
-        this.stringToSprite(290, 112, "Ведь счастье людей в");
-        this.stringToSprite(290, 134, "его руках. Только вперед.");
+        if (_lang === "ru") {
+            // text ru
+            this.stringToSprite(this.textOffestX, 144,  "Ничто его не остановит!");
+            this.stringToSprite(this.textOffestX, 144 + 30, "Ведь счастье людей в");
+            this.stringToSprite(this.textOffestX, 144 + 60, "его руках. Только вперед.");
+        } else {
+            // text en
+            this.stringToSprite(this.textOffestX, 144,      "Nothing will stop the brave repairman!");
+            this.stringToSprite(this.textOffestX, 144 + 30, "As the peoples happiness is in his hands.");
+            this.stringToSprite(this.textOffestX, 144 + 60, "Lets go!");
+        }
+
 
         this.game.camera.flash(0x000000, this.flashTime);
         this.game.camera.onFlashComplete.addOnce(this.beforeSlide8, this);
@@ -334,62 +495,63 @@ AdslJumper.storyState.prototype.codeToImg = {
     "32": fontName + "34.png", // space
     "33": fontName + "121.png", // !
     "46": fontName + "133.png", // .
+    "44": fontName + "134.png", // .
     
     // en lowercase
-    "97": fontName + "66.png",
-    "98": fontName + "67.png",
-    "99": fontName + "68.png",
-    "100": fontName + "69.png",
-    "101": fontName + "70.png",
-    "102": fontName + "71.png",
-    "103": fontName + "72.png",
-    "104": fontName + "73.png",
-    "105": fontName + "74.png",
-    "106": fontName + "75.png",
-    "107": fontName + "76.png",
-    "108": fontName + "77.png",
-    "109": fontName + "78.png",
-    "110": fontName + "79.png",
-    "111": fontName + "80.png",
-    "112": fontName + "81.png",
-    "113": fontName + "82.png",
-    "114": fontName + "83.png",
-    "115": fontName + "84.png",
-    "116": fontName + "85.png",
-    "117": fontName + "86.png",
-    "118": fontName + "87.png",
-    "119": fontName + "88.png",
-    "120": fontName + "89.png",
-    "121": fontName + "90.png",
-    "122": fontName + "91.png",
+    "97": fontName + "68.png",
+    "98": fontName + "69.png",
+    "99": fontName + "70.png",
+    "100": fontName + "71.png",
+    "101": fontName + "72.png",
+    "102": fontName + "73.png",
+    "103": fontName + "74.png",
+    "104": fontName + "75.png",
+    "105": fontName + "76.png",
+    "106": fontName + "77.png",
+    "107": fontName + "78.png",
+    "108": fontName + "79.png",
+    "109": fontName + "80.png",
+    "110": fontName + "81.png",
+    "111": fontName + "82.png",
+    "112": fontName + "83.png",
+    "113": fontName + "84.png",
+    "114": fontName + "85.png",
+    "115": fontName + "86.png",
+    "116": fontName + "87.png",
+    "117": fontName + "88.png",
+    "118": fontName + "89.png",
+    "119": fontName + "90.png",
+    "120": fontName + "91.png",
+    "121": fontName + "92.png",
+    "122": fontName + "93.png",
 
-    // // TODO en uppercase
-    // "97": fontName + "66.png",
-    // "98": fontName + "67.png",
-    // "99": fontName + "68.png",
-    // "100": fontName + "69.png",
-    // "101": fontName + "70.png",
-    // "102": fontName + "71.png",
-    // "103": fontName + "72.png",
-    // "104": fontName + "73.png",
-    // "105": fontName + "74.png",
-    // "106": fontName + "75.png",
-    // "107": fontName + "76.png",
-    // "108": fontName + "77.png",
-    // "109": fontName + "78.png",
-    // "110": fontName + "79.png",
-    // "111": fontName + "80.png",
-    // "112": fontName + "81.png",
-    // "113": fontName + "82.png",
-    // "114": fontName + "83.png",
-    // "115": fontName + "84.png",
-    // "116": fontName + "85.png",
-    // "117": fontName + "86.png",
-    // "118": fontName + "87.png",
-    // "119": fontName + "88.png",
-    // "120": fontName + "89.png",
-    // "121": fontName + "90.png",
-    // "122": fontName + "91.png",
+    // en uppercase
+    "65": fontName + "94.png",
+    "66": fontName + "95.png",
+    "67": fontName + "96.png",
+    "68": fontName + "97.png",
+    "69": fontName + "98.png",
+    "70": fontName + "99.png",
+    "71": fontName + "100.png",
+    "72": fontName + "101.png",
+    "73": fontName + "102.png",
+    "74": fontName + "103.png",
+    "75": fontName + "104.png",
+    "76": fontName + "105.png",
+    "77": fontName + "106.png",
+    "78": fontName + "107.png",
+    "79": fontName + "108.png",
+    "80": fontName + "109.png",
+    "81": fontName + "110.png",
+    "82": fontName + "111.png",
+    "83": fontName + "112.png",
+    "84": fontName + "113.png",
+    "85": fontName + "114.png",
+    "86": fontName + "115.png",
+    "87": fontName + "116.png",
+    "88": fontName + "117.png",
+    "89": fontName + "118.png",
+    "90": fontName + "119.png",
 
     // rus lowercase
     "1072": fontName + "1.png",

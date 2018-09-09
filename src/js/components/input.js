@@ -45,6 +45,7 @@ AdslJumper.Input.prototype.update = function () {
     // reset
     this.dx = 0;
     this.dy = 0;
+    this.dz = 0;
 
     if (this.game.input.gamepad.supported && this.game.input.gamepad.active && this.pad1.connected) {
         this.usingPad = true;
@@ -55,6 +56,8 @@ AdslJumper.Input.prototype.update = function () {
     if (this.leftIsDown()) this.dx += - 1;
     if (this.rightIsDown()) this.dx += 1;
     if (this.jumpIsJustDown()) this.dy += 1;
+    if (this.downIsJustDown()) this.dy -= 1;
+    if (this.selectButtonIsJustDown()) this.dz = 1;
 
 
 };

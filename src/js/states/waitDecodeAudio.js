@@ -2,9 +2,9 @@
 AdslJumper.waitDecodeAudio = {
 
     preload: function () {
-        this.clockSprite = this.game.add.sprite(300, 160, "atlas_0", "waitAudioDecodeTime1.png");
+        this.clockSprite = this.game.add.sprite(464, 254, "atlas_0", "waitAudioDecodeTime1.png");
         this.clockSprite.smoothed = false;
-        this.clockSprite.scale.setTo(2);
+        this.clockSprite.scale.setTo(_scaleFactor);
         this.clockSprite.animations.add("default", [
             "waitAudioDecodeTime1.png",
             "waitAudioDecodeTime2.png",
@@ -16,7 +16,7 @@ AdslJumper.waitDecodeAudio = {
         ], 8, true);
 
         // text load
-        this.textSprite = this.game.add.sprite(256, 320, "atlas_0", "waitAudioDecodeText2.png");
+        this.textSprite = this.game.add.sprite(432, 510, "atlas_0", "waitAudioDecodeText2.png");
         this.textSprite.smoothed = false;
         this.textSprite.scale.setTo(2);
 
@@ -45,16 +45,11 @@ AdslJumper.waitDecodeAudio.beforeStory = function () {
     // add track
     SoundManager.currentTrack = this.game.add.sound("intro");
     this.game.sound.decode("intro");
-
-    // text Decode
-    this.textSprite = this.game.add.sprite(256, 320, "atlas_0", "waitAudioDecodeText1.png");
-    this.textSprite.smoothed = false;
-    this.textSprite.scale.setTo(2);
-
+    this.textSprite.frameName = "waitAudioDecodeText1.png";
 
     // after decode start story
     this.game.sound.setDecodedCallback([SoundManager.currentTrack], function () {
-        this.state.start("story");
+       this.state.start("story");
     }, this);
  
 };
