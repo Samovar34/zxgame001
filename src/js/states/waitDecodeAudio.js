@@ -18,20 +18,24 @@ AdslJumper.waitDecodeAudio = {
         // text load
         this.textSprite = this.game.add.sprite(432, 510, "atlas_0", "waitAudioDecodeText2.png");
         this.textSprite.smoothed = false;
-        this.textSprite.scale.setTo(2);
+        this.textSprite.scale.setTo(_scaleFactor);
 
         this.clockSprite.animations.play("default");
 
 
         // load music
-        if (_level < 10) {
-            this.load.audio('track01', ['assets/audio/music/track01.ogg', 'assets/audio/music/track01.mp3'], false);
+        if (_level <= 0) {
+            this.load.audio('intro', ['assets/audio/music/intro.ogg', 'assets/audio/music/intro.mp3'], false);
+        } else if (_level >= 1 && _level <= 2) {
+            this.load.audio('track02', ['assets/audio/music/track02.ogg', 'assets/audio/music/track02.mp3'], false);
+        } else if (_level >= 3 && _level <= 5) {
+            this.load.audio('track03', ['assets/audio/music/track03.ogg', 'assets/audio/music/track03.mp3'], false);
         }
     },
 
     create: function () {
 
-        if (_level === 0) {
+        if (_level <= 0) {
             this.beforeStory();
         } else {
             this.beforePlay();
@@ -41,39 +45,46 @@ AdslJumper.waitDecodeAudio = {
 
 // before story
 AdslJumper.waitDecodeAudio.beforeStory = function () {
-
     // add track
-    SoundManager.currentTrack = this.game.add.sound("intro");
+    SoundManager.setTrack(this.game.add.sound("intro"));
     this.game.sound.decode("intro");
     this.textSprite.frameName = "waitAudioDecodeText1.png";
 
     // after decode start story
-    this.game.sound.setDecodedCallback([SoundManager.currentTrack], function () {
-       this.state.start("story");
-    }, this);
+    this.game.sound.setDecodedCallback([SoundManager.tempTrack], this.doOnDecodeTrack, this);
  
 };
 
 AdslJumper.waitDecodeAudio.beforePlay = function () {
+    // stop current music
+    SoundManager.resetMusic();
+
     this.textSprite.frameName = "waitAudioDecodeText1.png";
 
-
-    if (_level < 10) {
+    if (_level >= 1 && _level <= 2) {
         // add track
-        SoundManager.tempTrack = this.game.add.sound("track01");
-        this.game.sound.decode("track01");
+        SoundManager.setTrack(this.game.add.sound("track02"));
+        this.game.sound.decode("track02");
+    } else if (_level >= 3 && _level <= 10) {
+        SoundManager.setTrack(this.game.add.sound("track03"));
+        this.game.sound.decode("track03");
     }
 
     this.game.sound.setDecodedCallback([SoundManager.tempTrack], this.doOnDecodeTrack, this);
 };
 
 AdslJumper.waitDecodeAudio.doOnDecodeTrack = function () {
+
+    // story or menu state
+    if (_level <= 0) {
+        this.state.start("story");
+        return;
+    }
+
+
     if (START_TIME === 0) {
         START_TIME = (new Date).getTime();
     }
-    if (_level < 10) {
-        this.state.start("level" + _level);
-    } else {
 
-    }
+    this.state.start("level" + _level);
 };

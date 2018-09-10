@@ -13,7 +13,7 @@ AdslJumper.SoundManager = function (game) {
     /** @type {number} */
     this.sfxVolume = 0.7;
     /** @type {number} */
-    this.musicVolume = 0.0;
+    this.musicVolume = 0.3;
 
     /** @type {Phaser.Game} */
     this.game = game;
@@ -111,9 +111,32 @@ AdslJumper.SoundManager.prototype.setSFXVolume = function (value) {
  * play music
  */
 AdslJumper.SoundManager.prototype.playTrack = function () {
-    if (this.currentTrack) {
-        this.currentTrack.loopFull(this.musicVolume);
+    if (!this.tempTrack) {
+        console.warn("set track first");
+        return;
     }
+
+    this.currentTrack = this.tempTrack;
+    this.currentTrack.loopFull(this.musicVolume);
+    this.tempTrack = null;
+};
+
+/**
+ * set this.currentTrack
+ * @param {Phaser.Sound} audio
+ */
+AdslJumper.SoundManager.prototype.setTrack = function (audio) {
+  this.tempTrack = audio;
+};
+
+/**
+ * stop play music and reset this.currentTrack
+ */
+AdslJumper.SoundManager.prototype.resetMusic = function () {
+  if (this.currentTrack) {
+      this.currentTrack.stop();
+  }
+  this.currentTrack = null;
 };
 
 // void

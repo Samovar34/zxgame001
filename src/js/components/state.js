@@ -217,8 +217,6 @@ AdslJumper.State.prototype = {
 
         // MUSIC
         if (!SoundManager.currentTrack) {
-            SoundManager.currentTrack = SoundManager.tempTrack;
-            SoundManager.tempTrack = null;
             SoundManager.playTrack();
         }
 
@@ -356,7 +354,12 @@ AdslJumper.State.prototype = {
      * start new level
      */
     startNewLevelState: function () {
-        this.game.state.start("level" + _level);
+        if (_level === 3) {
+            this.game.state.start("waitDecodeAudio");
+        } else {
+            this.game.state.start("level" + _level);
+        }
+
     },
 
     // CALLBACKS

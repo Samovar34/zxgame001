@@ -9,7 +9,7 @@ var game = (function () {
     /** @global
      * 	@type {number}
      * */
-	var _level = 0; // 0 - story
+	var _level = 0; // -1 - story; 0 - menu
 
     /** @global
      * 	@type {number}

@@ -2,7 +2,8 @@ AdslJumper.storyState = function (game) {};
 
 AdslJumper.storyState.prototype = {
     create: function () {
-        // modules
+        // set level -1
+        _level = -1;
 
         // variables
         this.isRunning = false;
@@ -107,10 +108,10 @@ AdslJumper.storyState.prototype.afterChooseLang = function() {
     this.isRunning = false;
 
     // music
-    if (SoundManager.currentTrack) {
+    try {
         SoundManager.playTrack();
-    } else {
-        console.error("story state without music!");
+    } catch (err) {
+        console.error("Story state music error " + err.message);
     }
 };
 

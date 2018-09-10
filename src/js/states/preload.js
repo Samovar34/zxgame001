@@ -39,9 +39,6 @@ AdslJumper.preloadState.prototype = {
         this.load.audio('pickUp', ['assets/audio/pickUp.ogg', 'assets/audio/pickUp.mp3']);
         this.load.audio('openDoor2', ['assets/audio/openDoor2.ogg', 'assets/audio/openDoor2.mp3']);
 
-        // music
-        this.load.audio('intro', ['assets/audio/music/intro.ogg', 'assets/audio/music/intro.mp3'], false);
-
         // init game components
         this.game.load.onFileComplete.add(this.doOnFIleLoad, this);
 

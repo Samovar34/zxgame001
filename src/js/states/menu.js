@@ -1,5 +1,8 @@
 AdslJumper.menuState = {
     create: function () {
+        // set level
+        _level = 0;
+
         AdslJumper.gameObjectFactory.init(this);
 
         // variables
@@ -58,8 +61,6 @@ AdslJumper.menuState = {
                 this.options.kill();
                 this.about.kill();
                 this.game.camera.onFadeComplete.addOnce(function () {
-                    SoundManager.currentTrack.stop();
-                    SoundManager.currentTrack = null;
 
                     // clear cache
                     this.game.cache.removeTextureAtlas("atlas_1");
