@@ -26,9 +26,11 @@ AdslJumper.waitDecodeAudio = {
         // load music
         if (_level <= 0) {
             this.load.audio('intro', ['assets/audio/music/intro.ogg', 'assets/audio/music/intro.mp3'], false);
-        } else if (_level >= 1 && _level <= 2) {
+        } else if (_level >= 1 && _level <= 6) {
+            this.load.audio('track01', ['assets/audio/music/track01.ogg', 'assets/audio/music/track01.mp3'], false);
+        } else if (_level >= 7 && _level <= 20) {
             this.load.audio('track02', ['assets/audio/music/track02.ogg', 'assets/audio/music/track02.mp3'], false);
-        } else if (_level >= 3 && _level <= 5) {
+        } else if (_level >= 21 && _level <= 25) {
             this.load.audio('track03', ['assets/audio/music/track03.ogg', 'assets/audio/music/track03.mp3'], false);
         }
     },
@@ -61,13 +63,13 @@ AdslJumper.waitDecodeAudio.beforePlay = function () {
 
     this.textSprite.frameName = "waitAudioDecodeText1.png";
 
-    if (_level >= 1 && _level <= 2) {
+    if (_level >= 1 && _level <= 6) {
         // add track
+        SoundManager.setTrack(this.game.add.sound("track01"));
+        this.game.sound.decode("track01");
+    } else if (_level >= 7 && _level <= 20) {
         SoundManager.setTrack(this.game.add.sound("track02"));
         this.game.sound.decode("track02");
-    } else if (_level >= 3 && _level <= 10) {
-        SoundManager.setTrack(this.game.add.sound("track03"));
-        this.game.sound.decode("track03");
     }
 
     this.game.sound.setDecodedCallback([SoundManager.tempTrack], this.doOnDecodeTrack, this);

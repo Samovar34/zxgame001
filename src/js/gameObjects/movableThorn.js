@@ -10,13 +10,15 @@ AdslJumper.MovableThorn = function (game, x, y, properties) {
 
     this.game = game;
     this.frame = 0;
+    this.smoothed = false;
+    this.scale.setTo(_scaleFactor);
 
     this.tag = "movableThorn";
 
     // enable physics
-    this.game.physics.arcade.enable(this);
-    this.body.immovable = true;
-    this.body.setSize(20, 20, 32, 6);
+    // this.game.physics.arcade.enable(this);
+    // this.body.immovable = true;
+    // this.body.setSize(20, 20, 32, 6);
 
     switch(properties.direction) {
         case "right":

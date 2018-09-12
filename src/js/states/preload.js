@@ -12,7 +12,7 @@ AdslJumper.preloadState.prototype = {
         this.progress.scale.setTo(_scaleFactor);
 
         // load levels
-        for (var i = 1; i <= 6; i++) {
+        for (var i = 1; i <= 10; i++) {
             this.load.json("level" + i, "assets/levels/level" + i + ".json");
             this.load.image("level" + i + "bg", "assets/images/levels/level" + i + ".png");
         }

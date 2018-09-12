@@ -354,7 +354,7 @@ AdslJumper.State.prototype = {
      * start new level
      */
     startNewLevelState: function () {
-        if (_level === 3) {
+        if (_level === 7) {
             this.game.state.start("waitDecodeAudio");
         } else {
             this.game.state.start("level" + _level);

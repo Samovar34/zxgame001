@@ -37,7 +37,6 @@ AdslJumper.storyState.prototype = {
         // skip
         if (Input.dz === 1) {
             if (this.currentState === this.chooseLang && !this.chooseLangComplete) {
-                console.log("bals");
                 this.chooseLangComplete = true;
                 if (this.arrow.position.y === 280) {
                     _lang = "en";

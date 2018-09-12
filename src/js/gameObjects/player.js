@@ -194,7 +194,7 @@ AdslJumper.Player.prototype.update = function () {
 AdslJumper.Player.prototype.jump = function (force) {
 
     //todo подумать как запретить прыжок в jumpForce
-    if (this.inTrigger) return;
+    //if (this.inTrigger) return;
 
     // jump from wall
     if (this._onWall() && !this._onFloor() && this.canJump && this.allowWallSliding) {
