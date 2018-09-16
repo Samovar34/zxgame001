@@ -295,12 +295,23 @@ AdslJumper.State.prototype = {
                 this.gui.flash();
             } else {
                 // continue state
-                alert("ГАМОВЕР");
+                //alert("ГАМОВЕР");
             }
 
             this.gui.setScore(_score);
 
             this.game.camera.shake(0.01, 500);
+        }
+    },
+
+    /**
+     * gameOver
+     * @param {AdslJumper.Player} player
+     * @param {AdslJumper.MovableThorn} movableThorn
+     */
+    gameOverMT: function (player, movableThorn) {
+        if (movableThorn.isDangerous()) {
+            this.gameOver();
         }
     },
 
@@ -400,6 +411,11 @@ AdslJumper.State.prototype = {
         player.customTouchRight = player.body.touching.right;
         player.customTouchDown = player.body.touching.down;
         player.customTouchLeft = player.body.touching.left;
+
+        if (collider.tag === "rb2d") {
+            player.customTouchRight = false;
+            player.customTouchLeft = false
+        }
     },
 
     /**

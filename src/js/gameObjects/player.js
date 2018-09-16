@@ -176,9 +176,10 @@ AdslJumper.Player.prototype.update = function () {
     }
 
     // if player touch enything no allow double jump
-    if (this._isToucn()) {
-        this.canDoubleJump = false;
-    }
+    // TODO fink about it
+    // if (this._isToucn()) {
+    //     this.canDoubleJump = false;
+    // }
 
     this.currentState();
 
