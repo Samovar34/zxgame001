@@ -236,7 +236,7 @@ AdslJumper.gameObjectFactory.jumpForce = function (x, y) {
     /**
      * @type {string}
      */
-    sprite._event = "strongJump";
+    sprite.data.event = "strongJump";
 
     sprite.animations.add("default", ["jumpForce1.png", "jumpForce2.png", "jumpForce3.png", "jumpForce4.png"], 8, true);
 
@@ -254,24 +254,55 @@ AdslJumper.gameObjectFactory.jumpForce = function (x, y) {
 AdslJumper.gameObjectFactory.platformA = function (x, y) {
     var gameObject = this.state.game.make.sprite(x * _scaleFactor, y * _scaleFactor, "atlas_2", "platformA1.png");
 
+    // main
+    gameObject.tag = "rb2d";
+    gameObject.anchor.setTo(0, 1);
     gameObject.smoothed = false;
     gameObject.scale.setTo(_scaleFactor);
+    gameObject.data.x = x * _scaleFactor;
+    gameObject.data.y = y * _scaleFactor;
 
+    // physics
     this.state.game.physics.arcade.enable(gameObject);
+    gameObject.body.setSize(39, 24, 1, 0);
     gameObject.body.mass = 1;
     gameObject.outOfBoundsKill = true;
     gameObject.checkWorldBounds = true;
     gameObject.body.maxVelocity.x = 0;
     gameObject.body.maxVelocity.y = 100;
 
-    gameObject.tag = "rb2d";
-
+    // animation
     gameObject.animations.add("default", [
         "platformA1.png",
         "platformA2.png"
     ], 8, true);
 
     gameObject.animations.play("default");
+
+    return gameObject;
+};
+
+/**
+ * create fx game object
+ * @param {number} x
+ * @param {number} y
+ * @returns {Phaser.Sprite}
+ */
+AdslJumper.gameObjectFactory.platformAHalo = function(x ,y) {
+    var gameObject = this.state.game.make.sprite(x * _scaleFactor, y * _scaleFactor, "atlas_2", "platformA7.png");
+    gameObject.anchor.setTo(0, 1);
+    gameObject.smoothed = false;
+    gameObject.scale.setTo(_scaleFactor);
+
+    gameObject.animations.add
+    ("default",
+        [
+            "platformA4.png",
+            "platformA5.png",
+            "platformA6.png",
+            "platformA7.png",
+        ],10
+    );
 
     return gameObject;
 };
@@ -521,7 +552,7 @@ AdslJumper.gameObjectFactory.mine = function (x, y) {
 
     sprite.smoothed = false;
     sprite.scale.setTo(_scaleFactor);
-    sprite._event = "mineGameOver";
+    sprite.data.event = "mineGameOver";
 
     sprite.animations.add("default", ["mine1.png", "mine2.png"], 1, true);
 
@@ -537,7 +568,7 @@ AdslJumper.gameObjectFactory.mine = function (x, y) {
  * @returns {Phaser.Sprite}
  */
 AdslJumper.gameObjectFactory.flyingThorn = function (x, y) {
-    var sprite = this.state.make.sprite(x * _scaleFactor, y * _scaleFactor, "atlas_2", "flyingThorn.png");
+    var sprite = this.state.make.sprite(x * _scaleFactor, (y - 16) * _scaleFactor, "atlas_2", "flyingThorn.png");
 
     sprite.smoothed = false;
     sprite.scale.setTo(_scaleFactor);
@@ -545,7 +576,7 @@ AdslJumper.gameObjectFactory.flyingThorn = function (x, y) {
     this.state.game.physics.arcade.enable(sprite);
     sprite.body.setSize(38, 10, 5, 3);
 
-    sprite._event = "gameOver";
+    sprite.data.event = "gameOver";
 
     return sprite;
 };

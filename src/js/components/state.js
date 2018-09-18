@@ -288,17 +288,9 @@ AdslJumper.State.prototype = {
             this.player.body.gravity.y = -300;
             this.player.animations.play("death");
 
-            // TODO убрать биткойн
-            // score -1 after death
-            if (_score > 0) {
-                _score -= 1;
-                this.gui.flash();
-            } else {
-                // continue state
-                //alert("ГАМОВЕР");
-            }
+            this.gui.flash();
 
-            this.gui.setScore(_score);
+            // TODO add death score
 
             this.game.camera.shake(0.01, 500);
         }
@@ -427,9 +419,9 @@ AdslJumper.State.prototype = {
     playerTriggerHandler: function (player, trigger) {
         player.inTrigger = true;
         try {
-            this[trigger._event](player, trigger);
+            this[trigger.data.event](player, trigger);
         } catch (err) {
-            console.warn("no handler for " + trigger._event);
+            console.warn("no handler for " + trigger.data.event);
         }
     },
 
@@ -546,7 +538,7 @@ AdslJumper.State.prototype = {
             tempElement.width = this.map.triggers[i+2] * _scaleFactor;
             tempElement.height = this.map.triggers[i+3] * _scaleFactor;
 
-            tempElement._event = this.map.triggers[i+4];
+            tempElement.data.event = this.map.triggers[i+4];
 
             // add to the group
             this.triggers.add(tempElement);

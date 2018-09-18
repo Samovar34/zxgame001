@@ -6,96 +6,142 @@ AdslJumper.level9 = new AdslJumper.State(Game, {
     createExplosions: true
 });
 
-//144 128
-
 AdslJumper.level9.doAfterCreate = function () {
 
-    this.pl1 = AdslJumper.gameObjectFactory.platformA(160, 128);
-
-    this.pl1.events.onKilled.add(function () {
-        this.makeExplosion(this.pl1.x + 41, this.pl1.y);
-    }, this);
-
+    // platforms
+    this.pl1 = AdslJumper.gameObjectFactory.platformA(
+        this.map.objects.pl1.x,
+        this.map.objects.pl1.y
+    );
+    this.pl1.body.maxVelocity.y = 25;
     this.collision2d.add(this.pl1);
 
-    this.pl2 = AdslJumper.gameObjectFactory.platformA(320, 128);
-
-    this.pl2.events.onKilled.add(function () {
-        this.makeExplosion(this.pl2.x + 41, this.pl2.y);
-    }, this);
-
+    this.pl2 = AdslJumper.gameObjectFactory.platformA(
+        this.map.objects.pl2.x,
+        this.map.objects.pl2.y
+    );
     this.collision2d.add(this.pl2);
 
-    this.pl3 = AdslJumper.gameObjectFactory.platformA(480, 140);
-
-    this.pl3.events.onKilled.add(function () {
-        this.makeExplosion(this.pl3.x + 41, this.pl3.y);
-    }, this);
-
+    this.pl3 = AdslJumper.gameObjectFactory.platformA(
+        this.map.objects.pl3.x,
+        this.map.objects.pl3.y
+    );
     this.collision2d.add(this.pl3);
 
-    var laser = this.add.sprite(466, 240, "atlas_2", "flyingThorn.png");
-    laser.smoothed = false;
-    laser.scale.setTo(_scaleFactor);
-    this.game.physics.arcade.enable(laser);
-    laser._event = "gameOver";
+    // platforms halo
+    this.pl1Halo = AdslJumper.gameObjectFactory.platformAHalo(
+        this.map.objects.pl1.x,
+        this.map.objects.pl1.y
+    );
+    this.pl1Halo.events.onAnimationComplete.add(this.onPl1, this);
+    this.pl1Halo.kill();
+    this.fx.add(this.pl1Halo);
 
-    this.add.tween(laser).to( { y: 80 }, 1000, "Linear", true, 0, -1, true);
-    this.triggers.add(laser);
+    this.pl2Halo = AdslJumper.gameObjectFactory.platformAHalo(
+        this.map.objects.pl2.x,
+        this.map.objects.pl2.y
+    );
+    this.pl2Halo.kill();
+    this.fx.add(this.pl2Halo);
+
+    this.pl3Halo = AdslJumper.gameObjectFactory.platformAHalo(
+        this.map.objects.pl3.x,
+        this.map.objects.pl3.y
+    );
+    this.pl3Halo.kill();
+    this.fx.add(this.pl3Halo);
+
+    // flying thorns
+    this.fT1 = AdslJumper.gameObjectFactory.flyingThorn(
+        this.map.objects.fT1.x,
+        this.map.objects.fT1.y
+    );
+    this.triggers.add(this.fT1);
+    this.add.tween(this.fT1).to(
+        { x: this.map.objects.fT1End.x * _scaleFactor }, 1000, "Linear", true, 0, -1, true
+    );
 
 
-    laser = this.add.sprite(112 * _scaleFactor, 108 * _scaleFactor, "atlas_2", "flyingThorn.png");
-    laser.smoothed = false;
-    laser.scale.setTo(_scaleFactor);
-    this.game.physics.arcade.enable(laser);
-    laser._event = "gameOver";
+    this.fT2 = AdslJumper.gameObjectFactory.flyingThorn(
+        this.map.objects.fT2.x,
+        this.map.objects.fT2.y
+    );
+    this.triggers.add(this.fT2);
+    this.add.tween(this.fT2).to(
+        { y: this.map.objects.fT2End.y * _scaleFactor }, 1000, "Linear", true, 0, -1, true
+    );
 
-    // 652
-    this.add.tween(laser).to( { x: 326 * _scaleFactor }, 1000, "Linear", true, 0, -1, true);
+    this.fT3 = AdslJumper.gameObjectFactory.flyingThorn(
+        this.map.objects.fT3.x,
+        this.map.objects.fT3.y
+    );
+    this.triggers.add(this.fT3);
+    this.add.tween(this.fT3).to(
+        { x: this.map.objects.fT3End.x * _scaleFactor }, 1000, "Linear", true, 0, -1, true
+    );
 
-    this.triggers.add(laser);
+    this.fT4 = AdslJumper.gameObjectFactory.flyingThorn(
+        this.map.objects.fT4.x,
+        this.map.objects.fT4.y
+    );
+    this.triggers.add(this.fT4);
+    this.add.tween(this.fT4).to(
+        { y: this.map.objects.fT4End.y * _scaleFactor }, 1000, "Linear", true, 0, -1, true
+    );
 
-    laser = this.add.sprite(652 * _scaleFactor, 108 * _scaleFactor, "atlas_2", "flyingThorn.png");
-    laser.smoothed = false;
-    laser.scale.setTo(_scaleFactor);
-    this.game.physics.arcade.enable(laser);
-    laser._event = "gameOver";
+    // door scree
+    if (_lang === "ru") {
+        this.doorScreen = this.fx.add(this.make.image(this.map.objects.sD.x * _scaleFactor, (this.map.objects.sD.y - 10) * _scaleFactor, "atlas_2", "screenDoor2.png"));
+    } else {
+        this.doorScreen = this.fx.add(this.make.image(this.map.objects.sD.x * _scaleFactor, (this.map.objects.sD.y - 10) * _scaleFactor, "atlas_2", "screenDoor1.png"));
+    }
+    this.doorScreen.smoothed = false;
+    this.doorScreen.scale.setTo(_scaleFactor);
 
-    // 652
-    this.add.tween(laser).to( { x: 400 * _scaleFactor }, 1000, "Linear", true, 0, -1, true);
-
-    this.triggers.add(laser);
-
-    laser = this.add.sprite(652 * _scaleFactor, 500, "atlas_2", "flyingThorn.png");
-    laser.smoothed = false;
-    laser.scale.setTo(_scaleFactor);
-    this.game.physics.arcade.enable(laser);
-    laser._event = "gameOver";
-
-    this.add.tween(laser).to( { y: 240 }, 1000, "Linear", true, 0, -1, true);
-    this.triggers.add(laser);
+    // arrow
+    this.arrow = AdslJumper.gameObjectFactory.arrow(
+        this.map.objects.arrow.x * _scaleFactor,
+        (this.map.objects.arrow.y - 6) * _scaleFactor
+    );
+    this.fx.add(this.arrow);
 };
 
 
 AdslJumper.level9.gameOver = function () {
-  AdslJumper.State.prototype.gameOver.call(this);
-
-      this.pl1.revive();
-      this.pl1.body.stop();
-      this.pl1.x = 160*_scaleFactor;
-      this.pl1.y = 128*_scaleFactor;
-
-    this.pl2.revive();
-    this.pl2.body.stop();
-    this.pl2.x = 320*_scaleFactor;
-    this.pl2.y = 128*_scaleFactor;
-
-    this.pl3.revive();
-    this.pl3.body.stop();
-    this.pl3.x = 480*_scaleFactor;
-    this.pl3.y = 140*_scaleFactor;
+    AdslJumper.State.prototype.gameOver.call(this);
+    this.pl3Halo.revive();
+    this.pl2Halo.revive();
+    this.pl1Halo.revive();
+    this.pl1Halo.animations.play("default");
 };
 
 AdslJumper.level9.openDoor = function () {
   this.exitDoor.open();
+    this.exitDoor.open();
+    this.arrow.kill();
+    if (_lang === "ru") {
+        this.doorScreen.frameName = "screenDoor4.png";
+    } else {
+        this.doorScreen.frameName = "screenDoor3.png";
+    }
+};
+
+AdslJumper.level9.onPl1 = function () {
+    this.pl1Halo.kill();
+    this.pl1.revive();
+    this.pl1.body.stop();
+    this.pl1.x = this.pl1.data.x;
+    this.pl1.y = this.pl1.data.y;
+
+    this.pl2Halo.kill();
+    this.pl2.revive();
+    this.pl2.body.stop();
+    this.pl2.x = this.pl2.data.x;
+    this.pl2.y = this.pl2.data.y;
+
+    this.pl3Halo.kill();
+    this.pl3.revive();
+    this.pl3.body.stop();
+    this.pl3.x = this.pl3.data.x;
+    this.pl3.y = this.pl3.data.y;
 };
