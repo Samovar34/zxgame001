@@ -1,8 +1,11 @@
-// MovableThornRight class
-// extends Phaser.Sprite class
-// only for goup
-// perion int (0, 1) откуда начинается анимация
-// type string up, right, down, left
+/**
+ * MovableThorn game object class
+ * @param {Phaser.Game} game
+ * @param {number} x
+ * @param {number} y
+ * @param {boolean} phase
+ * @constructor
+ */
 AdslJumper.MovableThorn = function (game, x, y, phase) {
 
     // extend
@@ -14,7 +17,7 @@ AdslJumper.MovableThorn = function (game, x, y, phase) {
     this.scale.setTo(_scaleFactor);
 
     this.tag = "movableThorn";
-    this._event = "gameOverMT";
+    this.data.event = "gameOverMT";
 
     //enable physics
     this.game.physics.arcade.enable(this);
@@ -132,21 +135,29 @@ AdslJumper.MovableThorn = function (game, x, y, phase) {
             "movableThorn2.png",
             "movableThorn2.png",
             "movableThorn2.png",
-            //activete
+            //activate
             "movableThorn3.png",
             "movableThorn4.png",
             "movableThorn5.png",
             "movableThorn6.png"
         ], 10, true);
     }
-    // TODO где запускать?
+
     this.animations.play("default");
 };
 
 AdslJumper.MovableThorn.prototype = Object.create(Phaser.Sprite.prototype);
 AdslJumper.MovableThorn.prototype.constructor = AdslJumper.MovableThorn;
 
-// if true it can kill player
+/**
+ *
+ * @returns {boolean}
+ */
 AdslJumper.MovableThorn.prototype.isDangerous = function () {
-    return !(this.frameName == "movableThorn1.png" || this.frameName == "movableThorn2.png" || this.frameName == "movableThorn3.png" || this.frameName == "movableThorn4.png");
+    return !(
+        this.frameName === "movableThorn1.png" ||
+        this.frameName === "movableThorn2.png" ||
+        this.frameName === "movableThorn3.png" ||
+        this.frameName === "movableThorn4.png"
+    );
 };

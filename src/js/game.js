@@ -102,6 +102,7 @@ var game = (function () {
         Game.state.add("level8", AdslJumper.level8);
         Game.state.add("level9", AdslJumper.level9);
         Game.state.add("level10", AdslJumper.level10);
+        Game.state.add("level11", AdslJumper.level11);
 
         Game.state.start("boot");
 	};
@@ -138,11 +139,41 @@ var game = (function () {
 
         setLang: function(val) {
             _lang = val;
+        },
+
+        sound: function () {
+            return SoundManager;
         }
     }
 })();
 
 window.onload = game.init;
+
+// TODO debug
+document.body.addEventListener("keypress", function (e) {
+
+    console.log(e.keyCode);
+    kC = e.keyCode;
+
+   if (e.shiftKey) {
+       var state = game.getState();
+       // B flyMode
+       if (kC === 66 || kC === 1048) {
+           if (game.getState()._debug) {
+               state._debug = false;
+           } else {
+               state._debug = true;
+           }
+       }
+
+       // V open exit door
+       if (kC === 86 || kC === 1052) {
+           state.exitDoor.open();
+       }
+   }
+   e.preventDefault();
+   return false;
+}, false);
 
 
 

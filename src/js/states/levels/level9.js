@@ -3,7 +3,8 @@ AdslJumper.level9 = new AdslJumper.State(Game, {
     height: 320,
     inputOnFlash: true,
     openDoor: false,
-    createExplosions: true
+    createExplosions: true,
+    debug: false
 });
 
 AdslJumper.level9.doAfterCreate = function () {
@@ -61,7 +62,6 @@ AdslJumper.level9.doAfterCreate = function () {
         { x: this.map.objects.fT1End.x * _scaleFactor }, 1000, "Linear", true, 0, -1, true
     );
 
-
     this.fT2 = AdslJumper.gameObjectFactory.flyingThorn(
         this.map.objects.fT2.x,
         this.map.objects.fT2.y
@@ -89,14 +89,17 @@ AdslJumper.level9.doAfterCreate = function () {
         { y: this.map.objects.fT4End.y * _scaleFactor }, 1000, "Linear", true, 0, -1, true
     );
 
-    // door scree
-    if (_lang === "ru") {
-        this.doorScreen = this.fx.add(this.make.image(this.map.objects.sD.x * _scaleFactor, (this.map.objects.sD.y - 10) * _scaleFactor, "atlas_2", "screenDoor2.png"));
-    } else {
-        this.doorScreen = this.fx.add(this.make.image(this.map.objects.sD.x * _scaleFactor, (this.map.objects.sD.y - 10) * _scaleFactor, "atlas_2", "screenDoor1.png"));
-    }
-    this.doorScreen.smoothed = false;
-    this.doorScreen.scale.setTo(_scaleFactor);
+    this.fT5 = AdslJumper.gameObjectFactory.flyingThorn(
+        this.map.objects.fT5.x,
+        this.map.objects.fT5.y
+    );
+    this.triggers.add(this.fT5);
+    this.add.tween(this.fT5).to(
+        { x: this.map.objects.fT5End.x * _scaleFactor }, 2000, "Linear", true, 0, -1, true
+    );
+
+    // door screen
+    this.doorScreen = new AdslJumper.DoorScreen(this, this.map.objects.sD.x, (this.map.objects.sD.y - 10));
 
     // arrow
     this.arrow = AdslJumper.gameObjectFactory.arrow(
@@ -116,14 +119,9 @@ AdslJumper.level9.gameOver = function () {
 };
 
 AdslJumper.level9.openDoor = function () {
-  this.exitDoor.open();
     this.exitDoor.open();
     this.arrow.kill();
-    if (_lang === "ru") {
-        this.doorScreen.frameName = "screenDoor4.png";
-    } else {
-        this.doorScreen.frameName = "screenDoor3.png";
-    }
+    this.doorScreen.open();
 };
 
 AdslJumper.level9.onPl1 = function () {

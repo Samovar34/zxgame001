@@ -225,7 +225,7 @@ AdslJumper.gameObjectFactory.fxSquare = function (x, y) {
  * @returns {Phaser.Sprite}
  */
 AdslJumper.gameObjectFactory.jumpForce = function (x, y) {
-    var sprite = this.state.make.sprite(x * _scaleFactor, y * _scaleFactor, "atlas_2", "jumpForce1.png");
+    var sprite = this.state.make.sprite(x * _scaleFactor, (y - 32) * _scaleFactor, "atlas_2", "jumpForce1.png");
 
     this.state.game.physics.arcade.enable(sprite);
     sprite.body.setSize(16, 4, 8, -2);
@@ -300,8 +300,8 @@ AdslJumper.gameObjectFactory.platformAHalo = function(x ,y) {
             "platformA4.png",
             "platformA5.png",
             "platformA6.png",
-            "platformA7.png",
-        ],10
+            "platformA7.png"
+        ],8
     );
 
     return gameObject;
@@ -377,6 +377,32 @@ AdslJumper.gameObjectFactory.screenGreenLoad = function (x, y) {
         "screenGreenLoad3.png",
         "screenGreenLoad4.png",
         "screenGreenLoad5.png"
+    ], 8, true);
+
+    return sprite;
+};
+
+/**
+ * create fx game object
+ * @param {number} x
+ * @param {number} y
+ * @returns {Phaser.Sprite}
+ */
+AdslJumper.gameObjectFactory.screenCube = function (x, y) {
+    var sprite = this.state.make.sprite(x * _scaleFactor, (y - 32) * _scaleFactor, "atlas_2", "screenCube1.png");
+
+    sprite.smoothed = false;
+    sprite.scale.setTo(_scaleFactor);
+
+    sprite.animations.add("default", [
+        "screenCube1.png",
+        "screenCube2.png",
+        "screenCube3.png",
+        "screenCube4.png",
+        "screenCube5.png",
+        "screenCube6.png",
+        "screenCube7.png",
+        "screenCube8.png"
     ], 8, true);
 
     return sprite;
@@ -574,7 +600,7 @@ AdslJumper.gameObjectFactory.flyingThorn = function (x, y) {
     sprite.scale.setTo(_scaleFactor);
 
     this.state.game.physics.arcade.enable(sprite);
-    sprite.body.setSize(38, 10, 5, 3);
+    sprite.body.setSize(12, 12, 2, 2);
 
     sprite.data.event = "gameOver";
 

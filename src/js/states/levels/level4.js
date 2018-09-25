@@ -6,7 +6,7 @@ AdslJumper.level4 = new AdslJumper.State(Game, {
 });
 
 AdslJumper.level4.doAfterCreate = function() {
-    this.triggers.add(AdslJumper.gameObjectFactory.jumpForce(662, 320));
+    this.triggers.add(AdslJumper.gameObjectFactory.jumpForce(662, 320 + 32));
 
     this.player.allowWallSliding = false;
 };

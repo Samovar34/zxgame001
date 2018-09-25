@@ -96,7 +96,10 @@ AdslJumper.SoundManager.prototype.constructor = AdslJumper.SoundManager;
  * @param {number} value
  */
 AdslJumper.SoundManager.prototype.setMusicVolume = function (value) {
-    // TODO logic here
+    this.musicVolume = value;
+    if (this.currentTrack) {
+        this.currentTrack.volume = this.musicVolume;
+    }
 };
 
 /**
@@ -104,7 +107,7 @@ AdslJumper.SoundManager.prototype.setMusicVolume = function (value) {
  * @param {number} value
  */
 AdslJumper.SoundManager.prototype.setSFXVolume = function (value) {
-    // TODO logic here
+    this.sfxVolume = value;
 };
 
 /**
@@ -142,6 +145,7 @@ AdslJumper.SoundManager.prototype.resetMusic = function () {
 // void
 AdslJumper.SoundManager.prototype.playStep01 = function () {
     if (!this.step01.isPlaying) {
+        this.step01.volume = this.sfxVolume;
         this.step01.play();
     }
 };
@@ -149,23 +153,27 @@ AdslJumper.SoundManager.prototype.playStep01 = function () {
 // void
 AdslJumper.SoundManager.prototype.playStep02 = function () {
     if (!this.step02.isPlaying) {
+        this.step02.volume = this.sfxVolume;
         this.step02.play();
     }
 };
 
 // void
 AdslJumper.SoundManager.prototype.playJump = function () {
+    this.jump.volume = this.sfxVolume;
     this.jump.play();
 };
 
 // void
 AdslJumper.SoundManager.prototype.playCoin = function () {
+    this.coin.volume = this.sfxVolume;
     this.coin.play();
 };
 
 // void
 AdslJumper.SoundManager.prototype.playOpenDoor2 = function () {
     if (!this.openDoor2.isPlaying) {
+        this.openDoor2.volume = this.sfxVolume;
         this.openDoor2.play();
     }
 };
@@ -173,6 +181,7 @@ AdslJumper.SoundManager.prototype.playOpenDoor2 = function () {
 // void
 AdslJumper.SoundManager.prototype.playOpenDoor = function () {
     if (!this.openDoor.isPlaying) {
+        this.openDoor.volume = this.sfxVolume;
         this.openDoor.play();
     }
 };
@@ -180,6 +189,7 @@ AdslJumper.SoundManager.prototype.playOpenDoor = function () {
 // void
 AdslJumper.SoundManager.prototype.playDoubleJump = function () {
     if (!this.doubleJump.isPlaying) {
+        this.doubleJump.volume = this.sfxVolume;
         this.doubleJump.play();
     }
 };
@@ -187,6 +197,7 @@ AdslJumper.SoundManager.prototype.playDoubleJump = function () {
 // void
 AdslJumper.SoundManager.prototype.playPickUp= function () {
     if (!this.pickUp.isPlaying) {
+        this.pickUp.volume = this.sfxVolume;
         this.pickUp.play();
     }
 };
@@ -194,6 +205,7 @@ AdslJumper.SoundManager.prototype.playPickUp= function () {
 // void
 AdslJumper.SoundManager.prototype.playPlayerDeath = function () {
     if (!this.playerDeath.isPlaying) {
+        this.playerDeath.volume = this.sfxVolume * 0.7;
         this.playerDeath.play();
     }
 };
@@ -201,6 +213,7 @@ AdslJumper.SoundManager.prototype.playPlayerDeath = function () {
 // void
 AdslJumper.SoundManager.prototype.playPunch = function () {
     if (!this.punch.isPlaying) {
+        this.punch.volume = this.sfxVolume;
         this.punch.play();
     }
 };
@@ -208,6 +221,7 @@ AdslJumper.SoundManager.prototype.playPunch = function () {
 // void
 AdslJumper.SoundManager.prototype.playPlayerRespawn = function () {
     if (!this.playerRespawn.isPlaying) {
+        this.playerRespawn.volume = this.sfxVolume * 0.7;
         this.playerRespawn.play();
     }
 };
@@ -222,6 +236,7 @@ AdslJumper.SoundManager.prototype.playSkyNetEyes = function () {
 // void
 AdslJumper.SoundManager.prototype.playJumpForce = function () {
     if (!this.jumpForce.isPlaying) {
+        this.jumpForce.volume = this.sfxVolume * 0.7;
         this.jumpForce.play();
     }
 };

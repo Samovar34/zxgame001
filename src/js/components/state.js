@@ -20,6 +20,10 @@ AdslJumper.State = function (game, prop) {
      */
     this._height = prop.height;
 
+    /**
+     * @type boolean
+     */
+    this._debug = prop.debug;
 
     /**
      * if true player can move after camera flash
@@ -165,17 +169,16 @@ AdslJumper.State.prototype = {
             this.map.exitDoor.nextLevel
         );
 
-        // this.collision2d = AdslJumper.world.createCollision(this.map.collision);
-        // this.fx = AdslJumper.world.createFx(this.map.fx);
 
         this.createCollision();
         this.createFx();
+        this.createTriggers();
+        this.hasTriggers = true;
 
-        if (this.map.triggers.length > 0) {
-            // this.triggers = AdslJumper.world.createTriggers(this.map.triggers);
-            this.createTriggers();
-            this.hasTriggers = true;
-        }
+        // if (this.map.triggers.length > 0) {
+        //     this.createTriggers();
+        //     this.hasTriggers = true;
+        // }
 
         if (this.map.traps.length > 0) {
             this.createTraps();
@@ -197,6 +200,12 @@ AdslJumper.State.prototype = {
         this.player.setOnDeathCompleteCallback(this.onPlayerDeathComplete, this);
         this.player.setOnRespawnCompleteCallback(this.onPlayerRespawnComplete, this);
 
+        // TODO debug
+        if (this._debug) {
+            this.player.body.gravity.setTo(0, 0);
+            this.player.alpha = 0.2;
+        }
+
         if (this._createExplosion) {
             this.explosions = this.game.add.group();
             this.explosions.add(AdslJumper.gameObjectFactory.explosion());
@@ -212,7 +221,7 @@ AdslJumper.State.prototype = {
 
         // GUI
         this.gui = new AdslJumper.GUI(this.game);
-        this.gui.setRoom("0" + _level);
+        this.gui.setRoom(_level);
         this.gui.setScore(_score);
 
         // MUSIC
@@ -241,7 +250,16 @@ AdslJumper.State.prototype = {
     update: function () {
         Input.update();
 
-        if (!this.player.alive) return;
+        if (this._debug) {
+            this.game.physics.arcade.moveToPointer(this.player, 160, this.game.input.activePointer, 500);
+            return;
+        }
+
+
+        // TODO debug
+        if (!this.player.alive) {
+            return;
+        }
 
         this.player._reset();
 
@@ -357,7 +375,7 @@ AdslJumper.State.prototype = {
      * start new level
      */
     startNewLevelState: function () {
-        if (_level === 7) {
+        if (_level === 11) {
             this.game.state.start("waitDecodeAudio");
         } else {
             this.game.state.start("level" + _level);

@@ -7,9 +7,10 @@ AdslJumper.level8 = new AdslJumper.State(Game, {
 });
 
 AdslJumper.level8.doAfterCreate = function() {
+    var mapObjects = this.map.objects;
 
     // strong jump
-    this.jF = this.fx.add(AdslJumper.gameObjectFactory.jumpForce(336, 320));
+    this.jF = this.fx.add(AdslJumper.gameObjectFactory.jumpForce(mapObjects.fJ.x, mapObjects.fJ.y));
     this.triggers.add(this.jF);
 
     // movable thorn
@@ -31,24 +32,19 @@ AdslJumper.level8.doAfterCreate = function() {
 
 
     // flying thorns
-    this.fT1 = AdslJumper.gameObjectFactory.flyingThorn(160, 160);
-    this.add.tween(this.fT1).to( { x: 576 + 64 }, 700, "Linear", true, 0, -1, true);
+    this.fT1 = AdslJumper.gameObjectFactory.flyingThorn(mapObjects.fT1.x, mapObjects.fT1.y);
+    this.add.tween(this.fT1).to( { x: mapObjects.fT1End.x * _scaleFactor }, 700, "Linear", true, 0, -1, true);
     this.triggers.add(this.fT1);
 
-    this.fT2 = AdslJumper.gameObjectFactory.flyingThorn(192, 240);
-    this.add.tween(this.fT2).to( { x: 70 }, 700, "Linear", true, 0, -1, true);
+    this.fT2 = AdslJumper.gameObjectFactory.flyingThorn(mapObjects.fT2.x, mapObjects.fT2.y);
+    this.add.tween(this.fT2).to( { x: mapObjects.fT2End.x * _scaleFactor }, 700, "Linear", true, 0, -1, true);
     this.triggers.add(this.fT2);
 
+    this.fT3 = AdslJumper.gameObjectFactory.flyingThorn(mapObjects.fT3.x, mapObjects.fT3.y);
+    this.add.tween(this.fT3).to( { x: mapObjects.fT3End.x * _scaleFactor }, 700, "Linear", true, 0, -1, true);
+    this.triggers.add(this.fT3);
 
-    // door
-    if (_lang === "ru") {
-        this.doorScreen = this.fx.add(this.make.image(102 * _scaleFactor, 84 * _scaleFactor, "atlas_2", "screenDoor2.png"));
-    } else {
-        this.doorScreen = this.fx.add(this.make.image(102 * _scaleFactor, 84 * _scaleFactor, "atlas_2", "screenDoor1.png"));
-    }
-
-    this.doorScreen.smoothed = false;
-    this.doorScreen.scale.setTo(_scaleFactor);
+    this.doorScreen = new AdslJumper.DoorScreen(this, 102, 84);
 
     this.arrow = AdslJumper.gameObjectFactory.arrow(124 * _scaleFactor, 70 * _scaleFactor);
     this.fx.add(this.arrow);
@@ -67,7 +63,6 @@ AdslJumper.level8.strongJump = function () {
 
 AdslJumper.level8.render = function () {
     AdslJumper.State.prototype.render.call(this);
-   //this.game.debug.body(this.fT1);
 };
 
 /**
@@ -76,12 +71,8 @@ AdslJumper.level8.render = function () {
  * @param {Phaser.Sprite} t
  */
 AdslJumper.level8.openDoor = function (p, t) {
-  t.kill();
-  this.arrow.kill();
-  this.exitDoor.open();
-    if (_lang === "ru") {
-        this.doorScreen.frameName = "screenDoor4.png";
-    } else {
-        this.doorScreen.frameName = "screenDoor3.png";
-    }
+    t.kill();
+    this.arrow.kill();
+    this.exitDoor.open();
+    this.doorScreen.open();
 };

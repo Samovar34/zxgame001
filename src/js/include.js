@@ -14,7 +14,7 @@
 //@@include('./gameObjects/led.js')
 //@@include('./gameObjects/mine.js')
 //@@include('./gameObjects/error01.js')
-//@@include('./gameObjects/doorSensor.js')
+//@@include('./gameObjects/doorScreen.js')
 //@@include('./gameObjects/screenA.js')
 //@@include('./gameObjects/platform01.js')
 //@@include('./gameObjects/arrow.js')
@@ -38,7 +38,6 @@
 //@@include('./states/levels/level8.js')
 //@@include('./states/levels/level9.js')
 //@@include('./states/levels/level10.js')
+//@@include('./states/levels/level11.js')
 
-
-//@@include('./states/test.js')
 

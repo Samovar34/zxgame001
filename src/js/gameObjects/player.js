@@ -163,8 +163,6 @@ AdslJumper.Player.prototype.restoreDefault = function () {
  */
 AdslJumper.Player.prototype.update = function () {
 
-
-    //TODO разобраться почему возникает прыжок если вызывать хардкорно
     if (this.stopUpdate) {
         return;
     }
@@ -175,14 +173,7 @@ AdslJumper.Player.prototype.update = function () {
         SoundManager.playPunch();
     }
 
-    // if player touch enything no allow double jump
-    // TODO fink about it
-    // if (this._isToucn()) {
-    //     this.canDoubleJump = false;
-    // }
-
     this.currentState();
-
 
     if (this.canInput && Input.dy > 0) {
         this.jump();
@@ -193,9 +184,6 @@ AdslJumper.Player.prototype.update = function () {
  * player's jump
  */
 AdslJumper.Player.prototype.jump = function (force) {
-
-    //todo подумать как запретить прыжок в jumpForce
-    //if (this.inTrigger) return;
 
     // jump from wall
     if (this._onWall() && !this._onFloor() && this.canJump && this.allowWallSliding) {

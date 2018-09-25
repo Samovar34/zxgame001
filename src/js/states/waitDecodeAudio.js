@@ -1,6 +1,10 @@
 // декодирование и дозагрузка файлов
 AdslJumper.waitDecodeAudio = {
 
+    track1Levels: [1, 10],
+    track2Levels: [11, 21],
+    track3Levels: [22, 35],
+
     preload: function () {
         this.clockSprite = this.game.add.sprite(464, 254, "atlas_0", "waitAudioDecodeTime1.png");
         this.clockSprite.smoothed = false;
@@ -26,11 +30,11 @@ AdslJumper.waitDecodeAudio = {
         // load music
         if (_level <= 0) {
             this.load.audio('intro', ['assets/audio/music/intro.ogg', 'assets/audio/music/intro.mp3'], false);
-        } else if (_level >= 1 && _level <= 6) {
+        } else if (_level >= this.track1Levels[0] && _level <= this.track1Levels[1]) {
             this.load.audio('track01', ['assets/audio/music/track01.ogg', 'assets/audio/music/track01.mp3'], false);
-        } else if (_level >= 7 && _level <= 20) {
+        } else if (_level >= this.track2Levels[0] && _level <= this.track2Levels[1]) {
             this.load.audio('track02', ['assets/audio/music/track02.ogg', 'assets/audio/music/track02.mp3'], false);
-        } else if (_level >= 21 && _level <= 25) {
+        } else if (_level >= this.track3Levels[0] && _level <= this.track3Levels[1]) {
             this.load.audio('track03', ['assets/audio/music/track03.ogg', 'assets/audio/music/track03.mp3'], false);
         }
     },
@@ -63,11 +67,11 @@ AdslJumper.waitDecodeAudio.beforePlay = function () {
 
     this.textSprite.frameName = "waitAudioDecodeText1.png";
 
-    if (_level >= 1 && _level <= 6) {
+    if (_level >= this.track1Levels[0] && _level <= this.track1Levels[1]) {
         // add track
         SoundManager.setTrack(this.game.add.sound("track01"));
         this.game.sound.decode("track01");
-    } else if (_level >= 7 && _level <= 20) {
+    } else if (_level >= this.track2Levels[0] && _level <= this.track2Levels[1]) {
         SoundManager.setTrack(this.game.add.sound("track02"));
         this.game.sound.decode("track02");
     }

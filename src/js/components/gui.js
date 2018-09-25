@@ -161,7 +161,12 @@ AdslJumper.GUI.prototype.constructor = AdslJumper.GUI;
  * @param {String | Number} room
  */
 AdslJumper.GUI.prototype.setRoom = function (room) {
-    room += "";
+    if (room <= 9) {
+        room = "0" + room;
+    } else {
+        room += "";
+    }
+
     this.roomNumber0.frameName = "numbers" + room[0] + ".png";
     this.roomNumber1.frameName = "numbers" + room[1] + ".png";
 };
