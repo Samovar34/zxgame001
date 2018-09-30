@@ -600,7 +600,7 @@ AdslJumper.gameObjectFactory.flyingThorn = function (x, y) {
     sprite.scale.setTo(_scaleFactor);
 
     this.state.game.physics.arcade.enable(sprite);
-    sprite.body.setSize(12, 12, 2, 2);
+    sprite.body.setSize(10, 10, 3, 3);
 
     sprite.data.event = "gameOver";
 

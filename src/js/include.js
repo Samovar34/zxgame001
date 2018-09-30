@@ -18,6 +18,7 @@
 //@@include('./gameObjects/screenA.js')
 //@@include('./gameObjects/platform01.js')
 //@@include('./gameObjects/arrow.js')
+//@@include('./gameObjects/timer.js')
 
 //@@include('./components/gameObjectFactory.js')
 

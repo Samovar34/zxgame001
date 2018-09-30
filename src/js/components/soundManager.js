@@ -13,7 +13,7 @@ AdslJumper.SoundManager = function (game) {
     /** @type {number} */
     this.sfxVolume = 0.9;
     /** @type {number} */
-    this.musicVolume = 0.0;
+    this.musicVolume = 0.7;
 
     /** @type {Phaser.Game} */
     this.game = game;
@@ -81,6 +81,10 @@ AdslJumper.SoundManager = function (game) {
     /** @type {Phaser.Sound} */
     this.jumpForce = this.game.add.audio('jumpForce');
     this.jumpForce.volume = this.sfxVolume;
+
+    /** @type {Phaser.Sound} */
+    this.screenTimer = this.game.add.audio('screenTimer');
+    this.screenTimer.volume = this.sfxVolume;
 
     // music
     /** @type {Phaser.Sound} */
@@ -249,4 +253,12 @@ AdslJumper.SoundManager.prototype.playExplosion = function () {
 // void
 AdslJumper.SoundManager.prototype.playMenuSelect = function (val) {
     this["menuSelect"+ val].play();
+};
+
+// void
+AdslJumper.SoundManager.prototype.playScreenTimer = function (val) {
+    if (!this.screenTimer.isPlaying) {
+        this.screenTimer.volume = this.sfxVolume;
+        this.screenTimer.play();
+    }
 };

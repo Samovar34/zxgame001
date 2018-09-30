@@ -27,6 +27,7 @@ AdslJumper.preloadState.prototype = {
         this.load.audio('getCoin', 'assets/audio/coin.wav');
         this.load.audio('doubleJump', 'assets/audio/doubleJump.wav');
         this.load.audio('playerDeath', ['assets/audio/playerDeath.wav', 'assets/audio/playerDeath.ogg']);
+        this.load.audio('screenTimer', ['assets/audio/screenTimer.wav', 'assets/audio/screenTimer.ogg']);
         this.load.audio('playerRespawn', ['assets/audio/playerRespawn.wav', 'assets/audio/playerRespawn.ogg']);
         this.load.audio('skyNetEyes', ['assets/audio/skynetEyes.wav', 'assets/audio/skynetEyes.ogg']);
         this.load.audio('jumpForce', ['assets/audio/jumpForce.wav', 'assets/audio/jumpForce.ogg']);
