@@ -103,6 +103,7 @@ var game = (function () {
         Game.state.add("level9", AdslJumper.level9);
         Game.state.add("level10", AdslJumper.level10);
         Game.state.add("level11", AdslJumper.level11);
+        Game.state.add("level12", AdslJumper.level12);
 
         Game.state.start("boot");
 	};

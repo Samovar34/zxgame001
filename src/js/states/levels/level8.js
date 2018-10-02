@@ -33,15 +33,15 @@ AdslJumper.level8.doAfterCreate = function() {
 
     // flying thorns
     this.fT1 = AdslJumper.gameObjectFactory.flyingThorn(mapObjects.fT1.x, mapObjects.fT1.y);
-    this.add.tween(this.fT1).to( { x: mapObjects.fT1End.x * _scaleFactor }, 700, "Linear", true, 0, -1, true);
+    this.add.tween(this.fT1).to( { x: mapObjects.fT1End.x * _scaleFactor }, 700, Phaser.Easing.Linear.None, true, 0, -1, true);
     this.triggers.add(this.fT1);
 
     this.fT2 = AdslJumper.gameObjectFactory.flyingThorn(mapObjects.fT2.x, mapObjects.fT2.y);
-    this.add.tween(this.fT2).to( { x: mapObjects.fT2End.x * _scaleFactor }, 700, "Linear", true, 0, -1, true);
+    this.add.tween(this.fT2).to( { x: mapObjects.fT2End.x * _scaleFactor }, 700, Phaser.Easing.Linear.None, true, 0, -1, true);
     this.triggers.add(this.fT2);
 
     this.fT3 = AdslJumper.gameObjectFactory.flyingThorn(mapObjects.fT3.x, mapObjects.fT3.y);
-    this.add.tween(this.fT3).to( { x: mapObjects.fT3End.x * _scaleFactor }, 700, "Linear", true, 0, -1, true);
+    this.add.tween(this.fT3).to( { x: mapObjects.fT3End.x * _scaleFactor }, 1400, Phaser.Easing.Sinusoidal.Out, true, 0, -1, true);
     this.triggers.add(this.fT3);
 
     this.doorScreen = new AdslJumper.DoorScreen(this, 102, 84);
