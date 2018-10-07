@@ -15,6 +15,12 @@ AdslJumper.level12.doAfterCreate = function () {
     this.stateTimer1 = 0;
     this.stateTimer2 = 0;
 
+    /**
+     *  is challenge start
+     * @type {boolean}
+     */
+    this.isChallenge = false;
+
     this.loopDuration = 550;
 
     this.easingType = Phaser.Easing.Cubic.InOut;
@@ -72,4 +78,52 @@ AdslJumper.level12.doAfterCreate = function () {
         (this.map.objects.ar1.y - 6) * _scaleFactor
     );
     this.fx.add(this.arrow);
+
+    this.challengeScreen = new AdslJumper.ChallengeScreen(this.game, this.map.objects.sC.x, this.map.objects.sC.y);
+    this.fx.add(this.challengeScreen);
+
+    this.exitDoor.animationOpenDoor.onComplete.addOnce(function () {
+        this.player.canInput = true;
+    }, this);
+
+};
+
+AdslJumper.level12.startChallenge = function (player, trigger) {
+    // stop player and disallow input
+    if (player.canInput) {
+        player.canInput = false;
+        player.body.stop();
+        this.arrow.kill();
+    }
+
+    // set player position
+    if (player.x !== 358) {
+        player.x = 358;
+    }
+
+
+    if (!this.challengeScreen.loadingAnim.isPlaying && !this.isChallenge && !this.player.stopUpdate) {
+            this.isChallenge = true;
+            this.challengeScreen.loadingAnim.play(8);
+        }
+
+    if (this.isChallenge && this.challengeScreen.challengeAnim.isPlaying) {
+        if (Input.dy >= 1) {
+            if (this.challengeScreen.checkInput()) {
+                trigger.kill();
+                this.exitDoor.open();
+            } else {
+                this.isChallenge = false;
+                this.player.canInput = true;
+                this.gameOver();
+                this.arrow.revive();
+            }
+        }
+    }
+
+};
+
+AdslJumper.level12.render = function () {
+    AdslJumper.State.prototype.render.call(this);
+    //this.game.debug.physicsGroup(this.triggers);
 };

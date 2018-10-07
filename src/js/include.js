@@ -19,6 +19,7 @@
 //@@include('./gameObjects/platform01.js')
 //@@include('./gameObjects/arrow.js')
 //@@include('./gameObjects/timer.js')
+//@@include('./gameObjects/challengeScreen.js')
 
 //@@include('./components/gameObjectFactory.js')
 
@@ -41,5 +42,6 @@
 //@@include('./states/levels/level10.js')
 //@@include('./states/levels/level11.js')
 //@@include('./states/levels/level12.js')
+//@@include('./states/levels/level13.js')
 
 

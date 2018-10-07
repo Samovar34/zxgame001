@@ -12,8 +12,8 @@ AdslJumper.bootState.prototype = {
         this.game.stage.backgroundColor = AdslJumper.gameOptions.bgColor;
 
         //TODO del
-        this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
-        this.game.scale.startFullScreen(false);
+        // this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
+        // this.game.scale.startFullScreen(false);
 
         // // scaling
         this.game.renderer.renderSession.roundPixels = true; // без этой опции страные артефакты. Проверено в Linux Mint

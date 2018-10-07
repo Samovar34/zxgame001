@@ -439,6 +439,7 @@ AdslJumper.State.prototype = {
         try {
             this[trigger.data.event](player, trigger);
         } catch (err) {
+            console.warn(err.message);
             console.warn("no handler for " + trigger.data.event);
         }
     },
